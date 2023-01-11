@@ -10,3 +10,9 @@
 
 - 새 프로젝트 심리테스트에 대한 회의
 - spring boot crud study
+
+### 2023.01.11 수
+
+- 새 프로젝트 기획 회의
+  - 자료 조사
+- spring boot crud study
