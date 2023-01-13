@@ -3,7 +3,7 @@
 - 아이디어 기획 회의
 - SpringBoot 복습
 - SpringBoot WebRTC
-  - Spring Web Socket
+- Spring Web Socket
 
 ##### 2023-01-10(화)
 
@@ -22,3 +22,9 @@
 - 기획서 작성 회의
 - 기능정의서 작성 회의
 - 지도 API 관련 학습
+
+##### 2023-01-13(금)
+
+- 기획서 작성 회의
+- 기획서 발표
+- 간트 차트 작성
