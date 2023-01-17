@@ -55,3 +55,11 @@
 * 공공데이터 API 정리
 * ERD 설계
 * 와이어 프레임 논의
+
+
+
+**날짜 : 23/01/17**
+
+* git commit convention
+* git branch message convention
+* 공통 프로젝트 노션 이사하기
