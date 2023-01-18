@@ -63,3 +63,13 @@
 * git commit convention
 * git branch message convention
 * 공통 프로젝트 노션 이사하기
+
+
+
+**날짜 : 23/01/18**
+
+* git convention회의
+* Jira 회의
+* 와이어 프레임 논의
+* 디자인 컨셉 논의
+* ERD 설계 논의
