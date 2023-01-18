@@ -40,3 +40,8 @@
 - 서버 배포 및 DB 연결 (www.sungwoo.shop)
 - ERD 설계
 - CI/CD 학습
+
+##### 2023-01-18(수)
+
+- ERD 설계
+- CI/CD 학습
