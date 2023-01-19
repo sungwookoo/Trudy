@@ -73,3 +73,13 @@
 * 와이어 프레임 논의
 * 디자인 컨셉 논의
 * ERD 설계 논의
+
+
+
+**날짜 : 23/01/19**
+
+* ERD 설계
+* Java study
+  * 클래스와 객체
+  * 인스턴스 생성
+  * 인스턴스 메모리 저장 방법![trudy_erd_2차수정](C:\Users\SSAFY\Downloads\trudy_erd_2차수정.png)
