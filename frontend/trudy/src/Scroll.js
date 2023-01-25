@@ -1,7 +1,10 @@
-import './Scroll.css';
 import { useState, useEffect, useRef } from 'react';
 
+import Dots from './Dots';
+import './Scroll.css';
+import './Landing.css';
 
+const DIVIDER_HEIGHT = 5;
 
 function Scroll() {
   const outerDivRef = useRef();
@@ -19,7 +22,7 @@ function Scroll() {
           // 현재 1페이지
           console.log('1 page, down');
           outerDivRef.current.scrollTo({
-            top: pageHeight,
+            top: pageHeight + DIVIDER_HEIGHT,
             left: 0,
             behavior: "smooth",
           });
@@ -28,23 +31,25 @@ function Scroll() {
             // 현재 2페이지
             console.log('2 page, down');
             outerDivRef.current.scrollTo({
-              top: pageHeight * 2,
+              top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
               left: 0,
-              behavior: 'smooth',
+              behavior: "smooth",
           });
           setScrollIndex(3);
         } else {
             // 현재 3페이지
             console.log('3 page, down');
             outerDivRef.current.scrollTo({
-              top: pageHeight * 2,
+              top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
               left: 0,
-              behavior: 'smooth',
+              behavior: "smooth",
           });
           setScrollIndex(3);  
         }
       } else {
+        // 스크롤 올릴 때때
         if (scrollTop >=0 && scrollTop < pageHeight) {
+          // 현재 1페이지
           console.log('1 page, up');
           outerDivRef.current.scrollTo({
             top: 0,
@@ -53,6 +58,7 @@ function Scroll() {
           });
           setScrollIndex(1);
         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
+          // 현재 2페이지
           console.log('2 page, up');
           outerDivRef.current.scrollTo({
             top: 0,
@@ -63,7 +69,7 @@ function Scroll() {
         } else {
           console.log('3 page, up');
           outerDivRef.current.scrollTo({
-            top: pageHeight,
+            top: pageHeight + DIVIDER_HEIGHT,
             left: 0,
             behavior: 'smooth'
           });
@@ -77,12 +83,42 @@ function Scroll() {
       outerDivRefCurrent.removeEventListener('wheel', wheelHandler);
     };
   }, []);
+  const Item = ({ text }) => {
+    return text;
+  };
     return (
       <div ref={outerDivRef} className="outer">
-        <div className="inner bg-yellow">1</div>
-        <div className="inner bg-blue">2</div>
-        <div className="inner bg-pink">3</div>
+        <Dots scrollIndex={scrollIndex} />
+        <div className='landing-container'>
+          {/* 랜딩 1번째 화면 */}
+          <div className='landing1'>
+            <div className="landing-image-container1"></div>
+              <div className="trudy-header1">
+                Trudy
+              </div>
+              <div className="trudy-detail1">
+                Travel deeper see more with local expertise
+              </div>
+          </div>
+      <div className='divider'></div>
+      {/* 랜딩 2번째 화면 */}
+        <div className='landing2'>
+          <div className="landing-image-container2"></div>
+        </div>
+      <div className='divider'></div>
+      {/* 랜딩 3번째 화면 */}
+        <div className='landing3'>
+          <div className='landing-image-container3'></div>  
+            <div className='landing-title3'>
+              We provide 
+            </div>
+            <div className='landing-detail3'>
+              <Item text={['Interactive Map', <br />, 'Messenger', <br />, 'Planner', <br />, <br />, 'Both Web & Mobile']}/>
+            </div>
+          </div>
+
       </div>
+    </div>
   );
 }
 

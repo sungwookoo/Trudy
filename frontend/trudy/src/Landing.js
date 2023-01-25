@@ -41,7 +41,6 @@ const Item = ({ text }) => {
             <div className='landing-detail3'>
               <Item text={['Interactive Map', <br />, 'Messenger', <br />, 'Planner', <br />, <br />, 'Both Web & Mobile']}/>
             </div>
-            
           </div>
       </div>
     )
