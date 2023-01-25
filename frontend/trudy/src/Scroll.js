@@ -92,7 +92,7 @@ function Scroll() {
         <div className='landing-container'>
           {/* 랜딩 1번째 화면 */}
           <div className='landing1'>
-            <div className="landing-image-container1"></div>
+            <div className=" landing-image-container1"></div>
               <div className="trudy-header1">
                 Trudy
               </div>
@@ -104,6 +104,12 @@ function Scroll() {
       {/* 랜딩 2번째 화면 */}
         <div className='landing2'>
           <div className="landing-image-container2"></div>
+            <div className='trudy-header2'>
+              Traveling to Korea?
+            </div>
+            <div className="trudy-detail2">
+              Search hidden gems only locals can provide!
+            </div>
         </div>
       <div className='divider'></div>
       {/* 랜딩 3번째 화면 */}
