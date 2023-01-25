@@ -1,0 +1,75 @@
+.landing-image-container1{
+    width: 1910px;
+    height: 930px;
+    background: linear-gradient(to right,
+    rgba(20, 20, 20, 0) 10%,
+    rgba(20, 20, 20, 0.25) 25%,
+    rgba(20, 20, 20, 0.5) 50%,
+    rgba(20, 20, 20, 0.75) 75%,
+    rgba(20, 20, 20, 1) 120%)
+    , url(https://media.nomadicmatt.com/2022/koreaguide1.jpg);
+    background-size: cover;
+}
+
+.trudy-header1{
+    font-size: 100px;
+    margin-left: 1300px;
+    margin-top: -700px;
+    color: ivory;
+    font-weight: bold;
+}
+
+.trudy-detail1{
+    font-size: 30px;
+    width: 350px;
+    margin-left: 1300px;
+    color: ivory;
+    font-weight: bold;
+}
+
+.button1{
+
+}
+
+.landing-image-container2{
+    width: 1910px;
+    height: 930px;
+    margin-top: 485px;
+    background: linear-gradient(to left,
+    rgba(20, 20, 20, 0) 10%,
+    rgba(20, 20, 20, 0.25) 25%,
+    rgba(20, 20, 20, 0.5) 50%,
+    rgba(20, 20, 20, 0.75) 75%,
+    rgba(20, 20, 20, 1) 100%)
+    , url(https://www.visitbusan.net/uploadImgs/files/cntnts/20191229160530047_oen);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.landing-image-container3{
+    background: linear-gradient(to left,
+    rgba(20, 20, 20, 0) 10%,
+    rgba(20, 20, 20, 0.25) 25%,
+    rgba(20, 20, 20, 0.5) 50%,
+    rgba(20, 20, 20, 0.75) 75%,
+    rgba(20, 20, 20, 1) 150%), url("landing3.png");
+    width: 1400px;
+    height: 930px;
+    background-size: cover;
+}
+
+.landing-title3{
+    font-size: 80px;
+    margin-left: 1420px;
+    margin-top: -700px;
+    color: rgb(35, 162, 35);
+    font-weight: bold;
+}
+
+.landing-detail3{
+    font-size: 50px;
+    margin-left: 1420px;
+    /* white-space: pre-line; */
+    color: rgb(35, 162, 35);
+    font-weight: bold;
+}
