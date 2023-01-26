@@ -9,13 +9,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {
+    
 
-    @GetMapping("/")
-    public List profile() {
-        List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
-
-
-    }
 /*
     [ member_Table *
       member_posts_thumnail_images:
@@ -24,7 +19,5 @@ public class ProfileController {
       member_follow(er):
       member_Introduce_Table *
     ]
-
-
  */
 }
