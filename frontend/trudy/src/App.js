@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Landing from './Landing/Landing';
+import Map from './Map/Map';
+import Forum from './Forum/Forum';
+import Square from './Square/Square';
 import Profile from './Profile/Profile';
+import Planner from './Planner/Planner';
 import Nav from './Common/Nav';
 
 
@@ -23,10 +27,12 @@ function App() {
 
   // 첫 번째 렌더링을 마친 후 실행
   useEffect(() => {
+    // 여기에 로컬호스트나 url 주소 기입
     axios
-      .get("/api/test")
+      .get("http://localhost:8080/api/post/7")
       .then((Response) => {
         callback(Response.data);
+        console.log("Success")
       })
       .catch((Error) => {
         console.log(Error);
@@ -52,6 +58,10 @@ function App() {
           <Nav />
             <Routes>
               <Route path="/" element={<Landing/>} />
+              <Route path="/map" element={<Map/>} />
+              <Route path="/forum" element={<Forum/>} />
+              <Route path="/square" element={<Square/>} />
+              <Route path="/planner" element={<Planner/>} />
               <Route path="/profile" element={<Profile/>} />
             </Routes>
         </BrowserRouter>  
