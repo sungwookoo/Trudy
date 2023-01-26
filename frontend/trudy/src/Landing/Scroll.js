@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 
-import Dots from './Dots';
-import './Scroll.css';
-import './Landing.css';
+import Dots from '../Common/Dots';
+import '../Landing/Scroll.css';
+import '../Landing/Landing.css';
 
 const DIVIDER_HEIGHT = 5;
 
-function Scroll() {
+// 스크롤 컴포넌트 추후 컴포넌트 폴더로 따로 export 예정
+
+function Scroll(props) {
   const outerDivRef = useRef();
   const [scrollIndex, setScrollIndex] = useState(1);
   useEffect(() => {
@@ -86,6 +88,10 @@ function Scroll() {
   const Item = ({ text }) => {
     return text;
   };
+
+
+// 이하 html
+
     return (
       <div ref={outerDivRef} className="outer">
         <Dots scrollIndex={scrollIndex} />

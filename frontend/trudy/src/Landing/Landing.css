@@ -43,7 +43,7 @@ body {
 .landing-image-container2{
     width: 100%;
     height: 100vh;
-    /* margin-top: 485px; */
+    /* margin-top: 2px; */
     background: linear-gradient(to right,
     rgba(20, 20, 20, 0) 10%,
     rgba(20, 20, 20, 0.25) 25%,
@@ -51,7 +51,7 @@ body {
     rgba(20, 20, 20, 0.75) 75%,
     rgba(20, 20, 20, 1) 100%)
     , url(https://www.visitbusan.net/uploadImgs/files/cntnts/20191229160530047_oen);
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     background-size: cover;
 }
 
@@ -78,12 +78,13 @@ body {
 }
 
 .landing-image-container3{
-    background: linear-gradient(to left,
+    /* background: linear-gradient(to left,
     rgba(20, 20, 20, 0) 10%,
     rgba(20, 20, 20, 0.25) 25%,
     rgba(20, 20, 20, 0.5) 50%,
     rgba(20, 20, 20, 0.75) 75%,
-    rgba(20, 20, 20, 0.9) 150%), url("landing3.png");
+    rgba(20, 20, 20, 0.9) 150%), url("landing3.png"); */
+    background-image: url("../assets/landing3.png");
     width: 70%;
     height: 100vh;
     background-size: cover;
@@ -91,7 +92,7 @@ body {
 
 .landing-title3{
     font-size: 80px;
-    margin-left: 1380px;
+    margin-left: 72%;
     margin-top: -36.4%;
     color: rgb(35, 162, 35);
     font-weight: bold;
