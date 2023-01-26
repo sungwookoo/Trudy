@@ -1,6 +1,9 @@
+import './Dots.css'
+
+
 const Dot = ({ num, scrollIndex }) => {
     return (
-        <div
+        <div className='dot-style'
             style={{
                 width: 10,
                 height: 10,
@@ -16,8 +19,8 @@ const Dot = ({ num, scrollIndex }) => {
 
 const Dots = ({ scrollIndex }) => {
     return (
-        <div style={{ position: 'fixed', top: '50%', right: 10 }}>
-          <div
+        <div className='dots-layout' style={{ position: 'fixed', top: '50%', right: 10 }}>
+          <div className='dots-spacing'
             style={{
               display: 'flex',
               flexDirection: 'column',

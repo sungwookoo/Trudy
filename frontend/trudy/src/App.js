@@ -1,10 +1,11 @@
-import React from "react";
 import { BrowserRouter, Routes, Route,} from 'react-router-dom';
-import Scroll from './Landing/Scroll';
-import Profile from './Profile/Profile';
-import Nav from './Common/Nav';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+import Landing from './Landing/Landing';
+import Profile from './Profile/Profile';
+import Nav from './Common/Nav';
+
 
 function App() {
   // 요청받은 정보를 담아줄 변수 선언
@@ -48,13 +49,11 @@ function App() {
     return (
       <div className="App">
         <BrowserRouter>
-        <Nav />
-          <Routes>
-            <Route exact path="/" component={Scroll} />
-            <Route path="/profile" component={Profile} />
-          </Routes>
-          <Scroll />
-          <Profile />
+          <Nav />
+            <Routes>
+              <Route path="/" element={<Landing/>} />
+              <Route path="/profile" element={<Profile/>} />
+            </Routes>
         </BrowserRouter>  
       </div>
     );

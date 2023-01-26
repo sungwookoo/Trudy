@@ -84,7 +84,7 @@ body {
     rgba(20, 20, 20, 0.5) 50%,
     rgba(20, 20, 20, 0.75) 75%,
     rgba(20, 20, 20, 0.9) 150%), url("landing3.png"); */
-    background-image: url("../assets/landing3.png");
+    background-image: url("../assets/landingCrossPlatform.png");
     width: 70%;
     height: 100vh;
     background-size: cover;
@@ -104,3 +104,19 @@ body {
     color: rgb(35, 162, 35);
     font-weight: bold;
 }
+
+
+.outer {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.outer::-webkit-scrollbar {
+    display: none;
+}
+
+.divider{
+    height: 4px;
+    background-color: black;
+}
+

@@ -1,48 +1,51 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
-import '../styles/Nav.css'
+import './Nav.css';
+import trudylogo from '../assets/trudylogo.png'
 
 const Nav= (props) => {
   return (
-    <nav>
-      <div>
-        <NavLink to='/'>
-          Trudy
-        </NavLink>
-      </div>
-      {/* <div>
-        <NavLink to='/map'>
-          Map
-        </NavLink>
-      </div>
-      <div>
-        <NavLink to='/forum'>
-          Forum
-        </NavLink>
-      </div>
-      <div>
-        <NavLink to='/square'>
-          Square
-        </NavLink>
-      </div>
-      <div>
-        <NavLink to='/planner'>
-          Planner
-        </NavLink>
-      </div> */}
-      <div>
-        <NavLink to='/profile'>
-          Profile
-        </NavLink>
-      </div>
-
-
-
-
-
-
-
-
+    // 네비게이션바
+    <nav className="nav-bar">
+      <NavLink to='/'>
+      <img className="nav-logo" src={trudylogo} alt="TrudyLogo"></img>
+      </NavLink>
+        {/* 랜딩페이지 */}
+        <div className="nav-item-logo">
+          <NavLink className="nav-link" to='/'>
+            Trudy
+          </NavLink>
+        </div>
+        {/* 지도 */}
+        <div className="nav-item">
+          <NavLink className="nav-link" to='/map'>
+            Map
+          </NavLink>
+        </div>
+        {/* 포럼 */}
+        <div className="nav-item">
+          <NavLink className="nav-link" to='/forum'>
+            Forum
+          </NavLink>
+        </div >
+        {/* 스퀘어 */}
+        <div className="nav-item">
+          <NavLink className="nav-link" to='/square'>
+            Square
+          </NavLink>
+        </div>
+        {/* 플래너 */}
+        <div className="nav-item">
+          <NavLink className="nav-link" to='/planner'>
+            Planner
+          </NavLink>
+        </div>
+        {/* 프로필 */}
+        <div className="nav-item">
+          <NavLink className="nav-link" to='/profile'>
+            Profile
+          </NavLink>
+        </div>
     </nav>
   )
 }
