@@ -1,5 +1,6 @@
 package com.ssafy.trudy.controller;
 
+import com.ssafy.trudy.model.Posts;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +69,21 @@ public class PostsController {
 
         return res;
     }
+
+    @GetMapping("/list")
+    public List<Posts> getPosts() {
+        List<Posts> list = new ArrayList<>();
+        for(int i=1; i<=10; i++) {
+            Posts post = new Posts();
+            post.setId((long) i);
+            post.setTitle("테스트 제목입니다 " + i);
+            post.setContent("테스트 내용입니다 " + i);
+            post.setThumbnail_image_id(i);
+            list.add(post);
+        }
+        return list;
+    }
+
 
    /* @GetMapping("/")
     public List allPosts() {
