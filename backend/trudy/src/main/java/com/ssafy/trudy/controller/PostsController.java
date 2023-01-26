@@ -24,6 +24,9 @@ public class PostsController {
             map.put("title", "first posts");
             map.put("content", "rock the world");
             map.put("thumbnail_image_id", 1);
+            map.put("post_likes", 3);
+            map.put("user_post_like", true);
+            map.put("posts_category", )
             res.add(map);
         }
 
