@@ -1,4 +1,5 @@
-import '../Profile/Profile.css'
+import '../Profile/Profile.css';
+import testStr from '../App';
 
 function Profile() {
     if (testStr.length > 0) {
