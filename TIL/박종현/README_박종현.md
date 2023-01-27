@@ -55,3 +55,8 @@
 - 기획 추가 회의
 - erd 설계
 - jpa 학습
+
+### 2023.01.27 금
+
+- spring boot entity 작성중
+- api 설계서 완성
