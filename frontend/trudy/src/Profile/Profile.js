@@ -4,7 +4,7 @@ import testStr from '../App';
 function Profile() {
     if (testStr.length > 0) {
       return testStr.map((userdata) => (
-        <div key={userdata.id}>{userdata.}</div>
+        <div key={userdata.id}>{userdata}</div>
       ));
   }
 };
