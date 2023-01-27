@@ -1,7 +1,25 @@
-body {
+/* body {
     margin: 0;
+    
+} */
+
+
+.landing-body{
     overflow-y: hidden;
 }
+
+
+.outer {
+    height: 100vh;
+    overflow-y: auto;
+    
+    
+}
+
+.outer::-webkit-scrollbar {
+    display: none;
+}
+
 
 .landing1{
     height: 100vh;
@@ -104,15 +122,6 @@ body {
     font-weight: bold;
 }
 
-
-.outer {
-    height: 100vh;
-    overflow-y: auto;
-}
-
-.outer::-webkit-scrollbar {
-    display: none;
-}
 
 .divider{
     height: 4px;

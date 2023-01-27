@@ -88,6 +88,7 @@ function Landing(props) {
 // 이하 html
 
   return (
+  <div className='landing-body'>
     <div ref={outerDivRef} className="outer">
       <Dots scrollIndex={scrollIndex} />
         <div className='landing-container'>
@@ -125,6 +126,7 @@ function Landing(props) {
           </div>
         </div>
     </div>
+  </div>
   );
 }
 
