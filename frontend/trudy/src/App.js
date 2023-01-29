@@ -12,7 +12,6 @@ import Nav from './Common/Nav';
 
 
 function App() {
-  useEffect(() => {
 
     let [postInfo, setPostInfo] = useState([])
     useEffect(() => {
@@ -21,7 +20,7 @@ function App() {
         setPostInfo(res.data.postList);
       });
     }, []);
-    
+
     return (
       <div className="App">
         <BrowserRouter>
@@ -36,8 +35,8 @@ function App() {
             </Routes>
         </BrowserRouter>  
       </div>
-    );
-  };
+    ); 
+}
 
 
 export default App;
