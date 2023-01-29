@@ -16,7 +16,7 @@ function App() {
     let [postInfo, setPostInfo] = useState([])
     useEffect(() => {
   
-      axios.get("http://sungwoo.shop:8080/api/posts/alldata").then((res) => {
+      axios.get("/api/posts/alldata").then((res) => {
         setPostInfo(res.data.postList);
       });
     }, []);
@@ -28,7 +28,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Landing/>} />
               <Route path="/map" element={<Map/>} />
-              <Route path="/forum" element={<Forum/>} />
+              <Route path="/forum" element={<Forum postInfo={postInfo} setPostInfo={setPostInfo}/>} />
               <Route path="/square" element={<Square/>} />
               <Route path="/planner" element={<Planner/>} />
               <Route path="/profile" element={<Profile/>} />
