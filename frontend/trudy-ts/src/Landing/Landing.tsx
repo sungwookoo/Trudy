@@ -7,7 +7,7 @@ const DIVIDER_HEIGHT = 5;
 // 스크롤 컴포넌트 추후 컴포넌트 폴더로 따로 export 예정
 
 function Landing() {
-  // 밑엔 스크롤
+  // 밑엔 스크롤 (추후 컴포넌트로 뺴서 props 받아 사용 할 예정)
   const outerDivRef : any = useRef();
   const [scrollIndex, setScrollIndex] = useState(1);
   useEffect(() => {

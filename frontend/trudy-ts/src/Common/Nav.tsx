@@ -46,6 +46,12 @@ const Nav = () => {
           Profile
         </NavLink>
       </div>
+      {/* 로그인 */}
+      <div className='nav-item'>
+        <NavLink className="nav-link" to='/login'>
+          Login
+        </NavLink>
+      </div>
   </nav>
 )
 }
