@@ -63,3 +63,38 @@
 * git commit convention
 * git branch message convention
 * 공통 프로젝트 노션 이사하기
+
+
+
+**날짜 : 23/01/18**
+
+* git convention회의
+* Jira 회의
+* 와이어 프레임 논의
+* 디자인 컨셉 논의
+* ERD 설계 논의
+
+
+
+**날짜 : 23/01/19**
+
+* ERD 설계
+* Java study
+  * 클래스와 객체
+  * 인스턴스 생성
+  * 인스턴스 메모리 저장 방법![trudy_erd_2차수정](C:\Users\SSAFY\Downloads\trudy_erd_2차수정.png)
+
+
+
+**날짜 : 23/01/20**
+
+* ERD 피드백 받기
+* 화면 설계 피드백 받기
+* 시퀀스 설계 피드백 받기
+* 설계의 중요성... 기획을 정말 세심히 해야함을 느꼈다
+
+
+
+**날짜 : 23/01/25**
+
+* 스프링 ing ... 빡쌔다

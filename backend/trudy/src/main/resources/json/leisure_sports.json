@@ -1,0 +1,4029 @@
+{
+  "items": {
+    "item": [
+      {
+        "addr1": "325, Solbong-ro, Pyeongchang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266863",
+        "contenttypeid": "75",
+        "createdtime": "20030108234417",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/1846753_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/53/1846753_image3_1.jpg",
+        "mapx": "128.6743702048",
+        "mapy": "37.6575030436",
+        "mlevel": "6",
+        "modifiedtime": "20200818200201",
+        "readcount": "12529",
+        "sigungucode": "15",
+        "tel": "+82-33-333-8828",
+        "title": "Alpensia Casino (알펜시아 카지노)",
+        "zipcode": "25351"
+      },
+      {
+        "addr1": "325, Solbong-ro, Daegwallyeong-myeon, Pyeongchang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "1133074",
+        "contenttypeid": "75",
+        "createdtime": "20101124200022",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/99/1985699_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/99/1985699_image3_1.jpg",
+        "mapx": "128.6743702048",
+        "mapy": "37.6575030436",
+        "mlevel": "6",
+        "modifiedtime": "20190522180616",
+        "readcount": "196771",
+        "sigungucode": "15",
+        "tel": "+82-33-2202-3433",
+        "title": "Alpensia Ski Resort (알펜시아리조트 스키장)",
+        "zipcode": "25351"
+      },
+      {
+        "addr1": "961-34, Yumyeong-ro, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1526656",
+        "contenttypeid": "75",
+        "createdtime": "20120104233532",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.4824208474",
+        "mapy": "37.6201738275",
+        "mlevel": "6",
+        "modifiedtime": "20210521183040",
+        "readcount": "16162",
+        "sigungucode": "1",
+        "tel": "+82-31-589-3000",
+        "title": "Ananti Chord (아난티코드)",
+        "zipcode": "12472"
+      },
+      {
+        "addr1": "Hoban-ro, Andong-si, Gyeongsangbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "35",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030500",
+        "contentid": "1891010",
+        "contenttypeid": "75",
+        "createdtime": "20140205020316",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/38/2038038_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/38/2038038_image3_1.jpg",
+        "mapx": "128.7719600867",
+        "mapy": "36.5843448602",
+        "mlevel": "6",
+        "modifiedtime": "20210129011940",
+        "readcount": "18661",
+        "sigungucode": "11",
+        "tel": "+82-54-856-3013",
+        "title": "Andongho Lake (안동호)",
+        "zipcode": "36710"
+      },
+      {
+        "addr1": "35-7, Gonghang-gil 127beon-gil, Gangneung-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0305",
+        "cat3": "A03050100",
+        "contentid": "1064078",
+        "contenttypeid": "75",
+        "createdtime": "20100723190715",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.9515529876",
+        "mapy": "37.7667541230",
+        "mlevel": "6",
+        "modifiedtime": "20210813003428",
+        "readcount": "21678",
+        "sigungucode": "1",
+        "tel": "+82-33-641-9002",
+        "title": "Aranaby Zipline (아라나비(스카이 어촌체험))",
+        "zipcode": "25617"
+      },
+      {
+        "addr1": "424, Wangheung-ro, Buyeo-gun, Chungcheongnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "34",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030100",
+        "contentid": "2811005",
+        "contenttypeid": "75",
+        "createdtime": "20220316172312",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/22/2374122_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/22/2374122_image2_1.jpg",
+        "mapx": "126.9159168914",
+        "mapy": "36.3021240253",
+        "mlevel": "6",
+        "modifiedtime": "20220408140326",
+        "readcount": "3055",
+        "sigungucode": "6",
+        "tel": "+82-1833-8982",
+        "title": "Baengmagang Leisure Park (백마강레저파크)",
+        "zipcode": "33114"
+      },
+      {
+        "addr1": "27, Geumgang-ro 2536beon-gil, Pocheon-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266855",
+        "contenttypeid": "75",
+        "createdtime": "20030108233227",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/17/2783217_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/17/2783217_image2_1.jpg",
+        "mapx": "127.2496952269",
+        "mapy": "37.7976433822",
+        "mlevel": "6",
+        "modifiedtime": "20230103151551",
+        "readcount": "120574",
+        "sigungucode": "29",
+        "tel": "+82-31-540-5000",
+        "title": "Bears Town Ski Resort (베어스타운리조트 스키장)",
+        "zipcode": "11188"
+      },
+      {
+        "addr1": "40, Bogaewonsam-ro 1534beon-gil, Cheoin-gu, Yongin-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1354908",
+        "contenttypeid": "75",
+        "createdtime": "20110809014357",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.3258850281",
+        "mapy": "37.1341633670",
+        "mlevel": "6",
+        "modifiedtime": "20210521192612",
+        "readcount": "7215",
+        "sigungucode": "23",
+        "tel": "+82-1899-1888",
+        "title": "Blue One Yongin Country Club (블루원 용인컨트리클럽)",
+        "zipcode": "17170"
+      },
+      {
+        "addr1": "182-14, Bomun-ro, Gyeongju-si, Gyeongsangbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "35",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "266856",
+        "contenttypeid": "75",
+        "createdtime": "20030108233325",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "129.2733616942",
+        "mapy": "35.8611864275",
+        "mlevel": "6",
+        "modifiedtime": "20210416000023",
+        "readcount": "12858",
+        "sigungucode": "2",
+        "tel": "+82-54-745-1680",
+        "title": "Bomun Golf Club (보문골프클럽)",
+        "zipcode": "38116"
+      },
+      {
+        "addr1": "31, Cheyukgongwon-gil, Buan-gun, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1904447",
+        "contenttypeid": "75",
+        "createdtime": "20140311182123",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.7221082088",
+        "mapy": "35.7005060345",
+        "mlevel": "6",
+        "modifiedtime": "20210611222938",
+        "readcount": "13187",
+        "sigungucode": "6",
+        "tel": "+82-63-580-3904",
+        "title": "Buan Sports Park (부안스포츠파크)",
+        "zipcode": "56319"
+      },
+      {
+        "addr1": "35, Junganggongwon-ro, Bundang-gu, Seongnam-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "686614",
+        "contenttypeid": "75",
+        "createdtime": "20090130233939",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/688334_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/34/688334_image3_1.jpg",
+        "mapx": "127.1286403895",
+        "mapy": "37.3808673819",
+        "mlevel": "6",
+        "modifiedtime": "20210304231145",
+        "readcount": "31851",
+        "sigungucode": "12",
+        "tel": "+82-31-708-7485",
+        "title": "Bundang Olympic Sports Center Ice Skating Rink (분당올림픽스포츠센터 아이스링크)",
+        "zipcode": "13588"
+      },
+      {
+        "addr1": "344, World cup-daero, Yeonje-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1955161",
+        "contenttypeid": "75",
+        "createdtime": "20141010233829",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "129.0582325921",
+        "mapy": "35.1902245312",
+        "mlevel": "6",
+        "modifiedtime": "20210611235344",
+        "readcount": "31638",
+        "sigungucode": "13",
+        "tel": "+82-51-500-2123",
+        "title": "Busan Asiad Main Stadium (부산 아시아드주경기장)",
+        "zipcode": "47500"
+      },
+      {
+        "addr1": "344, World cup-daero, Yeonje-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1392583",
+        "contenttypeid": "75",
+        "createdtime": "20110928014859",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/19/1919819_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/19/1919819_image2_1.jpg",
+        "mapx": "129.0582325921",
+        "mapy": "35.1902245312",
+        "mlevel": "6",
+        "modifiedtime": "20210722004030",
+        "readcount": "18017",
+        "sigungucode": "13",
+        "tel": "+82-51-504-8001",
+        "title": "Busan Sports Complex (부산종합운동장)",
+        "zipcode": "47500"
+      },
+      {
+        "addr1": "12, Seongwang-ro 173beon-gil, Buyeo-gun, Chuncheongnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "34",
+        "cat1": "A03",
+        "cat2": "A0304",
+        "cat3": "A03040400",
+        "contentid": "2812434",
+        "contenttypeid": "75",
+        "createdtime": "20220324111615",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/79/2794079_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/79/2794079_image2_1.jpg",
+        "mapx": "126.9075709630",
+        "mapy": "36.2815401261",
+        "mlevel": "6",
+        "modifiedtime": "20220726174653",
+        "readcount": "0",
+        "sigungucode": "6",
+        "tel": "+82-41-837-8809",
+        "title": "Buyeo Sky Banner (부여하늘날기)",
+        "zipcode": "33141"
+      },
+      {
+        "addr1": "35, Centum nam-daero, Haeundae-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "1024958",
+        "contenttypeid": "75",
+        "createdtime": "20100519190616",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/55/1020255_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/55/1020255_image3_1.jpg",
+        "mapx": "129.1295519730",
+        "mapy": "35.1688560217",
+        "mlevel": "6",
+        "modifiedtime": "20200813235814",
+        "readcount": "20771",
+        "sigungucode": "16",
+        "tel": "+82-51-745-1400",
+        "title": "Centum City Ice Rink - Shinsegae Department Store (센텀시티 아이스링크 (신세계백화점))",
+        "zipcode": "48058"
+      },
+      {
+        "addr1": "470, Woni-daero, Uichang-gu, Changwon-si, Gyeongsangnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "36",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020900",
+        "contentid": "266905",
+        "contenttypeid": "75",
+        "createdtime": "20030109000532",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.6680182588",
+        "mapy": "35.2320015771",
+        "mlevel": "6",
+        "modifiedtime": "20210608001850",
+        "readcount": "8294",
+        "sigungucode": "16",
+        "tel": "+82-55-239-1111",
+        "title": "Changwon Cyclodrome (창원경륜장)",
+        "zipcode": "51411"
+      },
+      {
+        "addr1": "6, Cheongpungho-ro 50-gil, Jecheon-si, Chungcheongbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "33",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022400",
+        "contentid": "266908",
+        "contenttypeid": "75",
+        "createdtime": "20030109000921",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/56/2366256_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/56/2366256_image3_1.jpg",
+        "mapx": "128.1790672297",
+        "mapy": "37.0128207675",
+        "mlevel": "6",
+        "modifiedtime": "20191127184445",
+        "readcount": "83385",
+        "sigungucode": "7",
+        "tel": {
+          "-self-closing": "true"
+        },
+        "title": "Cheongpung Land (청풍랜드)",
+        "zipcode": "27215"
+      },
+      {
+        "addr1": "34, Cheongaedong-ro, Dong-gu, Daejeon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "3",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1918474",
+        "contenttypeid": "75",
+        "createdtime": "20140513024422",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/78/2675778_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/78/2675778_image2_1.jpg",
+        "mapx": "127.4719596145",
+        "mapy": "36.3739061524",
+        "mlevel": "6",
+        "modifiedtime": "20210604231614",
+        "readcount": "6731",
+        "sigungucode": "2",
+        "tel": "+82-42-273-5550",
+        "title": "Daecheongho Obaengni (500-ri) Road (대청호오백리길)",
+        "zipcode": "34500"
+      },
+      {
+        "addr1": "12-1, Goseong-ro 35-gil, Buk-gu, Daegu",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "4",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1392498",
+        "contenttypeid": "75",
+        "createdtime": "20110928010625",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.5850938178",
+        "mapy": "35.8816379215",
+        "mlevel": "6",
+        "modifiedtime": "20210611232814",
+        "readcount": "14586",
+        "sigungucode": "5",
+        "tel": "+82-53-606-8200",
+        "title": "Daegu Citizen Stadium (대구시민운동장)",
+        "zipcode": "41595"
+      },
+      {
+        "addr1": "180, Universiad-ro, Suseong-gu, Daegu",
+        "addr2": "504",
+        "areacode": "4",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1276759",
+        "contenttypeid": "75",
+        "createdtime": "20110513001800",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.6901804487",
+        "mapy": "35.8299818185",
+        "mlevel": "6",
+        "modifiedtime": "20220630130525",
+        "readcount": "20230",
+        "sigungucode": "7",
+        "tel": "+82-53-803-8300",
+        "title": "Daegu Stadium (대구스타디움)",
+        "zipcode": "42250"
+      },
+      {
+        "addr1": "32, World Cup-daero, Yuseong-gu, Daejeon",
+        "addr2": "(Noeun-dong)",
+        "areacode": "3",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1934190",
+        "contenttypeid": "75",
+        "createdtime": "20140715182635",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/18/1946518_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/18/1946518_image3_1.jpg",
+        "mapx": "127.3251146529",
+        "mapy": "36.3651962068",
+        "mlevel": "6",
+        "modifiedtime": "20210611233934",
+        "readcount": "37894",
+        "sigungucode": "4",
+        "tel": "+82-42-610-2900",
+        "title": "Daejeon World Cup Stadium (대전월드컵경기장)",
+        "zipcode": "34148"
+      },
+      {
+        "addr1": "14 , Daeseonggangbyeon-gil, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030100",
+        "contentid": "584607",
+        "contenttypeid": "75",
+        "createdtime": "20080709191718",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/91/1900091_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/91/1900091_image3_1.jpg",
+        "mapx": "127.3795395377",
+        "mapy": "37.6814842660",
+        "mlevel": "6",
+        "modifiedtime": "20221017112108",
+        "readcount": "16006",
+        "sigungucode": "1",
+        "tel": "+82-31-584-3119",
+        "title": "Daesung Water Leports (대성수상레저)",
+        "zipcode": "12457"
+      },
+      {
+        "addr1": "185, Manseon-ro, Muju-gun, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "266853",
+        "contenttypeid": "75",
+        "createdtime": "20030108233104",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/68/2003268_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/68/2003268_image2_1.jpg",
+        "mapx": "127.7443793143",
+        "mapy": "35.8790813030",
+        "mlevel": "6",
+        "modifiedtime": "20200728190155",
+        "readcount": "9144",
+        "sigungucode": "5",
+        "tel": "+82-63-320-7336",
+        "title": "Deogyusan Resort Sledding Hills (무주덕유산리조트 썰매장)",
+        "zipcode": "55556"
+      },
+      {
+        "addr1": "185, Manseon-ro, Muju-gun, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266854",
+        "contenttypeid": "75",
+        "createdtime": "20030108233142",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.7443793143",
+        "mapy": "35.8790813030",
+        "mlevel": "6",
+        "modifiedtime": "20220901141847",
+        "readcount": "103115",
+        "sigungucode": "5",
+        "tel": "+82-63-322-9000",
+        "title": "Deogyusan Ski Resort (무주덕유산리조트 스키장)",
+        "zipcode": "55556"
+      },
+      {
+        "addr1": "29, Bomokpo-ro, Seogwipo-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030400",
+        "contentid": "864907",
+        "contenttypeid": "75",
+        "createdtime": "20181129223938",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.6059523963",
+        "mapy": "33.2408463811",
+        "mlevel": "6",
+        "modifiedtime": "20200910201553",
+        "readcount": "1556",
+        "sigungucode": "3",
+        "tel": "+82-10-8696-2187",
+        "title": "Diveland (다이브랜드)",
+        "zipcode": "63599"
+      },
+      {
+        "addr1": "Dodong-ri, Ulleung-gun, Gyeongsangbuk-do",
+        "addr2": "Within Yaksu Park",
+        "areacode": "35",
+        "cat1": "A02",
+        "cat2": "A0203",
+        "cat3": "A02030600",
+        "contentid": "622500",
+        "contenttypeid": "75",
+        "createdtime": "20080911002607",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/1893645_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/45/1893645_image3_1.jpg",
+        "mapx": "130.8983938108",
+        "mapy": "37.4884949382",
+        "mlevel": "6",
+        "modifiedtime": "20211002011931",
+        "readcount": "11740",
+        "sigungucode": "17",
+        "tel": "+82-54-790-6427",
+        "title": "Dokdo Island Observatory Cable Car (독도전망대 케이블카)",
+        "zipcode": "40223"
+      },
+      {
+        "addr1": "100, Jebangan-gil, Yeongwol-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030800",
+        "contentid": "266847",
+        "contenttypeid": "75",
+        "createdtime": "20030108232522",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/00/1822100_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/00/1822100_image3_1.jpg",
+        "mapx": "128.5038327432",
+        "mapy": "37.1959002553",
+        "mlevel": "6",
+        "modifiedtime": "20170629194854",
+        "readcount": "26814",
+        "sigungucode": "8",
+        "tel": "+82-33-370-2946",
+        "title": "Donggang River Rafting (Yeongwol) (동강 래프팅 (영월))",
+        "zipcode": "26237"
+      },
+      {
+        "addr1": "97, Ilchul-ro, Donghae-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1948662",
+        "contenttypeid": "75",
+        "createdtime": "20140918012339",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/65/1220365_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/65/1220365_image3_1.jpg",
+        "mapx": "129.1183390829",
+        "mapy": "37.5522210485",
+        "mlevel": "6",
+        "modifiedtime": "20221226132509",
+        "readcount": "26432",
+        "sigungucode": "3",
+        "tel": "+82-33-530-2231",
+        "title": "Donghae Nongoldam-gil Street (Deungdae Damhwa Village) (동해 논골담길 (등대 담화마을))",
+        "zipcode": "25717"
+      },
+      {
+        "addr1": "200, Duryugongwon-ro, Dalseo-gu, Daegu",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "4",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "266891",
+        "contenttypeid": "75",
+        "createdtime": "20030108235626",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/57/1573857_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/57/1573857_image3_1.jpg",
+        "mapx": "128.5648324586",
+        "mapy": "35.8548628013",
+        "mlevel": "6",
+        "modifiedtime": "20210708182525",
+        "readcount": "18423",
+        "sigungucode": "2",
+        "tel": "+82-53-620-0001",
+        "title": "E-World Sledding Hills (이월드 눈썰매장)",
+        "zipcode": "42666"
+      },
+      {
+        "addr1": "1206, Eosil-ro, Yangsan-si, Gyeongsangnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "36",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "658160",
+        "contenttypeid": "75",
+        "createdtime": "20081127010310",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.9839409477",
+        "mapy": "35.4247357285",
+        "mlevel": "6",
+        "modifiedtime": "20211221003307",
+        "readcount": "63206",
+        "sigungucode": "10",
+        "tel": "+82-55-379-8000",
+        "title": "Eden Valley Ski Resort (에덴밸리스키장 (에덴밸리리조트))",
+        "zipcode": "50584"
+      },
+      {
+        "addr1": "688, Bukhangangbyeon-gil, Chuncheon-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1718200",
+        "contenttypeid": "75",
+        "createdtime": "20120913232043",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/06/1583506_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/06/1583506_image3_1.jpg",
+        "mapx": "127.5879388398",
+        "mapy": "37.8167862599",
+        "mlevel": "6",
+        "modifiedtime": "20210115194549",
+        "readcount": "6536",
+        "sigungucode": "13",
+        "tel": "+82-33-260-2000",
+        "title": "Elysian Gangchon Country Club (엘리시안 강촌 컨트리클럽)",
+        "zipcode": "24464"
+      },
+      {
+        "addr1": "688, Bukhangangbyeon-gil, Chuncheon-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266939",
+        "contenttypeid": "75",
+        "createdtime": "20051203063519",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/56/1986856_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/56/1986856_image3_1.jpg",
+        "mapx": "127.5787976128",
+        "mapy": "37.8301345384",
+        "mlevel": "6",
+        "modifiedtime": "20210105020920",
+        "readcount": "108444",
+        "sigungucode": "13",
+        "tel": {
+          "-self-closing": "true"
+        },
+        "title": "Elysian Gangchon Ski Resort (엘리시안 강촌 스키장)",
+        "zipcode": "24464"
+      },
+      {
+        "addr1": "1738-116, Pyeonghwa-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1372862",
+        "contenttypeid": "75",
+        "createdtime": "20110827010111",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/72/1950572_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/72/1950572_image3_1.jpg",
+        "mapx": "126.3799246266",
+        "mapy": "33.3714422694",
+        "mlevel": "6",
+        "modifiedtime": "20221226140757",
+        "readcount": "13015",
+        "sigungucode": "4",
+        "tel": "+82-64-798-7001",
+        "title": "Elysian Jeju Country Club (엘리시안 골프 제주)",
+        "zipcode": "63041"
+      },
+      {
+        "addr1": "1383, Gimyujeong-ro, Chuncheon-si, Gangwon-do",
+        "addr2": "(Sindong-myeon)",
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1998468",
+        "contenttypeid": "75",
+        "createdtime": "20150420234556",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.7121497907",
+        "mapy": "37.8157136906",
+        "mlevel": "6",
+        "modifiedtime": "20221222153737",
+        "readcount": "76759",
+        "sigungucode": "13",
+        "tel": "+82-33-245-1000",
+        "title": "Gangchon Rail Park (Gimyujeong Railbike) (강촌레일파크 (김유정레일바이크))",
+        "zipcode": "24412"
+      },
+      {
+        "addr1": "32, Jonghabundongjang-gil, Gangneung-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "2593982",
+        "contenttypeid": "75",
+        "createdtime": "20190329021531",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.8925858597",
+        "mapy": "37.7737771598",
+        "mlevel": "6",
+        "modifiedtime": "20210115194658",
+        "readcount": "2395",
+        "sigungucode": "1",
+        "tel": "+82-33-647-8388",
+        "title": "Gangneung Curling Center (강릉컬링센터 (강릉실내빙상장))",
+        "zipcode": "25474"
+      },
+      {
+        "addr1": "14, Jangteo-gil, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2361107",
+        "contenttypeid": "75",
+        "createdtime": "20160113015922",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/87/2361087_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/87/2361087_image3_1.jpg",
+        "mapx": "127.5158755988",
+        "mapy": "37.8290223933",
+        "mlevel": "6",
+        "modifiedtime": "20210601221852",
+        "readcount": "69063",
+        "sigungucode": "1",
+        "tel": "+82-31-582-7788",
+        "title": "Gapyeong Rail Park (가평레일파크)",
+        "zipcode": "12419"
+      },
+      {
+        "addr1": "5-20, Gitdaebong-gil, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "266839",
+        "contenttypeid": "75",
+        "createdtime": "20030108231217",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.4023797520",
+        "mapy": "37.7555510732",
+        "mlevel": "6",
+        "modifiedtime": "20210831221623",
+        "readcount": "20163",
+        "sigungucode": "1",
+        "tel": "+82-31-8078-8048",
+        "title": "Gapyeong Sledding Hills (가평사계절썰매장)",
+        "zipcode": "12446"
+      },
+      {
+        "addr1": "156, Hwangnyeongsan-ro, Suyeong-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020200",
+        "contentid": "1852112",
+        "contenttypeid": "75",
+        "createdtime": "20131018202834",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/1572153_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/53/1572153_image3_1.jpg",
+        "mapx": "129.1029352159",
+        "mapy": "35.1552848264",
+        "mlevel": "6",
+        "modifiedtime": "20200819184537",
+        "readcount": "24856",
+        "sigungucode": "12",
+        "tel": "+82-51-625-0709",
+        "title": "Geumnyeonsan Youth Training Institute (부산광역시 금련산청소년수련원)",
+        "zipcode": "48259"
+      },
+      {
+        "addr1": "502, Inje-ro, Gimhae-si, Gyeongsangnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "36",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "708721",
+        "contenttypeid": "75",
+        "createdtime": "20090321011953",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.8958636958",
+        "mapy": "35.2811835601",
+        "mlevel": "6",
+        "modifiedtime": "20200624182624",
+        "readcount": "8972",
+        "sigungucode": "4",
+        "tel": "+82-55-337-0091",
+        "title": "Gimhae Gaya Country Club (가야컨트리클럽)",
+        "zipcode": "50811"
+      },
+      {
+        "addr1": "41, Masa-ro 473beon-gil, Gimhae-si, Gyeongsangnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "36",
+        "cat1": "A03",
+        "cat2": "A0305",
+        "cat3": "A03050100",
+        "contentid": "2436562",
+        "contenttypeid": "75",
+        "createdtime": "20161028021322",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.8208566542",
+        "mapy": "35.3717886705",
+        "mlevel": {
+          "-self-closing": "true"
+        },
+        "modifiedtime": "20221229155535",
+        "readcount": "9342",
+        "sigungucode": "4",
+        "tel": {
+          "-self-closing": "true"
+        },
+        "title": "Gimhae Nakdonggang River Rail Park (김해낙동강레일파크)",
+        "zipcode": "50800"
+      },
+      {
+        "addr1": "322, Sowol-ro, Yongsan-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "686603",
+        "contenttypeid": "75",
+        "createdtime": "20090130231538",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/49/1868049_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/49/1868049_image3_1.jpg",
+        "mapx": "126.9962146098",
+        "mapy": "37.5397493436",
+        "mlevel": "6",
+        "modifiedtime": "20190614224506",
+        "readcount": "72822",
+        "sigungucode": "21",
+        "tel": "+82-2-799-8113",
+        "title": "Grand Hyatt Seoul Ice Skating Rink (그랜드하얏트 서울 아이스링크)",
+        "zipcode": "04347"
+      },
+      {
+        "addr1": "177, Walkerhill-ro, Gwangjin-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "1988750",
+        "contenttypeid": "75",
+        "createdtime": "20150216221134",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.1107898477",
+        "mapy": "37.5552218298",
+        "mlevel": "6",
+        "modifiedtime": "20221221143744",
+        "readcount": "106943",
+        "sigungucode": "6",
+        "tel": "+82-2-450-4630",
+        "title": "Grand Walkerhill Riverpark (Outdoor swimming pool) (그랜드 워커힐 리버파크 수영장(야외수영장))",
+        "zipcode": "04963"
+      },
+      {
+        "addr1": "1685, Namgunsan-ro, Gunsan-si, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1717570",
+        "contenttypeid": "75",
+        "createdtime": "20120913015018",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.6606864273",
+        "mapy": "35.8972770194",
+        "mlevel": "6",
+        "modifiedtime": "20210514002922",
+        "readcount": "17221",
+        "sigungucode": "2",
+        "tel": "+82-63-472-3355",
+        "title": "Gunsan Country Club (군산 컨트리클럽)",
+        "zipcode": "54170"
+      },
+      {
+        "addr1": "240, Geumhwa-ro, Seo-gu, Gwangju",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "5",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1331534",
+        "contenttypeid": "75",
+        "createdtime": "20110714233608",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/05/1587805_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/05/1587805_image3_1.jpg",
+        "mapx": "126.8749061843",
+        "mapy": "35.1337617441",
+        "mlevel": "6",
+        "modifiedtime": "20210611233644",
+        "readcount": "12343",
+        "sigungucode": "5",
+        "tel": "+82-62-604-2002",
+        "title": "Gwangju World Cup Stadium (광주월드컵경기장)",
+        "zipcode": "62048"
+      },
+      {
+        "addr1": "83-66, Seonsa-ro, Gangdong-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "1057623",
+        "contenttypeid": "75",
+        "createdtime": "20100709223338",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.1242166149",
+        "mapy": "37.5477896024",
+        "mlevel": "6",
+        "modifiedtime": "20190730002040",
+        "readcount": "12605",
+        "sigungucode": "2",
+        "tel": "+82-2-470-9561",
+        "title": "Gwangnaru Hangang Park Outdoor Swimming Pool (한강시민공원 광나루수영장(실외))",
+        "zipcode": "05244"
+      },
+      {
+        "addr1": "San 85, Jang-dong, Daedeok-gu, Daejeon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "3",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1731981",
+        "contenttypeid": "75",
+        "createdtime": "20121011235442",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.4492219591",
+        "mapy": "36.4032551669",
+        "mlevel": "6",
+        "modifiedtime": "20221226152750",
+        "readcount": "31883",
+        "sigungucode": "1",
+        "tel": "+82-42-623-9909",
+        "title": "Gyejoksan Red Clay Trail (계족산 황톳길)",
+        "zipcode": "34345"
+      },
+      {
+        "addr1": "182-98, Bomun-ro, Gyeongju-si, Gyeongsangbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "35",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "266842",
+        "contenttypeid": "75",
+        "createdtime": "20030108231552",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "129.2630291720",
+        "mapy": "35.8644775271",
+        "mlevel": "6",
+        "modifiedtime": "20150216220938",
+        "readcount": "12809",
+        "sigungucode": "2",
+        "tel": "+82-54-745-2228",
+        "title": "Gyeongju Country Club (경주컨트리클럽)",
+        "zipcode": "38116"
+      },
+      {
+        "addr1": "2070-61, 1100-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1074445",
+        "contenttypeid": "75",
+        "createdtime": "20100816201021",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/60/601660_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/60/601660_image3_1.jpg",
+        "mapx": "126.4948724979",
+        "mapy": "33.3927306237",
+        "mlevel": "6",
+        "modifiedtime": "20200625184131",
+        "readcount": "111319",
+        "sigungucode": "4",
+        "tel": "+82-64-740-6000",
+        "title": "Hallasan Mountain Trekking (한라산 트레킹)",
+        "zipcode": "63077"
+      },
+      {
+        "addr1": "373, Daejong-ro, Jung-gu, Daejeon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "3",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1393108",
+        "contenttypeid": "75",
+        "createdtime": "20110928231711",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/88/1585788_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/88/1585788_image3_1.jpg",
+        "mapx": "127.4315370174",
+        "mapy": "36.3162759121",
+        "mlevel": "6",
+        "modifiedtime": "20210409230058",
+        "readcount": "9650",
+        "sigungucode": "5",
+        "tel": "+82-42-610-4900",
+        "title": "Hanbat Sports Complex (한밭종합운동장)",
+        "zipcode": "35021"
+      },
+      {
+        "addr1": "Sambuyeon-ro, Galmal-eup, Cheorwon-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030800",
+        "contentid": "266907",
+        "contenttypeid": "75",
+        "createdtime": "20030109000740",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/67/1846567_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/67/1846567_image3_1.jpg",
+        "mapx": "127.3134347336",
+        "mapy": "38.1468538192",
+        "mlevel": "6",
+        "modifiedtime": "20181024015537",
+        "readcount": "24778",
+        "sigungucode": "12",
+        "tel": "+82-33-450-5365",
+        "title": "Hantangang River Rafting (한탄강 래프팅)",
+        "zipcode": "24040"
+      },
+      {
+        "addr1": "188, Sinchon-gil, Okcheon-myeon, Yangpyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "266885",
+        "contenttypeid": "75",
+        "createdtime": "20030108235011",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/89/690389_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/89/690389_image3_1.jpg",
+        "mapx": "127.4570802429",
+        "mapy": "37.5670600823",
+        "mlevel": "6",
+        "modifiedtime": "20190617225056",
+        "readcount": "15045",
+        "sigungucode": "19",
+        "tel": "+82-31-772-3811",
+        "title": "Hanwha Resort - Yangpyeong Sledding Park (양평한화리조트 눈썰매장)",
+        "zipcode": "12505"
+      },
+      {
+        "addr1": "265, High1-gil, Jeongseon-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1718155",
+        "contenttypeid": "75",
+        "createdtime": "20120913223017",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/55/1583455_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/55/1583455_image3_1.jpg",
+        "mapx": "128.8182402232",
+        "mapy": "37.2115877814",
+        "mlevel": "6",
+        "modifiedtime": "20220818162455",
+        "readcount": "9253",
+        "sigungucode": "11",
+        "tel": "+82-1588-7789",
+        "title": "High 1 Country Club (하이원 컨트리클럽)",
+        "zipcode": "26154"
+      },
+      {
+        "addr1": "500, High1-gil, Jeongseon-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266941",
+        "contenttypeid": "75",
+        "createdtime": "20061121013213",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.8394968825",
+        "mapy": "37.2039890632",
+        "mlevel": "6",
+        "modifiedtime": "20211213194501",
+        "readcount": "137585",
+        "sigungucode": "11",
+        "tel": "+82-1588-7789",
+        "title": "High1 Ski Resort (하이원리조트 스키장)",
+        "zipcode": "26154"
+      },
+      {
+        "addr1": "30-11, Imwonhanggu-ro, Samcheok-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030600",
+        "contentid": "1874490",
+        "contenttypeid": "75",
+        "createdtime": "20131220190742",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/75/1813175_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/75/1813175_image3_1.jpg",
+        "mapx": "129.3461314168",
+        "mapy": "37.2297903766",
+        "mlevel": "6",
+        "modifiedtime": "20210129011527",
+        "readcount": "21007",
+        "sigungucode": "4",
+        "tel": "+82-33-572-6011",
+        "title": "Imwonhang Port (Imwonhang Breakwater - Domigul Cave) (임원항 (임원항방파제 - 도미굴))",
+        "zipcode": "25956"
+      },
+      {
+        "addr1": "806, Bongsu-daero, Seo-gu, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020300",
+        "contentid": "1941657",
+        "contenttypeid": "75",
+        "createdtime": "20140819011155",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/26/1930626_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/26/1930626_image3_1.jpg",
+        "mapx": "126.6651113190",
+        "mapy": "37.5452400279",
+        "mlevel": "6",
+        "modifiedtime": "20221229141106",
+        "readcount": "10328",
+        "sigungucode": "7",
+        "tel": "+82-32-456-2100",
+        "title": "Incheon Asiad Main Stadium (인천아시아드주경기장)",
+        "zipcode": "22717"
+      },
+      {
+        "addr1": "618, Maesohol-ro, Michuhol-gu, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1321632",
+        "contenttypeid": "75",
+        "createdtime": "20110701003701",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/60/1869660_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/60/1869660_image3_1.jpg",
+        "mapx": "126.6864651730",
+        "mapy": "37.4366169207",
+        "mlevel": "6",
+        "modifiedtime": "20210611234205",
+        "readcount": "21260",
+        "sigungucode": "3",
+        "tel": "+82-32-455-2677",
+        "title": "Incheon Munhak Sports Complex (Incheon Worldcup Stadium) (인천문학경기장(인천월드컵경기장))",
+        "zipcode": "22234"
+      },
+      {
+        "addr1": "130, Sanghadap-ro, Inje-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "2018345",
+        "contenttypeid": "75",
+        "createdtime": "20150717224152",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/41/2607541_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/41/2607541_image3_1.jpg",
+        "mapx": "128.2950634635",
+        "mapy": "38.0012086833",
+        "mlevel": "6",
+        "modifiedtime": "20200904235801",
+        "readcount": "6078",
+        "sigungucode": "10",
+        "tel": "+82-1644-3366",
+        "title": "Inje Speedium Resort Circuit (인제스피디움리조트 서킷)",
+        "zipcode": "24654"
+      },
+      {
+        "addr1": "65, Hangaram-ro, Songpa-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "1057698",
+        "contenttypeid": "75",
+        "createdtime": "20100709235506",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.0867514361",
+        "mapy": "37.5176813118",
+        "mlevel": "6",
+        "modifiedtime": "20190730003028",
+        "readcount": "17807",
+        "sigungucode": "18",
+        "tel": "+82-421-2564",
+        "title": "Jamsil Hangang Park Outdoor Swimming Pool (한강시민공원 잠실수영장(실외))",
+        "zipcode": "05502"
+      },
+      {
+        "addr1": "221-124, Jamwon-ro, Seocho-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "1057685",
+        "contenttypeid": "75",
+        "createdtime": "20100709234719",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.0122970150",
+        "mapy": "37.5208018331",
+        "mlevel": "6",
+        "modifiedtime": "20220906143141",
+        "readcount": "18520",
+        "sigungucode": "15",
+        "tel": "+82-2-536-8261",
+        "title": "Jamwon Hangang Park Outdoor Swimming Pool (한강시민공원 잠원수영장(실외))",
+        "zipcode": "06513"
+      },
+      {
+        "addr1": "129, Jangamdong-gil, Pyeongchang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0304",
+        "cat3": "A03040300",
+        "contentid": "1373522",
+        "contenttypeid": "75",
+        "createdtime": "20110830203133",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/1825107_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/07/1825107_image3_1.jpg",
+        "mapx": "128.4218341137",
+        "mapy": "37.3976643382",
+        "mlevel": "6",
+        "modifiedtime": "20220627134931",
+        "readcount": "18588",
+        "sigungucode": "15",
+        "tel": "+82-33-332-2625",
+        "title": "Jangamsan Paragliding Field (장암산 활공장)",
+        "zipcode": "25369"
+      },
+      {
+        "addr1": "241, Dongho-ro, Jung-gu, Seoul",
+        "addr2": "(Jangchung-dong 2(i)-ga)",
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1145194",
+        "contenttypeid": "75",
+        "createdtime": "20101213232824",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/07/2017907_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/07/2017907_image3_1.jpg",
+        "mapx": "127.0068047884",
+        "mapy": "37.5582390522",
+        "mlevel": "6",
+        "modifiedtime": "20200601201229",
+        "readcount": "16977",
+        "sigungucode": "24",
+        "tel": "+82-2-2128-2800",
+        "title": "Jangchung Gymnasium (장충체육관)",
+        "zipcode": "04605"
+      },
+      {
+        "addr1": "60, Jaraseom-ro, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021700",
+        "contentid": "2674758",
+        "contenttypeid": "75",
+        "createdtime": "20201006183949",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.5207059793",
+        "mapy": "37.8200013097",
+        "mlevel": "6",
+        "modifiedtime": "20210219191947",
+        "readcount": "140608",
+        "sigungucode": "1",
+        "tel": "+82-31-8078-8028",
+        "title": "Jaraseom Island Auto Campground (자라섬오토캠핑장)",
+        "zipcode": "12421"
+      },
+      {
+        "addr1": "151, Jungang-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266900",
+        "contenttypeid": "75",
+        "createdtime": "20030109000224",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/59/1950459_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/59/1950459_image3_1.jpg",
+        "mapx": "126.5262894256",
+        "mapy": "33.5060602515",
+        "mlevel": "6",
+        "modifiedtime": "20200818180808",
+        "readcount": "10140",
+        "sigungucode": "4",
+        "tel": "+82-64-720-9999",
+        "title": "Jeju KAL Hotel Casino (Golden Beach) (제주칼호텔 (주)골든비치)",
+        "zipcode": "63194"
+      },
+      {
+        "addr1": "47 , Waheulsangseo 2-gil, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0305",
+        "cat3": "A03050100",
+        "contentid": "2823215",
+        "contenttypeid": "75",
+        "createdtime": "20220609135716",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/2522143_image2_1.JPG",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/2522143_image2_1.JPG",
+        "mapx": "126.6381496945",
+        "mapy": "33.4821813471",
+        "mlevel": "6",
+        "modifiedtime": "20221229133159",
+        "readcount": "1278",
+        "sigungucode": "4",
+        "tel": {
+          "-self-closing": "true"
+        },
+        "title": "Jeju Leports Land (제주레포츠랜드㈜)",
+        "zipcode": "63344"
+      },
+      {
+        "addr1": "1737-1, Yeonpyeong-ri, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1930268",
+        "contenttypeid": "75",
+        "createdtime": "20140701002953",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.9516416919",
+        "mapy": "33.4931851843",
+        "mlevel": "6",
+        "modifiedtime": "20210702185447",
+        "readcount": "13094",
+        "sigungucode": "4",
+        "tel": "+82-64-762-2190",
+        "title": "Jeju Olle Trail - Route 1-1 (Udo Island Olle) ([제주올레 1-1코스] 우도-올레)",
+        "zipcode": "63365"
+      },
+      {
+        "addr1": "196, Hallimhaean-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1849446",
+        "contenttypeid": "75",
+        "createdtime": "20131008003701",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.2625365394",
+        "mapy": "33.4193184574",
+        "mlevel": "6",
+        "modifiedtime": "20210614182954",
+        "readcount": "6832",
+        "sigungucode": "4",
+        "tel": "+82-64-762-2190",
+        "title": "Jeju Olle Trail - Route 15 (Hallim - Gonae Olle) ([제주올레 15코스] 한림-고내 올레)",
+        "zipcode": "63031"
+      },
+      {
+        "addr1": "1111-2, Gonae-ri, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1849439",
+        "contenttypeid": "75",
+        "createdtime": "20131008003337",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.3379094700",
+        "mapy": "33.4669310396",
+        "mlevel": "6",
+        "modifiedtime": "20210614182600",
+        "readcount": "6040",
+        "sigungucode": "4",
+        "tel": "+82-64-762-2190",
+        "title": "Jeju Olle Trail - Route 16 (Gonae - Gwangnyeong Olle) ([제주올레 16코스] 고내-광령 올레)",
+        "zipcode": "63045"
+      },
+      {
+        "addr1": "47, Tapdong-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266898",
+        "contenttypeid": "75",
+        "createdtime": "20030109000138",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.5197536189",
+        "mapy": "33.5176644182",
+        "mlevel": "6",
+        "modifiedtime": "20200818182905",
+        "readcount": "10439",
+        "sigungucode": "4",
+        "tel": "+82-64-754-8867",
+        "title": "Jeju Oriental Hotel Casino (제주 오리엔탈호텔카지노)",
+        "zipcode": "63166"
+      },
+      {
+        "addr1": "33, World cup-ro, Seogwipo-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "266936",
+        "contenttypeid": "75",
+        "createdtime": "20050309000945",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/24/1010424_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/24/1010424_image3_1.jpg",
+        "mapx": "126.5092023235",
+        "mapy": "33.2462886912",
+        "mlevel": "6",
+        "modifiedtime": "20210202221835",
+        "readcount": "25733",
+        "sigungucode": "3",
+        "tel": "+82-64-760-3623",
+        "title": "Jeju World Cup Stadium (제주월드컵경기장)",
+        "zipcode": "63572"
+      },
+      {
+        "addr1": "17, Jeongdongyeok-gil, Gangneung-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2399001",
+        "contenttypeid": "75",
+        "createdtime": "20160811011931",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/08/2713708_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/08/2713708_image2_1.jpg",
+        "mapx": "129.0327146846",
+        "mapy": "37.6914949653",
+        "mlevel": {
+          "-self-closing": "true"
+        },
+        "modifiedtime": "20210628233215",
+        "readcount": "8006",
+        "sigungucode": "1",
+        "tel": "+82-33-655-7786",
+        "title": "Jeongdongjin Railbike (정동진 레일바이크)",
+        "zipcode": "25631"
+      },
+      {
+        "addr1": "745, Nochusan-ro, Jeongseon-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1990426",
+        "contenttypeid": "75",
+        "createdtime": "20150303190750",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/10/618910_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/10/618910_image3_1.jpg",
+        "mapx": "128.7303916593",
+        "mapy": "37.5170481276",
+        "mlevel": "6",
+        "modifiedtime": "20221223141143",
+        "readcount": "18972",
+        "sigungucode": "11",
+        "tel": "+82-33-563-8787",
+        "title": "Jeongseon Railbike (정선레일바이크)",
+        "zipcode": "26104"
+      },
+      {
+        "addr1": "420, Dongbu-daero, Deokjin-gu, Jeonju-si, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2436560",
+        "contenttypeid": "75",
+        "createdtime": "20161028020444",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/2426934_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/34/2426934_image2_1.jpg",
+        "mapx": "127.1761005484",
+        "mapy": "35.8296908054",
+        "mlevel": "6",
+        "modifiedtime": "20210615015522",
+        "readcount": "8408",
+        "sigungucode": "12",
+        "tel": "+82-63-273-7788",
+        "title": "Jeonju Hanok Railbike (전주한옥레일바이크)",
+        "zipcode": "55026"
+      },
+      {
+        "addr1": "1055, Girin-daero, Deokjin-gu, Jeonju-si, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020300",
+        "contentid": "266924",
+        "contenttypeid": "75",
+        "createdtime": "20040420194527",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/24/1605424_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/24/1605424_image3_1.jpg",
+        "mapx": "127.0645233665",
+        "mapy": "35.8681289403",
+        "mlevel": "6",
+        "modifiedtime": "20210611233126",
+        "readcount": "17762",
+        "sigungucode": "12",
+        "tel": "+82-63-239-2546",
+        "title": "Jeonju World Cup Stadium (전주월드컵경기장)",
+        "zipcode": "54809"
+      },
+      {
+        "addr1": "60, Jugyang-daero 2000beon-gil, Cheoin-gu, Yongin-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1719980",
+        "contenttypeid": "75",
+        "createdtime": "20120917203050",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/38/1941238_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/38/1941238_image3_1.jpg",
+        "mapx": "127.3288158683",
+        "mapy": "37.2131903992",
+        "mlevel": "6",
+        "modifiedtime": "20210417012856",
+        "readcount": "8418",
+        "sigungucode": "23",
+        "tel": "+82-31-330-1400",
+        "title": "Jisan Country Club (지산 컨트리클럽)",
+        "zipcode": "17165"
+      },
+      {
+        "addr1": "267, Jisan-ro, Icheon-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266904",
+        "contenttypeid": "75",
+        "createdtime": "20030109000501",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/63/693063_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/63/693063_image3_1.jpg",
+        "mapx": "127.3442255243",
+        "mapy": "37.2153404296",
+        "mlevel": {
+          "-self-closing": "true"
+        },
+        "modifiedtime": "20211119193215",
+        "readcount": "160148",
+        "sigungucode": "26",
+        "tel": "+82-31-644-1200",
+        "title": "Jisan Forest Ski Resort (지산 포레스트 리조트 스키장)",
+        "zipcode": "17390"
+      },
+      {
+        "addr1": "60, Jungmungwangwang-ro 72beon-gil, Seogwipo-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "266903",
+        "contenttypeid": "75",
+        "createdtime": "20030109000433",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/92/2607292_image2_1.bmp",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/92/2607292_image2_1.bmp",
+        "mapx": "126.4114439561",
+        "mapy": "33.2542473811",
+        "mlevel": "6",
+        "modifiedtime": "20200625182755",
+        "readcount": "20682",
+        "sigungucode": "3",
+        "tel": "+82-64-738-1202",
+        "title": "Jungmun Golf Club (중문골프클럽)",
+        "zipcode": "63535"
+      },
+      {
+        "addr1": "265, High1-gil, Jeongseon-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266841",
+        "contenttypeid": "75",
+        "createdtime": "20030108231432",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/72/1846772_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/72/1846772_image3_1.jpg",
+        "mapx": "128.8216009997",
+        "mapy": "37.2127210495",
+        "mlevel": "6",
+        "modifiedtime": "20220809165652",
+        "readcount": "48693",
+        "sigungucode": "11",
+        "tel": "+82-1588-7789",
+        "title": "Kangwon Land Casino (강원랜드 카지노)",
+        "zipcode": "26154"
+      },
+      {
+        "addr1": "47-93, Kkotdongne-gil, Eumseong-gun, Chungcheongbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "33",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020200",
+        "contentid": "1932945",
+        "contenttypeid": "75",
+        "createdtime": "20140709233712",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/09/1932809_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/09/1932809_image2_1.jpg",
+        "mapx": "127.5816227134",
+        "mapy": "36.9495670586",
+        "mlevel": "6",
+        "modifiedtime": "20210525185211",
+        "readcount": "8775",
+        "sigungucode": "6",
+        "tel": "+82-43-879-0100",
+        "title": "Kkottongnae (꽃동네)",
+        "zipcode": "27732"
+      },
+      {
+        "addr1": "278, Docheogwit-ro, Gwangju-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "655453",
+        "contenttypeid": "75",
+        "createdtime": "20081121023418",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/32/2658432_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/32/2658432_image3_1.jpg",
+        "mapx": "127.2922239974",
+        "mapy": "37.3374836915",
+        "mlevel": "6",
+        "modifiedtime": "20220818163055",
+        "readcount": "90113",
+        "sigungucode": "5",
+        "tel": "+82-1661-8787",
+        "title": "Konjiam Ski Resort (곤지암리조트 스키장)",
+        "zipcode": "12809"
+      },
+      {
+        "addr1": "579, Giheungdanji-ro, Cheoin-gu, Yongin-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1720035",
+        "contenttypeid": "75",
+        "createdtime": "20120917222512",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/39/1941239_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/39/1941239_image3_1.jpg",
+        "mapx": "127.1548314473",
+        "mapy": "37.2193921057",
+        "mlevel": "6",
+        "modifiedtime": "20210628232446",
+        "readcount": "11382",
+        "sigungucode": "23",
+        "tel": "+82-31-334-7111",
+        "title": "Korea Country Club (코리아 골프장)",
+        "zipcode": "17125"
+      },
+      {
+        "addr1": "145, Anam-ro, Seongbuk-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "686625",
+        "contenttypeid": "75",
+        "createdtime": "20090130235424",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/21/688321_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/21/688321_image3_1.jpg",
+        "mapx": "127.0318266080",
+        "mapy": "37.5899635928",
+        "mlevel": "6",
+        "modifiedtime": "20200424182616",
+        "readcount": "28447",
+        "sigungucode": "17",
+        "tel": "+82-2-3290-4243",
+        "title": "Korea University Ice Skating Rink (고려대학교 아이스링크)",
+        "zipcode": "02841"
+      },
+      {
+        "addr1": "441, Gwangnaru-ro, Gwangjin-gu, Seoul",
+        "addr2": "(Neung-dong)",
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "686462",
+        "contenttypeid": "75",
+        "createdtime": "20090130201304",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/59/688359_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/59/688359_image3_1.jpg",
+        "mapx": "127.0792846475",
+        "mapy": "37.5459390073",
+        "mlevel": {
+          "-self-closing": "true"
+        },
+        "modifiedtime": "20210210232109",
+        "readcount": "46556",
+        "sigungucode": "6",
+        "tel": "+82-1800-5309",
+        "title": "Korean Children\u2019s Center Snow Sledding Field (어린이회관 눈썰매장)",
+        "zipcode": "04991"
+      },
+      {
+        "addr1": "90, Minsokchon-ro, Giheung-gu, Yongin-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "266917",
+        "contenttypeid": "75",
+        "createdtime": "20030109001418",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.1205723175",
+        "mapy": "37.2594535228",
+        "mlevel": "6",
+        "modifiedtime": "20220902153140",
+        "readcount": "24296",
+        "sigungucode": "23",
+        "tel": "+82-31-286-2111",
+        "title": "Korean Folk Village Sledding Hills (한국민속촌 눈썰매장)",
+        "zipcode": "17075"
+      },
+      {
+        "addr1": "107, Gyeongmagongwon-daero, Gwacheon-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020800",
+        "contentid": "2670240",
+        "contenttypeid": "75",
+        "createdtime": "20200901230130",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.0157237676",
+        "mapy": "37.4476881606",
+        "mlevel": "6",
+        "modifiedtime": "20200901230130",
+        "readcount": "0",
+        "sigungucode": "3",
+        "tel": "+82-1566-3333",
+        "title": "Let's Run Park Seoul (렛츠런파크 서울)",
+        "zipcode": "13822"
+      },
+      {
+        "addr1": "240, Olympic-ro, Songpa-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "266850",
+        "contenttypeid": "75",
+        "createdtime": "20030108232728",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.0976311526",
+        "mapy": "37.5123821225",
+        "mlevel": "6",
+        "modifiedtime": "20221223164034",
+        "readcount": "73192",
+        "sigungucode": "18",
+        "tel": "+82-1661-2000",
+        "title": "Lotte World Indoor Ice Skating Rink (롯데월드 아이스링크 (실내))",
+        "zipcode": "05554"
+      },
+      {
+        "addr1": "10, Otbawi-gil, Danyang-gun, Chungcheongbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "33",
+        "cat1": "A02",
+        "cat2": "A0205",
+        "cat3": "A02050600",
+        "contentid": "2811003",
+        "contenttypeid": "75",
+        "createdtime": "20220316102603",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/73/2618373_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/73/2618373_image3_1.jpg",
+        "mapx": "128.3370707587",
+        "mapy": "36.9776749798",
+        "mlevel": "6",
+        "modifiedtime": "20220406161943",
+        "readcount": "2484",
+        "sigungucode": "2",
+        "tel": "+82-43-421-0014",
+        "title": "Mancheonha Skywalk (만천하 스카이워크)",
+        "zipcode": "27014"
+      },
+      {
+        "addr1": "505, Misa-daero, Hanam-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0301",
+        "cat3": "A03010200",
+        "contentid": "2499868",
+        "contenttypeid": "75",
+        "createdtime": "20170714022734",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/55/2021455_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/55/2021455_image2_1.jpg",
+        "mapx": "127.2132361251",
+        "mapy": "37.5536599743",
+        "mlevel": "6",
+        "modifiedtime": "20210705221956",
+        "readcount": "22220",
+        "sigungucode": "30",
+        "tel": "+82-31-790-8114",
+        "title": "Misari Speedboat Park (미사리 경정공원)",
+        "zipcode": "12900"
+      },
+      {
+        "addr1": "939, Anyangcheon-ro, Yangcheon-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "266851",
+        "contenttypeid": "75",
+        "createdtime": "20030108232921",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/56/1807956_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/56/1807956_image3_1.jpg",
+        "mapx": "126.8802699162",
+        "mapy": "37.5292429334",
+        "mlevel": "6",
+        "modifiedtime": "20210408184824",
+        "readcount": "33066",
+        "sigungucode": "19",
+        "tel": "+82-2-2649-8454",
+        "title": "Mokdong Ice Rink (Indoor) (목동아이스링크(실내))",
+        "zipcode": "07990"
+      },
+      {
+        "addr1": "939, Anyangcheon-ro, Yangcheon-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1393307",
+        "contenttypeid": "75",
+        "createdtime": "20110929015249",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/71/1807971_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/71/1807971_image3_1.jpg",
+        "mapx": "126.8819114075",
+        "mapy": "37.5301456356",
+        "mlevel": "6",
+        "modifiedtime": "20220914150328",
+        "readcount": "13515",
+        "sigungucode": "19",
+        "tel": "+82-2-2240-8800",
+        "title": "Mokdong Stadium (목동운동장(목동아이스링크,사격장)",
+        "zipcode": "07990"
+      },
+      {
+        "addr1": "120, Dalmaji-gil, Haeundae-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2657011",
+        "contenttypeid": "75",
+        "createdtime": "20200522183834",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/41/2368441_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/41/2368441_image3_1.jpg",
+        "mapx": "129.1756010591",
+        "mapy": "35.1574970351",
+        "mlevel": "6",
+        "modifiedtime": "20210702185150",
+        "readcount": "4192",
+        "sigungucode": "16",
+        "tel": "+82-51-502-7399",
+        "title": "Moontan Road (문탠로드)",
+        "zipcode": "48098"
+      },
+      {
+        "addr1": "5-11, Jamdu-gil, Muju-gun, Jeollabuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "37",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030800",
+        "contentid": "585619",
+        "contenttypeid": "75",
+        "createdtime": "20080711023923",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/28/2393428_image2_1.JPG",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/28/2393428_image2_1.JPG",
+        "mapx": "127.6073716053",
+        "mapy": "35.9982292071",
+        "mlevel": "6",
+        "modifiedtime": "20210717004922",
+        "readcount": "12915",
+        "sigungucode": "5",
+        "tel": "+82-63-322-7745",
+        "title": "Muju Rafting (무주래프팅)",
+        "zipcode": "55511"
+      },
+      {
+        "addr1": "80, Hwalgongjang-gil, Mungyeong-si, Gyeongsangbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "35",
+        "cat1": "A03",
+        "cat2": "A0304",
+        "cat3": "A03040300",
+        "contentid": "1059839",
+        "contenttypeid": "75",
+        "createdtime": "20100715002712",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/1613453_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/53/1613453_image3_1.jpg",
+        "mapx": "128.1538441059",
+        "mapy": "36.7362992625",
+        "mlevel": "6",
+        "modifiedtime": "20210521224140",
+        "readcount": "11199",
+        "sigungucode": "7",
+        "tel": "+82-54-571-4675",
+        "title": "Mungyeong Flying Land (문경활공랜드)",
+        "zipcode": "36912"
+      },
+      {
+        "addr1": "6221, Naerincheon-ro, Inje-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030800",
+        "contentid": "1117360",
+        "contenttypeid": "75",
+        "createdtime": "20101027193255",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/32/1583432_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/32/1583432_image3_1.jpg",
+        "mapx": "128.2067618712",
+        "mapy": "38.0431160103",
+        "mlevel": "6",
+        "modifiedtime": "20180713192223",
+        "readcount": "18670",
+        "sigungucode": "10",
+        "tel": {
+          "-self-closing": "true"
+        },
+        "title": "Naerincheon Stream Rafting (내린천 래프팅)",
+        "zipcode": "24640"
+      },
+      {
+        "addr1": "162, Hangangnanji-ro, Mapo-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022200",
+        "contentid": "1989051",
+        "contenttypeid": "75",
+        "createdtime": "20150223225350",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/90/1898390_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/90/1898390_image3_1.jpg",
+        "mapx": "126.8854490504",
+        "mapy": "37.5629224452",
+        "mlevel": "6",
+        "modifiedtime": "20221026161628",
+        "readcount": "32167",
+        "sigungucode": "13",
+        "tel": "+82-2-3780-0611",
+        "title": "Nanji Hangang Park MTB Course Site (난지한강공원 MTB코스장)",
+        "zipcode": "03900"
+      },
+      {
+        "addr1": "861, Seohak-ro, Taebaek-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "657876",
+        "contenttypeid": "75",
+        "createdtime": "20081126195622",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.9484881492",
+        "mapy": "37.1703950205",
+        "mlevel": "6",
+        "modifiedtime": "20221226130511",
+        "readcount": "41687",
+        "sigungucode": "14",
+        "tel": "+82-33-580-7000",
+        "title": "O2 Ski Resort (오투리조트 스키장)",
+        "zipcode": "26010"
+      },
+      {
+        "addr1": "58, Oak valley 2-gil, Wonju-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266943",
+        "contenttypeid": "75",
+        "createdtime": "20061121021308",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/50/2777750_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/50/2777750_image2_1.jpg",
+        "mapx": "127.8158885215",
+        "mapy": "37.4057326010",
+        "mlevel": "6",
+        "modifiedtime": "20221020101215",
+        "readcount": "100741",
+        "sigungucode": "9",
+        "tel": "+82-33-769-7070",
+        "title": "Oak Valley Snow Park (오크밸리 스키장)",
+        "zipcode": "26357"
+      },
+      {
+        "addr1": "Okcheon-eup, Okcheon-gun, Chungcheongbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "33",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020500",
+        "contentid": "1918564",
+        "contenttypeid": "75",
+        "createdtime": "20140513024755",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/877980_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/877980_image3_1.jpg",
+        "mapx": "127.5653394601",
+        "mapy": "36.2977387481",
+        "mlevel": "6",
+        "modifiedtime": "20210708011743",
+        "readcount": "25835",
+        "sigungucode": "5",
+        "tel": "+82-43-730-3773",
+        "title": "Okcheon Hyangsu Baengni (100-ri) Bike Road - Geumgang Course (옥천 향수 100리 자전거길 - 금강코스)",
+        "zipcode": "29030"
+      },
+      {
+        "addr1": "448, Olympic-ro, Songpa-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "686586",
+        "contenttypeid": "75",
+        "createdtime": "20090130224209",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.1166569093",
+        "mapy": "37.5225785043",
+        "mlevel": "6",
+        "modifiedtime": "20200325180205",
+        "readcount": "31305",
+        "sigungucode": "18",
+        "tel": "+82-2-2180-3692",
+        "title": "Olympic Park Ice Skating Rink (올림픽공원 스케이트장)",
+        "zipcode": "05540"
+      },
+      {
+        "addr1": "424, Olympic-ro, Songpa-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1140574",
+        "contenttypeid": "75",
+        "createdtime": "20101203230854",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/41/1903241_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/41/1903241_image3_1.jpg",
+        "mapx": "127.1229758237",
+        "mapy": "37.5209871362",
+        "mlevel": "6",
+        "modifiedtime": "20210611221329",
+        "readcount": "40151",
+        "sigungucode": "18",
+        "tel": "+82-2-410-1114",
+        "title": "Olympic Park Stadium (올림픽공원 경기장)",
+        "zipcode": "05540"
+      },
+      {
+        "addr1": "300, Hallyu world-ro, Ilsanseo-gu, Goyang-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "1864552",
+        "contenttypeid": "75",
+        "createdtime": "20131128020338",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.7545109178",
+        "mapy": "37.6645332869",
+        "mlevel": "6",
+        "modifiedtime": "20201103202937",
+        "readcount": "74936",
+        "sigungucode": "2",
+        "tel": "+82-1566-2232",
+        "title": "Onemount Snowpark (원마운트 스노우파크)",
+        "zipcode": "10392"
+      },
+      {
+        "addr1": "130-16, Oranam-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "266886",
+        "contenttypeid": "75",
+        "createdtime": "20030108235115",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/2476674_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/74/2476674_image2_1.jpg",
+        "mapx": "126.5132502034",
+        "mapy": "33.4482081134",
+        "mlevel": "6",
+        "modifiedtime": "20210531174958",
+        "readcount": "13798",
+        "sigungucode": "4",
+        "tel": "+82-64-747-5100",
+        "title": "Ora Country Club (오라컨트리클럽)",
+        "zipcode": "63144"
+      },
+      {
+        "addr1": "296, Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266910",
+        "contenttypeid": "75",
+        "createdtime": "20030109001114",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/53/1863153_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/53/1863153_image3_1.jpg",
+        "mapx": "129.1641325437",
+        "mapy": "35.1599632134",
+        "mlevel": "6",
+        "modifiedtime": "20200818201104",
+        "readcount": "19303",
+        "sigungucode": "16",
+        "tel": "+82-51-749-3550",
+        "title": "Paradise Casino Busan (파라다이스 카지노 부산)",
+        "zipcode": "48099"
+      },
+      {
+        "addr1": "208, Yeongjonghaeannam-ro 321beon-gil, Jung-gu, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266912",
+        "contenttypeid": "75",
+        "createdtime": "20030109001215",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/40/1378140_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/40/1378140_image3_1.jpg",
+        "mapx": "126.4574776244",
+        "mapy": "37.4405152207",
+        "mlevel": "6",
+        "modifiedtime": "20200905000746",
+        "readcount": "20353",
+        "sigungucode": "10",
+        "tel": "+82-32-729-3121",
+        "title": "Paradise Casino Incheon Airport (파라다이스 카지노 인천공항점)",
+        "zipcode": "22382"
+      },
+      {
+        "addr1": "80, Noyeon-ro, Jeju-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266913",
+        "contenttypeid": "75",
+        "createdtime": "20030109001253",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2375223_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2375223_image2_1.jpg",
+        "mapx": "126.4889236922",
+        "mapy": "33.4856424724",
+        "mlevel": "6",
+        "modifiedtime": "20200905000208",
+        "readcount": "18271",
+        "sigungucode": "4",
+        "tel": "+82-64-743-2121",
+        "title": "Paradise Casino Jeju Grand (파라다이스 카지노 제주 그랜드)",
+        "zipcode": "63132"
+      },
+      {
+        "addr1": "177, Walkerhill-ro, Gwangjin-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "266911",
+        "contenttypeid": "75",
+        "createdtime": "20030109001149",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/60/1903160_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/60/1903160_image3_1.jpg",
+        "mapx": "127.1107898477",
+        "mapy": "37.5552218298",
+        "mlevel": "6",
+        "modifiedtime": "20200905001041",
+        "readcount": "51095",
+        "sigungucode": "6",
+        "tel": "+82-1899-0700",
+        "title": "Paradise Casino Walker Hill (파라다이스 카지노 워커힐)",
+        "zipcode": "04963"
+      },
+      {
+        "addr1": "174, Taegi-ro, Pyeongchang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "658047",
+        "contenttypeid": "75",
+        "createdtime": "20081126235212",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.3251818060",
+        "mapy": "37.5804025028",
+        "mlevel": "6",
+        "modifiedtime": "20220818111141",
+        "readcount": "178573",
+        "sigungucode": "15",
+        "tel": "+82-1588-2828",
+        "title": "Phoenix Snow Park (휘닉스 스노우파크)",
+        "zipcode": "25307"
+      },
+      {
+        "addr1": "863, Sallongnam-ro, Seogwipo-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1717901",
+        "contenttypeid": "75",
+        "createdtime": "20120913190024",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.3878112658",
+        "mapy": "33.3172733815",
+        "mlevel": "6",
+        "modifiedtime": "20210211000736",
+        "readcount": "12489",
+        "sigungucode": "3",
+        "tel": "+82-64-792-5200",
+        "title": "Pinx Golf Club (핀크스 골프클럽)",
+        "zipcode": "63525"
+      },
+      {
+        "addr1": "2312, Yumyeong-ro, Seorak-myeon, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022400",
+        "contentid": "584737",
+        "contenttypeid": "75",
+        "createdtime": "20080709225711",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.4489546649",
+        "mapy": "37.7082713138",
+        "mlevel": "6",
+        "modifiedtime": "20180801193200",
+        "readcount": "91980",
+        "sigungucode": "1",
+        "tel": "+82-31-585-5526",
+        "title": "River Land (리버랜드)",
+        "zipcode": "12459"
+      },
+      {
+        "addr1": "2, Gongyangwang-gil, Samcheok-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0305",
+        "cat3": "A03050100",
+        "contentid": "2436555",
+        "contenttypeid": "75",
+        "createdtime": "20161028013541",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/1046023_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/1046023_image3_1.jpg",
+        "mapx": "129.2663939824",
+        "mapy": "37.3236974745",
+        "mlevel": "6",
+        "modifiedtime": "20221228163256",
+        "readcount": "23782",
+        "sigungucode": "4",
+        "tel": "+82-33-576-0656",
+        "title": "Samcheok Ocean Railbike (삼척 해양레일바이크)",
+        "zipcode": "25937"
+      },
+      {
+        "addr1": "Jeongna-dong Samcheok Port\u2013 Along Saecheonnyeon Road, Gyo-dong, Samcheok-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030600",
+        "contentid": "995783",
+        "contenttypeid": "75",
+        "createdtime": "20100410002657",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/185880_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/185880_image2_1.jpg",
+        "mapx": "129.1881530710",
+        "mapy": "37.4362635512",
+        "mlevel": "6",
+        "modifiedtime": "20141016223914",
+        "readcount": "10300",
+        "sigungucode": "4",
+        "tel": "+82-33-573-4096,+82-33-575-1330",
+        "title": "Samcheok Port \u2013 Along Saecheonnyeon Coastal Road (삼척항 - 새천년도로변)",
+        "zipcode": "25925"
+      },
+      {
+        "addr1": "88, Sanmagiyet-gil, Goesan-gun, Chungcheongbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "33",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2475961",
+        "contenttypeid": "75",
+        "createdtime": "20170117221748",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/28/1910428_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/28/1910428_image3_1.jpg",
+        "mapx": "127.8387771552",
+        "mapy": "36.7610684094",
+        "mlevel": "6",
+        "modifiedtime": "20200615200923",
+        "readcount": "23072",
+        "sigungucode": "1",
+        "tel": "+82-43-832-3527",
+        "title": "Sanmagi-yetgil Trail (산막이옛길)",
+        "zipcode": "28016"
+      },
+      {
+        "addr1": "Entrance of Bulgeun Oreum, Gasi-ri, Seogwipo-si, Jeju-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "39",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2476008",
+        "contenttypeid": "75",
+        "createdtime": "20170309231907",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.6757260497",
+        "mapy": "33.4014158790",
+        "mlevel": "6",
+        "modifiedtime": "20230116172747",
+        "readcount": "10192",
+        "sigungucode": "3",
+        "tel": "+82-64-900-8800",
+        "title": "Saryeoni Forest Trail (사려니숲길)",
+        "zipcode": "63622"
+      },
+      {
+        "addr1": "1111, Misiryeong-ro 2983beon-gil, Sokcho-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "266864",
+        "contenttypeid": "75",
+        "createdtime": "20030108234518",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/73/1947473_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/73/1947473_image3_1.jpg",
+        "mapx": "128.5283247210",
+        "mapy": "38.2098694575",
+        "mlevel": "6",
+        "modifiedtime": "20220812170152",
+        "readcount": "8738",
+        "sigungucode": "5",
+        "tel": "+82-33-630-5511",
+        "title": "Seorak Plaza Country Club (설악프라자컨트리클럽)",
+        "zipcode": "24801"
+      },
+      {
+        "addr1": "160, Yeouiseo-ro, Yeongdeungpo-gu, Seoul",
+        "addr2": "(Yeouido-dong)",
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0301",
+        "cat3": "A03010200",
+        "contentid": "1391859",
+        "contenttypeid": "75",
+        "createdtime": "20110926231011",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/2601180_image2_1.bmp",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/2601180_image2_1.bmp",
+        "mapx": "126.9116252334",
+        "mapy": "37.5348539529",
+        "mlevel": "6",
+        "modifiedtime": "20210730223017",
+        "readcount": "20420",
+        "sigungucode": "20",
+        "tel": "+82-2-3780-8400",
+        "title": "Seoul Marina Club & Yacht (서울마리나 클럽&요트)",
+        "zipcode": "07231"
+      },
+      {
+        "addr1": "110, Sejong-daero, Jung-gu, Seoul",
+        "addr2": "Taepyeongno 1-ga",
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021300",
+        "contentid": "686510",
+        "contenttypeid": "75",
+        "createdtime": "20090130204116",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/74/1874374_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/74/1874374_image3_1.jpg",
+        "mapx": "126.9779988714",
+        "mapy": "37.5655710163",
+        "mlevel": "6",
+        "modifiedtime": "20200402223359",
+        "readcount": "100104",
+        "sigungucode": "24",
+        "tel": "+82-2133-2691",
+        "title": "Seoul Plaza Ice Skating Rink (서울광장 스케이트장)",
+        "zipcode": "04524"
+      },
+      {
+        "addr1": "25, Olympic-ro, Songpa-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "1105499",
+        "contenttypeid": "75",
+        "createdtime": "20101009000935",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/68/629668_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/68/629668_image3_1.jpg",
+        "mapx": "127.0736415981",
+        "mapy": "37.5148536263",
+        "mlevel": "6",
+        "modifiedtime": "20210612000917",
+        "readcount": "107804",
+        "sigungucode": "18",
+        "tel": "+82-2-2240-8800",
+        "title": "Seoul Sports Complex (Jamsil Sports Complex) (서울종합운동장(잠실종합운동장))",
+        "zipcode": "05500"
+      },
+      {
+        "addr1": "240, World cup-ro, Mapo-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "266926",
+        "contenttypeid": "75",
+        "createdtime": "20040420200612",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/1805797_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/97/1805797_image3_1.jpg",
+        "mapx": "126.8972867084",
+        "mapy": "37.5683081417",
+        "mlevel": "6",
+        "modifiedtime": "20210503182035",
+        "readcount": "99064",
+        "sigungucode": "13",
+        "tel": "+82-2-2128-2000",
+        "title": "Seoul World Cup Stadium (서울월드컵경기장)",
+        "zipcode": "03932"
+      },
+      {
+        "addr1": "Makgye-dong, Gwacheon-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "266861",
+        "contenttypeid": "75",
+        "createdtime": "20030108233721",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/68/1861968_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/68/1861968_image3_1.jpg",
+        "mapx": "127.0170406660",
+        "mapy": "37.4352174086",
+        "mlevel": "6",
+        "modifiedtime": "20221122093446",
+        "readcount": "31954",
+        "sigungucode": "3",
+        "tel": "+82-2-509-6000",
+        "title": "Seoulland Sledding Hills (서울랜드 눈썰매장)",
+        "zipcode": "13829"
+      },
+      {
+        "addr1": "772, Gaya-daero, Busanjin-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "495645",
+        "contenttypeid": "75",
+        "createdtime": "20080124222946",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "129.0564586602",
+        "mapy": "35.1568643465",
+        "mlevel": "6",
+        "modifiedtime": "20220914141052",
+        "readcount": "36569",
+        "sigungucode": "7",
+        "tel": "+82-51-665-6000",
+        "title": "SEVEN LUCK CASINO - Busan Lotte Branch (세븐럭 카지노(부산롯데점))",
+        "zipcode": "47285"
+      },
+      {
+        "addr1": "58, Teheran-ro 87-gil, Gangnam-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "495641",
+        "contenttypeid": "75",
+        "createdtime": "20080124220839",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/13/2024213_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/13/2024213_image3_1.jpg",
+        "mapx": "127.0575320333",
+        "mapy": "37.5120258870",
+        "mlevel": "6",
+        "modifiedtime": "20220914140239",
+        "readcount": "138729",
+        "sigungucode": "1",
+        "tel": "+82-2-3466-6000",
+        "title": "SEVEN LUCK CASINO - Gangnam COEX Branch (세븐럭카지노(강남코엑스점))",
+        "zipcode": "06164"
+      },
+      {
+        "addr1": "95, Cheongpa-ro 20-gil, Yongsan-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021000",
+        "contentid": "2939896",
+        "contenttypeid": "75",
+        "createdtime": "20221230131612",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/36/2939436_image2_1.jpeg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/36/2939436_image3_1.jpeg",
+        "mapx": "126.9630345182",
+        "mapy": "37.5320052033",
+        "mlevel": "6",
+        "modifiedtime": "20230110171526",
+        "readcount": "1",
+        "sigungucode": "21",
+        "tel": {
+          "-self-closing": "true"
+        },
+        "title": "SEVEN LUCK CASINO - Seoul Dragon City Branch (세븐럭카지노(서울드래곤시티점))",
+        "zipcode": "04372"
+      },
+      {
+        "addr1": "178, Balgae-ro, Tongyeong-si, Gyeongsangnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "36",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2673137",
+        "contenttypeid": "75",
+        "createdtime": "20200918015025",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/30/2488130_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/30/2488130_image3_1.jpg",
+        "mapx": "128.4241976068",
+        "mapy": "34.8244567305",
+        "mlevel": "6",
+        "modifiedtime": "20210316194933",
+        "readcount": "8326",
+        "sigungucode": "17",
+        "tel": "+82-70-4731-8473",
+        "title": "Skyline Luge (스카이라인 루지)",
+        "zipcode": "53078"
+      },
+      {
+        "addr1": "233, Dotjil-ro, Nam-gu, Ulsan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "7",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1835373",
+        "contenttypeid": "75",
+        "createdtime": "20130808021900",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "129.3301379576",
+        "mapy": "35.5438399168",
+        "mlevel": "6",
+        "modifiedtime": "20210614183416",
+        "readcount": "4101",
+        "sigungucode": "2",
+        "tel": "+82-52-226-5892",
+        "title": "Solmarugil Road (솔마루길)",
+        "zipcode": "44701"
+      },
+      {
+        "addr1": "129-4, Amnam-dong, Seo-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2657026",
+        "contenttypeid": "75",
+        "createdtime": "20200522195800",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "129.0224999494",
+        "mapy": "35.0753645109",
+        "mlevel": "6",
+        "modifiedtime": "20230111135601",
+        "readcount": "3327",
+        "sigungucode": "11",
+        "tel": "+82-51-231-0252",
+        "title": "Songdo Cloud Walk (송도 구름산책로(스카이워크))",
+        "zipcode": "49269"
+      },
+      {
+        "addr1": "6215, Naerincheon-ro, Inje-eup, Inje-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030200",
+        "contentid": "1992074",
+        "contenttypeid": "75",
+        "createdtime": "20150317192138",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/37/1991337_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/37/1991337_image2_1.jpg",
+        "mapx": "128.2063313500",
+        "mapy": "38.0432965370",
+        "mlevel": "6",
+        "modifiedtime": "20170619213357",
+        "readcount": "3171",
+        "sigungucode": "10",
+        "tel": "+82-33-461-1659",
+        "title": "Songkang Canoe School (송강 카누학교)",
+        "zipcode": "24640"
+      },
+      {
+        "addr1": "139, Gangbyeonbuk-ro, Gwangjin-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030200",
+        "contentid": "996375",
+        "contenttypeid": "75",
+        "createdtime": "20100412221819",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.0739883760",
+        "mapy": "37.5294047205",
+        "mlevel": "6",
+        "modifiedtime": "20200601194720",
+        "readcount": "14191",
+        "sigungucode": "6",
+        "tel": "+82-33-461-1659",
+        "title": "Songkang Canoe School - Seoul branch (송강카누학교 서울분교)",
+        "zipcode": "05097"
+      },
+      {
+        "addr1": "96, Meokgat-ro, Namyangju-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266906",
+        "contenttypeid": "75",
+        "createdtime": "20030109000630",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/61/1986861_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/61/1986861_image3_1.jpg",
+        "mapx": "127.2700195037",
+        "mapy": "37.6623983733",
+        "mlevel": "6",
+        "modifiedtime": "20210219192756",
+        "readcount": "53426",
+        "sigungucode": "9",
+        "tel": "+82-31-594-1211",
+        "title": "Star Hill Resort (스타힐리조트)",
+        "zipcode": "12156"
+      },
+      {
+        "addr1": "809, Unakcheonggye-ro, Gapyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1718442",
+        "contenttypeid": "75",
+        "createdtime": "20120914014151",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/24/1956124_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/24/1956124_image3_1.jpg",
+        "mapx": "127.3510391446",
+        "mapy": "37.8797634514",
+        "mlevel": "6",
+        "modifiedtime": "20220825134603",
+        "readcount": "9218",
+        "sigungucode": "1",
+        "tel": "+82-31-585-7900",
+        "title": "Sun Hill Golf Club (썬힐 골프클럽)",
+        "zipcode": "12432"
+      },
+      {
+        "addr1": "310, World cup-ro, Paldal-gu, Suwon-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "266925",
+        "contenttypeid": "75",
+        "createdtime": "20040420195845",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.0369291446",
+        "mapy": "37.2865822176",
+        "mlevel": "6",
+        "modifiedtime": "20210526005149",
+        "readcount": "25053",
+        "sigungucode": "13",
+        "tel": "+82-31-202-2002",
+        "title": "Suwon World Cup Stadium (수원월드컵경기장)",
+        "zipcode": "16230"
+      },
+      {
+        "addr1": "84, Haeundaehaebyeon-ro, Haeundae-gu, Busan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "6",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030300",
+        "contentid": "266887",
+        "contenttypeid": "75",
+        "createdtime": "20030108235218",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/90/1157090_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/90/1157090_image3_1.jpg",
+        "mapx": "129.1405651222",
+        "mapy": "35.1609293352",
+        "mlevel": "6",
+        "modifiedtime": "20200729200303",
+        "readcount": "28464",
+        "sigungucode": "16",
+        "tel": "+82-51-741-6440",
+        "title": "Suyeongman Bay Yachting Center (수영만 요트경기장)",
+        "zipcode": "48090"
+      },
+      {
+        "addr1": "45, Jungnicheon-ro 115beon-gil, Icheon-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "725683",
+        "contenttypeid": "75",
+        "createdtime": "20090422234230",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/1875370_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/70/1875370_image3_1.jpg",
+        "mapx": "127.4510196920",
+        "mapy": "37.2761825537",
+        "mlevel": "6",
+        "modifiedtime": "20221026164350",
+        "readcount": "11414",
+        "sigungucode": "26",
+        "tel": "+82-31-639-5000",
+        "title": "The Hotel Miranda Swimming Pools (Indoor/Outdoor) (호텔미란다수영장(실내.외))",
+        "zipcode": "17372"
+      },
+      {
+        "addr1": "269, Jemullyang-ro, Jung-gu, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2813202",
+        "contenttypeid": "75",
+        "createdtime": "20220325113427",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.6171037210",
+        "mapy": "37.4766471560",
+        "mlevel": {
+          "-self-closing": "true"
+        },
+        "modifiedtime": "20230112133139",
+        "readcount": "30341",
+        "sigungucode": "10",
+        "tel": "+82-32-440-4055",
+        "title": "The Story Course of the Historical and Cultural Street of the Open Trade Port - 1 hr course ([인천 개항 누리길] 1시간 코스)",
+        "zipcode": "22307"
+      },
+      {
+        "addr1": "139, Gangbyeonbuk-ro, Gwangjin-gu, Seoul",
+        "addr2": "(Jayang-dong)",
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "1065231",
+        "contenttypeid": "75",
+        "createdtime": "20100727002731",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2612845_image2_1.bmp",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/45/2612845_image2_1.bmp",
+        "mapx": "127.0739883760",
+        "mapy": "37.5294047205",
+        "mlevel": "6",
+        "modifiedtime": "20220726143859",
+        "readcount": "18565",
+        "sigungucode": "6",
+        "tel": "+82-2-452-5955",
+        "title": "Ttukseom Hangang Park Outdoor Swimming Pool (한강시민공원 뚝섬수영장(실외))",
+        "zipcode": "05097"
+      },
+      {
+        "addr1": "139, Gangbyeonbuk-ro, Gwangjin-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021400",
+        "contentid": "1149636",
+        "contenttypeid": "75",
+        "createdtime": "20101221194153",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/95/1985295_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/95/1985295_image3_1.jpg",
+        "mapx": "127.0739744904",
+        "mapy": "37.5293380619",
+        "mlevel": "6",
+        "modifiedtime": "20210317224004",
+        "readcount": "49487",
+        "sigungucode": "6",
+        "tel": "+82-2-453-3028",
+        "title": "Ttukseom Hangang Park Sledding Hill (한강공원 뚝섬 눈썰매장)",
+        "zipcode": "05097"
+      },
+      {
+        "addr1": "44, Munsu-ro, Nam-gu, Ulsan",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "7",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022500",
+        "contentid": "266935",
+        "contenttypeid": "75",
+        "createdtime": "20050309000843",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/49/1588049_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/49/1588049_image3_1.jpg",
+        "mapx": "129.2595610237",
+        "mapy": "35.5352867733",
+        "mlevel": "6",
+        "modifiedtime": "20210526185409",
+        "readcount": "12813",
+        "sigungucode": "2",
+        "tel": "+82-52-220-2002",
+        "title": "Ulsan Munsu Football Stadium (문수축구경기장)",
+        "zipcode": "44659"
+      },
+      {
+        "addr1": "262, Hanchigol-gil, Hongcheon-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266845",
+        "contenttypeid": "75",
+        "createdtime": "20030108232009",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/70/2779470_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/70/2779470_image2_1.jpg",
+        "mapx": "127.6873540732",
+        "mapy": "37.6523905338",
+        "mlevel": "6",
+        "modifiedtime": "20211221004733",
+        "readcount": "221354",
+        "sigungucode": "16",
+        "tel": "+82-1588-4888",
+        "title": "Vivaldi Park Ski World (비발디 파크 스키월드)",
+        "zipcode": "25102"
+      },
+      {
+        "addr1": "451, Gowon-ro, Hoengseong-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266919",
+        "contenttypeid": "75",
+        "createdtime": "20030109001609",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/693412_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/12/693412_image3_1.jpg",
+        "mapx": "128.2492886569",
+        "mapy": "37.4872340609",
+        "mlevel": "6",
+        "modifiedtime": "20200905003329",
+        "readcount": "50021",
+        "sigungucode": "18",
+        "tel": "+82-1544-8833",
+        "title": "Welli Hilli Park Snow Park (웰리힐리파크 스노우파크)",
+        "zipcode": "25263"
+      },
+      {
+        "addr1": "2254, Seorak-ro, Inje-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022400",
+        "contentid": "1090193",
+        "contenttypeid": "75",
+        "createdtime": "20100911002546",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/42/1583442_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/42/1583442_image3_1.jpg",
+        "mapx": "128.1861599354",
+        "mapy": "38.0769144616",
+        "mlevel": "6",
+        "modifiedtime": "20200826223520",
+        "readcount": "28705",
+        "sigungucode": "10",
+        "tel": "+82-33-461-5216",
+        "title": "X-game Resort (Naerincheon Bungee Jumping) (엑스게임리조트(내린천 번지점프))",
+        "zipcode": "24628"
+      },
+      {
+        "addr1": "350, Yangbangsan-gil, Danyang-gun, Chungcheongbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "33",
+        "cat1": "A03",
+        "cat2": "A0304",
+        "cat3": "A03040300",
+        "contentid": "2617697",
+        "contenttypeid": "75",
+        "createdtime": "20190906013539",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/10/2014010_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/10/2014010_image3_1.jpg",
+        "mapx": "128.3817753625",
+        "mapy": "36.9683407791",
+        "mlevel": {
+          "-self-closing": "true"
+        },
+        "modifiedtime": "20210616005341",
+        "readcount": "2254",
+        "sigungucode": "2",
+        "tel": "+82-43-420-3035",
+        "title": "Yangbangsan Paragliding Site (양방산활공장)",
+        "zipcode": "27024"
+      },
+      {
+        "addr1": "112, Nampyeong-ro, Cheoin-gu, Yongin-si, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266884",
+        "contenttypeid": "75",
+        "createdtime": "20030108234858",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/41/692641_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/41/692641_image3_1.jpg",
+        "mapx": "127.2937635650",
+        "mapy": "37.2103734256",
+        "mlevel": "6",
+        "modifiedtime": "20201225022753",
+        "readcount": "106870",
+        "sigungucode": "23",
+        "tel": "+82-31-338-2001",
+        "title": "Yangji Pine Resort Ski Valley (양지파인리조트 스키장)",
+        "zipcode": "17164"
+      },
+      {
+        "addr1": "277, Yongmun-ro, Yangpyeong-gun, Gyeonggi-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "31",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2565935",
+        "contenttypeid": "75",
+        "createdtime": "20181115194734",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.5865626860",
+        "mapy": "37.4797614678",
+        "mlevel": "6",
+        "modifiedtime": "20210717010714",
+        "readcount": "7414",
+        "sigungucode": "19",
+        "tel": "+82-31-775-9911",
+        "title": "Yangpyeong Rail Bike (양평레일바이크)",
+        "zipcode": "12518"
+      },
+      {
+        "addr1": "119, Hajodaehaean-gil, Yangyang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030100",
+        "contentid": "2813155",
+        "contenttypeid": "75",
+        "createdtime": "20220325111213",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "128.7175465614",
+        "mapy": "38.0278081942",
+        "mlevel": "6",
+        "modifiedtime": "20221222093657",
+        "readcount": "2567",
+        "sigungucode": "7",
+        "tel": "+82-1522-2729",
+        "title": "Yangyang Surfyy Beach (서피비치, 서핑(양양))",
+        "zipcode": "25046"
+      },
+      {
+        "addr1": "Jangjeong-ri, Yesan-gun, Chungcheongnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "34",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030500",
+        "contentid": "995544",
+        "contenttypeid": "75",
+        "createdtime": "20100409221950",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/12/1281312_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/12/1281312_image3_1.jpg",
+        "mapx": "126.8079465160",
+        "mapy": "36.5969327614",
+        "mlevel": "6",
+        "modifiedtime": "20210119002846",
+        "readcount": "27858",
+        "sigungucode": "11",
+        "tel": "+82-41-339-8285",
+        "title": "Yedang Reservoir (예당저수지(예당관광지))",
+        "zipcode": "32455"
+      },
+      {
+        "addr1": "187, Mangyang-ro, Yeosu-si, Jeollanam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "38",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1998500",
+        "contenttypeid": "75",
+        "createdtime": "20160224014950",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "127.7467580825",
+        "mapy": "34.7722117660",
+        "mlevel": "6",
+        "modifiedtime": "20221228133227",
+        "readcount": "14530",
+        "sigungucode": "13",
+        "tel": "+82-61-652-7882",
+        "title": "Yeosu Ocean Railbike (여수해양레일바이크)",
+        "zipcode": "59723"
+      },
+      {
+        "addr1": "330, Yeouidong-ro, Yeongdeungpo-gu, Seoul",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "1",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030700",
+        "contentid": "1065219",
+        "contenttypeid": "75",
+        "createdtime": "20100727001733",
+        "firstimage": {
+          "-self-closing": "true"
+        },
+        "firstimage2": {
+          "-self-closing": "true"
+        },
+        "mapx": "126.9336123570",
+        "mapy": "37.5263886632",
+        "mlevel": "6",
+        "modifiedtime": "20190730002646",
+        "readcount": "22342",
+        "sigungucode": "20",
+        "tel": "+82-2-785-0478",
+        "title": "Yeouido Hangang Park Outdoor Swimming Pool (한강시민공원 여의도수영장(실외))",
+        "zipcode": "07337"
+      },
+      {
+        "addr1": "715, Olympic-ro, Pyeongchang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03020700",
+        "contentid": "1718348",
+        "contenttypeid": "75",
+        "createdtime": "20120914005909",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/80/1846680_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/80/1846680_image3_1.jpg",
+        "mapx": "128.7021986165",
+        "mapy": "37.6456188436",
+        "mlevel": "6",
+        "modifiedtime": "20221229140142",
+        "readcount": "6407",
+        "sigungucode": "15",
+        "tel": "+82-1522-3111",
+        "title": "Yongpyong Golf Club (용평 골프클럽)",
+        "zipcode": "25352"
+      },
+      {
+        "addr1": "715, Olympic-ro, Pyeongchang-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03021200",
+        "contentid": "266890",
+        "contenttypeid": "75",
+        "createdtime": "20030108235524",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/85/692885_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/85/692885_image3_1.jpg",
+        "mapx": "128.6755125974",
+        "mapy": "37.6303200970",
+        "mlevel": "6",
+        "modifiedtime": "20210122202231",
+        "readcount": "221560",
+        "sigungucode": "15",
+        "tel": "+82-1588-0009",
+        "title": "Yongpyong Ski Resort (용평리조트 스키장)",
+        "zipcode": "25352"
+      },
+      {
+        "addr1": "78-4, Seopsae-gil, Yeongwol-gun, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0303",
+        "cat3": "A03030800",
+        "contentid": "585614",
+        "contenttypeid": "75",
+        "createdtime": "20080711013656",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/26/1846426_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/26/1846426_image3_1.jpg",
+        "mapx": "128.5133697097",
+        "mapy": "37.2319101796",
+        "mlevel": "6",
+        "modifiedtime": "20221017102218",
+        "readcount": "7980",
+        "sigungucode": "8",
+        "tel": "+82-33-372-3398",
+        "title": "Yundaechun Rafting (연대천래프팅)",
+        "zipcode": "26223"
+      },
+      {
+        "addr1": "174, Buljeong-gil, Mungyeong-si, Gyeongsangbuk-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "35",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1059823",
+        "contenttypeid": "75",
+        "createdtime": "20100715001740",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/39/1959339_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/39/1959339_image3_1.jpg",
+        "mapx": "128.1368016320",
+        "mapy": "36.6229036016",
+        "mlevel": "6",
+        "modifiedtime": "20210222223208",
+        "readcount": "34474",
+        "sigungucode": "7",
+        "tel": "+82-1588-5219",
+        "title": "Zipline Mungyeong (짚라인 문경)",
+        "zipcode": "36987"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938812",
+        "contenttypeid": "75",
+        "createdtime": "20140804194407",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/1895197_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/97/1895197_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20220927110708",
+        "readcount": "28800",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 1] Simdo History & Culture Trail ([강화 나들길 제1코스] 심도역사문화길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938809",
+        "contenttypeid": "75",
+        "createdtime": "20140804193333",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/05/1895205_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/05/1895205_image3_1.jpg",
+        "mapx": "126.5160613555",
+        "mapy": "37.7336321177",
+        "mlevel": "6",
+        "modifiedtime": "20210811232140",
+        "readcount": "23046",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 2] Homeland Fortification Trail ([강화 나들길 제2코스] 호국돈대길)",
+        "zipcode": "23027"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938804",
+        "contenttypeid": "75",
+        "createdtime": "20140804192554",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/11/1895211_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/11/1895211_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20210602200745",
+        "readcount": "23110",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 3] Royal Tomb Trail ([강화 나들길 제3코스] 고려왕릉 가는 길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938801",
+        "contenttypeid": "75",
+        "createdtime": "20140804192140",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/16/1895216_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/16/1895216_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20210223233012",
+        "readcount": "23150",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 4] Sunset Village Trail ([강화 나들길 제4코스] 해가 지는 마을 길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938798",
+        "contenttypeid": "75",
+        "createdtime": "20140804191733",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/21/1895221_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/21/1895221_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20210223232702",
+        "readcount": "23287",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 5] Gobigogae Pass Trail ([강화 나들길 제5코스] 고비고개길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938795",
+        "contenttypeid": "75",
+        "createdtime": "20140804190922",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/27/1895227_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/27/1895227_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20220818152610",
+        "readcount": "23150",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 6] Birthplace of Hwanam Trail ([강화 나들길 제6코스] 화남생가 가는 길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938790",
+        "contenttypeid": "75",
+        "createdtime": "20140804185344",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/22/1895222_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/22/1895222_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20221229141359",
+        "readcount": "23723",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 7] Setting Sun Trail ([강화 나들길 제7코스] 낙조보러 가는 길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "24, Cheonghadong-gil, Ganghwa-gun, Incheon",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "2",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1938779",
+        "contenttypeid": "75",
+        "createdtime": "20140804184157",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/32/1895232_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/32/1895232_image3_1.jpg",
+        "mapx": "126.4822613345",
+        "mapy": "37.7458245442",
+        "mlevel": "6",
+        "modifiedtime": "20221111174618",
+        "readcount": "23896",
+        "sigungucode": "1",
+        "tel": "+82-32-934-1906",
+        "title": "[Ganghwa Nadeul-gil Course 8] Bird Watching Trail ([강화 나들길 제8코스] 철새 보러 가는 길)",
+        "zipcode": "23033"
+      },
+      {
+        "addr1": "Sacheonjin-ri, Gangneung-si, Gangwon-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "32",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "1891493",
+        "contenttypeid": "75",
+        "createdtime": "20140206010734",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/94/1847494_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/94/1847494_image3_1.jpg",
+        "mapx": "128.8792075570",
+        "mapy": "37.8296093261",
+        "mlevel": "6",
+        "modifiedtime": "20201126222754",
+        "readcount": "15381",
+        "sigungucode": "1",
+        "tel": "+82-33-645-0990",
+        "title": "[Gangneung Baugil Section 5] Beach and Lake Road ([강릉 바우길 5구간] 바다 호숫길)",
+        "zipcode": "25435"
+      },
+      {
+        "addr1": "Pyeongsan-ri, Namhae-gun, Gyeongsangnam-do",
+        "addr2": {
+          "-self-closing": "true"
+        },
+        "areacode": "36",
+        "cat1": "A03",
+        "cat2": "A0302",
+        "cat3": "A03022700",
+        "contentid": "2395480",
+        "contenttypeid": "75",
+        "createdtime": "20160728203313",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/96/2703896_image2_1.jpg",
+        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/96/2703896_image2_1.jpg",
+        "mapx": "127.8467994389",
+        "mapy": "34.7681611805",
+        "mlevel": "6",
+        "modifiedtime": "20210616194731",
+        "readcount": "28438",
+        "sigungucode": "5",
+        "tel": "+82-55-863-8778",
+        "title": "[Namhae Barae-gil] Daraengi Jiget-gil Trail ([남해 바래길] 다랭이지겟길)",
+        "zipcode": "52434"
+      }
+    ]
+  },
+  "#omit-xml-declaration": "yes"
+}

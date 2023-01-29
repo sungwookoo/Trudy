@@ -1,0 +1,9 @@
+/* .dot-style {
+    width: 10;
+    height: 10;
+    border: '1px solid black';
+    border-radius: 999;
+    background-color: scrollIndex === num ? 'white' : 'transparent';
+    transition-duration: 1000;
+    transition: "background-color 0.5s";
+} */
