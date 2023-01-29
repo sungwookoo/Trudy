@@ -14,11 +14,14 @@ import Nav from './Common/Nav';
 function App() {
   useEffect(() => {
 
-    axios.get("http://sungwoo.shop:8080/api/posts/alldata").then((res) => {
-      setPostInfo(res.data.postList);
-    });
-  }, []);
-
+    let [postInfo, setPostInfo] = useState([])
+    useEffect(() => {
+  
+      axios.get("http://sungwoo.shop:8080/api/posts/alldata").then((res) => {
+        setPostInfo(res.data.postList);
+      });
+    }, []);
+    
     return (
       <div className="App">
         <BrowserRouter>
