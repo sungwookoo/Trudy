@@ -6,16 +6,16 @@ const DIVIDER_HEIGHT = 5;
 
 // 스크롤 컴포넌트 추후 컴포넌트 폴더로 따로 export 예정
 
-function Landing(props) {
-  // 밑엔 스크롤
-  const outerDivRef = useRef();
+function Landing() {
+  // 밑엔 스크롤 (추후 컴포넌트로 뺴서 props 받아 사용 할 예정)
+  const outerDivRef : any = useRef();
   const [scrollIndex, setScrollIndex] = useState(1);
   useEffect(() => {
-    const wheelHandler = (e) => {
+    const wheelHandler = (e: any) => {
       e.preventDefault();
       const { deltaY } = e;
       // 스크롤 위쪽 끝부분 위치
-      const { scrollTop } = outerDivRef.current;
+      const { scrollTop }: any = outerDivRef.current;
       // 화면 세로길이, 100vh와 같음
       const pageHeight = window.innerHeight; 
 
@@ -80,7 +80,7 @@ function Landing(props) {
       outerDivRefCurrent.removeEventListener('wheel', wheelHandler);
     };
   }, []);
-  const Item = ({ text }) => {
+  const Item = ({ text }: any) => {
     return text;
   };
 
