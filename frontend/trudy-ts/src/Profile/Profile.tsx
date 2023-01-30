@@ -20,7 +20,7 @@ function Profile() {
     }, []);
     console.log(userInfo)
     return(
-        <div className='profile-container mt-1'>
+        <div className='profile-container'>
           <div className='picture-name'>
             <img className='profile-picture' src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg" alt="profilepicture" />
           {userInfo?.map((user, i) => {
