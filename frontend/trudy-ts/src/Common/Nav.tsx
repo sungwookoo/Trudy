@@ -48,8 +48,8 @@ const Nav = () => {
       </div>
       {/* 로그인 */}
       <div className='nav-item'>
-        <NavLink className="nav-link" to='/login'>
-          Login
+        <NavLink className="nav-link" to='/signIn'>
+          Sign In
         </NavLink>
       </div>
   </nav>
