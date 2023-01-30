@@ -1,0 +1,22 @@
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden;
+}
+
+.user-name {
+  font-size: 50px;
+}
+
+.picture-name{
+  display: flex;
+  flex-direction: row;
+}
