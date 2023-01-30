@@ -1,0 +1,29 @@
+.nav-bar {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    width: 100%;;
+}
+
+.nav-logo{
+    height: 40px;
+    margin-left: 80px;
+    margin-right: 15px;
+}
+
+.nav-item-logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-item {
+    margin-left: 60px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-link {
+    text-decoration: none;
+    /* font-size: 28px;
+    font-weight: bold; */
+}
