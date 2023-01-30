@@ -1,10 +1,11 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Profile from "./Profile/Profile";
 import Nav from "./Common/Nav";
-import Login from "./Account/Login";
+import SignIn from "./Account/SignIn";
+import ProfileUpdateDefault from "./Profile/ProfileUpdate";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/profileupdate" element={<ProfileUpdateDefault />} />
       </Routes>
     </div>
   );
