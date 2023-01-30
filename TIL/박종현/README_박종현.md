@@ -60,3 +60,9 @@
 
 - spring boot entity 작성중
 - api 설계서 완성
+
+### 2023.01.30 월
+
+- spring boot entity 및 틀 제작
+- jpa 학습
+  - repository.save 후 부트 종료 -> db에 데이터 남아있음 ->부트 실행 -> db에 데이터 날라가고 아무거도 없는 문제 해결중
