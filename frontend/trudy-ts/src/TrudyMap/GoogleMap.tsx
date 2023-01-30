@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: "1200px",
-  height: "1200px",
+  width: "400px",
+  height: "400px",
 };
 
 const center = {
-  lat: 37.460459,
-  lng: 126.44068,
+  lat: -3.745,
+  lng: -38.523,
 };
 
-class TrudyMap extends Component {
+class MyComponents extends Component {
   render() {
     return (
       <LoadScript googleMapsApiKey="AIzaSyCr_VXyq_r6dte_29ocp-T2i6yf30VvUMI">
@@ -23,5 +23,3 @@ class TrudyMap extends Component {
     );
   }
 }
-
-export default TrudyMap;
