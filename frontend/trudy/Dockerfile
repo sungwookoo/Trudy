@@ -6,9 +6,9 @@ COPY . .
 RUN npm run build
 FROM nginx:stable-alpine as production-stage
 
-RUN mkdir /etc/letsencrypt
-COPY --from=build-stage /var/certbot /etc/letsencrypt
-COPY --from=build-stage /var/certbot /var/www/certbot
+# RUN mkdir /etc/letsencrypt
+# COPY --from=build-stage /var/certbot /etc/letsencrypt
+# COPY --from=build-stage /var/certbot /var/www/certbot
 
 COPY --from=build-stage /var/jenkins_home/workspace/trudy_deploy/frontend/trudy/build /usr/share/nginx/html
 COPY --from=build-stage /var/jenkins_home/workspace/trudy_deploy/frontend/trudy/deploy_conf/nginx.conf /etc/nginx/conf.d/default.conf
