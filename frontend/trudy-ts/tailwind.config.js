@@ -4,9 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'trudy': {
-          DEFAULT: '#eefcef',
-          'dark': '#baf3bf'
+        trudy: {
+          DEFAULT: "#eefcef",
+          dark1: "#cbf6cf",
+          dark2: "#baf3bf",
         },
       },
     },

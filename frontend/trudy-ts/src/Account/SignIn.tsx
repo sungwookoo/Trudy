@@ -30,6 +30,8 @@ function SignIn() {
         <form className="mt-8 space-y-6" action="#" method="POST">
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="-space-y-px rounded-md shadow-sm">
+
+            {/* 이메일 주소 입력 */}
             <div>
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -44,6 +46,8 @@ function SignIn() {
                 placeholder="Email address"
               />
             </div>
+
+            {/* 비밀번호 입력 */}
             <div>
               <label htmlFor="password" className="sr-only">
                 Password
@@ -61,6 +65,8 @@ function SignIn() {
           </div>
 
           <div className="flex items-center justify-between">
+
+            {/* 아이디, 비밀번호 저장 */}
             <div className="flex items-center">
               <input
                 id="remember-me"
@@ -76,6 +82,7 @@ function SignIn() {
               </label>
             </div>
 
+            {/* 비밀번호 찾기 */}
             <div className="text-sm">
               <a
                 href="#"
@@ -86,19 +93,22 @@ function SignIn() {
             </div>
           </div>
 
+          {/* 로그인 버튼 */}
           <div>
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Sign in
             </button>
           </div>
+
+          {/* 회원가입 버튼 */}
           <div>
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Sign up
