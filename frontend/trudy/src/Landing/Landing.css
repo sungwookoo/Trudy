@@ -95,7 +95,7 @@
     rgba(20, 20, 20, 0.5) 50%,
     rgba(20, 20, 20, 0.75) 75%,
     rgba(20, 20, 20, 0.9) 150%), url("landing3.png"); */
-  background-image: url("../Assets/landingCrossPlatform.png");
+  background-image: url("../assets/landingCrossPlatform.png");
   width: 70%;
   height: 100vh;
   background-size: cover;
