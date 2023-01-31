@@ -4,8 +4,8 @@ import "./TrudyMap.css";
 import SearchBar from "./SearchBar";
 
 const containerStyle = {
-  width: "1200px",
-  height: "1200px",
+  width: "800px",
+  height: "600px",
 };
 
 const center = {
