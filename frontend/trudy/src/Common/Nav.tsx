@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.css";
-import trudylogo from "../Assets/trudylogo.png";
+import trudylogo from "../assets/trudylogo.png";
 
 const Nav = () => {
   return (
