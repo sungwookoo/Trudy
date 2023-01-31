@@ -36,7 +36,7 @@ public class Place {
     private String contentid;
 
     @Column(length = 45)
-    private String createdtypeid;
+    private String contenttypeid;
 
     @Column(length = 45)
     private String createdtime;

@@ -28,7 +28,7 @@ public class Comment {
     private String content;
 
     @Column(name = "is_deleted")
-    private boolean isDeleted;
+    private byte isDeleted;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

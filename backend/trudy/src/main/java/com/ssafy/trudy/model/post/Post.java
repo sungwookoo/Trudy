@@ -19,6 +19,7 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member memberId;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     @Column(name = "thumbnail_image_id")
     private int thumbnailImageId;

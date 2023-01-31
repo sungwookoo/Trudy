@@ -12,7 +12,7 @@ public class Follow {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "follow_from")

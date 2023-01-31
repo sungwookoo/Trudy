@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Ban {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "ban_from")

@@ -23,9 +23,14 @@ public class Alarm {
     private String type;
 
     @Column(name = "target_id")
-    private String targetId;
+    private int targetId;
 
     @Column(name = "is_checked")
-    private boolean isChecked;
+    private byte isChecked;
 }
 
+/*
+자바 Long -> 디비의 bigint 로 수정
+자바 boolean -> 자바 byte로 수정
+자바 foreign key type ->디비의 bigint로 수정
+ */

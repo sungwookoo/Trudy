@@ -34,13 +34,13 @@ public class Member {
     private String birth;
 
     @Column(name = "is_local")
-    private boolean isLocal;
+    private byte isLocal;
 
     @Column(name = "is_public")
-    private boolean isPublic;
+    private byte isPublic;
 
 
-    public Member(String email, String password, String name, String image, String gender, String area, String birth, boolean isLocal, boolean isPublic) {
+    public Member(String email, String password, String name, String image, String gender, String area, String birth, byte isLocal, byte isPublic) {
         this.email = email;
         this.password = password;
         this.name = name;
