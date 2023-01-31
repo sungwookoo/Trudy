@@ -1,22 +1,39 @@
 .profile-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 100px;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  margin-top: 50px;
+  background-color: blue;
 }
 
 .profile-picture {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 70%;
   overflow: hidden;
+  margin-right: 20px;
+  border-color: lightgrey;
+  border-width: 3px;
 }
 
 .user-name {
   font-size: 50px;
+  font-weight: 600;
+  /* margin-left: 100px; */
 }
 
 .picture-name{
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: 1000px;
+  height: 400px;
+  background-color: blueviolet;
+}
+
+.content-box {
+  width: 1300px;
+  height: 400px;
+  background-color: aqua;
 }
