@@ -1,19 +1,23 @@
 package com.ssafy.trudy.model;
 
+import com.ssafy.trudy.model.member.Member;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-//jonghyun
+import javax.persistence.*;
+
 @Entity
 @Data
+@Table(name = "ban")
 public class Ban {
     @Id
     @GeneratedValue
     private int id;
 
-    private int ban_from;
+    @ManyToOne
+    @JoinColumn(name = "ban_from")
+    private Member banFrom;
 
-    private int ban_to;
+    @ManyToOne
+    @JoinColumn(name = "ban_to")
+    private Member banTo;
 }
