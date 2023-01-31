@@ -3,11 +3,18 @@ package com.ssafy.trudy.controller;
 
 import com.ssafy.trudy.model.member.Member;
 import com.ssafy.trudy.service.MemberService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/member")
@@ -15,7 +22,8 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberService memberService;
+    @Autowired
+    MemberService memberService;
 
     //일반 회원 가입
     @PostMapping
@@ -77,11 +85,45 @@ public class MemberController {
     }
 
     //회원 목록 가져오기
-    @GetMapping
-    public void memberList(){
+    @GetMapping("/")
+    public Result memberList(){
+        List<Member> findMembers = memberService.findMemberList();
+        List<MemberListDto> collect = findMembers.stream()
+                .map(m -> new MemberListDto(m.getId(), m.getEmail(), m.getPassword(), m.getName(), m.getImage(), m.getGender(), m.getArea(), m.getBirth(), m.getIsLocal(), m.getIsPublic(), m.getLastAccess()))
+                .collect(Collectors.toList());
 
+        return new Result(collect);
     }
 
+//    @GetMapping("/filter/")
+//    public Result memberListFiltered(@RequestParam Map<String, String> map){
+//        List<Member> findMembers = memberService.findMemberListFiltered(isLocal, gender, search);
+//        List<MemberListDto> collect = findMembers.stream()
+//                .map(m -> new MemberListDto(m.getId(), m.getEmail(), m.getPassword(), m.getName(), m.getImage(), m.getGender(), m.getArea(), m.getBirth(), m.getIsLocal(), m.getIsPublic(), m.getLastAccess()))
+//                .collect(Collectors.toList());
+//
+//        return new Result(collect);
+//    }
 
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private T data;
+    }
 
+    @Data
+    @AllArgsConstructor
+    static class MemberListDto {
+        private Long id;
+        private String email;
+        private String password;
+        private String name;
+        private String image;
+        private String gender;
+        private String area;
+        private String birth;
+        private byte isLocal;
+        private byte isPublic;
+        private Timestamp lastAccess;
+    }
 }

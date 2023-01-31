@@ -3,6 +3,7 @@ package com.ssafy.trudy.model.member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -39,8 +40,11 @@ public class Member {
     @Column(name = "is_public")
     private byte isPublic;
 
+    @Column(name = "last_access")
+    private Timestamp lastAccess;
 
-    public Member(String email, String password, String name, String image, String gender, String area, String birth, byte isLocal, byte isPublic) {
+
+    public Member(String email, String password, String name, String image, String gender, String area, String birth, byte isLocal, byte isPublic, Timestamp lastAccess) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -50,5 +54,6 @@ public class Member {
         this.birth = birth;
         this.isLocal = isLocal;
         this.isPublic = isPublic;
+        this.lastAccess = lastAccess;
     }
 }
