@@ -4,15 +4,21 @@ import com.ssafy.trudy.model.member.Member;
 import com.ssafy.trudy.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.*;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     //일반 회원 가입
     public void addMember(Member member){
@@ -64,11 +70,13 @@ public class MemberService {
 
     }
 
-    //회원 목록 가져오기
-    public void findMemberList(){
-
+    //회원 목록 가져오기 - 조회시 최근 접속일자를 내림차순
+    public List<Member> findMemberList(){
+        return memberRepository.findMemberList();
     }
 
+    // 필터된 회원 목록 가져오기
+//    public List<Member> findMemberListFilted() { return memberRepository.findMemberListFiltered(); }
 
 
 }

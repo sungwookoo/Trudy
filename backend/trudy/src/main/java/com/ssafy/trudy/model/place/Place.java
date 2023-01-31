@@ -1,6 +1,8 @@
 package com.ssafy.trudy.model.place;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +11,8 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "places")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Place {
 
     @Id
@@ -70,6 +74,4 @@ public class Place {
 
     @Column(length = 45)
     private String zipcode;
-
-
 }
