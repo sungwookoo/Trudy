@@ -18,12 +18,10 @@ function SideBarPlanner() {
         카테고리 선택
       </div>
       <div className="" id="bookmarkSelect">
-        <div className="" id="all">
-          전체
-        </div>
-        <div className="" id="bookmark">
-          북마크
-        </div>
+        <input type="radio" name="bookmarkSelect" className="" id="all" />
+        전체
+        <input type="radio" name="bookmarkSelect" className="" id="bookmark" />
+        북마크
       </div>
       <div className="" id="results">
         <div className="" id="result">
