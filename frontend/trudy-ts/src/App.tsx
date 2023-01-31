@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Planner from "./Planner/Planner";

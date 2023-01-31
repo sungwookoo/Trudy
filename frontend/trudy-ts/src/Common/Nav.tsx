@@ -20,7 +20,7 @@ const Nav = () => {
 
       {/* 지도 */}
       <div className="nav-item">
-        <NavLink className="nav-link" to="/map">
+        <NavLink className="nav-link" to="/trudymap">
           Map
         </NavLink>
       </div>
