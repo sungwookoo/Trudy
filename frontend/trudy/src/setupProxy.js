@@ -1,12 +1,11 @@
-const { configure } = require("@testing-library/react");
+// src/setupProxy.js
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "http://i8e202.p.ssafy.io/api",
-      // target: "http://localhost:8080",
+      target: "http://localhost:8080",
       changeOrigin: true,
     })
   );
