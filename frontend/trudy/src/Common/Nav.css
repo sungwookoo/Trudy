@@ -1,7 +1,8 @@
 .nav-bar {
-    height: 50px;
+    height: 5vh;
     display: flex;
     align-items: center;
+    width: 100%;;
 }
 
 .nav-logo{

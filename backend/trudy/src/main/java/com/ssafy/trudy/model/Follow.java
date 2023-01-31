@@ -1,20 +1,25 @@
 package com.ssafy.trudy.model;
 
+import com.ssafy.trudy.model.member.Member;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-// jonghyun
+import javax.persistence.*;
+
 @Entity
 @Data
+@Table(name = "follow")
 public class Follow {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
-    private int follow_from;
+    @ManyToOne
+    @JoinColumn(name = "follow_from")
+    private Member followFrom;
 
-    private int follow_to;
+    @ManyToOne
+    @JoinColumn(name = "follow_to")
+    private Member followTo;
+
 }
