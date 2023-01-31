@@ -1,6 +1,6 @@
 .google-map {
+  margin-right: 40px;
   display: flex;
   flex-direction: row;
   justify-content: right;
-  margin-top: 20px;
 }
