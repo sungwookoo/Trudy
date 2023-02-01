@@ -128,6 +128,32 @@
 
 
 
+# 02.01
+
+### App.tsx
+
+- ```jsx
+  <Route path="/square" element={<Square />} />
+  ```
+
+
+
+### Square/Square.tsx
+
+- 생성
+
+
+
+### Square/Square.css
+
+- 생성
+
+
+
+
+
+
+
 # To Do
 
 ## 기능

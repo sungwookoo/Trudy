@@ -1,7 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import Nav from "./Common/Nav";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
+import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
 import Profile from "./Profile/Profile";
 import Nav from "./Common/Nav";
@@ -18,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
+        <Route path="/square" element={<Square />} /> 
         <Route path="/planner" element={<Planner />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profileupdate" element={<ProfileUpdate />} />
