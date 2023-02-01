@@ -25,7 +25,7 @@ public class Member {
 
     private String image;
 
-    @Column(length = 45)
+    @Column(name = "gender", length = 45)
     private String gender;
 
     @Column(length = 45)

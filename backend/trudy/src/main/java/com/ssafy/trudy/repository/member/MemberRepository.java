@@ -14,15 +14,15 @@ public class MemberRepository {
     @PersistenceContext
     private EntityManager em;
 
-    // 모든 멤버 정보를 받기
+    // 모든 멤버 정보를 받기(from DB)
     public List<Member> findMemberList() {
         return em.createQuery("select m from Member m order by lastAccess asc", Member.class)
                 .getResultList();
     }
 
-//    public List<Member> findMemberListFiltered(MemberSearch memberSearch) {
-//        String jpql = "select m From Member m";
-//
-//        }
-//    }
+    // 필터된 멤버 정보를 받기(from DB)
+    public List<Member> findMemberListFiltered(byte userType, String gender) {
+        return em.createQuery("select m from Member m where m.isLocal=:userType and m.gender=:gender", Member.class)
+                .getResultList();
+    }
 }

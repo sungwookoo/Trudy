@@ -18,4 +18,12 @@ public class PlaceService {
     public List<Place> findPlaceList() {
         return placeRepository.findPlaceList();
     }
+    public List<Place> findPlaceListFiltered(String[][] areaSigungu, String[] contentTypeId) {
+        return placeRepository.findPlaceListFiltered(areaSigungu, contentTypeId);
+    }
+    public List<Place> findPlaceListSearch(String title) {
+        return placeRepository.findPlaceListSearch(title);
+    }
+
+    public List<Place> findPlace(Long id) { return placeRepository.findPlace(id); }
 }

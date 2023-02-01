@@ -76,7 +76,5 @@ public class MemberService {
     }
 
     // 필터된 회원 목록 가져오기
-//    public List<Member> findMemberListFilted() { return memberRepository.findMemberListFiltered(); }
-
-
+    public List<Member> findMemberListFiltered(byte userType, String gender) { return memberRepository.findMemberListFiltered(userType, gender); }
 }
