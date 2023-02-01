@@ -6,7 +6,6 @@ import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
 import Profile from "./Profile/Profile";
-import Nav from "./Common/Nav";
 import ProfileUpdate from "./Profile/ProfileUpdate";
 import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";

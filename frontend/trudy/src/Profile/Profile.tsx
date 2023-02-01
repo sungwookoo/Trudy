@@ -34,7 +34,7 @@ function Profile() {
         {/* 프로필 사진과 유저네임 */}
           <div className='picture-name'>
             
-            {dummyMembers?.map((member ,i) => {
+            {dummyMembers.map((member) => {
                 return (
                   <div>
                     <div>

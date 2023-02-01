@@ -33,9 +33,65 @@ import axios from 'axios';
   
 // }
 
+
+
+
+
+// type PostType = {
+//   id: number;
+//   title: string;
+//   content: string;
+//   created_at: string;
+// }
+
+function ForumPage() {
+
+  // const [response, setForumResponse] = useState<IgetForumResponse[]>();
+  // const IgetForumData: IgetForumData   = {
+  //   url: 'api/post'
+  // }
+
+  // 이벤트 보내는거
+  // const [category, setCategory] = useState<string>('');
+  // const [region, setRegion] = useState<string>('');
+  // const [search, setSearch] = useState<string>('');
+
+  // const arr = new Array(1, 2)
+  // for (let i = 0; i < arr.length; i++) {
+  //   console.log(arr[i])
+  // }
+
+    // useEffect(() => {
+    //     axios.get('/forum')
+    //     .then(res => setForumResponse(res.data))
+    //     .catch(error => console.log(error))
+    // })
+  
+  
+  return(
+    
+  <div className='grid grid-cols-4 mx-48 mt-20'> 
+
+  {dummyPost.map((post) => (
+    <ForumItem 
+    key={post.id}
+    post={post}
+    // title={post.title}
+    // content={post.content}
+    // created_at={post.created_at}
+    />
+    
+  ))}
+
+  </div>
+  );
+}
+export default ForumPage;
+
+
 // 더미 포스트들
 
-export const dummyPost = [
+const dummyPost = [
   {
     id: 1,
     member_id: 2,
@@ -44,6 +100,8 @@ export const dummyPost = [
     thumbnail_image_id: 3,
     created_at: '2023-01-25',
     update_at: '2023-01-27',
+    url: 'https://post-phinf.pstatic.net/MjAxNzAzMjlfNzcg/MDAxNDkwNzY4NTgxNDIz.iarrZNPWO9PnUpjn_F4fCJSHNS2rCGIpLUjbDLrSd4Mg.WgEljCuTXQNuVIt60_kKswCa5_ugaD3ty8Xt2T8vyM4g.JPEG/GettyImages-467508318.jpg?type=w1200'
+
   },
   {
     id: 2,
@@ -53,10 +111,12 @@ export const dummyPost = [
     thumbnail_image_id: 3,
     created_at: '2023-01-25',
     update_at: '2023-01-27',
+    url: 'https://korean.visitseoul.net/data/kukudocs/seoul2133/20220829/202208291317416161.jpg'
+
   }
 ]
 
-export const dummyPost_images = [
+const dummyPost_images = [
   {
     id: 1,
     post_id: 1,
@@ -80,52 +140,3 @@ export const dummyMembers = [
     image: 'https://cdn.newsculture.press/news/photo/202210/511468_622866_71.jpg'
   }
 ]
-
-
-
-type PostType = {
-  id: number;
-  title: string;
-  content: string;
-  created_at: string;
-}
-
-export default function ForumPage() {
-
-  // const [response, setForumResponse] = useState<IgetForumResponse[]>();
-  // const IgetForumData: IgetForumData   = {
-  //   url: 'api/post'
-  // }
-
-  // 이벤트 보내는거
-  // const [category, setCategory] = useState<string>('');
-  // const [region, setRegion] = useState<string>('');
-  // const [search, setSearch] = useState<string>('');
-
-  // const arr = new Array(1, 2)
-  // for (let i = 0; i < arr.length; i++) {
-  //   console.log(arr[i])
-  // }
-
-    // useEffect(() => {
-    //     axios.get('/forum')
-    //     .then(res => setForumResponse(res.data))
-    //     .catch(error => console.log(error))
-    // })
-  
-
-  return(
-    <div className='grid grid-cols-4 mx-48 mt-20'>
-    {dummyPost.map((post: PostType) => {
-      return (
-        <ForumItem key={post.id}
-        title={post.title}
-        content={post.content}
-        created_at={post.created_at}
-        />
-        );
-    })}
-    </div>
-  );
-}
-    
