@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +30,8 @@ public class PostController {
 
     private final PostService postService;
 
+    ModelMapper modelMapper = new ModelMapper();
+
     //포럼 게시글 목록 가져오기
     @Operation(summary = "get posts", description = "포럼 게시글 목록 가져오기")
     @ApiResponses({
@@ -37,14 +42,34 @@ public class PostController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping
-    public List<PostListResponse> postList(){
+    public ResponseEntity<?> postList(){
 
-        List<Post> findPosts = postService.findPostList();
-        List<PostListResponse> response = findPosts.stream()
-                .map(p -> new PostListResponse( p.getId(), p.getMemberId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt() ))
-                .collect(Collectors.toList());
+        //List<Post> findPostList = postService.findPostList();
+        //List<PostListResponse> response = findPostList.stream()
+//                .map(p -> new PostListResponse(
+//                        p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(),modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class)
+//                        /*p.getMemberId().getId(), p.getMemberId().getEmail(), p.getMemberId().getName(), p.getMemberId().getImage(), p.getMemberId().getGender(), p.getMemberId().getArea(),
+//                            p.getMemberId().getBirth(), p.getMemberId().getIsLocal(), p.getMemberId().getIsPublic(), p.getMemberId().getLastAccess()*/ ))
+//                .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class)))
+//                .collect(Collectors.toList());
 
-        return response;
+        //return response;
+
+        try{
+            List<Post> findPostList = postService.findPostList();
+            if(findPostList != null || !findPostList.isEmpty()){
+                List<PostListResponse> response = findPostList.stream()
+                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class)))
+                        .collect(Collectors.toList());
+
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
 
     }
 
@@ -69,28 +94,24 @@ public class PostController {
 
     //포럼 게시글 상세보기
     @GetMapping("/{post_id}")
-    public void postDetail(@PathVariable("post_id") Long postId){
-        Optional<Post> findPost = postService.findPostDetail(postId);
+    public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
 
         //존재하는지 확인 후 전송
-
         try{
-            if(findPost == null){
+            Optional<Post> findPost = postService.findPostDetail(postId);
 
-                return;
+            if(findPost.get() != null || findPost.isPresent()){
+                Post p = findPost.get();
+                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
+                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
+                return ResponseEntity.ok().body(postListResponse);
+            } else {
+                return ResponseEntity.noContent().build();
             }
         } catch (Exception e){
             e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
-
-        //return
-
-//        List<PostListResponse> response = findPosts.stream()
-//                .map(p -> new PostListResponse( p.getId(), p.getMemberId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt() ))
-//                .collect(Collectors.toList());
-
-        //return
-
     }
 
     //포럼 게시글 좋아요
