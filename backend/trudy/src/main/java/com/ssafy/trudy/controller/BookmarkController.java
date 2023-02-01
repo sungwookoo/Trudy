@@ -1,6 +1,6 @@
 package com.ssafy.trudy.controller;
 
-import com.ssafy.trudy.service.BookmarkService;
+import com.ssafy.trudy.bookmark.BookmarkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
