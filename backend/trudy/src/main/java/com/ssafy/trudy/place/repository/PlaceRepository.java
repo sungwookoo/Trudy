@@ -1,6 +1,7 @@
 package com.ssafy.trudy.place.repository;
 
 import com.ssafy.trudy.place.model.Place;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -54,12 +55,19 @@ public class PlaceRepository {
         return em.createQuery(jpql, Place.class).getResultList();
     }
 
-    // 결과는 ㄴㄴ -> title을 포함한다는 것을 어떻게 써야할까?
     public List<Place> findPlaceListSearch(String title) {
         return em.createQuery("select p from Place p where p.title like title", Place.class).getResultList();
     }
 
     public List<Place> findPlace(Long id) {
         return em.createQuery("select p from Place p where p.id = id", Place.class).getResultList();
+    }
+
+//    public List<Place> findByNameContaingTitle(String keyword);
+
+    public List<Place> searchPlaceFilter(String keyword) {;
+        return em.createQuery("select p from Place p where p.title like :cash", Place.class)
+                .setParameter("cash", "%" + keyword + "%")
+                .getResultList();
     }
 }

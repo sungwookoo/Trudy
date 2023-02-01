@@ -20,7 +20,7 @@ public class PlaceController {
     @Autowired
     private PlaceService placeService;
 
-    // 초기 조회, 전체 조회
+    // 1) 초기 조회, 전체 조회
     @GetMapping({"","/areaAllFilter"})
     public Result places() {
         List<Place> findPlace = placeService.findPlaceList();
@@ -31,7 +31,7 @@ public class PlaceController {
         return new Result(collect);
     }
 
-    // 클릭해서 하나의 관광지 선택
+    // 2) 클릭해서 하나의 관광지 선택
     @GetMapping("/detail")
     public PlacesDto placeOne(@RequestParam String placeId) {
         Long id = Long.parseLong(placeId);
@@ -58,6 +58,18 @@ public class PlaceController {
         placeDto.title = findOnePlace.getTitle();
         placeDto.zipcode = findOnePlace.getZipcode();
         return placeDto;
+    }
+
+    // 3) 돋보기 눌러서 서칭
+    @GetMapping("/search/{keyword}")
+    @ResponseBody
+    public Result placesSearch(@PathVariable String keyword) {
+        List<Place> searchPlaceFiltered = placeService.searchPlaceFilter(keyword);
+        List<PlacesDto> collect = searchPlaceFiltered.stream()
+                .map(p -> new PlacesDto(p.getId(), p.getAddr1(), p.getAddr2(), p.getAreacode(), p.getCat1(), p.getCat2(), p.getCat3(), p.getContentid(), p.getContenttypeid(), p.getCreatedtime(), p.getFirstimage(), p.getFirstimage2(), p.getMapx(), p.getMapy(), p.getMlevel(), p.getModifiedtime(), p.getReadcount(), p.getSigungucode(), p.getTel(), p.getTitle(), p.getZipcode()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
     }
     
     @GetMapping("/filter")
