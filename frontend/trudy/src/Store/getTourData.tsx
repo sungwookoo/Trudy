@@ -22,5 +22,5 @@ interface getTourResponse {
 }
 
 
-export const trudygetTourData = (url:getTourData) => {
+export const getTourData = (url:getTourData) => {
   const [response, setResponse] = useState<getTourResponse[]>();}

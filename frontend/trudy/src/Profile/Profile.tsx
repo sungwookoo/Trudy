@@ -2,7 +2,7 @@ import '../Profile/Profile.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-
+import { dummyMembers } from '../Forum/Forum';
 
 
 export type getUser = {
@@ -33,15 +33,21 @@ function Profile() {
       <div className='profile-container'>
         {/* 프로필 사진과 유저네임 */}
           <div className='picture-name'>
-            <img className='profile-picture'
-            src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
-            alt="profilepicture" 
-            />
-            {userInfo?.map((user, i) => {
+            
+            {dummyMembers?.map((member ,i) => {
                 return (
-                    <div className='user-name' key={user.id}>
-                      { user.username === 'Kamren' ? user.username : '' }
+                  <div>
+                    <div>
+                  <img className='profile-picture'
+                  src={member.image}
+                  alt="profilepicture" 
+                  />
                     </div>
+                  <div className='user-name' key={member.id}>
+                    { member.name }
+                    {/* { user.username === 'Kamren' ? user.username : '' } */}
+                  </div>
+                  </div>
                 )
               })
             }

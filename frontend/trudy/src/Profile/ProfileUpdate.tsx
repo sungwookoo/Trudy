@@ -59,11 +59,11 @@ function ProfileUpdate() {
       />
       <br />
       <label htmlFor="introduction">Introduction:</label>
-      <textarea
+      <input className='intro-text'
         id="introduction"
         name="introduction"
         value={userData.introduction}
-        // onChange={handleInputChange}
+        onChange={handleInputChange}
       />
       <br />
       <button className='bg-green-500 px-2 py-1 rounded-full' onClick={navigateToProfile}>Save Changes</button>
