@@ -1,6 +1,7 @@
 package com.ssafy.trudy.post;
 
 import com.ssafy.trudy.post.model.Post;
+import com.ssafy.trudy.post.model.PostDto;
 import com.ssafy.trudy.post.model.PostDto.PostListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Tag(name = "post", description = "게시물 API")
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/post")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
@@ -47,8 +50,9 @@ public class PostController {
 
     //포럼 게시글 작성
     @PostMapping
-    public void postAdd(){
-
+    public void postAdd(@RequestBody PostDto.PostInsertRequest postInsertRequest){
+        //1. dto안에 dto를 key, body 형식으로 받아온다.
+        postService.addPost(postInsertRequest);
     }
 
     //포럼 게시글 수정
@@ -65,7 +69,27 @@ public class PostController {
 
     //포럼 게시글 상세보기
     @GetMapping("/{post_id}")
-    public void postDetail(){
+    public void postDetail(@PathVariable("post_id") Long postId){
+        Optional<Post> findPost = postService.findPostDetail(postId);
+
+        //존재하는지 확인 후 전송
+
+        try{
+            if(findPost == null){
+
+                return;
+            }
+        } catch (Exception e){
+            e.getStackTrace();
+        }
+
+        //return
+
+//        List<PostListResponse> response = findPosts.stream()
+//                .map(p -> new PostListResponse( p.getId(), p.getMemberId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt() ))
+//                .collect(Collectors.toList());
+
+        //return
 
     }
 

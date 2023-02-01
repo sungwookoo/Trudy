@@ -1,12 +1,14 @@
 package com.ssafy.trudy.post;
 
 import com.ssafy.trudy.post.model.Post;
+import com.ssafy.trudy.post.model.PostDto;
 import com.ssafy.trudy.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -22,7 +24,9 @@ public class PostService {
     }
 
     //포럼 게시글 작성
-    public void addPost(){
+    public void addPost(PostDto.PostInsertRequest postDetailRequest){
+        // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.).
+
     }
 
     //포럼 게시글 수정
@@ -36,8 +40,10 @@ public class PostService {
     }
 
     //포럼 게시글 상세보기
-    public void findPostDetail(){
-
+    public Optional<Post> findPostDetail(Long postId){
+        //Optional 클래스는 여러 가지 API를 제공하여 null일 수도 있는 객체를 다룰 수 있도록 돕습니다.
+        Optional<Post> post = postRepository.findById(postId);
+        return post;
     }
 
     //포럼 게시글 좋아요
