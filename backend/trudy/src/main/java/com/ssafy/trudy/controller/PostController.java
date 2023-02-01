@@ -1,10 +1,19 @@
 package com.ssafy.trudy.controller;
 
+import com.ssafy.trudy.model.member.Member;
+import com.ssafy.trudy.model.post.Post;
 import com.ssafy.trudy.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "post", description = "게시물 API")
 @RestController
 @RequestMapping("/api/post")
 @Slf4j
@@ -14,7 +23,15 @@ public class PostController {
     private final PostService postService;
 
     //포럼 게시글 목록 가져오기
-    @GetMapping
+    @Operation(summary = "get posts", description = "포럼 게시글 목록 가져오기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = Post.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/")
     public void postList(){
 
     }
