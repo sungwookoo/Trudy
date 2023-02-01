@@ -1,7 +1,10 @@
 package com.ssafy.trudy.controller;
 
 import com.ssafy.trudy.model.member.Member;
+import com.ssafy.trudy.model.member.MemberDto;
 import com.ssafy.trudy.model.post.Post;
+import com.ssafy.trudy.model.post.PostDto;
+import com.ssafy.trudy.model.post.PostDto.PostListResponse;
 import com.ssafy.trudy.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,6 +15,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Tag(name = "post", description = "게시물 API")
 @RestController
@@ -31,8 +37,15 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping("/")
-    public void postList(){
+    @GetMapping
+    public List<PostListResponse> postList(){
+
+        List<Post> findPosts = postService.findPostList();
+        List<PostListResponse> response = findPosts.stream()
+                .map(p -> new PostListResponse( p.getId(), p.getMemberId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt() ))
+                .collect(Collectors.toList());
+
+        return response;
 
     }
 

@@ -2,6 +2,7 @@ package com.ssafy.trudy.controller;
 
 
 import com.ssafy.trudy.model.member.Member;
+import com.ssafy.trudy.model.member.MemberDto;
 import com.ssafy.trudy.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -89,8 +90,8 @@ public class MemberController {
     @GetMapping("")
     public Result memberList(){
         List<Member> findMembers = memberService.findMemberList();
-        List<MemberListDto> collect = findMembers.stream()
-                .map(m -> new MemberListDto(m.getId(), m.getEmail(), m.getPassword(), m.getName(), m.getImage(), m.getGender(), m.getArea(), m.getBirth(), m.getIsLocal(), m.getIsPublic(), m.getLastAccess()))
+        List<MemberDto.MemberListDto> collect = findMembers.stream()
+                .map(m -> new MemberDto.MemberListDto(m.getId(), m.getEmail(), m.getPassword(), m.getName(), m.getImage(), m.getGender(), m.getArea(), m.getBirth(), m.getIsLocal(), m.getIsPublic(), m.getLastAccess()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -122,19 +123,5 @@ public class MemberController {
         private T data;
     }
 
-    @Data
-    @AllArgsConstructor
-    static class MemberListDto {
-        private Long id;
-        private String email;
-        private String password;
-        private String name;
-        private String image;
-        private String gender;
-        private String area;
-        private String birth;
-        private byte isLocal;
-        private byte isPublic;
-        private Timestamp lastAccess;
-    }
+
 }
