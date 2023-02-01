@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/place")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PlaceController {
 
     @Autowired
