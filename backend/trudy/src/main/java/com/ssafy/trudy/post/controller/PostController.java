@@ -40,8 +40,9 @@ public class PostController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping
-    public ResponseEntity<?> postList(){
-
+    public String/*ResponseEntity<?>*/ postList(){
+        //test
+        postService.findPostList();
         //List<Post> findPostList = postService.findPostList();
         //List<PostListResponse> response = findPostList.stream()
 //                .map(p -> new PostListResponse(
@@ -53,30 +54,31 @@ public class PostController {
 
         //return response;
 
-        try{
-            List<Post> findPostList = postService.findPostList();
-            if(findPostList != null || !findPostList.isEmpty()){
-                /*List<PostListResponse> response = findPostList.stream()
-                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
-                        .collect(Collectors.toList());*/
-
-                return ResponseEntity.ok().body("response");
-            } else {
-                return ResponseEntity.noContent().build();
-            }
-        } catch (Exception e){
-            e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+//        try{
+//            List<Post> findPostList = postService.findPostList();
+//            if(findPostList != null || !findPostList.isEmpty()){
+//                /*List<PostListResponse> response = findPostList.stream()
+//                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
+//                        .collect(Collectors.toList());*/
+//
+//                return ResponseEntity.ok().body("response");
+//            } else {
+//                return ResponseEntity.noContent().build();
+//            }
+//        } catch (Exception e){
+//            e.getStackTrace();
+//            return ResponseEntity.internalServerError().build();
+//        }
+        return "test end";
 
     }
 
     //포럼 게시글 작성
-    @PostMapping
-    public void postAdd(@RequestBody PostDto.PostInsertRequest postInsertRequest){
-        //1. dto안에 dto를 key, body 형식으로 받아온다.
-        postService.addPost(postInsertRequest);
-    }
+//    @PostMapping
+//    public void postAdd(@RequestBody PostDto.Post postDto){
+//        //1. dto안에 dto를 key, body 형식으로 받아온다.
+//        postService.addPost(postDto);
+//    }
 
     //포럼 게시글 수정
     @PutMapping("/{post_id}")
