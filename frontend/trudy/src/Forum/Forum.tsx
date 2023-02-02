@@ -85,8 +85,8 @@ function ForumPage() {
         <button className='rounded-full bg-green-500 w-48 h-10'>Attraction</button>
         <button className='rounded-full bg-green-500 w-48 h-10'>Festival</button> */}
         </div>
-        <div>
-          <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-5 ml-5"
+        <div className='bg-red-700'>
+          <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
               onClick={navigateToCreateArticle}>
               Post Article
           </button>
