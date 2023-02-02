@@ -24,9 +24,9 @@ public class PostDto {
 
         private PostElement postElement;
         private MemberElement memberElement;
-        private List<PostImageElement> postImageElements;
-        private List<PostAreaElement> postAreaElements;
-        private List<PostCategoryElement> postCategoryElements;
+        private List<PostImageElement> postImageElementList;
+        private List<PostAreaElement> postAreaElementList;
+        private List<PostCategoryElement> postCategoryElementList;
 
         private int postLikeCount;
 

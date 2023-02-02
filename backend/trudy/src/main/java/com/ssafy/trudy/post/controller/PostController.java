@@ -40,9 +40,9 @@ public class PostController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping
-    public String/*ResponseEntity<?>*/ postList(){
+    public ResponseEntity<?> postList(){
         //test
-        postService.findPostList();
+       // postService.findPostList();
         //List<Post> findPostList = postService.findPostList();
         //List<PostListResponse> response = findPostList.stream()
 //                .map(p -> new PostListResponse(
@@ -54,22 +54,22 @@ public class PostController {
 
         //return response;
 
-//        try{
-//            List<Post> findPostList = postService.findPostList();
-//            if(findPostList != null || !findPostList.isEmpty()){
-//                /*List<PostListResponse> response = findPostList.stream()
-//                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
-//                        .collect(Collectors.toList());*/
-//
-//                return ResponseEntity.ok().body("response");
-//            } else {
-//                return ResponseEntity.noContent().build();
-//            }
-//        } catch (Exception e){
-//            e.getStackTrace();
-//            return ResponseEntity.internalServerError().build();
-//        }
-        return "test end";
+        try{
+            List<PostDto.PostCombine> findPostCombines = postService.findPostList();
+            if(findPostCombines != null || !findPostCombines.isEmpty()){
+                /*List<PostListResponse> response = findPostList.stream()
+                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
+                        .collect(Collectors.toList());*/
+
+                return ResponseEntity.ok().body(findPostCombines);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+        //return "test end";
 
     }
 

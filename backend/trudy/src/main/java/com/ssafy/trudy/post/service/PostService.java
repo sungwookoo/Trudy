@@ -25,50 +25,26 @@ public class PostService {
     ModelMapper modelMapper = new ModelMapper();
 
     //포럼 게시글 목록 가져오기
-    public String /*List<Post>*/ findPostList(){
-        //엔티티를 담을 리스트
-//        List<Post> posts = postRepository.findAll().stream().map(p->);
-//        List<PostImage> postImages = new ArrayList<>();
-//        List<PostCategory> postCategories = new ArrayList<>();
-//        List<PostArea> postAreas  = new ArrayList<>();
-
-//        List<PostDto.> posts = postRepository.findAll();
-//        List<PostImage> postImages = new ArrayList<>();
-//        List<PostCategory> postCategories = new ArrayList<>();
-//        List<PostArea> postAreas  = new ArrayList<>();
-
-//        log.info(posts.get(0).toString());
-//        log.info(posts.get(0).getId().toString());
-//        log.info("test" + postAreaRepository.findByPostId(posts.get(0)));
-//        log.info("convert : " + modelMapper.map(postAreaRepository.findByPostId(posts.get(0)), PostDto.PostAreaElement.class));
-
-
+    public List<PostDto.PostCombine> findPostList(){
 
         //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
-        List<Post> postEntities = postRepository.findAll();//.stream().map(p->new PostDto.PostWithMemeber(modelMapper.map(p, PostDto.PostElement.class),modelMapper.map(p.getMemberId(), PostDto.MemberElement.class) ) ).collect(Collectors.toList());
-
-
-        //PostArea postArea =  postAreaRepository.findByPostId(postEntities.get(0));
-
-//        log.info("postArea entity print +++++++++++: " + postArea);
-//        log.info("postArea entity to SigunguElement print +++++++++++: " + modelMapper.map(postArea.getSigunguCode(), PostDto.SigunguElement.class));
-//        log.info("postArea entity to AreaElement print +++++++++++: " + modelMapper.map(postArea.getSigunguCode().getAreaCode(), PostDto.AreaElement.class));
+        List<Post> postEntityList = postRepository.findAll();//.stream().map(p->new PostDto.PostWithMemeber(modelMapper.map(p, PostDto.PostElement.class),modelMapper.map(p.getMemberId(), PostDto.MemberElement.class) ) ).collect(Collectors.toList());
 
         //Dto를 담을 리스트()
-        List<PostDto.PostCombine> postCombines = new ArrayList<>();
+        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
 
-        for(Post postEntity : postEntities){
+        for(Post postEntity : postEntityList){
 
             PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
             PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
 
-            //image 정보 리스트 가져오기
-            List<PostDto.PostImageElement> postImageElements = postImageRepository.findByPostId(postEntity)
+            //image 정보 리스트 가져와서 DTO에 저장
+            List<PostDto.PostImageElement> postImageElementList = postImageRepository.findByPostId(postEntity)
                     .stream()
                     .map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
 
-            //area 정보 리스트 가져오기
-            List<PostDto.PostAreaElement> postAreaElements = postAreaRepository
+            //area 정보 리스트 가져와서 DTO에 저장
+            List<PostDto.PostAreaElement> postAreaElementList = postAreaRepository
                     .findByPostId(postEntity)
                     .stream()
                     .map(p -> new PostDto.PostAreaElement(
@@ -77,62 +53,29 @@ public class PostService {
                     )).collect(Collectors.toList());
 
 
-            //category 정보 리스트 가져오기
-            List<PostDto.PostCategoryElement> postCategoryElements = postCategoryRepository
+            //category 정보 리스트 가져와서 DTO에 저장
+            List<PostDto.PostCategoryElement> postCategoryElementLIst = postCategoryRepository
                     .findByPostId(postEntity)
                     .stream()
-                    .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());;
+                    .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());
 
+            //postLikeCount 정보 가져옴
             int postLikeCount = postLikeRepository.countByPostId(postEntity);
 
-            postCombines.add(new PostDto.PostCombine(postElement, memberElement, postImageElements, postAreaElements, postCategoryElements, postLikeCount));
-
-
+            //한개 포럼글에 대한 정보를 묶음
+            postCombineList.add(new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount));
         }
 
-        for(int i=0; i<postCombines.size(); i++) {
-            log.info(i + " post+++++++ : " + postCombines.get(i).getPostElement().toString());
-            log.info(i + " member+++++++ : " + postCombines.get(i).getMemberElement().toString());
-            log.info(i + " image+++++++ : " + postCombines.get(i).getPostImageElements().toString());
-            log.info(i + " area+++++++ : " + postCombines.get(i).getPostAreaElements().toString());
-            log.info(i + " category+++++++ : " + postCombines.get(i).getPostCategoryElements().toString());
-            log.info(i + " count+++++++ : " + postCombines.get(i).getPostLikeCount());
+        for(int i=0; i<postCombineList.size(); i++) {
+            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
+            log.info(i + " member+++++++ : " + postCombineList.get(i).getMemberElement().toString());
+            log.info(i + " image+++++++ : " + postCombineList.get(i).getPostImageElementList().toString());
+            log.info(i + " area+++++++ : " + postCombineList.get(i).getPostAreaElementList().toString());
+            log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
+            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
         }
 
-        //List<PostDto.PostImageElement> postImageElements = PostImageRepository.findB
-       // List<PostDto.PostAreaElement> postAreaElements = postAreaRepository.findByPostId()
-        //log.info("test11 : " + postWithMemebers.toString());
-
-//        List<PostDto.PostImageElement> postImageElements = new ArrayList<>();
-//        List<PostDto.PostAreaElement> postAreaElements = new ArrayList<>();
-//        List<PostDto.PostCategoryElement> postCategoryElements = new ArrayList<>();
-//
-//        for(PostDto.PostElement postElement : postElements){
-//            Long postId = postElement.getId();
-//            postImageElements.add(postImageRepository.findByPostId)
-//        }
-//
-//        log.info("test : " + postElements.get(0).toString());
-
-        //엔티티들 가져옴
-//        for(Post post : posts){
-//            Long id = post.getId();
-//            Optional<PostImage> postImage = postImageRepository.findById(id);  //PostImage 엔티티를 가져옴
-//            postImages.add(postImage.get());
-//
-//            Optional<PostCategory> postCategory = postCategoryRepository.findById(id);  //postCategory 엔티티를 가져옴
-//            postCategories.add(postCategory.get());
-//
-//            Optional<PostArea> postArea = postAreaRepository.findById(id);      //postArea 엔티티를 가져옴
-//            postAreas.add(postArea.get());
-//        }
-        //log.info(posts.get(0).toString());
-
-
-        Map<String, Object> resMap = new HashMap<>();
-        //resMap.put()
-
-        return "posts";
+        return postCombineList;
     }
 
     //포럼 게시글 작성

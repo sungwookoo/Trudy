@@ -16,6 +16,8 @@ public class PostCategory {
     @JoinColumn(name = "post_id")
     private Post postId;
 
-    @Column(length = 45)
-    private String name;
+    @Column(name = "name", length = 45)
+    @Enumerated(EnumType.STRING)
+    private CategoryName categoryName;
+//    private String name;
 }
