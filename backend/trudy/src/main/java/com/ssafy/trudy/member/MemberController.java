@@ -92,7 +92,7 @@ public class MemberController {
         return memberService.findMember(email);
     }
 
-    //회원 목록 가져오기
+    //1) 회원 목록 가져오기
     @GetMapping("")
     public List<MemberDto> findAllMember() {
         return memberService.findAll();
