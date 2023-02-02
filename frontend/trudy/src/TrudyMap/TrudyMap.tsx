@@ -1,34 +1,50 @@
-import React, { Component } from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import React, { useEffect, useState } from "react";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import "./TrudyMap.css";
-import SearchBar from "./SearchBar";
+import Place from "./Place";
 
 const containerStyle = {
-  width: "800px",
-  height: "600px",
+  width: "1000px",
+  height: "680px",
 };
 
-const center = {
-  lat: 37.460459,
-  lng: 126.44068,
+let center = {
+  lat: 37.4602,
+  lng: 126.4407,
 };
 
-class TrudyMap extends Component {
-  render() {
-    return (
-      <>
-        <SearchBar />
-        <LoadScript googleMapsApiKey="AIzaSyCr_VXyq_r6dte_29ocp-T2i6yf30VvUMI" region="US" language="en">
-          <div className="google-map">
-            <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-              {/* Child components, such as markers, info windows, etc. */}
-              <></>
-            </GoogleMap>
-          </div>
-        </LoadScript>
-      </>
-    );
-  }
+function MyComponent() {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyCr_VXyq_r6dte_29ocp-T2i6yf30VvUMI",
+    language: "en",
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map: any) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    // map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback() {
+    setMap(null);
+  }, []);
+
+  return isLoaded ? (
+    <div className="map-page-container">
+      <div className="place-info">
+        <Place getPosition={center} />
+      </div>
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoad} onUnmount={onUnmount}>
+        {/* Child components, such as markers, info windows, etc. */}
+        <></>
+      </GoogleMap>
+    </div>
+  ) : (
+    <></>
+  );
 }
 
-export default TrudyMap;
+export default React.memo(MyComponent);
