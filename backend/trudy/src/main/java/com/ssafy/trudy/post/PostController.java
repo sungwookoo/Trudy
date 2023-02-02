@@ -58,11 +58,11 @@ public class PostController {
         try{
             List<Post> findPostList = postService.findPostList();
             if(findPostList != null || !findPostList.isEmpty()){
-                List<PostListResponse> response = findPostList.stream()
-                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class)))
-                        .collect(Collectors.toList());
+                /*List<PostListResponse> response = findPostList.stream()
+                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
+                        .collect(Collectors.toList());*/
 
-                return ResponseEntity.ok().body(response);
+                return ResponseEntity.ok().body("response");
             } else {
                 return ResponseEntity.noContent().build();
             }
@@ -102,9 +102,9 @@ public class PostController {
 
             if(findPost.get() != null || findPost.isPresent()){
                 Post p = findPost.get();
-                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-                return ResponseEntity.ok().body(postListResponse);
+//                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
+//                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
+                return ResponseEntity.ok().body("postListResponse");
             } else {
                 return ResponseEntity.noContent().build();
             }

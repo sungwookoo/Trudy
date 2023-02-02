@@ -24,6 +24,7 @@ public class PostDto {
 //        private LocalDateTime updatedAt;
         private PostRequest post;
         private MemberRequest member;
+        private PostImageRequest postImageRequest;
 
         //private postCategoryRequest postCategoryRequest;
        // private PostCategoryRequest postCategoryRequest;

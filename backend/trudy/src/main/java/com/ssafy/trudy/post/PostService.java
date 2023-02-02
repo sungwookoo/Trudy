@@ -28,6 +28,7 @@ public class PostService {
     //포럼 게시글 목록 가져오기
     public List<Post> findPostList(){
         List<Post> post = postRepository.findAll();
+        log.info(post.get(0).toString());
         return post;
     }
 
