@@ -4,6 +4,7 @@ import './ForumItem.css'
 
 
 interface propsTypes {
+  post: number;
   title: string;
   content: string;
   created_at: string;
@@ -14,7 +15,7 @@ interface propsTypes {
 
 
 function ForumItem(props: any) {
-
+  console.log(props.post)
   const forumData = props.post
 
   return(
@@ -31,7 +32,7 @@ function ForumItem(props: any) {
           
         {/* Post 테이블 더미 */}
         <div>{forumData.title}</div>
-        <div>{forumData.content}</div>
+        <div className='txt-content'>{forumData.content}</div>
         <div>{forumData.created_at}</div>
         
       </div>

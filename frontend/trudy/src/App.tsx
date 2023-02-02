@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Nav from "./Common/Nav";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
@@ -11,6 +10,7 @@ import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";
 import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
+import Nav from "./Common/Nav";
 
 function App() {
   return (
