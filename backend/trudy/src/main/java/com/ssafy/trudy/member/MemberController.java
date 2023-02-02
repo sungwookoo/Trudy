@@ -82,7 +82,7 @@ public class MemberController {
 
     }
 
-    //회원 목록 가져오기
+    //1) 회원 목록 가져오기
     @GetMapping("")
     public Result memberList(){
         List<Member> findMembers = memberService.findMemberList();
@@ -93,6 +93,7 @@ public class MemberController {
         return new Result(collect);
     }
 
+    // 2)
     @GetMapping("/filter")
     @ResponseBody
     public Result memberListFiltered(@RequestBody MemberFilterDto memberFilterDto){
