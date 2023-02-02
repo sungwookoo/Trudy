@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
+import { useLinkClickHandler } from "react-router-dom";
 import PlaceForm from "./PlaceForm";
 
-type mapPlace = {
+export type mapPlaceType = {
   id: number;
   addr1: string;
   addr2: string | undefined;
@@ -12,7 +13,7 @@ type mapPlace = {
   contentId: string | undefined;
   contentTypeId: string | undefined;
   createdTime: string | undefined;
-  firstImage: string | undefined;
+  firstImage: string;
   firstImage2: string | undefined;
   mapx: string;
   mapy: string;
@@ -24,31 +25,40 @@ type mapPlace = {
   tel: string | undefined;
   zipcode: string | undefined;
 };
-function Place() {
-  const [places, setPlaces] = useState<mapPlace[]>([]);
+
+function Place(props: any) {
+  const [position, setPostion] = useState<string[]>(["37.4602", "126.4407"]);
+  const [places, setPlaces] = useState<mapPlaceType[]>([]);
   const API_URL: string = "api/place";
 
-  const getAPI = useCallback(
-    async (e: any) => {
-      e.preventDefault();
-      const result = await axios.get(API_URL);
+  useEffect(() => {
+    axios.get(API_URL).then((res: any) => {
+      console.log(res.data.data.length, 222);
       // console.log("result.data: ", result.data.slice(1, 30));
-      setPlaces(result.data.data.slice(1, 30));
-      console.log(places);
-    },
-    [API_URL]
-  );
-  // console.log(places);
+      setPlaces([...res.data.data].slice(1, 10));
+    });
+  }, []);
+
+  // })
+  // await axios.get(API_URL)
+  // .then(result =>
+  //   console.log(result.data.data.length, 222)
+  //     // console.log("result.data: ", result.data.slice(1, 30));
+  //   setPlaces(result.data.data.slice(1, 30));
+  //   console.log(places);
+  //   )
+  //   [API_URL]
+  // );
+  // // console.log(places);
 
   return (
     <>
-      <button onClick={getAPI}>Fetching Data!</button>;
-      <img src={places[1].firstImage} alt="" />
-      <div>{places[1].title}</div>
-      <div>{places[1].addr1}</div>
-      {/* {places.map((data, i) => {
-        // <PlaceForm key={i} datas={data} />;
-      // })} */}
+      {places.map((data, i) => {
+        // return data.title;
+        // return <img src={data.firstImage} alt="Thumbnail"/>;
+
+        return <PlaceForm key={i} data={data} />;
+      })}
     </>
   );
 }
