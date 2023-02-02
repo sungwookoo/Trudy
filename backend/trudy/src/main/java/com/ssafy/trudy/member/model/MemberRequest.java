@@ -12,7 +12,9 @@ public class MemberRequest {
     private String password;
     private String name;
     private String gender;
-    private String area;
+    private Long areaCode;
+
+    private Long sigunguCode;
     private String birth;
     private byte isLocal;
     private byte isPublic;

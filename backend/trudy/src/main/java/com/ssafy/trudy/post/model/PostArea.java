@@ -1,6 +1,6 @@
 package com.ssafy.trudy.post.model;
 
-import com.ssafy.trudy.address.model.Sigungu;
+import com.ssafy.trudy.etc.model.Sigungu;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -16,7 +16,8 @@ public class MemberDto {
     private String name;
     private String image;
     private String gender;
-    private String area;
+    private Long areaCode;
+    private Long sigunguCode;
     private String birth;
     private byte isLocal;
     private byte isPublic;
@@ -24,14 +25,15 @@ public class MemberDto {
     private LocalDateTime lastAccess;
 
     @Builder
-    public MemberDto(Long id, String email, String password, String name, String image, String gender, String area, String birth, byte isLocal, byte isPublic, MemberRole role, LocalDateTime lastAccess) {
+    public MemberDto(Long id, String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode, String birth, byte isLocal, byte isPublic, MemberRole role, LocalDateTime lastAccess) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.image = image;
         this.gender = gender;
-        this.area = area;
+        this.areaCode = areaCode;
+        this.sigunguCode = sigunguCode;
         this.birth = birth;
         this.isLocal = isLocal;
         this.isPublic = isPublic;
