@@ -13,10 +13,6 @@ public class Introduce {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "member_id")
-    private Member memberId;
-
     private String title;
 
     private String plan;
