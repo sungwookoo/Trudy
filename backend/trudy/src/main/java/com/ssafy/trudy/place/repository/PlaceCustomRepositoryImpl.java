@@ -8,13 +8,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+
 public class PlaceCustomRepositoryImpl implements PlaceCustomRepository{
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public List<Place> findPlaceListByCategory(String[][] areaSigungu, String[] contentTypeId) {
+    public List<Place> findPlaceListByCategory(int offset, int limit, String[][] areaSigungu, String[] contentTypeId) {
         String jpql = "select m from Place m ";
 
         // Build areaSigungu filter
@@ -45,9 +45,11 @@ public class PlaceCustomRepositoryImpl implements PlaceCustomRepository{
             }
             jpql += ")";
         }
-
+        System.out.println(jpql);
         // Create query and set parameters
-        TypedQuery<Place> query = em.createQuery(jpql, Place.class);
+        TypedQuery<Place> query = em.createQuery(jpql, Place.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit);
         for (int i = 0; i < areaSigungu.length; i++) {
             query.setParameter("areaSigungu_" + i, areaSigungu[i][0]);
             query.setParameter("sigungu_" + i, areaSigungu[i][1]);
@@ -55,6 +57,16 @@ public class PlaceCustomRepositoryImpl implements PlaceCustomRepository{
         for (int i = 0; i < contentTypeId.length; i++) {
             query.setParameter("contentTypeId_" + i, contentTypeId[i]);
         }
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Place> findByPage(int offset, int limit) {
+        String jpql = "select p from Place p";
+        TypedQuery<Place> query = em.createQuery(jpql, Place.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit);
+
         return query.getResultList();
     }
 }
