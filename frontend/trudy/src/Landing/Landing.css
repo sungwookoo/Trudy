@@ -6,6 +6,7 @@
 .outer {
   height: 95vh;
   overflow-y: auto;
+  overflow: hidden;
 }
 
 .landing1 {

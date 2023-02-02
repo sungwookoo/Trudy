@@ -3,6 +3,8 @@ import React, { useEffect, useState, Component } from 'react';
 import './Forum.css'
 import ForumItem from './ForumItem';
 import axios from 'axios';
+import Category from '../Common/ForumCategory';
+import ForumCreate from './ForumCreate';
 
 interface IgetForumResponse {
   id: number;
@@ -30,22 +32,33 @@ interface IgetForumResponse {
 // }
 
 
-// type PostType = {
-//   id: number;
-//   title: string;
-//   content: string;
-//   created_at: string;
-// }
+interface articlePostType {
+  title: string;
+  content: string;
+}
+
 
 function ForumPage() {
 
   const [forumResponse, setForumResponse] = useState<IgetForumResponse[]>([]);
+// 나중에 articles를 밑에 map돌려줘야함
+  // const [articles, setArticles] = useState(<articlePostType[]>)([]);
 
+  const [articles, setArticles] = useState<{ title: string; content: string }[]>([]);
 
+  
   // 이벤트 보내는거
   // const [forumCategory, setCategory] = useState<string>('');
   // const [forumRegion, setRegion] = useState<string>('');
   // const [forumSearch, setSearch] = useState<string>('');
+
+  // 작성하기 버튼
+  const navigate = useNavigate();
+  const navigateToCreateArticle = () => {
+    navigate('/ForumCreate');
+  };
+
+
 
   // const arr = new Array(1, 2)
   // for (let i = 0; i < arr.length; i++) {
@@ -66,8 +79,17 @@ function ForumPage() {
     <div className='forum-page'>
       <div className='filter-bar'>
         <div className='cat-selectors'>
-        <button className='rounded-full bg-green-500 w-52'>Food</button>
-        <button className='rounded-full bg-green-500 w-52'>Hotel</button>
+          <Category />
+        {/* <button className='rounded-full bg-green-500 w-48 h-10'>Food</button>
+        <button className='rounded-full bg-green-500 w-48 h-10'>Hotel</button>
+        <button className='rounded-full bg-green-500 w-48 h-10'>Attraction</button>
+        <button className='rounded-full bg-green-500 w-48 h-10'>Festival</button> */}
+        </div>
+        <div>
+          <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-5 ml-5"
+              onClick={navigateToCreateArticle}>
+              Post Article
+          </button>
         </div>
       </div>
         <div className='forum-content'> 

@@ -11,8 +11,15 @@ import SignUp from "./Account/SignUp";
 import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
+import ForumCreate from "./Forum/ForumCreate";
+
 
 function App() {
+
+  // Code to handle form submission
+  const writeArticle = (event: React.FormEvent<HTMLFormElement>) => {
+  };
+
   return (
     <div>
       {/* 네비게이션바 */}
@@ -21,6 +28,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
+        <Route path="/forumcreate" element={<ForumCreate onSubmit={writeArticle} />} />
         <Route path="/square" element={<Square />} /> 
         <Route path="/planner" element={<Planner />} />
         <Route path="/profile" element={<Profile />} />

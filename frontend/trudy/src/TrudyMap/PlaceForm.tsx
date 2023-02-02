@@ -1,16 +1,25 @@
-import { useNavigate } from "react-router";
-import React from "react";
-import { mapPlaceType } from "./Place";
+import React, { useCallback } from "react";
 
-function PlaceForm({ data }: { data: mapPlaceType }) {
+type PlaceFormProps = {
+  data: {
+    id: number;
+    firstImage: string;
+    title: string;
+    mapx: string;
+    mapy: string;
+  };
+  onClick: (mapx: string | number, mapy: string | number) => void;
+};
+
+function PlaceForm({ data, onClick }: PlaceFormProps) {
+  const handleClick = useCallback(() => {
+    onClick(data.mapx, data.mapy);
+  }, [data.mapx, data.mapy, onClick]);
+
   return (
-    <div className="item-container">
-      {/* 포럼 아이템 개별 상자 */}
-      <div className="item-box">
-        <img className="thumbnail-image" src={data.firstImage} alt="Thumbnail"></img>
-        <div>{data.title}</div>
-        <div>{data.addr1}</div>
-      </div>
+    <div onClick={handleClick} style={{ display: "inline-block", cursor: "pointer" }}>
+      <img src={data.firstImage} alt="Place thumbnail" />
+      <h3>{data.title}</h3>
     </div>
   );
 }

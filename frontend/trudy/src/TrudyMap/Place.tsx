@@ -15,8 +15,8 @@ export type mapPlaceType = {
   createdTime: string | undefined;
   firstImage: string;
   firstImage2: string | undefined;
-  mapx: string;
-  mapy: string;
+  mapx: any;
+  mapy: any;
   title: string;
   mlevel: string | undefined;
   modifiedTime: string | undefined;
@@ -27,13 +27,17 @@ export type mapPlaceType = {
 };
 
 function Place(props: any) {
-  const [position, setPostion] = useState<string[]>(["37.4602", "126.4407"]);
+  const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   const API_URL: string = "api/place";
 
+  const handlePlaceClick = (place: mapPlaceType) => {
+    setSelectedPlace(place);
+    // props.setCenter({ lat: parseInt(place.mapy), lng: parseInt(place.mapx) });
+    props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
+  };
   useEffect(() => {
     axios.get(API_URL).then((res: any) => {
-      console.log(res.data.data.length, 222);
       // console.log("result.data: ", result.data.slice(1, 30));
       setPlaces([...res.data.data].slice(1, 10));
     });
@@ -57,7 +61,7 @@ function Place(props: any) {
         // return data.title;
         // return <img src={data.firstImage} alt="Thumbnail"/>;
 
-        return <PlaceForm key={i} data={data} />;
+        return <PlaceForm key={i} data={data} onClick={() => handlePlaceClick(data)} />;
       })}
     </>
   );
