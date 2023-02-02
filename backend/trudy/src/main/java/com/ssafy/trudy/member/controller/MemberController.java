@@ -3,10 +3,14 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.config.JwtConfig;
 import com.ssafy.trudy.member.model.MemberDto;
+import com.ssafy.trudy.member.model.MemberInfoDto;
+import com.ssafy.trudy.member.model.MemberLoginDto;
 import com.ssafy.trudy.member.model.MemberRequest;
 import com.ssafy.trudy.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +28,61 @@ public class MemberController {
     private final MemberService memberService;
     private final JwtConfig jwtConfig;
 
-    //일반 회원 가입
+    // 회원 가입
     @PostMapping("/signup")
     public MemberDto createMember(MemberRequest memberRequest) {
         return memberService.createMember(memberRequest);
     }
+
+
+    // 회원 목록 조회
+    @GetMapping("/")
+    public List<MemberDto> findAllMember() {
+        return memberService.findAll();
+    }
+
+
+    // 회원 정보 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<MemberDto> modifyMember(@PathVariable("id") Long id, @RequestBody MemberRequest memberRequest){
+        return memberService.modifyMember(id, memberRequest);
+    }
+
+    // 회원 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MemberDto> deleteMember(@PathVariable("id") Long id) {
+        try {
+            memberService.deleteMember(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    // 내 프로필
+    @GetMapping("/mypage")
+    public MemberInfoDto findMember(Authentication authentication){
+        if(authentication == null) {
+            throw new BadCredentialsException("회원 정보를 찾을 수 없습니다.");
+        }
+        return memberService.findMember(authentication.getName());
+    }
+
+    // 다른 사람 프로필
+    @GetMapping("/{id}")
+    public MemberInfoDto memberDetail(@PathVariable("id") Long id){
+        String email = memberService.findEmailById(id);
+        return memberService.findMember(email);
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public String login(MemberRequest memberRequest) {
+        MemberLoginDto member = memberService.findByEmailAndPassword(memberRequest.getEmail(), memberRequest.getPassword());
+        return jwtConfig.createToken(member.getEmail(), Arrays.asList(member.getRole().getValue()));
+    }
+
 
     //구글 연동 회원가입
     @PostMapping("/google")
@@ -42,11 +96,7 @@ public class MemberController {
 
     }
 
-    //회원 정보 수정
-    @PutMapping("/{member_id}")
-    public void memberModify(){
 
-    }
 
     //팔로워 리스트 가져오기
     @GetMapping("/follower/{member_id}")
@@ -72,33 +122,7 @@ public class MemberController {
 
     }
 
-    // 내 프로필
-    @GetMapping("/mypage")
-    public MemberDto findMember(Authentication authentication){
-        if(authentication == null) {
-            throw new BadCredentialsException("회원 정보를 찾을 수 없습니다.");
-        }
-        return memberService.findMember(authentication.getName());
-    }
 
-    // 다른 사람 프로필
-    @GetMapping("/profile")
-    public MemberDto memberDetail(@RequestParam String email){
-        return memberService.findMember(email);
-    }
-
-    //1) 회원 목록 가져오기
-    @GetMapping("")
-    public List<MemberDto> findAllMember() {
-        return memberService.findAll();
-    }
-
-    // 로그인
-    @PostMapping("/login")
-    public String login(MemberRequest memberRequest) {
-        MemberDto member = memberService.findByEmailAndPassword(memberRequest.getEmail(), memberRequest.getPassword());
-        return jwtConfig.createToken(member.getEmail(), Arrays.asList(member.getRole().getValue()));
-    }
 
 //    @GetMapping("")
 //    public Result memberList(){
