@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/member")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin("*")
+
 public class MemberController {
 
     @Autowired

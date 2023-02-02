@@ -12,12 +12,6 @@ function SignUp() {
   const [region, setRegion] = useState<string[]>([]);
   const [regionDetail, setRegionDetail] = useState<string[]>([]);
 
-  async function submit(event: SyntheticEvent) {
-    event.preventDefault();
-
-    // await fetch("로그인 url");
-  }
-
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -25,15 +19,12 @@ function SignUp() {
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
-          <input type="hidden" name="remember" defaultValue="true" />
 
+        <form className="mt-8 space-y-6" action="/api/member" method="POST">
           {/* 비밀번호 */}
           <div className="-space-y-px rounded-md shadow-md">
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+              Password
               <input
                 id="password"
                 name="password"
@@ -48,9 +39,7 @@ function SignUp() {
           {/* 비밀번호 확인 */}
           <div className="-space-y-px rounded-md shadow-md">
             <div>
-              <label htmlFor="password-confirm" className="sr-only">
-                Password Confirm
-              </label>
+              Password Confirm
               <input
                 id="password-confirm"
                 name="password-confirm"
@@ -65,12 +54,10 @@ function SignUp() {
           {/* 닉네임 */}
           <div className="-space-y-px rounded-md shadow-md">
             <div>
-              <label htmlFor="Nickname" className="sr-only">
-                Nickname
-              </label>
+              Nickname
               <input
                 id="nickname"
-                name="nickname"
+                name="name"
                 type="text"
                 autoComplete="nickname"
                 required
@@ -85,21 +72,40 @@ function SignUp() {
           {/* 성별 */}
           <div>
             <div>
-              <label htmlFor="Gender">Gender</label>
-              <br />
-              <input id="male" name="gender" type="radio" required />
-              Male
-              <input id="female" name="gender" type="radio" required />
-              Female
-              <input id="female" name="gender" type="radio" required />I prefer
-              not to say
+              <h1>Gender</h1>
+              <label htmlFor="male">
+                <input
+                  id="male"
+                  name="gender"
+                  type="radio"
+                  value="Male"
+                  required
+                />
+                Male
+              </label>
+            </div>
+
+            <div>
+              <input
+                id="female"
+                name="gender"
+                type="radio"
+                value="Female"
+                required
+              />
+              <label htmlFor="female">Female</label>
+            </div>
+
+            <div>
+              <input id="unknown" name="gender" type="radio" required />
+              <label htmlFor="unknown">I prefer not to say</label>
             </div>
           </div>
 
           {/* 생년월일 */}
           <div className="-space-y-px rounded-md">
             <div>
-              <label htmlFor="Birthday">Birthday</label>
+              <label htmlFor="birthday">Birthday</label>
               <br />
               <input id="birthday" name="birthday" type="month" required />
             </div>
@@ -110,11 +116,24 @@ function SignUp() {
             <div>
               <label htmlFor="Local">Local</label>
               <br />
-              <input id="islocal" name="islocal" type="radio" required />
-              Yes
-              <input id="islocal" name="islocal" type="radio" required />
-              No
+              <input
+                id="local"
+                name="islocal"
+                type="radio"
+                value={parseInt("1")}
+                required
+              />
+              Local
+              <input
+                id="tourist"
+                name="islocal"
+                type="radio"
+                value={parseInt("0")}
+                required
+              />
+              Tourist
             </div>
+            <br />
 
             {/* 지역 */}
             <div className="-space-y-px rounded-md">

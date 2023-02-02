@@ -1,4 +1,5 @@
-import { SyntheticEvent, useState, useEffect, useRef } from "react";
+import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./SignIn.css";
 
 // 로그인 페이지
@@ -6,6 +7,11 @@ import "./SignIn.css";
 function SignIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate();
+  const navigateToSignUp = () => {
+    navigate("/signupselect");
+  };
 
   async function submit(event: SyntheticEvent) {
     event.preventDefault();
@@ -27,10 +33,14 @@ function SignIn() {
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
+
+        <form
+          className="mt-8 space-y-6"
+          action="/api/member/login"
+          method="POST"
+        >
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="-space-y-px rounded-md shadow-sm">
-
             {/* 이메일 주소 입력 */}
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -65,7 +75,6 @@ function SignIn() {
           </div>
 
           <div className="flex items-center justify-between">
-
             {/* 아이디, 비밀번호 저장 */}
             <div className="flex items-center">
               <input
@@ -109,6 +118,7 @@ function SignIn() {
             <button
               type="submit"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={navigateToSignUp}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Sign up

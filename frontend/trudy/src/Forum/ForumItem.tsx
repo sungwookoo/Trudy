@@ -19,20 +19,20 @@ function ForumItem(props: any) {
   const forumData = props.post
 
   return(
-    <div className="item-container">
+    <div className="forum-item-container">
       {/* 포럼 아이템 개별 상자 */}
-      <div className='item-box'>
+      <div className='forum-item-box'>
         {/* Post_image 테이블 더미 */}
         
-        <img className='thumbnail-image' src={forumData.url}></img>
+        <img className='forum-thumbnail-image' src={forumData.url}></img>
         
         {/* 멤버 테이블 프로필 사진 */}
           
-        {/* <img className='member-image' src={props.image}></img> */}
+        {/* <img className='forum-member-image' src={props.image}></img> */}
           
         {/* Post 테이블 더미 */}
         <div>{forumData.title}</div>
-        <div className='txt-content'>{forumData.content}</div>
+        <div className='forum-txt-content'>{forumData.content}</div>
         <div>{forumData.created_at}</div>
         
       </div>
