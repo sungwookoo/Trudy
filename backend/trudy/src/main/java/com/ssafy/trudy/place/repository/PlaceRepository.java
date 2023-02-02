@@ -34,7 +34,7 @@ public class PlaceRepository {
      */
     public List<Place> findPlaceListFiltered(String[][] areaSigungu, String[] contentTypeId) {
         String jpql = "select m from Place m ";
-gi
+
         // Build areaSigungu filter
         if (areaSigungu.length > 0) {
             jpql += "where (";
