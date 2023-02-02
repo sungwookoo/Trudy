@@ -9,59 +9,37 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDto {
 
+    //포럼 글(post) 1개의 전체 정보 별 전달할 요소DTO
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class PostCombine {
-        //private PostWithMemeber postWithMemeber;
 
         private PostElement postElement;
         private MemberElement memberElement;
-        private List<PostImageElement> postImageElement;
+        private List<PostImageElement> postImageElements;
         private List<PostAreaElement> postAreaElements;
         private List<PostCategoryElement> postCategoryElements;
 
-        //private postCategoryRequest postCategoryRequest;
-       // private PostCategoryRequest postCategoryRequest;
-    }
+        private int postLikeCount;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class PostWithMemeber {
-        private PostElement postElement;
-        private MemberElement memberElement;
     }
 
 
-
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class PostRequest {
-//
-//        private Post post;
-//        private PostArea postArea;
-//        private PostCategory postCategory;
-//        private PostImage postImage;
-//    }
-
-
-
-    //요소
-    //post 요소
+    //요소DTO 모음
+    //post 내부 요소---------------------------------------------------------------------
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class PostElement{
         private Long id;
-        //private Member memberId;
         private String title;
         private String content;
         private int thumbnailImageId;
@@ -74,9 +52,6 @@ public class PostDto {
     @NoArgsConstructor
     public static class PostAreaElement{
 
-        //private Sigungu sigungu;
-        //private SigunguElement sigunguElement;
-
         private AreaElement areaElement;
         private SigunguElement sigunguElement;
     }
@@ -84,26 +59,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class AreaElement{
-        private int code;
-        private String name;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class SigunguElement{
-        private Long id;
-        private int code;
-        //private AreaElement areaElement;
-        private String name;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class PostCategoryElement{
-        //private Post postId;
         private String name;
     }
 
@@ -112,12 +68,10 @@ public class PostDto {
     @NoArgsConstructor
     public static class PostImageElement{
         private Long id;
-        //private Post postId;
         private String url;
     }
 
-    //member 요소
-
+    //member 요소-----------------------
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -134,4 +88,21 @@ public class PostDto {
         private Timestamp lastAccess;
     }
 
+    //area, sigungu 요소----------------
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AreaElement{
+        private int code;
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SigunguElement{
+        private Long id;
+        private int code;
+        private String name;
+    }
 }

@@ -1,10 +1,7 @@
 package com.ssafy.trudy.post.service;
 
 import com.ssafy.trudy.post.model.*;
-import com.ssafy.trudy.post.repository.PostAreaRepository;
-import com.ssafy.trudy.post.repository.PostCategoryRepository;
-import com.ssafy.trudy.post.repository.PostImageRepository;
-import com.ssafy.trudy.post.repository.PostRepository;
+import com.ssafy.trudy.post.repository.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +20,7 @@ public class PostService {
     private final PostImageRepository postImageRepository;
     private final PostCategoryRepository postCategoryRepository;
     private final PostAreaRepository postAreaRepository;
+    private final PostLikeRepository postLikeRepository;
 
     ModelMapper modelMapper = new ModelMapper();
 
@@ -46,35 +44,60 @@ public class PostService {
 
 
 
-        //Dto를 담을 리스트
-        List<Post> PostEntities = postRepository.findAll();//.stream().map(p->new PostDto.PostWithMemeber(modelMapper.map(p, PostDto.PostElement.class),modelMapper.map(p.getMemberId(), PostDto.MemberElement.class) ) ).collect(Collectors.toList());
+        //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
+        List<Post> postEntities = postRepository.findAll();//.stream().map(p->new PostDto.PostWithMemeber(modelMapper.map(p, PostDto.PostElement.class),modelMapper.map(p.getMemberId(), PostDto.MemberElement.class) ) ).collect(Collectors.toList());
+
+
+        //PostArea postArea =  postAreaRepository.findByPostId(postEntities.get(0));
+
+//        log.info("postArea entity print +++++++++++: " + postArea);
+//        log.info("postArea entity to SigunguElement print +++++++++++: " + modelMapper.map(postArea.getSigunguCode(), PostDto.SigunguElement.class));
+//        log.info("postArea entity to AreaElement print +++++++++++: " + modelMapper.map(postArea.getSigunguCode().getAreaCode(), PostDto.AreaElement.class));
+
+        //Dto를 담을 리스트()
         List<PostDto.PostCombine> postCombines = new ArrayList<>();
 
-        for(Post postEntity : PostEntities){
+        for(Post postEntity : postEntities){
 
             PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
             PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
 
             //image 정보 리스트 가져오기
-            List<PostDto.PostImageElement> postImageElements = postImageRepository.findByPostId(postEntity).stream().map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
+            List<PostDto.PostImageElement> postImageElements = postImageRepository.findByPostId(postEntity)
+                    .stream()
+                    .map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
 
             //area 정보 리스트 가져오기
-            List<PostDto.PostAreaElement> postAreaElements = postAreaRepository.findByPostId(postEntity).stream()
-                    .map(p ->new PostDto.PostAreaElement(new PostDto.AreaElement(modelMapper.map(p.getSigunguCode(), PostDto.AreaElement.class)), new PostDto.SigunguElement(modelMapper.map(p, PostDto.SigunguElement.class))) ).collect(Collectors.toList());
-            //if(!postAreaElements.isEmpty())log.info("test ======= : " + postEntity.getId() + "    ==  " + postAreaElements.get(0));
+            List<PostDto.PostAreaElement> postAreaElements = postAreaRepository
+                    .findByPostId(postEntity)
+                    .stream()
+                    .map(p -> new PostDto.PostAreaElement(
+                            modelMapper.map(p.getSigunguCode().getAreaCode(), PostDto.AreaElement.class),
+                            modelMapper.map(p.getSigunguCode(), PostDto.SigunguElement.class)
+                    )).collect(Collectors.toList());
+
 
             //category 정보 리스트 가져오기
-            List<PostDto.PostCategoryElement> postCategoryElements = postCategoryRepository.findByPostId(postEntity).stream().map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());;
+            List<PostDto.PostCategoryElement> postCategoryElements = postCategoryRepository
+                    .findByPostId(postEntity)
+                    .stream()
+                    .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());;
 
-            postCombines.add(new PostDto.PostCombine(postElement, memberElement, postImageElements, postAreaElements, postCategoryElements));
+            int postLikeCount = postLikeRepository.countByPostId(postEntity);
+
+            postCombines.add(new PostDto.PostCombine(postElement, memberElement, postImageElements, postAreaElements, postCategoryElements, postLikeCount));
+
+
         }
 
-        log.info("post+++++++ : " + postCombines.get(0).getPostElement().toString());
-        log.info("member+++++++ : " +  postCombines.get(0).getMemberElement().toString());
-        log.info("image+++++++ : " +  postCombines.get(0).getPostImageElement().toString());
-        log.info("area+++++++ : " +  postCombines.get(0).getPostAreaElements().toString());
-        log.info("category+++++++ : " +  postCombines.get(0).getPostCategoryElements().toString());
-
+        for(int i=0; i<postCombines.size(); i++) {
+            log.info(i + " post+++++++ : " + postCombines.get(i).getPostElement().toString());
+            log.info(i + " member+++++++ : " + postCombines.get(i).getMemberElement().toString());
+            log.info(i + " image+++++++ : " + postCombines.get(i).getPostImageElements().toString());
+            log.info(i + " area+++++++ : " + postCombines.get(i).getPostAreaElements().toString());
+            log.info(i + " category+++++++ : " + postCombines.get(i).getPostCategoryElements().toString());
+            log.info(i + " count+++++++ : " + postCombines.get(i).getPostLikeCount());
+        }
 
         //List<PostDto.PostImageElement> postImageElements = PostImageRepository.findB
        // List<PostDto.PostAreaElement> postAreaElements = postAreaRepository.findByPostId()
