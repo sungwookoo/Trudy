@@ -36,9 +36,11 @@ public class Member implements UserDetails {
     @Column(name = "gender", length = 45)
     private String gender;
 
-    @Column(length = 45)
-    private String area;
+    @Column(name = "area_code")
+    private Long areaCode;
 
+    @Column(name = "sigungu_code")
+    private Long sigunguCode;
     @Column(length = 8)
     private String birth;
 
@@ -57,13 +59,14 @@ public class Member implements UserDetails {
 
 
     @Builder
-    public Member(String email, String password, String name, String image, String gender, String area, String birth, byte isLocal, byte isPublic, MemberRole role, LocalDateTime lastAccess) {
+    public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, byte isLocal, byte isPublic, MemberRole role, LocalDateTime lastAccess) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.image = image;
         this.gender = gender;
-        this.area = area;
+        this.areaCode = areaCode;
+        this.sigunguCode = sigunguCode;
         this.birth = birth;
         this.isLocal = isLocal;
         this.isPublic = isPublic;

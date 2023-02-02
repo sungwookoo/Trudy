@@ -1,32 +1,35 @@
 package com.ssafy.trudy.post.model;
 
 import com.ssafy.trudy.member.model.Member;
+import com.ssafy.trudy.post.model.Post;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-// 관계 빼고 완료
-@Entity
 @Data
-@Table(name = "posts")
-public class Post {
+@Entity
+@Table(name = "comments")
+public class Comment {
+
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post postId;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
     private Member memberId;
-    private String title;
-    @Column(columnDefinition = "TEXT")
+
+    @Column(nullable = false)
     private String content;
-    @Column(name = "thumbnail_image_id")
-    private Long thumbnailImageId;
+
+    @Column(name = "is_deleted")
+    private byte isDeleted;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 }

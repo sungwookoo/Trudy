@@ -1,12 +1,10 @@
 package com.ssafy.trudy.post.model;
 
-import com.ssafy.trudy.address.model.Sigungu;
-import com.ssafy.trudy.member.model.Member;
+import com.ssafy.trudy.etc.model.Sigungu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 

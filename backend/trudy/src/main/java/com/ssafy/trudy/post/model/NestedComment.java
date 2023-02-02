@@ -6,27 +6,25 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-// 관계 빼고 완료
-@Entity
 @Data
-@Table(name = "posts")
-public class Post {
+@Entity
+@Table(name = "nested_comments")
+public class NestedComment {
+    
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment commentId;
+
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member memberId;
-    private String title;
-    @Column(columnDefinition = "TEXT")
+    
     private String content;
-    @Column(name = "thumbnail_image_id")
-    private Long thumbnailImageId;
-
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 }
