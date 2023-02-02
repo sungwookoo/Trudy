@@ -5,8 +5,8 @@ type PlaceFormProps = {
     id: number;
     firstImage: string;
     title: string;
-    mapx: string | number;
-    mapy: string | number;
+    mapx: string;
+    mapy: string;
   };
   onClick: (mapx: string | number, mapy: string | number) => void;
 };

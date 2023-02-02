@@ -15,8 +15,8 @@ export type mapPlaceType = {
   createdTime: string | undefined;
   firstImage: string;
   firstImage2: string | undefined;
-  mapx: string | number;
-  mapy: string | number;
+  mapx: any;
+  mapy: any;
   title: string;
   mlevel: string | undefined;
   modifiedTime: string | undefined;
@@ -34,8 +34,7 @@ function Place(props: any) {
   const handlePlaceClick = (place: mapPlaceType) => {
     setSelectedPlace(place);
     // props.setCenter({ lat: parseInt(place.mapy), lng: parseInt(place.mapx) });
-    props.onPlaceClick(place.mapy, place.mapx);
-    console.log(typeof place.mapy);
+    props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
   useEffect(() => {
     axios.get(API_URL).then((res: any) => {
