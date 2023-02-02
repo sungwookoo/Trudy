@@ -9,10 +9,9 @@ import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, SearchMemberRepository {
     Member findByEmail(String email);
     Member findByEmailAndPassword(String email, String password);
-
 //    @PersistenceContext
 //    private EntityManager em;
 //
