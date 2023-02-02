@@ -7,8 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,7 @@ public class PlaceController {
     private PlaceService placeService;
 
     // 1) 초기 조회, 전체 조회
-    @GetMapping({"","/areaAllFilter"})
+    @GetMapping({""})
     public Result places() {
         List<Place> findPlace = placeService.findPlaceList();
         // 엔티티 -> DTO 변환
@@ -71,29 +73,65 @@ public class PlaceController {
 
         return new Result(collect);
     }
-    
+
+    // 4) 관광지 정보 클릭할 때 필터링
     @GetMapping("/filter")
     @ResponseBody
-    public Result placesFilter(@ModelAttribute String[][] areaSigungu, @ModelAttribute String[] contentTypeId) {
+    public ResponseEntity<PlacesFilterResponse> placesFilter(@RequestParam String areaSigun, @RequestParam String contentTypeIdd) {
+        String[][] areaSigungu = parseFunction(areaSigun);
+        String[] contentTypeId = parseFunction2(contentTypeIdd);
         List<Place> findPlaceFiltered = placeService.findPlaceListFiltered(areaSigungu, contentTypeId);
-        // 엔티티 -> DTO 변환
-        List<PlacesDto> collect = findPlaceFiltered.stream()
-                .map(p -> new PlacesDto(p.getId(), p.getAddr1(), p.getAddr2(), p.getAreacode(), p.getCat1(), p.getCat2(), p.getCat3(), p.getContentid(), p.getContenttypeid(), p.getCreatedtime(), p.getFirstimage(), p.getFirstimage2(), p.getMapx(), p.getMapy(), p.getMlevel(), p.getModifiedtime(), p.getReadcount(), p.getSigungucode(), p.getTel(), p.getTitle(), p.getZipcode()))
+        List<PlaceDto> places = findPlaceFiltered.stream()
+                .map(p -> new PlaceDto(p.getId(), p.getAddr1(), p.getAddr2(), p.getAreacode(), p.getCat1(), p.getCat2(), p.getCat3(), p.getContentid(), p.getContenttypeid(), p.getCreatedtime(), p.getFirstimage(), p.getFirstimage2(), p.getMapx(), p.getMapy(), p.getMlevel(), p.getModifiedtime(), p.getReadcount(), p.getSigungucode(), p.getTel(), p.getTitle(), p.getZipcode()))
                 .collect(Collectors.toList());
 
-        return new Result(collect);
-    }
-
-    @Data
-    static class PlaceFilterDto {
-        private String[][] areaSigungu;
-        private String[] contentTypeId;
+        PlacesFilterResponse response = new PlacesFilterResponse(places);
+        return ResponseEntity.ok(response);
     }
 
     @Data
     @AllArgsConstructor
     static class Result<T> {
         private T data;
+    }
+
+    public String[][] parseFunction(String input) {
+        // Remove square brackets from start and end of input string
+        input = input.substring(1, input.length() - 1);
+        input = input.substring(1, input.length() - 1);
+
+        // Split input string into rows
+        String[] rows = input.split("\\], \\[");
+
+        // Split each row into individual values
+        String[][] array = new String[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            array[i] = rows[i].split(", ");
+        }
+        return array;
+    }
+
+    public String[] parseFunction2(String input) {
+        String[] result = Arrays.stream(input.substring(1, input.length() - 1).split(","))
+                .map(String::trim)
+                .toArray(String[]::new);
+        return result;
+    }
+
+    public class PlacesFilterResponse {
+        private List<PlaceDto> places;
+
+        public PlacesFilterResponse(List<PlaceDto> places) {
+            this.places = places;
+        }
+
+        public List<PlaceDto> getPlaces() {
+            return places;
+        }
+
+        public void setPlaces(List<PlaceDto> places) {
+            this.places = places;
+        }
     }
 
     @Data
@@ -123,5 +161,30 @@ public class PlaceController {
         private String zipcode;
     }
 
-
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class PlaceDto {
+        private Long id;
+        private String addr1;
+        private String addr2;
+        private String areacode;
+        private String cat1;
+        private String cat2;
+        private String cat3;
+        private String contentId;
+        private String contentTypeId;
+        private String createdtTime;
+        private String firstImage;
+        private String firstImage2;
+        private String mapx;
+        private String mapy;
+        private String mlevel;
+        private String modifiedTime;
+        private String readCount;
+        private String sigunguCode;
+        private String tel;
+        private String title;
+        private String zipcode;
+    }
 }
