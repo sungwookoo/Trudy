@@ -1,10 +1,7 @@
 package com.ssafy.trudy.place.controller;
 
-import com.ssafy.trudy.place.model.Place;
 import com.ssafy.trudy.place.model.PlaceDto;
 import com.ssafy.trudy.place.service.PlaceService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
