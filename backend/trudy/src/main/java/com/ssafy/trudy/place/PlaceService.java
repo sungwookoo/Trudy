@@ -26,4 +26,8 @@ public class PlaceService {
     }
 
     public List<Place> findPlace(Long id) { return placeRepository.findPlace(id); }
+
+    public List<Place> searchPlaceFilter(String keyword) {
+        return placeRepository.searchPlaceFilter(keyword);
+    }
 }
