@@ -16,7 +16,16 @@ function Square() {
       nickname: "윈터",
       isLocal: "유저타입",
       gender: "성별",
-      area : "지역",
+      area: "지역",
+      introduce: "소개글",
+    },
+    {
+      image:
+        "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800",
+      nickname: "쯔위",
+      isLocal: "유저타입",
+      gender: "성별",
+      area: "지역",
       introduce: "소개글",
     },
     {
@@ -25,7 +34,7 @@ function Square() {
       nickname: "카리나",
       isLocal: "유저타입",
       gender: "성별",
-      area : "지역",
+      area: "지역",
       introduce: "소개글",
     },
     {
@@ -34,30 +43,19 @@ function Square() {
       nickname: "윈터",
       isLocal: "유저타입",
       gender: "성별",
-      area : "지역",
+      area: "지역",
       introduce: "소개글",
     },
     {
       image:
-        "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/01/22/j0CUgPfqy6Fn637784817551514147.jpg",
-      nickname: "윈터",
+        "http://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2019/08/02/02a7e664-bc25-488d-9690-9d79b3395d6b.jpg",
+      nickname: "권나라",
       isLocal: "유저타입",
       gender: "성별",
-      area : "지역",
-      introduce: "소개글",
-    },
-    {
-      image:
-        "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/01/22/j0CUgPfqy6Fn637784817551514147.jpg",
-      nickname: "윈터",
-      isLocal: "유저타입",
-      gender: "성별",
-      area : "지역",
+      area: "지역",
       introduce: "소개글",
     },
   ];
-
-
 
   const guidesList = tempData.map((guide) => {
     return (
@@ -84,6 +82,11 @@ function Square() {
       </div>
     );
   });
+
+  const imgError = (e: any) => {
+    e.target.src =
+      "https://blog.kakaocdn.net/dn/KKL4x/btqCn032NNl/JiK0uDHJMbeLPJpPuIOor0/img.gif";
+  };
 
   const [squareData, setSquareData] = useState<[]>([]);
 
@@ -148,18 +151,18 @@ function Square() {
 
         {/* 검색 */}
         <form>
-          <div className="relative">
-            <div>
+          <div className="flex">
+            <div className="relative">
               <input
                 type="search"
                 id="default-search"
-                className="float-left block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search Name"
                 required
               />
               <button
                 type="submit"
-                className="p-2 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="absolute flex inset-y-0 right-0 p-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <svg
                   className="w-5 h-5"
@@ -181,22 +184,21 @@ function Square() {
         </form>
       </div>
       <br />
-
-
+      <br />
 
       {/* 게시물 */}
       <div id="guidesGrid" className="p-4 grid grid-cols-3 relative">
-        {/* {squareData.map((guide: { image: string; name: string }, i) => {
+        {squareData.map((guide: { image: string; name: string }, i) => {
           return (
             <div
               className="bg-trudy border-2 shadow-lg p-6 inline-block"
               key={i}
-              onclick="프로필 페이지 이동"
+              // onclick="프로필 페이지 이동"
             >
               <div className="md:w-1/3 inline-block float-left">
                 <img
                   src={guide.image}
-                  alt="image"
+                  onError={imgError}
                   className="h-64 w-full object-cover rounded relative"
                 />
               </div>
@@ -214,8 +216,7 @@ function Square() {
               </div>
             </div>
           );
-        })} */}
-
+        })}
 
         {guidesList}
       </div>
