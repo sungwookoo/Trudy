@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/post")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
