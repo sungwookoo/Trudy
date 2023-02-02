@@ -58,6 +58,10 @@ public class Member implements UserDetails {
     private LocalDateTime lastAccess;
 
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "introduce_id", referencedColumnName = "id")
+    private Introduce introduceId;
+
     @Builder
     public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, byte isLocal, byte isPublic, MemberRole role, LocalDateTime lastAccess) {
         this.email = email;
