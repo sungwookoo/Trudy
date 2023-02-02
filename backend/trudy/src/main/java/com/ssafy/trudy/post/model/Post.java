@@ -22,7 +22,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String content;
     @Column(name = "thumbnail_image_id")
-    private int thumbnailImageId;
+    private Long thumbnailImageId;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
