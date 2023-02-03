@@ -1,96 +1,54 @@
 package com.ssafy.trudy.place.repository;
 
 import com.ssafy.trudy.place.model.Place;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.*;
+import java.awt.print.Pageable;
+import java.util.List;
 
 @Repository
-public class PlaceRepository {
-    @PersistenceContext
-    private EntityManager em;
+public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceCustomRepository {
 
+    // 쿼리 파라미터로 넘어온 값이 페이지 정보로 만들어 진다.
+    // 1-1) 지역시군구 값 X, 콘텐츠 타입 X, keyword X
+    List<Place> findAll();
 
-    /**
-     * findPlaceList
-     * 처음 지도 칸을 누를 때, 혹은 필터링에서 All 누를 떄
-     * 모든 장소 정보를 제공한다.
-     */
-    public List<Place> findPlaceList() {
-        return em.createQuery("select p from Place p", Place.class)
-                .getResultList();
-    }
+    // 1-2) 지역시군구 값 X, 콘텐츠 타입 X, keyword O
+    List<Place> findPlacesByTitleContaining(String keyword);
 
-    /**
-     * findPlaceListFiltered
-     * [[areacode, sigungucode], [], [] ...]
-     * [contentTypeId, contentTypeId2, 3, 4]
-     * 필터링 기능을 구현
-     * @return 필터 후 장소들의 목록
-     */
-    public List<Place> findPlaceListFiltered(String[][] areaSigungu, String[] contentTypeId) {
-        String jpql = "select m from Place m ";
+    // 2-1) 지역시군구 값 O, 콘텐츠 타입 X, keyword X
+    // **areacode로 찾음
 
-        // Build areaSigungu filter
-        if (areaSigungu.length > 0) {
-            jpql += "where (";
-            for (int i = 0; i < areaSigungu.length; i++) {
-                if (i > 0) {
-                    jpql += " or ";
-                }
-                jpql += "(m.areacode =: areaSigungu_" + i + " and m.sigungucode =: sigungu_" + i + ")";
-            }
-            jpql += ") ";
-        }
+    // 2-2) 지역시군구 값 O, 콘텐츠 타입 X, keyword O
+    List<Place> findPlacesByAreacodeAndSigungucodeAndTitleContaining(String areacode, String sigungucode, String keyword);
 
-        // Build contentTypeId filter
-        if (contentTypeId.length > 0) {
-            if (areaSigungu.length > 0) {
-                jpql += "and ";
-            } else {
-                jpql += "where ";
-            }
-            jpql += "(";
-            for (int i = 0; i < contentTypeId.length; i++) {
-                if (i > 0) {
-                    jpql += " or ";
-                }
-                jpql += "m.contenttypeid =: contentTypeId_" + i;
-            }
-            jpql += ")";
-        }
+    // 2-2-x) 지역값만 O with keyword
+    List<Place> findPlacesByAreacodeAndTitleContaining(String areacode, String keyword);
 
-        // Create query and set parameters
-        TypedQuery<Place> query = em.createQuery(jpql, Place.class);
-        for (int i = 0; i < areaSigungu.length; i++) {
-            query.setParameter("areaSigungu_" + i, areaSigungu[i][0]);
-            query.setParameter("sigungu_" + i, areaSigungu[i][1]);
-        }
-        for (int i = 0; i < contentTypeId.length; i++) {
-            query.setParameter("contentTypeId_" + i, contentTypeId[i]);
-        }
-        return query.getResultList();
-    }
+    // 3-1) 지역 시군구 값 X, 콘텐츠 타입 O, keyword X
+    List<Place> findPlacesByContenttypeid(String contenttypeid);
 
-    public List<Place> findPlaceListSearch(String title) {
-        return em.createQuery("select p from Place p where p.title like title", Place.class).getResultList();
-    }
+    // 3-2) 지역 시군구 값 X, 콘텐츠 타입 O, keyword O
+    List<Place> findPlacesByContenttypeidAndTitleContaining(String contenttypeid, String keyword);
 
-    /**
-     * findPlace
-     * id로 특정 지역을 찾는다.
-     */
-    public List<Place> findPlace(Long id) {
-        return em.createQuery("select p from Place p where p.id = id", Place.class).getResultList();
-    }
+    // 4번은 이중 for문이다.
+    // 4-1) 지역 시군구 값 O, 콘텐츠 타입 O, keyword X
+    // 4-1-x) 지역값으로 O, 콘텐츠 타입 O, keyword X
+    List<Place> findPlacesByAreacodeAndContenttypeid(String areacode, String contenttypeid);
+    // 4-1-o) 지역 시군구 값 O, 콘텐츠 타입 O, keyword X
+    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeid(String areacode, String sigungucode, String contenttypeid);
 
-    public List<Place> searchPlaceFilter(String keyword) {;
-        return em.createQuery("select p from Place p where p.title like :cash", Place.class)
-                .setParameter("cash", "%" + keyword + "%")
-                .getResultList();
-    }
+    // 4-2) 지역 시군구 값 O, 콘텐츠 타입 O, keyword O
+    // 4-2-x) 지역값으로 O, 콘텐츠 타입 O, keyword O
+    List<Place> findPlacesByAreacodeAndContenttypeidAndTitleContaining(String areacode, String contenttypeid, String keyword);
+    // 4-2-o) 지역 시군구 값 O, 콘텐츠 타입 O, keyword O
+    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(String areacode, String sigungucode, String contenttypeid, String keyword);
+
+    // **areacode로 장소찾기
+    List<Place> findPlacesByAreacode(String areacode);
+
+    // **areacode,sigungu로 장소찾기
+    List<Place> findPlacesByAreacodeAndSigungucode(String areacode, String sigungucode);
 }

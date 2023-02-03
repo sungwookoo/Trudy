@@ -2,6 +2,7 @@ package com.ssafy.trudy.post.controller;
 
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.model.PostDto;
+import com.ssafy.trudy.post.repository.PostCategoryRepository;
 import com.ssafy.trudy.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,7 +42,8 @@ public class PostController {
     })
     @GetMapping
     public ResponseEntity<?> postList(){
-
+        //test
+       // postService.findPostList();
         //List<Post> findPostList = postService.findPostList();
         //List<PostListResponse> response = findPostList.stream()
 //                .map(p -> new PostListResponse(
@@ -54,13 +56,14 @@ public class PostController {
         //return response;
 
         try{
-            List<Post> findPostList = postService.findPostList();
-            if(findPostList != null || !findPostList.isEmpty()){
+            log.info("========post Controller / postList===========");
+            List<PostDto.PostCombine> findPostCombines = postService.findPostList();
+            if(findPostCombines != null || !findPostCombines.isEmpty()){
                 /*List<PostListResponse> response = findPostList.stream()
                         .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
                         .collect(Collectors.toList());*/
 
-                return ResponseEntity.ok().body("response");
+                return ResponseEntity.ok().body(findPostCombines);
             } else {
                 return ResponseEntity.noContent().build();
             }
@@ -68,14 +71,16 @@ public class PostController {
             e.getStackTrace();
             return ResponseEntity.internalServerError().build();
         }
+        //return "test end";
 
     }
 
     //포럼 게시글 작성
     @PostMapping
-    public void postAdd(@RequestBody PostDto.PostInsertRequest postInsertRequest){
+    public void postAdd(){
         //1. dto안에 dto를 key, body 형식으로 받아온다.
-        postService.addPost(postInsertRequest);
+        postService.addPost();
+
     }
 
     //포럼 게시글 수정
@@ -92,24 +97,30 @@ public class PostController {
 
     //포럼 게시글 상세보기
     @GetMapping("/{post_id}")
-    public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
+    public void/*ResponseEntity<?>*/ postDetail(@PathVariable("post_id") Long postId){
+
+        //Comment 리스트를 가져옴
+
+        //Comment_id를 이용해서 nested_comments, comment_like 가져옴
+
+        //nested_comment_id를 이용해서 nested_comment_like 가져옴
 
         //존재하는지 확인 후 전송
-        try{
-            Optional<Post> findPost = postService.findPostDetail(postId);
-
-            if(findPost.get() != null || findPost.isPresent()){
-                Post p = findPost.get();
-//                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-//                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-                return ResponseEntity.ok().body("postListResponse");
-            } else {
-                return ResponseEntity.noContent().build();
-            }
-        } catch (Exception e){
-            e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+//        try{
+//            Optional<Post> findPost = postService.findPostDetail(postId);
+//
+//            if(findPost.get() != null || findPost.isPresent()){
+//                Post p = findPost.get();
+////                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
+////                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
+//                return ResponseEntity.ok().body("postListResponse");
+//            } else {
+//                return ResponseEntity.noContent().build();
+//            }
+//        } catch (Exception e){
+//            e.getStackTrace();
+//            return ResponseEntity.internalServerError().build();
+//        }
     }
 
     //포럼 게시글 좋아요
