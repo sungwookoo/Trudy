@@ -1,6 +1,6 @@
 .forum-page{
   width: auto;
-  height: 100vh;
+  height: 95vh;
 }
 
 .filter-bar {
@@ -21,7 +21,7 @@
   /* justify-content: center; */
   /* width: 200px; */
   /* width: 150px; */
-  height: 45%;
+  /* height: 45%; */
 }
 
 .forum-container {
@@ -36,8 +36,9 @@
 
   background-color: red;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  /* margin-top: 50px; */
+  padding-top: 50px;
   /* flex-direction: row; */
 }
 

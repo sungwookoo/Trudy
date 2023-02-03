@@ -7,6 +7,11 @@ const writeArticle = (title: string, content: string) => {
 };
 
 function ForumCreate ( onSubmit: any ) {
+  const [open, setOpen] = useState(false)
+  const [image, setImage] = useState({
+    image_file: '',
+    preview_URL: '',
+  })
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
