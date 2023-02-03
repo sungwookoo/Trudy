@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface PlaceCustomRepository {
 
-    List<Place> findPlaceListByCategory(int offset, int limit, String[][] areaSigungu, String[] contentTypeId);
-
-    // 전체 중에서
+    // 1-1) 지역시군구 값 X, 콘텐츠 타입 X, 키워드 X
     List<Place> findByPage(int limit, int offset);
 }
