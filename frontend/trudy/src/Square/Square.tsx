@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { SyntheticEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Square.css";
 
 function Square() {
@@ -10,80 +11,10 @@ function Square() {
   const [searchChange, setSearchChange] = useState<string>();
   const [squareData, setSquareData] = useState<[]>([]);
 
-  // 더미데이터
-  // const tempData = [
-  //   {
-  //     image:
-  //       "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/01/22/j0CUgPfqy6Fn637784817551514147.jpg",
-  //     nickname: "윈터",
-  //     isLocal: "유저타입",
-  //     gender: "성별",
-  //     area: "지역",
-  //     introduce: "소개글",
-  //   },
-  //   {
-  //     image:
-  //       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800",
-  //     nickname: "쯔위",
-  //     isLocal: "유저타입",
-  //     gender: "성별",
-  //     area: "지역",
-  //     introduce: "소개글",
-  //   },
-  //   {
-  //     image:
-  //       "http://sports.hankooki.com/news/photo/202210/6808890_990617_216.jpg",
-  //     nickname: "카리나",
-  //     isLocal: "유저타입",
-  //     gender: "성별",
-  //     area: "지역",
-  //     introduce: "소개글",
-  //   },
-  //   {
-  //     image:
-  //       "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/01/22/j0CUgPfqy6Fn637784817551514147.jpg",
-  //     nickname: "윈터",
-  //     isLocal: "유저타입",
-  //     gender: "성별",
-  //     area: "지역",
-  //     introduce: "소개글",
-  //   },
-  //   {
-  //     image:
-  //       "http://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2019/08/02/02a7e664-bc25-488d-9690-9d79b3395d6b.jpg",
-  //     nickname: "권나라",
-  //     isLocal: "유저타입",
-  //     gender: "성별",
-  //     area: "지역",
-  //     introduce: "소개글",
-  //   },
-  // ];
-
-  // const guidesList = tempData.map((guide) => {
-  //   return (
-  //     <div className="bg-trudy border-2 shadow-lg p-6 inline-block">
-  //       <div className="md:w-1/3 inline-block float-left">
-  //         <img
-  //           src={guide.image}
-  //           alt="Article Image"
-  //           className="h-64 w-full object-cover rounded relative"
-  //         />
-  //       </div>
-  //       <div className="md:w-2/3 md:h-full p-4 bg-yellow-300 inline-block">
-  //         <h3 className="text-lg font-bold">{guide.nickname}</h3>
-  //         <p className="text-gray-600">Gender</p>
-  //         <p className="text-gray-600">Region</p>
-  //         <p className="text-gray-600">isLocal</p>
-  //         <p className="mt-2 truncate">
-  //           Introduce: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  //           Sed in aliquam magna. Integer tristique, dolor eu dignissim
-  //           convallis, sapien risus rhoncus neque, non bibendum lectus enim in
-  //           lorem.
-  //         </p>
-  //       </div>
-  //     </div>
-  //   );
-  // });
+  const navigate = useNavigate();
+  const navigateToProfile = (e :React.MouseEvent<HTMLDivElement>) => {
+    navigate("/profile");
+  };
 
   const imgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src =
@@ -110,7 +41,6 @@ function Square() {
       });
     }
     SquareGet();
-    console.log();
   }, [area, isLocal, gender, nameSearch]);
   //   async function SquareGet() {
   //     await axios.get("api/member/", { params }).then((response) => {
@@ -216,23 +146,24 @@ function Square() {
               gender: string;
               areacode: number;
               isLocal: number;
+              id: number;
             },
             i
           ) => {
             return (
               <div
-                className="bg-trudy border-2 shadow-lg p-6 inline-block"
+                className="p-4 inline-block"
                 key={i}
-                // onclick="프로필 페이지 이동"
+                onClick={navigateToProfile}
               >
-                <div className="md:w-1/3 inline-block float-left">
+                <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
                   <img
                     src={guide.image}
                     onError={imgError}
                     className="h-64 w-full object-cover rounded relative"
                   />
                 </div>
-                <div className="md:w-2/3 md:h-full p-4 bg-yellow-300 inline-block">
+                <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
                   <h3 className="text-lg font-bold">{guide.name}</h3>
                   <p className="text-gray-600">{guide.gender}</p>
                   <p className="text-gray-600">areacode : {guide.areacode}</p>
