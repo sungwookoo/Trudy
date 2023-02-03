@@ -3,15 +3,6 @@ package com.ssafy.trudy.post.service;
 import com.ssafy.trudy.post.model.*;
 import com.ssafy.trudy.post.repository.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
-import com.ssafy.trudy.member.model.Member;
-import com.ssafy.trudy.post.model.Post;
-import com.ssafy.trudy.post.model.PostArea;
-import com.ssafy.trudy.post.model.PostCategory;
-import com.ssafy.trudy.post.model.PostDto;
-import com.ssafy.trudy.post.repository.PostAreaRepository;
-import com.ssafy.trudy.post.repository.PostCategoryRepository;
-import com.ssafy.trudy.post.repository.PostImageRepository;
-import com.ssafy.trudy.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -109,13 +100,34 @@ public class PostService {
     }
 
     //포럼 게시글 상세보기
-    public Optional<Post> findPostDetail(Long postId) throws  Exception{
+    public void /*Optional<Post>*/ findPostDetail(Long postId) throws  Exception{
+
+        /*
+        post entity를 가져옴
+    comments entity 를 전부 구해옴
+    해당 comments entity로
+    -> comment_like count를 구한다, nested_comment entity를 구해옴
+        -> nested_comment entity로 nested_comment like count를 구해온다
+     */
+        //front에 전송할 객체
+        PostDto.CommentCombine CommentRepository = new PostDto.CommentCombine();
+
+        //post entity를 가져옴
+        Post postEntity = postRepository.findById(postId).get();
+
+        //postCombine 가져오는 코드 복사
+
+        //
+
+
+
+
         //Optional 클래스는 여러 가지 API를 제공하여 null일 수도 있는 객체를 다룰 수 있도록 돕습니다.
-        Optional<Post> post = postRepository.findById(postId);
+//        Optional<Post> post = postRepository.findById(postId);
+//
+//        log.info(post.toString());
 
-        log.info(post.toString());
-
-        return post;
+//        return post;
     }
 
     //포럼 게시글 좋아요
