@@ -1,5 +1,6 @@
 package com.ssafy.trudy.post.service;
 
+import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.model.PostArea;
 import com.ssafy.trudy.post.model.PostCategory;
@@ -87,6 +88,14 @@ public class PostService {
     //대댓글 삭제
     public void removePostNestedComment(){
 
+    }
+
+    public List<Post> getAllByUserId(Long memberId) {
+        return postRepository.findAllByMemberId(memberId);
+    }
+
+    public List<Post> getAllByUserIds(List<Long> memberIds) {
+        return postRepository.findAllByMemberIdIn(memberIds);
     }
 
 }

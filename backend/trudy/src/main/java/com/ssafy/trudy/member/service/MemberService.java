@@ -1,22 +1,34 @@
 package com.ssafy.trudy.member.service;
 
+import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
+import com.ssafy.trudy.exception.ApiException;
+import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.*;
+import com.ssafy.trudy.member.model.dto.MemberResponse;
+import com.ssafy.trudy.member.model.dto.MemberProfileResponse;
+import com.ssafy.trudy.auth.dto.request.LoginRequest;
 import com.ssafy.trudy.member.repository.MemberRepository;
-import com.ssafy.trudy.member.repository.SearchMemberRepository;
+import com.ssafy.trudy.member.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,115 +36,74 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
 
+    @Autowired
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    //일반 회원 가입
-    public MemberDto createMember(MemberRequest memberRequest){
-        Member member = memberRepository.save(
-                Member.builder()
-                        .email(memberRequest.getEmail())
-                        .password(bCryptPasswordEncoder.encode(memberRequest.getPassword()))
-                        .name(memberRequest.getName())
-                        .gender(memberRequest.getGender())
-                        .areaCode(memberRequest.getAreaCode())
-                        .sigunguCode(memberRequest.getSigunguCode())
-                        .birth(memberRequest.getBirth())
-                        .isLocal(memberRequest.getIsLocal())
-                        .isPublic(memberRequest.getIsPublic())
-                        .role(MemberRole.MEMBER)
-                        .lastAccess(LocalDateTime.now())
-                        .build());
 
-        return MemberDto.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .password(member.getPassword())
-                .name(member.getName())
-                .image(member.getImage())
-                .gender(member.getGender())
-                .areaCode(member.getAreaCode())
-                .sigunguCode(member.getSigunguCode())
-                .birth(member.getBirth())
-                .isLocal(member.getIsLocal())
-                .isPublic(member.getIsPublic())
+    public Member getByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+    }
+
+    public Member getById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+    }
+
+    public void createRefreshToken(Authentication authentication, String token) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Member member = this.getById(((PrincipalDetails) userDetails).getMember().getId());
+
+        RefreshToken refreshToken = RefreshToken.builder()
+                .member(member)
+                .token(token)
                 .build();
+
+        refreshTokenRepository.save(refreshToken);
     }
 
-    public List<MemberDto> findAll() {
-        int page = 2;
-        int size = 10;
-        Pageable limit = PageRequest.of(page * size,size);
-        memberRepository.findAll(limit);
-        return memberRepository
-                .findAll(limit).stream().map(member->MemberDto.builder()
-                        .id(member.getId())
-                        .email(member.getEmail())
-                        .password(member.getPassword())
-                        .name(member.getName())
-                        .image(member.getImage())
-                        .gender(member.getGender())
-                        .areaCode(member.getAreaCode())
-                        .sigunguCode(member.getSigunguCode())
-                        .birth(member.getBirth())
-                        .isLocal(member.getIsLocal())
-                        .isPublic(member.getIsPublic())
-                        .build()).collect(Collectors.toList());
+    public RefreshToken getByRefreshToken(String refreshToken) {
+        return refreshTokenRepository.findByToken(refreshToken)
+                .orElseThrow(() -> new ApiException(ServiceErrorType.WAS_LOGOUT_USER));
     }
 
 
-    // 정보 수정
-    public ResponseEntity<MemberDto> modifyMember(Long id, MemberRequest memberRequest) {
-        Optional<Member> memberData = memberRepository.findById(id);
-        if (memberData.isPresent()) {
-            Member member = memberData.get();
-            member.setName(memberRequest.getName());
-            member.setBirth(memberRequest.getBirth());
-            member.setGender(memberRequest.getGender());
-            member.setRole(memberRequest.getRole());
-            member.setIsLocal(memberRequest.getIsLocal());
-            member.setIsPublic(memberRequest.getIsPublic());
-            member.setAreaCode(memberRequest.getAreaCode());
-            member.setSigunguCode(memberRequest.getSigunguCode());
-            return new ResponseEntity<>(entityToDto(memberRepository.save(member)), HttpStatus.OK);
+    public void deleteByRefreshToken(String refreshToken) {
+        refreshTokenRepository.deleteByToken(refreshToken);
+    }
+
+    public Member save(Member member) {
+        return memberRepository.save(member);
+    }
+
+    public void deleteByMemberId(Long memberId) {
+        Member member = this.getById(memberId);
+
+        List<RefreshToken> refreshTokens = member.getRefreshTokens();
+
+        member.setRefreshTokens(new ArrayList<>());
+
+        this.save(member);
+        refreshTokenRepository.deleteAll(refreshTokens);
+    }
+
+    public Page<Member> getSearchByPageable(String name, String email, Pageable pageable) {
+        Page<Member> member;
+
+        if (Objects.nonNull(name) && Objects.nonNull(email)) {
+            member = memberRepository.findByNameContainingOrEmailContaining(name, email, pageable);
+        } else if (Objects.nonNull(email)) {
+            member = memberRepository.findByEmailContaining(email, pageable);
+        } else if (Objects.nonNull(name)) {
+            member = memberRepository.findByNameContaining(name, pageable);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    // 회원 삭제
-    public MemberDto deleteMember(Long id) {
-        return null;
-    }
-
-    public MemberInfoDto findMember(String email) {
-        Member member = Optional.ofNullable(memberRepository.findByEmail(email)).orElseThrow(() -> new BadCredentialsException("회원 정보를 찾을 수 없습니다."));
-        return new MemberInfoDto(member);
-    }
-
-    public MemberLoginDto findByEmailAndPassword(String email, String password) {
-        Member member = Optional.ofNullable(memberRepository.findByEmail(email)).orElseThrow(() -> new BadCredentialsException("회원 정보를 찾을 수 없습니다."));
-        if(!bCryptPasswordEncoder.matches(password, member.getPassword())) {
-            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+            member = memberRepository.findAll(pageable);
         }
 
-        return MemberLoginDto.builder()
-                .email(member.getEmail())
-                .password(member.getPassword())
-                .role(member.getRole())
-                .build();
+        return member;
     }
-
-    public MemberDto entityToDto(Member member) {
-        return new MemberDto(member.getId(), member.getEmail(), member.getPassword(), member.getName(), member.getImage(), member.getGender(), member.getAreaCode(), member.getSigunguCode(), member.getBirth(), member.getIsLocal(), member.getIsPublic());
-    }
-
-    public String findEmailById(Long id) {
-        return memberRepository.findById(id).orElseThrow(() -> new BadCredentialsException("회원 정보를 찾을 수 없습니다.")).getEmail();
-    }
-
-
-
 
     //구글 연동 회원가입
     public void addGoogle(){
@@ -141,11 +112,6 @@ public class MemberService {
 
     //비밀번호 찾기
     public void modifyPassword(){
-
-    }
-
-    //회원 정보 수정
-    public void modifyMember(){
 
     }
 
