@@ -43,7 +43,7 @@ public class PostController {
     @GetMapping
     public ResponseEntity<?> postList(){
         //test
-       // postService.findPostList();
+        // postService.findPostList();
         //List<Post> findPostList = postService.findPostList();
         //List<PostListResponse> response = findPostList.stream()
 //                .map(p -> new PostListResponse(
