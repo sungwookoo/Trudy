@@ -8,6 +8,9 @@ function Square() {
   const [gender, setGender] = useState<string>("All");
   const [nameSearch, setNameSearch] = useState<string>();
   const [searchChange, setSearchChange] = useState<string>();
+  const [squareData, setSquareData] = useState<[]>([]);
+
+
 
   // 더미데이터
   // const tempData = [
@@ -88,9 +91,6 @@ function Square() {
     e.currentTarget.src =
       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
   };
-  // const searchName = (e :React.MouseEvent<HTMLButtonElement>) => {
-  //   setNameSearch(e.target)
-  // }
 
   // 검색하고 enter 눌렀을 때
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -99,20 +99,18 @@ function Square() {
     }
   };
 
-  const [squareData, setSquareData] = useState<[]>([]);
 
   useEffect(() => {
-    const params = {
-      area: area,
-      isLocal: isLocal,
-      gender: gender,
-      name: nameSearch,
-    };
-    console.log("마운트");
+    // const params = {
+    //   area: area,
+    //   isLocal: isLocal,
+    //   gender: gender,
+    //   name: nameSearch,
+    // };
     async function SquareGet() {
-      await axios.get("api/member/", { params }).then((response) => {
+      await axios.get("api/member/").then((response) => {
         setSquareData(response.data.data);
-        console.log("필터링");
+        console.log(response.data);
       });
     }
     SquareGet();
