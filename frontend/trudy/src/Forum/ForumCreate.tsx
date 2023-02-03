@@ -1,49 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import './ForumCreate.css'
+import React, { Component } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-
-const writeArticle = (title: string, content: string) => {
-  console.log(`Title: ${title} Content: ${content}`);
-};
-
-function ForumCreate ( onSubmit: any ) {
-  const [open, setOpen] = useState(false)
-  const [image, setImage] = useState({
-    image_file: '',
-    preview_URL: '',
-  })
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit(title, content);
-  };
-
-  return (
-    <div className='article-create-container'>
-    <form className='article-form-container' onSubmit={handleSubmit}>
-      {/* <div className='forms-text'> */}
-      <input className='my-10 w-96 h-10 '
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      
-      <textarea className='w-96 h-80 resize-none'
-        placeholder="Content"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-      />
-      {/* </div> */}
-      <button className='bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-5 ml-5 my-10' type="submit">Post</button>
-    </form>
-      
-    
-    </div>
-  );
+class ForumCreate extends Component {
+    render() {
+        return (
+            <div className="">
+                <h1>Using CKEditor 5 build in React</h1>
+                <CKEditor
+                    editor={ ClassicEditor }
+                    data="<p>Hello from CKEditor 5!</p>"
+                    onReady={ (editor:any) => {
+                        // You can store the "editor" and use when it is needed.
+                        console.log( 'Editor is ready to use!', editor );
+                    } }
+                    onChange={ ( event: any, editor: any ) => {
+                        const data = editor.getData();
+                        console.log( { event, editor, data } );
+                    } }
+                    onBlur={ ( event: any, editor: any ) => {
+                        console.log( 'Blur.', editor );
+                    } }
+                    onFocus={ ( event: any, editor: any ) => {
+                        console.log( 'Focus.', editor );
+                    } }
+                />
+            </div>
+        );
+    }
 }
 
-export default ForumCreate;
+export default ForumCreate ;

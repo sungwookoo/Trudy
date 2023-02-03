@@ -31,9 +31,10 @@
 
 .forum-txt-content {
   overflow: hidden;
+  width: 300px;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* 라인수 */
+  -webkit-line-clamp: 3; /* 라인수 */
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   line-height: 1.2em;
