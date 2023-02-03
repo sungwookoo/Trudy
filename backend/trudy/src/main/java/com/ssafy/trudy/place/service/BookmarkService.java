@@ -18,7 +18,9 @@ public class BookmarkService {
     }
 
     //북마크한 places 리스트 가져오기
-    public void findBookmarkList(){
+    public void findBookmarkList(String memberIdd){
+        Long memberId = Long.parseLong(memberIdd);
+
 
     }
 
