@@ -24,9 +24,9 @@ public class BookmarkController {
     }
 
     //북마크한 places 리스트 가져오기
-    @GetMapping("/{member_id}")
-    public void bookmarkList(@PathVariable String memberId){
-        List<PlaceDto> findBookmarkList(memberId);
-    }
+//    @GetMapping("/{member_id}")
+//    public void bookmarkList(@PathVariable String memberId){
+//        List<PlaceDto> findBookmarkList(memberId);
+//    }
 
 }

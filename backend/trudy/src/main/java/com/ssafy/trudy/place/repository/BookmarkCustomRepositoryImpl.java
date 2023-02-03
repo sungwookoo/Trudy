@@ -7,14 +7,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
-public class BookmarkCustomRepositoryImpl implements BookmarkCustomRepository{
-
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    @Override
-    public List<Place> findBookmarkList() {
-//        Member user = (Member) authentication.getPrincipal();
-//        Long userId = user.getId();
-
-
-    }
-}
+//public class BookmarkCustomRepositoryImpl implements BookmarkCustomRepository{
+//
+////    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    @Override
+//    public List<Place> findBookmarkList() {
+////        Member user = (Member) authentication.getPrincipal();
+////        Long userId = user.getId();
+//
+//
+//    }
+//}

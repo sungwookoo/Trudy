@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface BookmarkRepository extends JpaRepository<Bookmark, Long>, BookmarkCustomRepository {
-
-    List<Place>
-}
+//@Repository
+//public interface BookmarkRepository extends JpaRepository<Bookmark, Long>, BookmarkCustomRepository {
+//
+//    List<Place>
+//}

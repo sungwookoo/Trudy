@@ -1,6 +1,6 @@
 package com.ssafy.trudy.place.service;
 
-import com.ssafy.trudy.place.repository.BookmarkRepository;
+//import com.ssafy.trudy.place.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class BookmarkService {
 
     //북마크 추가
-    private final BookmarkRepository bookmarkRepository;
+//    private final BookmarkRepository bookmarkRepository;
 
     public void addBookmark(){
 
