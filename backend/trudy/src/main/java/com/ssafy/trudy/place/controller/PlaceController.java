@@ -16,14 +16,7 @@ public class PlaceController {
     @Autowired
     private PlaceService placeService;
 
-    // 1) 돋보기 눌러서 서칭
-    @GetMapping("/search/{keyword}")
-    @ResponseBody
-    public List<PlaceDto> findPlaceListByTitle(@RequestParam String offset, @RequestParam String limit, @PathVariable String keyword) {
-        return placeService.findPlaceListByTitle(offset, limit, keyword);
-    }
-
-    // 2) 처음 조회, 관광지 정보 클릭할 때 필터링
+    // 장소 정보 API
     @GetMapping("")
     @ResponseBody
     public List<PlaceDto> findPlaceListByCategory(@RequestParam String offset, @RequestParam String limit, @RequestParam String areaSigun, @RequestParam String contentTypeId, @RequestParam String keyword) {

@@ -25,7 +25,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceCustom
     List<Place> findPlacesByAreacodeAndSigungucodeAndTitleContaining(String areacode, String sigungucode, String keyword);
 
     // 2-2-x) 지역값만 O with keyword
-    List<Place> findPlacesByAreaCodeAndTitleContaining(String areacode, String keyword);
+    List<Place> findPlacesByAreacodeAndTitleContaining(String areacode, String keyword);
 
     // 3-1) 지역 시군구 값 X, 콘텐츠 타입 O, keyword X
     List<Place> findPlacesByContenttypeid(String contenttypeid);

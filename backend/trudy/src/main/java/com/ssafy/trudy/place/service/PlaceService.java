@@ -7,14 +7,12 @@ import com.ssafy.trudy.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +59,7 @@ public class PlaceService {
                 for (String[] strings : areaSigungu) {
                     // 2-2-x) sigungucode = 100이 들어올 경우, areacode와 keyword로 판단해서 더하기
                     if (strings[1].equals("100")) {
-                        placeListByCategory.addAll(placeRepository.findPlacesByAreaCodeAndTitleContaining(strings[0], keyword));
+                        placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndTitleContaining(strings[0], keyword));
                     // 2-2-o) sigungucode가 정상적으로 들어올 경우, areacode와 sigungucode와 keyword로 판단하기
                     } else {
                         placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndTitleContaining(strings[0], strings[1], keyword));
@@ -105,16 +103,16 @@ public class PlaceService {
                 }
             // 4-2) keyword O -> 지역 시군구 값 & 콘텐츠 타입 값 & 키워드
             } else {
-                for (int i = 0; i < areaSigungu.length; i++) {
+                for (String[] strings : areaSigungu) {
                     // 4-2-x) sigungucode = 100이 들어온 경우, areacode와 컨텐츠타입과 키워드로 하기
-                    if (areaSigungu[i][1].equals("100")) {
-                        for (int j = 0; j < contentTypeId.length; j++) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeidAndTitleContaining(areaSigungu[i][0], contentTypeId[j], keyword));
+                    if (strings[1].equals("100")) {
+                        for (String s : contentTypeId) {
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeidAndTitleContaining(strings[0], s, keyword));
                         }
-                    // 4-2-o) sigungu가 정상적으로 들어온 경우, areacode & sigungucode & cotenttypeid & keyword
+                        // 4-2-o) sigungu가 정상적으로 들어온 경우, areacode & sigungucode & cotenttypeid & keyword
                     } else {
-                        for (int j = 0; j < contentTypeId.length; j++) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(areaSigungu[i][0], areaSigungu[i][1], contentTypeId[j], keyword));
+                        for (String s : contentTypeId) {
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(strings[0], strings[1], s, keyword));
                         }
                     }
                 }
