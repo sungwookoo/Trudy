@@ -26,9 +26,10 @@ public class PostService {
 
     //포럼 게시글 목록 가져오기
     public List<PostDto.PostCombine> findPostList(){
+        log.info("============Post Service / findPostList==========");
 
         //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
-        List<Post> postEntityList = postRepository.findAll();//.stream().map(p->new PostDto.PostWithMemeber(modelMapper.map(p, PostDto.PostElement.class),modelMapper.map(p.getMemberId(), PostDto.MemberElement.class) ) ).collect(Collectors.toList());
+        List<Post> postEntityList = postRepository.findAll();
 
         //Dto를 담을 리스트()
         List<PostDto.PostCombine> postCombineList = new ArrayList<>();
@@ -52,7 +53,6 @@ public class PostService {
                             modelMapper.map(p.getSigunguCode(), PostDto.SigunguElement.class)
                     )).collect(Collectors.toList());
 
-
             //category 정보 리스트 가져와서 DTO에 저장
             List<PostDto.PostCategoryElement> postCategoryElementLIst = postCategoryRepository
                     .findByPostId(postEntity)
@@ -64,26 +64,30 @@ public class PostService {
 
             //한개 포럼글에 대한 정보를 묶음
             postCombineList.add(new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount));
-        }
 
-        for(int i=0; i<postCombineList.size(); i++) {
-            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
-            log.info(i + " member+++++++ : " + postCombineList.get(i).getMemberElement().toString());
-            log.info(i + " image+++++++ : " + postCombineList.get(i).getPostImageElementList().toString());
-            log.info(i + " area+++++++ : " + postCombineList.get(i).getPostAreaElementList().toString());
-            log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
-            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
-        }
 
+
+        }
+//        for(int i=0; i<postCombineList.size(); i++) {
+//            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
+//            log.info(i + " member+++++++ : " + postCombineList.get(i).getMemberElement().toString());
+//            log.info(i + " image+++++++ : " + postCombineList.get(i).getPostImageElementList().toString());
+//            log.info(i + " area+++++++ : " + postCombineList.get(i).getPostAreaElementList().toString());
+//            log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
+//            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
+//        }
+
+        log.info(postCombineList.toString());
         return postCombineList;
     }
 
     //포럼 게시글 작성
-//    public void addPost(PostDto.Post postDto){
-//        // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
-//
-//
-//    }
+    public void addPost(){
+        // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
+        PostCategory save = postCategoryRepository.save(new PostCategory(CategoryName.Restaurant));
+        log.info("category test ============= " + save.toString());
+
+    }
 
     //포럼 게시글 수정
     public void modifyPost(){
