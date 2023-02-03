@@ -6,6 +6,5 @@ import com.ssafy.trudy.place.model.Place;
 import java.util.List;
 
 public interface BookmarkCustomRepository {
-
     List<Place> findBookmarkList();
 }

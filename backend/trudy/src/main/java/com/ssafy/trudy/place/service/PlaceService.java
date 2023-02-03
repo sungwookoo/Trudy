@@ -3,10 +3,12 @@ package com.ssafy.trudy.place.service;
 
 import com.ssafy.trudy.place.model.Place;
 import com.ssafy.trudy.place.model.PlaceDto;
+import com.ssafy.trudy.place.repository.BookmarkRepository;
 import com.ssafy.trudy.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +23,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class PlaceService {
 
+    @Autowired
     private final PlaceRepository placeRepository;
+
+    // id로 검색
+    public Place getById(Long placeId) {
+        return placeRepository.getById(placeId);
+    }
 
     // 카테고리 검색 전체
     public List<PlaceDto> findPlaceListByCategory(String offs, String lmt, String areaSigunguCash, String contentTypeIdCash, String keyword) {
