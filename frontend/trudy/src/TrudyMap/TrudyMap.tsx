@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import "./TrudyMap.css";
 import Place from "./Place";
+
+const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
 const containerStyle = {
   width: "1350px",
@@ -14,7 +16,7 @@ function TrudyMap() {
   const [marker, setMarker] = useState({ lat: 37.4602, lng: 126.4407 });
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCr_VXyq_r6dte_29ocp-T2i6yf30VvUMI",
+    googleMapsApiKey: API_KEY,
     language: "en",
   });
   const [map, setMap] = React.useState(null);
@@ -47,7 +49,7 @@ function TrudyMap() {
       </div>
 
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom} onLoad={onLoad} onUnmount={onUnmount}>
-        <Marker position={marker} />
+        <MarkerF position={marker} />
       </GoogleMap>
     </div>
   ) : (
