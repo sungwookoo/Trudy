@@ -56,8 +56,7 @@ function SideBarPlanner() {
                   name="bookmark"
                   id="bookmark"
                 />
-                                <p className="inline">All</p>
-
+                <p className="inline">Bookmark</p>
               </label>
             </div>
           </div>

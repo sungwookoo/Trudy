@@ -152,18 +152,18 @@ function Square() {
           ) => {
             return (
               <div
-                className="bg-trudy border-2 shadow-lg p-6 inline-block"
+                className="p-4 inline-block"
                 key={i}
                 onClick={navigateToProfile}
               >
-                <div className="md:w-1/3 inline-block float-left">
+                <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
                   <img
                     src={guide.image}
                     onError={imgError}
                     className="h-64 w-full object-cover rounded relative"
                   />
                 </div>
-                <div className="md:w-2/3 md:h-full p-4 bg-yellow-300 inline-block">
+                <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
                   <h3 className="text-lg font-bold">{guide.name}</h3>
                   <p className="text-gray-600">{guide.gender}</p>
                   <p className="text-gray-600">areacode : {guide.areacode}</p>
