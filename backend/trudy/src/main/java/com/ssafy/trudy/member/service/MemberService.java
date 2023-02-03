@@ -60,12 +60,13 @@ public class MemberService {
     }
 
     public List<MemberDto> findAll() {
-        int page = 2;
-        int size = 10;
-        Pageable limit = PageRequest.of(page * size,size);
-        memberRepository.findAll(limit);
+//        int page = 2;
+//        int size = 10;
+//        Pageable limit = PageRequest.of(page * size,size);
+//        memberRepository.findAll(limit);
         return memberRepository
-                .findAll(limit).stream().map(member->MemberDto.builder()
+//                .findAll(limit).stream().map(member->MemberDto.builder()
+                .findAll().stream().map(member->MemberDto.builder()
                         .id(member.getId())
                         .email(member.getEmail())
                         .password(member.getPassword())
