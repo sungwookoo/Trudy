@@ -14,7 +14,6 @@ import com.ssafy.trudy.member.model.RefreshToken;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.Post;
-import com.ssafy.trudy.post.model.PostDto;
 import com.ssafy.trudy.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
