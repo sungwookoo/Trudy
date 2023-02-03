@@ -3,28 +3,14 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
-import com.ssafy.trudy.config.JwtConfig;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
-import com.ssafy.trudy.member.model.dto.MemberProfileResponse;
-import com.ssafy.trudy.auth.dto.request.LoginRequest;
-import com.ssafy.trudy.member.model.MemberRequest;
-import com.ssafy.trudy.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/member")

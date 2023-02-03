@@ -3,33 +3,23 @@ package com.ssafy.trudy.member.service;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
-import com.ssafy.trudy.member.model.*;
-import com.ssafy.trudy.member.model.dto.MemberResponse;
-import com.ssafy.trudy.member.model.dto.MemberProfileResponse;
-import com.ssafy.trudy.auth.dto.request.LoginRequest;
+import com.ssafy.trudy.member.model.Member;
+import com.ssafy.trudy.member.model.RefreshToken;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
