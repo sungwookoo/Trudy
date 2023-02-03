@@ -3,6 +3,15 @@ package com.ssafy.trudy.post.service;
 import com.ssafy.trudy.post.model.*;
 import com.ssafy.trudy.post.repository.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import com.ssafy.trudy.member.model.Member;
+import com.ssafy.trudy.post.model.Post;
+import com.ssafy.trudy.post.model.PostArea;
+import com.ssafy.trudy.post.model.PostCategory;
+import com.ssafy.trudy.post.model.PostDto;
+import com.ssafy.trudy.post.repository.PostAreaRepository;
+import com.ssafy.trudy.post.repository.PostCategoryRepository;
+import com.ssafy.trudy.post.repository.PostImageRepository;
+import com.ssafy.trudy.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -137,6 +146,14 @@ public class PostService {
     //대댓글 삭제
     public void removePostNestedComment(){
 
+    }
+
+    public List<Post> getAllByUserId(Long memberId) {
+        return postRepository.findAllByMemberId(memberId);
+    }
+
+    public List<Post> getAllByUserIds(List<Long> memberIds) {
+        return postRepository.findAllByMemberIdIn(memberIds);
     }
 
 }
