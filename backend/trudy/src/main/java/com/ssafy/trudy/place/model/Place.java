@@ -39,7 +39,7 @@ public class Place {
     @Column(length = 45)
     private String contentid;
 
-    @Column(name = "contenttypeid", length = 45)
+    @Column(length = 45)
     private String contenttypeid;
 
     @Column(length = 45)
@@ -64,7 +64,7 @@ public class Place {
     @Column(length = 45)
     private String readcount;
 
-    @Column(name = "sigungucode", length = 45)
+    @Column(length = 45)
     private String sigungucode;
 
     @Column(length = 45)

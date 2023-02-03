@@ -1,12 +1,13 @@
 package com.ssafy.trudy.place.controller;
 
+import com.ssafy.trudy.place.model.PlaceDto;
 import com.ssafy.trudy.place.service.BookmarkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.config.web.servlet.oauth2.login.OAuth2LoginSecurityMarker;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookmark")
@@ -23,9 +24,9 @@ public class BookmarkController {
     }
 
     //북마크한 places 리스트 가져오기
-    @GetMapping("/{member_id}")
-    public void bookmarkList(){
-
-    }
+//    @GetMapping("/{member_id}")
+//    public void bookmarkList(@PathVariable String memberId){
+//        List<PlaceDto> findBookmarkList(memberId);
+//    }
 
 }

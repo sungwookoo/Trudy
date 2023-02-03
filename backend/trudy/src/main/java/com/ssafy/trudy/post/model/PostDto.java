@@ -1,56 +1,45 @@
 package com.ssafy.trudy.post.model;
 
+import com.ssafy.trudy.etc.model.Area;
 import com.ssafy.trudy.etc.model.Sigungu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PostDto {
 
+    //포럼 글(post) 1개의 전체 정보 별 전달할 요소DTO
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostListResponse {
-//        private Long id;
-//        private String title;
-//        private String content;
-//        private int thumbnailImageId;
-//        private LocalDateTime createdAt;
-//        private LocalDateTime updatedAt;
-        private PostRequest post;
-        private MemberRequest member;
-        private PostImageRequest postImageRequest;
+    public static class PostCombine {
 
-        //private postCategoryRequest postCategoryRequest;
-       // private PostCategoryRequest postCategoryRequest;
+        private PostElement postElement;
+        private MemberElement memberElement;
+        private List<PostImageElement> postImageElementList;
+        private List<PostAreaElement> postAreaElementList;
+        private List<PostCategoryElement> postCategoryElementList;
 
+        private int postLikeCount;
 
     }
 
+
+    //요소DTO 모음
+    //post 내부 요소---------------------------------------------------------------------
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostInsertRequest {
-
-        private PostRequest postRequest;
-        private PostAreaRequest postAreaRequest;
-        private PostCategoryRequest postCategoryRequest;
-        private PostImageRequest postImageRequest;
-    }
-
-
-
-    //요소
-    //post 요소
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class PostRequest{
+    public static class PostElement{
         private Long id;
-        //private Member memberId;
         private String title;
         private String content;
         private int thumbnailImageId;
@@ -61,34 +50,32 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostAreaRequest{
-        private Post post;
-        private Sigungu sigunguCode;
-    }
+    public static class PostAreaElement{
 
+        private AreaElement areaElement;
+        private SigunguElement sigunguElement;
+    }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostCategoryRequest{
-        //private Post postId;
+    public static class PostCategoryElement{
         private String name;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PostImageRequest{
-        //private Post postId;
-        private String imageId;
+    public static class PostImageElement{
+        private Long id;
+        private String url;
     }
 
-    //member 요소
-
+    //member 요소-----------------------
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class MemberRequest{
+    public static class MemberElement{
         private Long id;
         private String email;
         private String name;
@@ -101,4 +88,21 @@ public class PostDto {
         private Timestamp lastAccess;
     }
 
+    //area, sigungu 요소----------------
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AreaElement{
+        private int code;
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SigunguElement{
+        private Long id;
+        private int code;
+        private String name;
+    }
 }
