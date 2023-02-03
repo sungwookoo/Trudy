@@ -5,8 +5,9 @@ import "./Square.css";
 function Square() {
   const [area, setArea] = useState<number>(1);
   const [isLocal, setIsLocal] = useState<number>(1);
-  const [gender, setGender] = useState<string>("Male");
-  // const [search, setSearch] = useState<string>("");
+  const [gender, setGender] = useState<string>("All");
+  const [nameSearch, setNameSearch] = useState<string>();
+  const [searchChange, setSearchChange] = useState<string>();
 
   // 더미데이터
   // const tempData = [
@@ -83,28 +84,39 @@ function Square() {
   //   );
   // });
 
-  const imgError = (e: any) => {
-    e.target.src =
+  const imgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src =
       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
+  };
+  // const searchName = (e :React.MouseEvent<HTMLButtonElement>) => {
+  //   setNameSearch(e.target)
+  // }
+
+  // 검색하고 enter 눌렀을 때
+  const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key == "Enter") {
+      setNameSearch(searchChange);
+    }
   };
 
   const [squareData, setSquareData] = useState<[]>([]);
-
 
   useEffect(() => {
     const params = {
       area: area,
       isLocal: isLocal,
-      gender: gender
-    }
-
-    async function squareget() {
-      await axios.get("api/member/filter", {params}).then((response) => {
+      gender: gender,
+      name: nameSearch,
+    };
+    console.log("마운트");
+    async function SquareGet() {
+      await axios.get("api/member/", { params }).then((response) => {
         setSquareData(response.data.data);
+        console.log("필터링");
       });
     }
-    squareget();
-  }, [area, isLocal, gender]);
+    SquareGet();
+  }, [area, isLocal, gender, nameSearch]);
 
   return (
     <div>
@@ -150,42 +162,46 @@ function Square() {
         </select>
 
         {/* 검색 */}
-        <form>
-          <div className="flex">
-            <div className="relative">
-              <input
-                type="search"
-                id="default-search"
-                className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search Name"
-                required
-              />
-              <button
-                type="submit"
-                className="absolute flex inset-y-0 right-0 p-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        <div className="flex">
+          <div className="relative">
+            <input
+              type="search"
+              id="default-search"
+              className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search Name"
+              required
+              onKeyDown={pressEnter}
+              onChange={(e) => {
+                setSearchChange(e.target.value);
+              }}
+            />
+            <button
+              type="submit"
+              className="absolute flex inset-y-0 right-0 p-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={(e) => {
+                setNameSearch(searchChange);
+              }}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  ></path>
-                </svg>
-              </button>
-            </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </button>
           </div>
-        </form>
+        </div>
       </div>
       <br />
       <br />
-
 
       {/* 게시물 */}
       <div id="guidesGrid" className="p-4 grid grid-cols-3 relative">
