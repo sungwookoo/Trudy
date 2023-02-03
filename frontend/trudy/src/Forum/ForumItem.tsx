@@ -21,7 +21,7 @@ function ForumItem(props: any) {
   return(
     <div className="forum-item-container">
       {/* 포럼 아이템 개별 상자 */}
-      <div className='forum-item-box'>
+      <div className='forum-item-box my-2 mx-2'>
         {/* Post_image 테이블 더미 */}
         
         <img className='forum-thumbnail-image' src={forumData.url}></img>
