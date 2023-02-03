@@ -25,33 +25,6 @@ public class PlaceService {
 
     private final PlaceRepository placeRepository;
 
-    // 키워드로 찾기 - pagenation clear
-    public List<PlaceDto> findPlaceListByTitle(String offs, String lmt, String keyword) {
-        List<Place> placeListByTitle = Optional.ofNullable(placeRepository.findPlacesByTitleContaining(keyword)).orElseThrow(() -> new BadCredentialsException("해당 키워드의 장소를 찾을 수 없습니다."));
-        int offset = Integer.parseInt(offs);
-        int limit = Integer.parseInt(lmt);
-        try {
-            placeListByTitle = placeListByTitle.subList(offset, offset + limit);
-        } catch (Exception e) {
-            placeListByTitle = placeListByTitle.subList(offset, placeListByTitle.size() - 1);
-        }
-        return placeListByTitle.stream().map(place -> PlaceDto.builder()
-                .id(place.getId())
-                .addr1(place.getAddr1())
-                .addr2(place.getAddr2())
-                .areacode(place.getAreacode())
-                .contenttypeid(place.getContenttypeid())
-                .firstimage(place.getFirstimage())
-                .firstimage2(place.getFirstimage2())
-                .mapx(place.getMapx())
-                .mapy(place.getMapy())
-                .sigungucode(place.getSigungucode())
-                .tel(place.getTel())
-                .title(place.getTitle())
-                .zipcode(place.getZipcode())
-                .build()).collect(Collectors.toList());
-    }
-
     // 카테고리 검색 전체
     public List<PlaceDto> findPlaceListByCategory(String offs, String lmt, String areaSigunguCash, String contentTypeIdCash, String keyword) {
         // offset - page 개념, limit - 나올 게시물 갯수
@@ -116,22 +89,36 @@ public class PlaceService {
             String[][] areaSigungu = parseFunction(areaSigunguCash);
             String[] contentTypeId = parseFunction2(contentTypeIdCash);
             // 4-1) keyword X -> 지역 시군구 값 & 콘텐츠 타입 값
-            for(int i = 0; i < areaSigungu.length; i++) {
-                // 4-1-x) sigungucode = 100이 들어온 경우, areacode와 콘텐츠타입으로 하기
-                if(areaSigungu[i][1].equals("100")) {
-                    for(int j = 0; j < contentTypeId.length; j++) {
-                        placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeid(areaSigungu[i][0], contentTypeId[j]));
-                    }
-                // 4-1-o) sigungucode가 정상적으로 들어온 경우, areacode & sigungucode & contenttpyeid
-                } else {
-                    for(int j = 0; j < contentTypeId.length; j++) {
-                        placeListByCategory.addAll()
+            if(keyword.length() == 0) {
+                for (String[] strings : areaSigungu) {
+                    // 4-1-x) sigungucode = 100이 들어온 경우, areacode와 컨텐츠타입으로 하기
+                    if (strings[1].equals("100")) {
+                        for (String s : contentTypeId) {
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeid(strings[0], s));
+                        }
+                        // 4-1-o) sigungucode가 정상적으로 들어온 경우, areacode & sigungucode & contenttypeid
+                    } else {
+                        for (String s : contentTypeId) {
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeid(strings[0], strings[0], s));
+                        }
                     }
                 }
-
-                // 4-1-o)
+            // 4-2) keyword O -> 지역 시군구 값 & 콘텐츠 타입 값 & 키워드
+            } else {
+                for (int i = 0; i < areaSigungu.length; i++) {
+                    // 4-2-x) sigungucode = 100이 들어온 경우, areacode와 컨텐츠타입과 키워드로 하기
+                    if (areaSigungu[i][1].equals("100")) {
+                        for (int j = 0; j < contentTypeId.length; j++) {
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeidAndTitleContaining(areaSigungu[i][0], contentTypeId[j], keyword));
+                        }
+                    // 4-2-o) sigungu가 정상적으로 들어온 경우, areacode & sigungucode & cotenttypeid & keyword
+                    } else {
+                        for (int j = 0; j < contentTypeId.length; j++) {
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(areaSigungu[i][0], areaSigungu[i][1], contentTypeId[j], keyword));
+                        }
+                    }
+                }
             }
-            // 4-2) keyword O -> 지역 시군구 값 & 콘텐츠 타입 값 & 시군구
         }
 
         // pagenation 리스트 갯수 한정해서 보내기
@@ -156,25 +143,6 @@ public class PlaceService {
                 .title(place.getTitle())
                 .zipcode(place.getZipcode())
                 .build()).collect(Collectors.toList());
-    }
-
-    public PlaceDto findPlaceById(Long id) {
-        Place place = Optional.ofNullable(placeRepository.findPlaceById(id)).orElseThrow(() -> new BadCredentialsException("해당하는 장소를 찾을 수 없습니다."));
-        return PlaceDto.builder()
-                .id(place.getId())
-                .addr1(place.getAddr1())
-                .addr2(place.getAddr2())
-                .areacode(place.getAreacode())
-                .contenttypeid(place.getContenttypeid())
-                .firstimage(place.getFirstimage())
-                .firstimage2(place.getFirstimage2())
-                .mapx(place.getMapx())
-                .mapy(place.getMapy())
-                .sigungucode(place.getSigungucode())
-                .tel(place.getTel())
-                .title(place.getTitle())
-                .zipcode(place.getZipcode())
-                .build();
     }
 
     // String -> String[][]

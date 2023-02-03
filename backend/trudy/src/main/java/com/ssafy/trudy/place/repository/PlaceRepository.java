@@ -37,13 +37,14 @@ public interface PlaceRepository extends JpaRepository<Place, Long>, PlaceCustom
     // 4-1) 지역 시군구 값 O, 콘텐츠 타입 O, keyword X
     // 4-1-x) 지역값으로 O, 콘텐츠 타입 O, keyword X
     List<Place> findPlacesByAreacodeAndContenttypeid(String areacode, String contenttypeid);
-
     // 4-1-o) 지역 시군구 값 O, 콘텐츠 타입 O, keyword X
     List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeid(String areacode, String sigungucode, String contenttypeid);
 
-
     // 4-2) 지역 시군구 값 O, 콘텐츠 타입 O, keyword O
-
+    // 4-2-x) 지역값으로 O, 콘텐츠 타입 O, keyword O
+    List<Place> findPlacesByAreacodeAndContenttypeidAndTitleContaining(String areacode, String contenttypeid, String keyword);
+    // 4-2-o) 지역 시군구 값 O, 콘텐츠 타입 O, keyword O
+    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(String areacode, String sigungucode, String contenttypeid, String keyword);
 
     // **areacode로 장소찾기
     List<Place> findPlacesByAreacode(String areacode);
