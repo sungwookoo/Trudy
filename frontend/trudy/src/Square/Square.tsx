@@ -10,8 +10,6 @@ function Square() {
   const [searchChange, setSearchChange] = useState<string>();
   const [squareData, setSquareData] = useState<[]>([]);
 
-
-
   // 더미데이터
   // const tempData = [
   //   {
@@ -99,7 +97,6 @@ function Square() {
     }
   };
 
-
   useEffect(() => {
     // const params = {
     //   area: area,
@@ -109,12 +106,20 @@ function Square() {
     // };
     async function SquareGet() {
       await axios.get("api/member/").then((response) => {
-        setSquareData(response.data.data);
-        console.log(response.data);
+        setSquareData(response.data);
       });
     }
     SquareGet();
+    console.log();
   }, [area, isLocal, gender, nameSearch]);
+  //   async function SquareGet() {
+  //     await axios.get("api/member/", { params }).then((response) => {
+  //       setSquareData(response.data.data);
+  //       console.log(response.data);
+  //     });
+  //   }
+  //   SquareGet();
+  // }, [area, isLocal, gender, nameSearch]);
 
   return (
     <div>
@@ -203,35 +208,47 @@ function Square() {
 
       {/* 게시물 */}
       <div id="guidesGrid" className="p-4 grid grid-cols-3 relative">
-        {squareData.map((guide: { image: string; name: string }, i) => {
-          return (
-            <div
-              className="bg-trudy border-2 shadow-lg p-6 inline-block"
-              key={i}
-              // onclick="프로필 페이지 이동"
-            >
-              <div className="md:w-1/3 inline-block float-left">
-                <img
-                  src={guide.image}
-                  onError={imgError}
-                  className="h-64 w-full object-cover rounded relative"
-                />
+        {squareData.map(
+          (
+            guide: {
+              image: string;
+              name: string;
+              gender: string;
+              areacode: number;
+              isLocal: number;
+            },
+            i
+          ) => {
+            return (
+              <div
+                className="bg-trudy border-2 shadow-lg p-6 inline-block"
+                key={i}
+                // onclick="프로필 페이지 이동"
+              >
+                <div className="md:w-1/3 inline-block float-left">
+                  <img
+                    src={guide.image}
+                    onError={imgError}
+                    className="h-64 w-full object-cover rounded relative"
+                  />
+                </div>
+                <div className="md:w-2/3 md:h-full p-4 bg-yellow-300 inline-block">
+                  <h3 className="text-lg font-bold">{guide.name}</h3>
+                  <p className="text-gray-600">{guide.gender}</p>
+                  <p className="text-gray-600">areacode : {guide.areacode}</p>
+                  <p className="text-gray-600">isLocal : {guide.isLocal}</p>
+                  <p className="mt-2 truncate">
+                    Introduce: Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit. Sed in aliquam magna. Integer tristique,
+                    dolor eu dignissim convallis, sapien risus rhoncus neque,
+                    non bibendum lectus enim in lorem.
+                    {/* {guide.introduce} */}
+                  </p>
+                </div>
               </div>
-              <div className="md:w-2/3 md:h-full p-4 bg-yellow-300 inline-block">
-                <h3 className="text-lg font-bold">{guide.name}</h3>
-                <p className="text-gray-600">Gender</p>
-                <p className="text-gray-600">Region</p>
-                <p className="text-gray-600">isLocal</p>
-                <p className="mt-2 truncate">
-                  Introduce: Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit. Sed in aliquam magna. Integer tristique, dolor eu
-                  dignissim convallis, sapien risus rhoncus neque, non bibendum
-                  lectus enim in lorem.
-                </p>
-              </div>
-            </div>
-          );
-        })}
+            );
+          }
+        )}
 
         {/* {guidesList} */}
       </div>
