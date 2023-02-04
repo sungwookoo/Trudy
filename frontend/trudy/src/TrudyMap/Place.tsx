@@ -29,6 +29,11 @@ export type mapPlaceType = {
 function Place(props: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
+  const [limit, setLimit] = useState<any>(10);
+  const [offset, setOffset] = useState<any>(0);
+  const [areaSigun, setareaSigun] = useState<any>([]);
+  const [contentTypeId, setcontentTypeId] = useState<string[]>([]);
+  const [keyword, setkeyword] = useState<any>("");
   const API_URL: string = "api/place";
 
   const handlePlaceClick = (place: mapPlaceType) => {
@@ -37,30 +42,35 @@ function Place(props: any) {
     props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
   useEffect(() => {
-    axios.get(API_URL).then((res: any) => {
-      // console.log("result.data: ", result.data.slice(1, 30));
-      setPlaces([...res.data.data].slice(1, 10));
-    });
+    const fetchData = async () => {
+
+      
+      try {
+        const resData = await axios.get(
+          API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
+          // method: "get",
+          // url: API_URL,
+          // params: {
+          //   limit,
+          //   offset,
+          //   areaSigun,
+          //   contentTypeId,
+          //   keyword,
+          // },
+        );
+        console.log(resData.data)
+        console.log(contentTypeId)
+
+        setPlaces(resData.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
-
-  // })
-  // await axios.get(API_URL)
-  // .then(result =>
-  //   console.log(result.data.data.length, 222)
-  //     // console.log("result.data: ", result.data.slice(1, 30));
-  //   setPlaces(result.data.data.slice(1, 30));
-  //   console.log(places);
-  //   )
-  //   [API_URL]
-  // );
-  // // console.log(places);
-
   return (
     <>
       {places.map((data, i) => {
-        // return data.title;
-        // return <img src={data.firstImage} alt="Thumbnail"/>;
-
         return <PlaceForm key={i} data={data} onClick={() => handlePlaceClick(data)} />;
       })}
     </>

@@ -21,8 +21,8 @@ public class Post {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @Column(name = "thumbnail_image_id")
-    private Long thumbnailImageId;
+    @Column(name = "thumbnail_image")
+    private String thumbnailImage;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
