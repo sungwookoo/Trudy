@@ -22,8 +22,8 @@ public class AuthAppController {
     private MemberAppService memberAppService;
 
     // 로그인
-    @PostMapping("/signin")
-    public TokenResponse signIn(@Valid @RequestBody LoginRequest signInRequest) {
+    @PostMapping("/login")
+    public TokenResponse login(@Valid @RequestBody LoginRequest signInRequest) {
         return memberAppService.login(signInRequest);
     }
 
