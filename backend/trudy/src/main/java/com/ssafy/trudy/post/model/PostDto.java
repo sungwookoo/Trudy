@@ -31,8 +31,6 @@ public class PostDto {
     }
 
     //포럼 글 마다 댓글+좋아요 개수, 댓글의 대댓글+좋아요 구조로 가져옴
-
-
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
