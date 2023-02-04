@@ -141,10 +141,16 @@ public class PostController {
         postService.addPostComment(memberId, postId, content);
     }
 
+    //포럼 댓글 좋아요
+    @PostMapping("/comment/like/{member_id}/{comment_id}")
+    public void postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
+        postService.addPostCommentLike(memberId, commentId);
+    }
+
     //댓글 삭제
     @DeleteMapping("/comment/{comment_id}")
-    public void postCommentRemove(){
-
+    public void postCommentRemove(@PathVariable("comment_id") Long commentId){
+        postService.removePostComment(commentId);
     }
 
     //대댓글 작성
@@ -162,8 +168,8 @@ public class PostController {
 
     //대댓글 삭제
     @DeleteMapping("/nested-comment/{nested_comment_id}")
-    public void postNestedCommentRemove(){
-
+    public void postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
+        postService.removePostNestedComment(nestedCommentId);
     }
 
 

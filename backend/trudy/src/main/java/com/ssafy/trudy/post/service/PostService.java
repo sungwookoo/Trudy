@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -195,11 +196,11 @@ public class PostService {
 //        log.info("Service addPostLike func - memberEntity ============== "+ memberEntity );
 //        log.info("Service addPostLike func - postEntity ============== "+ postEntity);
 
-        //member Entity와 postEntity로 구성된 postLike Entity가 있는지 확인하고, 없으면 저장하기 위한 postLikeEntity
+        //member Entity와 post Entity로 구성된 postLike Entity가 있는지 확인하고, 없으면 저장하기 위한 postLikeEntity
         PostLike postLikeEntityFind = postLikeRepository.findByMemberIdAndPostId(memberEntity, postEntity);
         PostLike postLikeEntitySave = new PostLike(memberEntity, postEntity);
 
-        //member Entity와 postEntity로 구성된 post like가 있는지 보고 없으면 추가해주고, 있으면 지운다.
+        //member Entity와 post Entity로 구성된 post like가 있는지 보고 없으면 추가해주고, 있으면 지운다.
         if(postLikeEntityFind == null) postLikeRepository.save(postLikeEntitySave);
         else postLikeRepository.delete(postLikeEntityFind);
 
@@ -216,9 +217,32 @@ public class PostService {
         commentRepository.save(commentEntitySave);
     }
 
-    //댓글 삭제
-    public void removePostComment(){
+    //포럼 댓글 좋아요 - 정상 동작
+    public void addPostCommentLike(Long memberId, Long commentId){
+        //CommentLike Entity의 존재 확인을 위해 Member Entity와 Comment Entity를 찾아온다.
+        Member memberEntity = memberRepository.findById(memberId).get();
+        Comment commentEntity = commentRepository.findById(commentId).get();
 
+        //Member Entity와 Comment Entity로 구성된 postLike Entity가 있는지 확인하고, 없으면 저장하기 위한 postLikeEntity
+        CommentLike commentLikeFind = commentLikeRepository.findByMemberIdAndCommentId(memberEntity, commentEntity);
+        CommentLike commentLikeSave = new CommentLike(memberEntity, commentEntity);
+
+        //member Entity와 Comment Entity로 구성된 post like가 있는지 보고 없으면 추가해주고, 있으면 지운다.
+        if(commentLikeFind == null)commentLikeRepository.save(commentLikeSave);
+        else commentLikeRepository.delete(commentLikeFind);
+    }
+
+    //댓글 삭제 - 정상 동작
+    @Transactional
+    public void removePostComment(Long commentId){
+        //Comment entity 가져옴
+        Optional<Comment> commentEntity = commentRepository.findById(commentId);
+
+        //Comment entity 내용 수정 후 저장
+        if(commentEntity.isPresent()){
+            commentEntity.get().setIsDeleted((byte) 1);
+            commentEntity.get().setContent("삭제된 댓글 입니다");
+        }
     }
 
     //대댓글 작성 - 정상 동작
@@ -247,9 +271,15 @@ public class PostService {
         else nestedCommentLikeRepository.delete(nestedCommentLikeFind);
     }
 
-    //대댓글 삭제
-    public void removePostNestedComment(){
+    //대댓글 삭제 - 정상 동작
+    public void removePostNestedComment(Long nestedCommentId){
+        //NestedComment entity를 가져옴
+        Optional<NestedComment> nestedComment = nestedCommentRepository.findById(nestedCommentId);
 
+        //NestedComment entity 삭제
+        if(nestedComment.isPresent()){
+            nestedCommentRepository.delete(nestedComment.get());
+        }
     }
 
     public List<Post> getAllByUserId(Long memberId) {
