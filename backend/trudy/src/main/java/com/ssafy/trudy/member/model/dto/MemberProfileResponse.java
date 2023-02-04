@@ -1,13 +1,18 @@
-package com.ssafy.trudy.member.model;
+package com.ssafy.trudy.member.model.dto;
 
-import com.ssafy.trudy.member.repository.IntroduceRepository;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ssafy.trudy.member.model.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class MemberInfoDto {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class MemberProfileResponse {
     private Long id;
     private String email;
     private String password;
@@ -19,13 +24,12 @@ public class MemberInfoDto {
     private String birth;
     private byte isLocal;
     private byte isPublic;
-
     private String title;
     private String self;
     private String plan;
     private String language;
 
-    public MemberInfoDto(Member member) {
+    public MemberProfileResponse(Member member) {
         this.id = member.getId();
         this.email = member.getEmail();
         this.password = member.getPassword();
@@ -41,21 +45,5 @@ public class MemberInfoDto {
         this.plan = member.getIntroduceId().getPlan();
         this.self = member.getIntroduceId().getSelf();
         this.language = member.getIntroduceId().getLanguage();
-    }
-
-    @Builder
-    public MemberInfoDto(Long id, String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode, String birth, byte isLocal, byte isPublic) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.image = image;
-        this.gender = gender;
-        this.areaCode = areaCode;
-        this.sigunguCode = sigunguCode;
-        this.birth = birth;
-        this.isLocal = isLocal;
-        this.isPublic = isPublic;
-
     }
 }
