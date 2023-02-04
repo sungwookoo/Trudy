@@ -29,8 +29,8 @@ public class BookmarkController {
     private final PlaceService placeService;
 
     // 세션 유저의 북마크 장소 id찾기
-    @GetMapping("")
-    public List<Long> bookmarkSearch(@RequestParam Long memberId) {
+    @GetMapping("/{memberId}")
+    public List<Long> bookmarkSearch(@PathVariable Long memberId) {
         Member member = memberService.getById(memberId);
         // 해당하는 북마크의 장소 id를 반환
         return bookmarkService.findBookmarksByMemberId(member);

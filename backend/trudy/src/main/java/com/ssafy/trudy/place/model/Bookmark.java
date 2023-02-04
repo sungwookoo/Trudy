@@ -1,5 +1,6 @@
 package com.ssafy.trudy.place.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.trudy.member.model.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Bookmark {
 
     @ManyToOne
     @JoinColumn(name = "place_id")
+    @JsonIgnore
     private Place placeId;
 
     public Bookmark(Member memberId, Place placeId) {
