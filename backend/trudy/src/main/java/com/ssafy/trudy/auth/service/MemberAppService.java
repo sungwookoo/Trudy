@@ -151,22 +151,22 @@ public class MemberAppService {
 
         List<Long> memberIds = memberPage.stream().map(Member::getId)
                 .collect(Collectors.toList());
-        List<Post> posts = postService.getAllByUserIds(memberIds);
+//        List<Post> posts = postService.getAllByUserIds(memberIds);
 
-        Map<Long, MemberPostResponse> postResponseMap = posts.stream()
-                .collect(Collectors.toMap(post -> post.getMemberId().getId(), post -> MemberPostResponse.builder()
-                        .id(post.getId())
-                        .title(post.getTitle())
-                        .thumbnailImage(post.getThumbnailImage())
-                        .createdAt(post.getCreatedAt())
-                        .build()));
+//        Map<Long, MemberPostResponse> postResponseMap = posts.stream()
+//                .collect(Collectors.toMap(post -> post.getMemberId().getId(), post -> MemberPostResponse.builder()
+//                        .id(post.getId())
+//                        .title(post.getTitle())
+//                        .thumbnailImage(post.getThumbnailImage())
+//                        .createdAt(post.getCreatedAt())
+//                        .build()));
 
         List<MemberResponse> memberResponses = memberPage.stream().map(member -> {
             MemberPostResponse memberPostResponse = null;
 
-            if (postResponseMap.containsKey(member.getId())) {
-                memberPostResponse = postResponseMap.get(member.getId());
-            }
+//            if (postResponseMap.containsKey(member.getId())) {
+//                memberPostResponse = postResponseMap.get(member.getId());
+//            }
 
             return MemberResponse.builder()
                     .id(member.getId())
