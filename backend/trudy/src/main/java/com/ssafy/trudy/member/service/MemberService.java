@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,8 @@ public class MemberService {
     public void createRefreshToken(Authentication authentication, String token) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Member member = this.getById(((PrincipalDetails) userDetails).getMember().getId());
+        member.setLastAccess(LocalDateTime.now());
+        memberRepository.save(member);
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .member(member)

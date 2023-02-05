@@ -1,62 +1,67 @@
-//package com.ssafy.trudy.config;
-//
-//import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-//import io.swagger.v3.oas.annotations.info.Contact;
-//import io.swagger.v3.oas.annotations.info.Info;
-//import io.swagger.v3.oas.annotations.info.License;
-//import io.swagger.v3.oas.models.OpenAPI;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springdoc.core.GroupedOpenApi;
-//
-//@OpenAPIDefinition(
-//        info = @Info(title = "TRUDY API 명세서",
-//                description = "TRUDY API 명세서",
-//                version = "v1"))
-//@RequiredArgsConstructor
-//@Configuration
-//public class SwaggerConfig {
-//
-//    @Bean
-//    public GroupedOpenApi chatOpenApi() {
-//        String[] paths = {"/api/**"};
-//
-//        return GroupedOpenApi.builder()
-//                .group("TRUDY API v1")
-//                .pathsToMatch(paths)
-//                .build();
-//    }
-//}
-//
-//    /*@OpenAPIDefinition(
-//            info = @Info(title = "TRUDY API 명세서",
-//                    description = "API 명세서",
-//                    version = "v1",
-//                    contact = @Contact(name = "trudy", email = "sungwookoo.dev@gmail.com"),
-//                    license = @License(name = "Apache 2.0",
-//                            url = "http://www.apache.org/licenses/LICENSE-2.0.html")
-//            )
-//    )
-//    @RequiredArgsConstructor
-//    @Configuration
-//    public class OpenApiConfig {
-//        *//**
-// * @return GroupedOpenApi
-// *//*
-//        @Bean
-//        public GroupedOpenApi postOpenAPI() {
-//            String[] paths = {"/post/**"};
-//            return GroupedOpenApi.builder().group("게시글 관련 API").pathsToMatch(paths)
-//                    .build();
-//        }
-//
-//        @Bean
-//        public OpenAPI springShopOpenAPI() {
-//            return new OpenAPI()
-//                    .info(new io.swagger.v3.oas.models.info.Info().title("포스트 API")
-//                            .description("OpenAPI @@")
-//                            .version("v0.0.1"));
-//        }
-//    }
-//}*/
+package com.ssafy.trudy.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.*;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+@EnableSwagger2
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo())
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()));
+    }
+
+    private ApiInfo apiInfo() {
+        Contact contact = new Contact("Trudy","trudy.onliine", "trudy@online");
+
+        return new ApiInfo(
+                "Trudy",
+                "Trudy",
+                "0.0.1",
+                "",
+                contact,
+                "SSAFY 8th",
+                "",
+                Collections.emptyList());
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext() {
+        return springfox
+                .documentation
+                .spi.service
+                .contexts
+                .SecurityContext
+                .builder()
+                .securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+    }
+}
