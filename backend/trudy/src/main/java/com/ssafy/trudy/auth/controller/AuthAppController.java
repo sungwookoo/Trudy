@@ -22,9 +22,9 @@ public class AuthAppController {
     private MemberAppService memberAppService;
 
     // 로그인
-    @PostMapping("/signin")
-    public TokenResponse signIn(@Valid @RequestBody LoginRequest signInRequest) {
-        return memberAppService.login(signInRequest);
+    @PostMapping("/login")
+    public TokenResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+        return memberAppService.login(loginRequest);
     }
 
     // 토큰 재발행
