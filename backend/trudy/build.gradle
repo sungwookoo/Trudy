@@ -38,10 +38,11 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-
 	testImplementation 'org.springframework.security:spring-security-test'
+
 //  util
 	implementation 'org.modelmapper:modelmapper:2.4.2'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
