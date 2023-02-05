@@ -1,6 +1,7 @@
 package com.ssafy.trudy.post.service;
 
 import com.ssafy.trudy.member.model.Member;
+import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.post.model.*;
 import com.ssafy.trudy.post.repository.*;
@@ -37,21 +38,28 @@ public class PostService {
     //member Entity Repository
     private final MemberRepository memberRepository;
 
+    private final IntroduceRepository introduceRepository;
+
     ModelMapper modelMapper = new ModelMapper();
 
     //포럼 게시글 목록 가져오기
     public List<PostDto.PostCombine> findPostList(){
         log.info("============Post Service / findPostList==========");
 
+//        log.info("postEntity=========== " + postRepository.findById(1L).get().toString());
+//        log.info("postEntity=========== " + postRepository.findById(2L).get().toString());
+//        log.info("postEntity=========== " + postRepository.findById(3L).get().toString());
         //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
         List<Post> postEntityList = postRepository.findAll();
+        //log.info("postEntity=========== " + postEntityList.toString());
+
 
         //Dto를 담을 리스트()
         List<PostDto.PostCombine> postCombineList = new ArrayList<>();
 
         for(Post postEntity : postEntityList){
-
             PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
+
             PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
 
             //image 정보 리스트 가져와서 DTO에 저장
@@ -80,8 +88,6 @@ public class PostService {
             //한개 포럼글에 대한 정보를 묶음
             postCombineList.add(new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount));
 
-
-
         }
 //        for(int i=0; i<postCombineList.size(); i++) {
 //            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
@@ -92,7 +98,6 @@ public class PostService {
 //            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
 //        }
 
-        log.info(postCombineList.toString());
         return postCombineList;
     }
 
@@ -118,13 +123,15 @@ public class PostService {
     public void /*Optional<Post>*/ findPostDetail(Long postId) throws  Exception{
 
         log.info("postService - findPostDetail");
-        postId = 0L;
+        postId = 1L;
 
         //1. post entity를 가져옴
+        log.info("1");
         Post postEntity = postRepository.findById(postId).get();
+        //log.info("postEntity ================== " + postEntity);
 
         //2. postCombine에 1개 글 상세정보(게시글, member, image, area, category, like_Count)를 채워 넣음
-        PostDto.PostCombine postCombine = new PostDto.PostCombine();
+/*        PostDto.PostCombine postCombine = new PostDto.PostCombine();
 
         PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
         PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
@@ -153,7 +160,7 @@ public class PostService {
         int postLikeCount = postLikeRepository.countByPostId(postEntity);
 
         postCombine = new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount);
-
+*/
 
          /*
         post entity를 가져옴
@@ -169,9 +176,11 @@ public class PostService {
         // 댓글 정보만 채우기
 //        PostDto.CommentElement commentElement = modelMapper.map(commentRepository.findByPostId(postEntity), PostDto.CommentElement.class);
 
-        log.info("0번 글 ========= " + postCombine);
-        log.info("0번 글 댓글 ========= " + commentRepository.findByPostId(postEntity));
-
+        //log.info("0번 글 ========= " + postCombine);
+        log.info("2");
+        List<Comment> comment = commentRepository.findByPostId(postEntity);
+        log.info("1번 글 댓글 ========= " + comment);
+        log.info("3");
 
 
 
@@ -186,15 +195,10 @@ public class PostService {
 
     //포럼 게시글 좋아요 - 정상 동작
     public void addPostLike(Long memberId, Long postId){
-//        log.info("Service - addPostLike - memberId : postId" + memberId +" : "+postId);
 
         //postLike Entity의 존재 확인을 위해 Member Entity와 Post Entity를 찾아온다.
         Member memberEntity = memberRepository.findById(memberId).get();
         Post postEntity = postRepository.findById(postId).get();
-
-        //확인
-//        log.info("Service addPostLike func - memberEntity ============== "+ memberEntity );
-//        log.info("Service addPostLike func - postEntity ============== "+ postEntity);
 
         //member Entity와 post Entity로 구성된 postLike Entity가 있는지 확인하고, 없으면 저장하기 위한 postLikeEntity
         PostLike postLikeEntityFind = postLikeRepository.findByMemberIdAndPostId(memberEntity, postEntity);

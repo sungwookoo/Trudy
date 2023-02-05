@@ -104,7 +104,7 @@ public class PostDto {
         private Long id;
         private String title;
         private String content;
-        private int thumbnailImage;
+        private String thumbnailImage;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
@@ -139,15 +139,16 @@ public class PostDto {
     @NoArgsConstructor
     public static class MemberElement{
         private Long id;
-        private String email;
-        private String name;
-        private String image;
-        private String gender;
-        private String area;
-        private String birth;
-        private byte isLocal;
-        private byte isPublic;
-        private Timestamp lastAccess;
+//        private String email;
+//        private String name;
+//        private String image;
+//        private String gender;
+//        private Long areaCode;
+//        private Long sigunguCode;
+//        private String birth;
+//        private byte isLocal;
+//        private byte isPublic;
+//        private Timestamp lastAccess;
     }
 
     //area, sigungu 요소----------------
