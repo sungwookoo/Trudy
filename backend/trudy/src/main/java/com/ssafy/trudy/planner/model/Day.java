@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
 @Entity
 @Table(name = "days")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Day {
 
     @Id
@@ -27,4 +28,10 @@ public class Day {
 
     private String memo;
 
+    public Day(Long id, Planner plannerId, String day, String memo){
+        this.id = id;
+        this.plannerId = plannerId;
+        this.day = day;
+        this.memo = memo;
+    }
 }
