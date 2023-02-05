@@ -119,19 +119,18 @@ public class PostService {
 
     }
 
-    //포럼 게시글 상세보기(게시글 + )
-    public void /*Optional<Post>*/ findPostDetail(Long postId) throws  Exception{
+    //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작
+    public Map /*Optional<Post>*/ findPostDetail(Long postId) throws Exception{
 
-        log.info("postService - findPostDetail");
-        postId = 1L;
+        //log.info("postService - findPostDetail");
+        //postId = 1L;
 
         //1. post entity를 가져옴
         log.info("1");
         Post postEntity = postRepository.findById(postId).get();
-        //log.info("postEntity ================== " + postEntity);
 
         //2. postCombine에 1개 글 상세정보(게시글, member, image, area, category, like_Count)를 채워 넣음
-/*        PostDto.PostCombine postCombine = new PostDto.PostCombine();
+        PostDto.PostCombine postCombine = new PostDto.PostCombine();
 
         PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
         PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
@@ -160,37 +159,101 @@ public class PostService {
         int postLikeCount = postLikeRepository.countByPostId(postEntity);
 
         postCombine = new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount);
-*/
 
-         /*
-        post entity를 가져옴
-    comments entity 를 전부 구해옴
-    해당 comments entity로
-    -> comment_like count를 구한다, nested_comment entity를 구해옴
-        -> nested_comment entity로 nested_comment like count를 구해온다
-     */
+        // post detail test
+//        log.info("postCombine =========== " );
+//        log.info("PostElement =========== " + postCombine.getPostElement());
+//        log.info("MemberElement =========== " + postCombine.getMemberElement());
+//        log.info("PostImageElementList =========== " + postCombine.getPostImageElementList());
+//        log.info("PostAreaElementList=========== " + postCombine.getPostAreaElementList());
+//        log.info("PostCategoryElementList =========== " + postCombine.getPostCategoryElementList());
+//        log.info("PostLikeCount =========== " + postCombine.getPostLikeCount());
+
+
+
+         /* commentElementList 채우기
+            post entity를 가져옴
+        comments entity 를 전부 구해옴
+        해당 comments entity로
+        -> comment_like count를 구한다, nested_comment entity를 구해옴
+            -> nested_comment entity로 nested_comment like count를 구해온다
+         */
 
         //3. post Entity를 이용해 댓글 정보를 채워 넣음
-        PostDto.CommentCombine commentCombine;
+        PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
 
         // 댓글 정보만 채우기
 //        PostDto.CommentElement commentElement = modelMapper.map(commentRepository.findByPostId(postEntity), PostDto.CommentElement.class);
 
-        //log.info("0번 글 ========= " + postCombine);
-        log.info("2");
-        List<Comment> comment = commentRepository.findByPostId(postEntity);
-        log.info("1번 글 댓글 ========= " + comment);
-        log.info("3");
+        // comment entity List 가져옴
+        List<Comment> commentEntityList = commentRepository.findByPostId(postEntity);
+        //log.info("1번 글 댓글 ========= " + commentEntityList);
 
+        List<PostDto.CommentElement> commentElementList = new ArrayList<>();
 
+        //for(comment entity 갯수) {comment_like count를 구한다 + {nested_comment entity를 구한다. + nested_comment_like count를 구한다.}}
+        for(Comment commentEntity : commentEntityList){
+            //1. Comment DTO 생성
+            PostDto.CommentElement commentElement = new PostDto.CommentElement();
 
+            //2. Comment DTO에 Comment entity를 DTO로 변환후 저장
+            commentElement = modelMapper.map(commentEntity, PostDto.CommentElement.class);
 
-        //Optional 클래스는 여러 가지 API를 제공하여 null일 수도 있는 객체를 다룰 수 있도록 돕습니다.
-//        Optional<Post> post = postRepository.findById(postId);
-//
-//        log.info(post.toString());
+            //3. Comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
+            commentElement.setCustomMemberForComment(modelMapper.map(commentEntity.getPostId().getMemberId(), PostDto.CustomMemberForComment.class));
 
-//        return post;
+            //4. comment DTO에 comment_like count 저장
+            commentElement.setCommentLikeCount(commentLikeRepository.countByCommentId(commentEntity));
+
+            //log.info("commentElement res ============== " + commentElement.toString());
+
+            //5. nested_comment List 채우기
+            List<PostDto.NestedCommentElement> nestedCommentElementList= new ArrayList<>();
+            List<NestedComment> nestedCommentList = nestedCommentRepository.findByCommentId(commentEntity);
+
+            for(NestedComment nestedCommentEntity : nestedCommentList){
+                // 5-1. nested_comment DTO 생성
+                PostDto.NestedCommentElement nestedCommentElement = new PostDto.NestedCommentElement();
+
+                // 5-2. nested_comment DTO에 nested_comment entity를 DTO로 변환후 저장
+                nestedCommentElement = modelMapper.map(nestedCommentEntity, PostDto.NestedCommentElement.class);
+
+                // 5-3. nested_comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
+                nestedCommentElement.setCustomMemberForComment(modelMapper.map(nestedCommentEntity.getMemberId(), PostDto.CustomMemberForComment.class));
+
+                // 5-4. nested_comment DTO에 nested_comment_like count 저장
+                nestedCommentElement.setNestedCommentLikeCount(nestedCommentLikeRepository.countByNestedCommentId(nestedCommentEntity));
+
+                // nested_comment List에 add
+                nestedCommentElementList.add(nestedCommentElement);
+            }
+
+            // Comment Element의 요소인 nestedCommentList를 저장
+            commentElement.setNestedCommentList(nestedCommentElementList);
+
+            // commentElement List에 add
+            commentElementList.add(commentElement);
+
+            //commentCombine(자세한 구조는 PostDto.CommentCombine 참고)에 commentElementList 저장
+            commentCombine.setCommentElementList(commentElementList);
+        }
+
+        // comment DTO 정보 test
+//        for(PostDto.CommentElement commentElement : commentElementList){
+//            log.info("result ==================== " );
+//            log.info("id ========= " + commentElement.getId());
+//            log.info("conent ========= " + commentElement.getContent());
+//            log.info("isdeleted ========= " + commentElement.getIsDeleted());
+//            log.info("created at========= " + commentElement.getCreatedAt());
+//            log.info("custom member for comment ========= " + commentElement.getCustomMemberForComment());
+//            log.info("nestedcommentlist ========= " + commentElement.getNestedCommentList());
+//        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("postCombine", postCombine);
+        response.put("commentCombine", commentCombine);
+
+        return response;
     }
 
     //포럼 게시글 좋아요 - 정상 동작

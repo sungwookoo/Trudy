@@ -60,7 +60,7 @@ public class PostDto {
         private int CommentLikeCount;
 
         //4. 해당 comment에 대한 nested_comment list
-        private List<NestedComment> nestedCommentList;
+        private List<NestedCommentElement> nestedCommentList;
     }
 
     //Nested_comment
@@ -139,16 +139,16 @@ public class PostDto {
     @NoArgsConstructor
     public static class MemberElement{
         private Long id;
-//        private String email;
-//        private String name;
-//        private String image;
-//        private String gender;
-//        private Long areaCode;
-//        private Long sigunguCode;
-//        private String birth;
-//        private byte isLocal;
-//        private byte isPublic;
-//        private Timestamp lastAccess;
+        private String email;
+        private String name;
+        private String image;
+        private String gender;
+        private Long areaCode;
+        private Long sigunguCode;
+        private String birth;
+        private byte isLocal;
+        private byte isPublic;
+        private LocalDateTime lastAccess;
     }
 
     //area, sigungu 요소----------------

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Tag(name = "post", description = "게시물 API")
@@ -95,38 +96,25 @@ public class PostController {
 
     }
 
-    //포럼 게시글 상세보기
+    //포럼 게시글 상세보기 - 정상 동작
     @GetMapping("/{post_id}")
-    public void/*ResponseEntity<?>*/ postDetail(@PathVariable("post_id") Long postId){
+    public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
+
         try {
             log.info("post Detail");
-            postService.findPostDetail(postId);
-        } catch (Exception e) {
+            Map<String, Object> response = postService.findPostDetail(postId);
+
+            if(!response.isEmpty() && response != null){
+
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e){
             e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
 
-        //Comment 리스트를 가져옴
-
-        //Comment_id를 이용해서 nested_comments, comment_like 가져옴
-
-        //nested_comment_id를 이용해서 nested_comment_like 가져옴
-
-        //존재하는지 확인 후 전송
-//        try{
-//            Optional<Post> findPost = postService.findPostDetail(postId);
-//
-//            if(findPost.get() != null || findPost.isPresent()){
-//                Post p = findPost.get();
-////                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-////                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-//                return ResponseEntity.ok().body("postListResponse");
-//            } else {
-//                return ResponseEntity.noContent().build();
-//            }
-//        } catch (Exception e){
-//            e.getStackTrace();
-//            return ResponseEntity.internalServerError().build();
-//        }
     }
 
     //포럼 게시글 좋아요 - 정상 동작
