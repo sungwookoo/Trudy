@@ -12,8 +12,10 @@ import java.util.List;
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     // id로 찾기
-
     Place getById(Long Id);
+
+    // contentId로 찾기
+    Place getByContentid(String contentId);
 
     // 쿼리 파라미터로 넘어온 값이 페이지 정보로 만들어 진다.
     // 1-1) 지역시군구 값 X, 콘텐츠 타입 X, keyword X
