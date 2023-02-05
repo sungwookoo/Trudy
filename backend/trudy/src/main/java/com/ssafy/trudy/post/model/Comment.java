@@ -2,7 +2,10 @@ package com.ssafy.trudy.post.model;
 
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.post.model.Post;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +13,8 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "comments")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment {
 
     @Id
@@ -32,4 +37,12 @@ public class Comment {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public Comment(Post postId, Member memberId, String content, byte isDeleted, LocalDateTime createdAt) {
+        this.postId = postId;
+        this.memberId = memberId;
+        this.content = content;
+        this.isDeleted = isDeleted;
+        this.createdAt = createdAt;
+    }
 }

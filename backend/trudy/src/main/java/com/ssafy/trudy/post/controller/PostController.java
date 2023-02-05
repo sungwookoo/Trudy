@@ -98,6 +98,12 @@ public class PostController {
     //포럼 게시글 상세보기
     @GetMapping("/{post_id}")
     public void/*ResponseEntity<?>*/ postDetail(@PathVariable("post_id") Long postId){
+        try {
+            log.info("post Detail");
+            postService.findPostDetail(postId);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
 
         //Comment 리스트를 가져옴
 
@@ -125,38 +131,45 @@ public class PostController {
 
     //포럼 게시글 좋아요
     @PostMapping("/like/{member_id}/{post_id}")
-    public void postLikeAdd(){
-
+    public void postLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId){
+        postService.addPostLike(memberId, postId);
     }
 
     //포럼 게시글 댓글 작성
-    @PostMapping("/comment/{post_id}")
-    public void postCommentAdd(){
+    @PostMapping("/comment/{member_id}/{post_id}")
+    public void postCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId, @RequestParam("content") String content){
+        postService.addPostComment(memberId, postId, content);
+    }
 
+    //포럼 댓글 좋아요
+    @PostMapping("/comment/like/{member_id}/{comment_id}")
+    public void postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
+        postService.addPostCommentLike(memberId, commentId);
     }
 
     //댓글 삭제
     @DeleteMapping("/comment/{comment_id}")
-    public void postCommentRemove(){
-
+    public void postCommentRemove(@PathVariable("comment_id") Long commentId){
+        postService.removePostComment(commentId);
     }
 
     //대댓글 작성
     @PostMapping("/nested-comment/{member_id}/{comment_id}")
-    public void postNestedCommentAdd(){
-
+    public void postNestedCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId, @RequestParam("content") String content){
+        postService.addPostNestedComment(memberId, commentId, content);
     }
 
     //대댓글 좋아요
     @PostMapping("/nested-comment/like/{member_id}/{nested_comment_id}")
-    public void postNestedCommentLikeAdd(){
-
+    public void postNestedCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("nested_comment_id") Long nestedCommentId){
+        log.info("test1");
+        postService.addPostNestedCommentLike(memberId, nestedCommentId);
     }
 
     //대댓글 삭제
     @DeleteMapping("/nested-comment/{nested_comment_id}")
-    public void postNestedCommentRemove(){
-
+    public void postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
+        postService.removePostNestedComment(nestedCommentId);
     }
 
 

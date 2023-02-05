@@ -12,9 +12,13 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long>, SearchMemberRepository {
     Optional<Member> findByEmail(String email);
 
-    Page<Member> findByNameContainingOrEmailContaining(String name, String email, Pageable pageable);
 
-    Page<Member> findByEmailContaining(String email, Pageable pageable);
+    Page<Member> findByNameContainingOrEmailContainingOrderByLastAccessDesc(String name, String email, Pageable pageable);
 
-    Page<Member> findByNameContaining(String name, Pageable pageable);
+    Page<Member> findByEmailContainingOrderByLastAccessDesc(String email, Pageable pageable);
+
+    Page<Member> findByNameContainingOrderByLastAccessDesc(String name, Pageable pageable);
+
+    Page<Member> findAllByOrderByLastAccessDesc(Pageable pageable);
+
 }
