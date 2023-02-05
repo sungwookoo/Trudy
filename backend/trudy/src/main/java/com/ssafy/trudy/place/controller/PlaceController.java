@@ -17,9 +17,12 @@ public class PlaceController {
     private PlaceService placeService;
 
     // 장소 정보 API
-    @GetMapping("")
-    @ResponseBody
-    public List<PlaceDto> placeListByCategory(@RequestParam String offset, @RequestParam String limit, @RequestParam String areaSigun, @RequestParam String contentTypeId, @RequestParam String keyword) {
+    @GetMapping()
+    public List<PlaceDto> placeListByCategory(@RequestParam(defaultValue = "0") String offset,
+                                              @RequestParam(defaultValue = "5") String limit,
+                                              @RequestParam(defaultValue = "") String areaSigun,
+                                              @RequestParam(defaultValue = "") String contentTypeId,
+                                              @RequestParam(defaultValue = "") String keyword) {
         return placeService.findPlaceListByCategory(offset, limit, areaSigun, contentTypeId, keyword);
     }
 }
