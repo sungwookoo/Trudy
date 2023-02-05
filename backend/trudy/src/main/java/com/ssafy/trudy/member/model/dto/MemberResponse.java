@@ -3,6 +3,7 @@ package com.ssafy.trudy.member.model.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.trudy.auth.dto.response.MemberPostResponse;
+import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.MemberRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +30,8 @@ public class MemberResponse {
     private String birth;
     private byte isLocal;
     private byte isPublic;
-    private MemberRole role;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastAccess;
-    private Long introduceId;
+    private Introduce introduceId;
     private MemberPostResponse posts;
 }
