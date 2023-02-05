@@ -92,6 +92,10 @@ public class Member {
         this.lastAccess = lastAccess;
     }
 
+    public void setIntroduceId(Introduce introduceId) {
+        this.introduceId = introduceId;
+    }
+
     public void setRefreshTokens(List<RefreshToken> refreshTokens) {
         this.refreshTokens = refreshTokens;
     }
