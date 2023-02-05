@@ -13,8 +13,8 @@ export type mapPlaceType = {
   contentId: string | undefined;
   contentTypeId: string | undefined;
   createdTime: string | undefined;
-  firstImage: string;
-  firstImage2: string | undefined;
+  firstimage: any;
+  firstimage2: string | undefined;
   mapx: any;
   mapy: any;
   title: string;
@@ -31,8 +31,8 @@ function Place(props: any) {
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   const [limit, setLimit] = useState<any>(10);
   const [offset, setOffset] = useState<any>(0);
-  const [areaSigun, setareaSigun] = useState<any>([]);
-  const [contentTypeId, setcontentTypeId] = useState<string[]>([]);
+  const [areaSigun, setareaSigun] = useState<any>("");
+  const [contentTypeId, setcontentTypeId] = useState<any>("");
   const [keyword, setkeyword] = useState<any>("");
   const API_URL: string = "api/place";
 
@@ -43,23 +43,19 @@ function Place(props: any) {
   };
   useEffect(() => {
     const fetchData = async () => {
-
-      
       try {
-        const resData = await axios.get(
-          API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
-          // method: "get",
-          // url: API_URL,
-          // params: {
-          //   limit,
-          //   offset,
-          //   areaSigun,
-          //   contentTypeId,
-          //   keyword,
-          // },
-        );
-        console.log(resData.data)
-        console.log(contentTypeId)
+        const resData = await axios<any> ({
+          // API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
+          method: "get",
+          url: API_URL,
+          params: {
+            limit,
+            offset,
+            areaSigun,
+            contentTypeId,
+            keyword,
+          },
+        });
 
         setPlaces(resData.data);
       } catch (error) {

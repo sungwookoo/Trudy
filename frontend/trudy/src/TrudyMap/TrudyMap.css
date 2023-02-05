@@ -1,23 +1,4 @@
-.map-page-container {
-  margin-top: 20px;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: space-between;
-}
-.place-info {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  width: 30%;
-  height: 100vh;
-  background-color: blue;
-  -webkit-overflow-scrolling: hidden;
-}
-
-.google-map {
-  width: 70%;
-  height: 660px;
-  display: flex;
-  justify-content: right;
+.w-1/3 {
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
 }
