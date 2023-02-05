@@ -4,6 +4,7 @@ package com.ssafy.trudy.place.service;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.place.model.Bookmark;
 import com.ssafy.trudy.place.model.Place;
+import com.ssafy.trudy.place.model.PlaceDto;
 import com.ssafy.trudy.place.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class BookmarkService {
     @Autowired
     private final BookmarkRepository bookmarkRepository;
 
-    // 회원정보로부터 북마크한 장소들을 찾기
+    // 회원정보로부터 북마크한 장소id들을 찾기
     public List<Long> findBookmarksByMemberId(Member member) {
         List<Bookmark> bookmarkList = bookmarkRepository.findBookmarksByMemberId(member);
         List<Long> bookmarkedPlaceIdList = new ArrayList<>();

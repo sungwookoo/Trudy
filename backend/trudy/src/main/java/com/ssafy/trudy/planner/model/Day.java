@@ -1,6 +1,8 @@
 package com.ssafy.trudy.planner.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -8,6 +10,8 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "days")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Day {
 
     @Id
