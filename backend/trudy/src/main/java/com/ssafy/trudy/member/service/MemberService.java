@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,8 @@ public class MemberService {
     public void createRefreshToken(Authentication authentication, String token) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Member member = this.getById(((PrincipalDetails) userDetails).getMember().getId());
+        member.setLastAccess(LocalDateTime.now());
+        memberRepository.save(member);
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .member(member)
@@ -83,13 +86,17 @@ public class MemberService {
         Page<Member> member;
 
         if (Objects.nonNull(name) && Objects.nonNull(email)) {
-            member = memberRepository.findByNameContainingOrEmailContaining(name, email, pageable);
+            System.out.println("#######findByNameOrEmail");
+            member = memberRepository.findByNameContainingOrEmailContainingOrderByLastAccessDesc(name, email, pageable);
         } else if (Objects.nonNull(email)) {
-            member = memberRepository.findByEmailContaining(email, pageable);
+            System.out.println("#######findByEmail");
+            member = memberRepository.findByEmailContainingOrderByLastAccessDesc(email, pageable);
         } else if (Objects.nonNull(name)) {
-            member = memberRepository.findByNameContaining(name, pageable);
+            System.out.println("#######findByName");
+            member = memberRepository.findByNameContainingOrderByLastAccessDesc(name, pageable);
         } else {
-            member = memberRepository.findAll(pageable);
+            System.out.println("#######findAll");
+            member = memberRepository.findAllByOrderByLastAccessDesc(pageable);
         }
 
         return member;
