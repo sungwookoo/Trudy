@@ -3,12 +3,14 @@ package com.ssafy.trudy.member.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public enum MemberRole {
-    MEMBER("ROLE_MEMBER"),
-    ADMIN("ROLE_ADMIN");
-    private String value;
 
+    ADMIN("관리자"),
+    MEMBER("회원");
+    private String description;
 
+    MemberRole(String description) {
+        this.description = description;
+    }
 }

@@ -61,6 +61,7 @@ public class MemberAppService {
         // 4. RefreshToken 저장
         memberService.createRefreshToken(authentication, customToken.getRefreshToken());
 
+
         // 5. 토큰 발급
         return customToken;
     }
