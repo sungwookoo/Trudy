@@ -30,6 +30,7 @@ public class MemberController {
         return memberAppService.getByPageable(principal, name, email, pageable);
     }
 
+    // 내 프로필
     @GetMapping("/me")
     public MemberResponse me(@AuthenticationPrincipal PrincipalDetails principal) {
         return memberAppService.me(principal);
@@ -42,7 +43,7 @@ public class MemberController {
 //    }
 
     // 회원 삭제
-    @DeleteMapping("/{id}")
+//    @DeleteMapping("/{id}")
 //    public ResponseEntity<MemberResponse> deleteMember(@PathVariable("id") Long id) {
 //        try {
 //            memberService.deleteMember(id);
