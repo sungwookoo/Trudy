@@ -1,22 +1,33 @@
-.article-create-container{
+.forum-create-container{
   width: auto;
+  height: 700px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   background-color: brown;
 }
 
+.forum-create-category{
+  
+}
 
-.article-form-container{
-  display: flex;
+
+.forum-create-box{
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 85%;
-  height: 30%;
+  width: 80%;
+  height: 50%;
   background-color: skyblue;
 }
 
-.forms-text{
+.editor{
+  height: 500px;
+}
 
+.Forum-Create-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
 }
