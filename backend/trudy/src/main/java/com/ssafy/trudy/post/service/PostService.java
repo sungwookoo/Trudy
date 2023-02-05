@@ -109,7 +109,7 @@ public class PostService {
 
     }
 
-    //포럼 게시글 수정
+    //포럼 게시글 수정 - ck에디터와 연관
     public void modifyPost(){
 
     }
@@ -179,7 +179,7 @@ public class PostService {
             -> nested_comment entity로 nested_comment like count를 구해온다
          */
 
-        //3. post Entity를 이용해 댓글 정보를 채워 넣음
+        // post Entity를 이용해 댓글 정보를 채워 넣음
         PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
 
         // 댓글 정보만 채우기
