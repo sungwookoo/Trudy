@@ -1,7 +1,9 @@
 package com.ssafy.trudy.planner.model;
 
 import com.ssafy.trudy.member.model.Member;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +11,8 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "planners")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Planner {
     @Id
     @GeneratedValue
@@ -22,5 +26,10 @@ public class Planner {
 
     @Column(length = 45)
     private String sequence;
-    
+
+    public Planner(Member memberId, String title, String sequence) {
+        this.memberId = memberId;
+        this.title = title;
+        this.sequence = sequence;
+    }
 }

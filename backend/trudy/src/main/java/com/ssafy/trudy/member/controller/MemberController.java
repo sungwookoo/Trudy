@@ -3,12 +3,17 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
+import com.ssafy.trudy.member.model.dto.MemberProfileResponse;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ResponseHeader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +26,13 @@ public class MemberController {
 
     private final MemberAppService memberAppService;
 
-    // 회원 목록 조회
+
+    @ApiOperation(value = "회원 리스트",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
     @GetMapping
     public Page<MemberResponse> getByPageable(@AuthenticationPrincipal PrincipalDetails principal,
                                             @RequestParam(required = false) String name,
@@ -30,9 +41,26 @@ public class MemberController {
         return memberAppService.getByPageable(principal, name, email, pageable);
     }
 
+    @ApiOperation(value = "내 프로필",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
     @GetMapping("/me")
     public MemberResponse me(@AuthenticationPrincipal PrincipalDetails principal) {
         return memberAppService.me(principal);
+    }
+
+    @ApiOperation(value = "다른사람 프로필",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/{id}")
+    public MemberResponse memberDetail(@PathVariable("id") Long id){
+        return memberAppService.memberDetail(id);
     }
 
     // 회원 정보 수정
@@ -42,7 +70,7 @@ public class MemberController {
 //    }
 
     // 회원 삭제
-    @DeleteMapping("/{id}")
+//    @DeleteMapping("/{id}")
 //    public ResponseEntity<MemberResponse> deleteMember(@PathVariable("id") Long id) {
 //        try {
 //            memberService.deleteMember(id);
@@ -52,12 +80,6 @@ public class MemberController {
 //        }
 //    }
 
-    // 다른 사람 프로필
-//    @GetMapping("/{id}")
-//    public MemberProfileResponse memberDetail(@PathVariable("id") Long id){
-//        String email = memberService.findEmailById(id);
-//        return memberService.findMember(email);
-//    }
 
     //구글 연동 회원가입
     @PostMapping("/google")

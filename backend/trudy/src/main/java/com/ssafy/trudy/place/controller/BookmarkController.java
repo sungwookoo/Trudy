@@ -28,12 +28,14 @@ public class BookmarkController {
     @Autowired
     private final PlaceService placeService;
 
-    // 세션 유저의 북마크 장소 id찾기
-    @GetMapping("/{memberId}")
-    public List<Long> bookmarkSearch(@PathVariable Long memberId) {
+    // 세션 유저의 북마크 장소 DTO로 반환
+    @GetMapping("")
+    public List<PlaceDto> bookmarkSearch(@RequestParam Long memberId) {
         Member member = memberService.getById(memberId);
-        // 해당하는 북마크의 장소 id를 반환
-        return bookmarkService.findBookmarksByMemberId(member);
+        // 해당하는 북마크의 장소 id 리스트를 받아옴
+        List<Long> placeIds = bookmarkService.findBookmarksByMemberId(member);
+        // 장소 id 리스트들로부터 place 리스트 정보를 받아오기
+        return placeService.findPlacesListByPlaceIds(placeIds);
     }
 
     // 북마크 추가

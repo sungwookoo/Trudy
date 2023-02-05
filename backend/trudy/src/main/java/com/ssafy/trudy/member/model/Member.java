@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Getter
@@ -48,9 +51,13 @@ public class Member {
     @Column(name = "is_public")
     private byte isPublic;
 
-    @Column
+    @CollectionTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_id")
+    )
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private MemberRole role;
+    private Set<MemberRole> roles;
 
     @Column(name = "last_access")
     private LocalDateTime lastAccess;
@@ -66,7 +73,7 @@ public class Member {
 
 
     @Builder(builderMethodName = "signupBuilder")
-    public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, byte isLocal, byte isPublic, MemberRole role, LocalDateTime lastAccess) {
+    public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, byte isLocal, byte isPublic, LocalDateTime lastAccess) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -76,8 +83,17 @@ public class Member {
         this.birth = birth;
         this.isLocal = isLocal;
         this.isPublic = isPublic;
-        this.role = role;
+        this.roles = Stream.of(MemberRole.MEMBER)
+                .collect(Collectors.toSet());
         this.lastAccess = lastAccess;
+    }
+
+    public void setLastAccess(LocalDateTime lastAccess) {
+        this.lastAccess = lastAccess;
+    }
+
+    public void setIntroduceId(Introduce introduceId) {
+        this.introduceId = introduceId;
     }
 
     public void setRefreshTokens(List<RefreshToken> refreshTokens) {

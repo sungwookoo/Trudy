@@ -3,8 +3,10 @@ package com.ssafy.trudy.member.service;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
+import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
+import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +35,9 @@ public class MemberService {
     @Autowired
     private final MemberRepository memberRepository;
 
+    @Autowired
+    private final IntroduceRepository introduceRepository;
+
     public Member getByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
@@ -45,6 +51,8 @@ public class MemberService {
     public void createRefreshToken(Authentication authentication, String token) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Member member = this.getById(((PrincipalDetails) userDetails).getMember().getId());
+        member.setLastAccess(LocalDateTime.now());
+        memberRepository.save(member);
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .member(member)
@@ -65,6 +73,7 @@ public class MemberService {
     }
 
     public Member save(Member member) {
+        member.setIntroduceId(introduceRepository.save(new Introduce()));
         return memberRepository.save(member);
     }
 
@@ -132,6 +141,10 @@ public class MemberService {
     //자기 소개 정보 가져오기
     public void findMemberDetail(){
 
+    }
+
+    public Introduce getByIntroduceId(Long introduceId) {
+        return introduceRepository.findById(introduceId).orElse(null);
     }
 
 

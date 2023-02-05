@@ -1,5 +1,6 @@
 package com.ssafy.trudy.member.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "introduces")
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class Introduce {
 
     @Id

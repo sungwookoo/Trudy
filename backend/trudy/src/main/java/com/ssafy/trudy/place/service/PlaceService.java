@@ -31,6 +31,37 @@ public class PlaceService {
         return placeRepository.getById(placeId);
     }
 
+    // contentId로 검색
+    public Place getByContentId(String contentId) {
+        return placeRepository.getByContentid(contentId);
+    }
+
+    // List<Long> placeIds(장소 id들)로 부터 List<PlaceDto> 받기
+    public List<PlaceDto> findPlacesListByPlaceIds(List<Long> placeIds) {
+        List<Place> placeListByPlacesIds = new ArrayList<>();
+        // 장소 id로 장소를 찾고 리스트에 추가
+        for (Long placeId : placeIds) {
+            placeListByPlacesIds.add(getById(placeId));
+        }
+        // Dto 변환 후  반환
+        return placeListByPlacesIds.stream().map(place -> PlaceDto.builder()
+                .id(place.getId())
+                .addr1(place.getAddr1())
+                .addr2(place.getAddr2())
+                .areacode(place.getAreacode())
+                .contenttypeid(place.getContenttypeid())
+                .firstimage(place.getFirstimage())
+                .firstimage2(place.getFirstimage2())
+                .mapx(place.getMapx())
+                .mapy(place.getMapy())
+                .sigungucode(place.getSigungucode())
+                .tel(place.getTel())
+                .title(place.getTitle())
+                .zipcode(place.getZipcode())
+                .build()).collect(Collectors.toList());
+    }
+
+
     // 카테고리 검색 전체
     public List<PlaceDto> findPlaceListByCategory(String offs, String lmt, String areaSigunguCash, String contentTypeIdCash, String keyword) {
         // offset - page 개념, limit - 나올 게시물 갯수
@@ -105,7 +136,7 @@ public class PlaceService {
                         // 4-1-o) sigungucode가 정상적으로 들어온 경우, areacode & sigungucode & contenttypeid
                     } else {
                         for (String s : contentTypeId) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeid(strings[0], strings[0], s));
+                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeid(strings[0], strings[1], s));
                         }
                     }
                 }
@@ -128,10 +159,15 @@ public class PlaceService {
         }
 
         // pagenation 리스트 갯수 한정해서 보내기
-        try {
+        // 1) 리밋트 갯수를 다 채울만큼 나올 수 있는 경우
+        if(placeListByCategory.size() >= offset + limit){
             placeListByCategory = placeListByCategory.subList(offset, offset + limit);
-        } catch (Exception e) {
+        // 2) 리밋트만 큼 갯수가 나오지 않을 경우
+        } else if(placeListByCategory.size() > offset && placeListByCategory.size() < offset + limit) {
             placeListByCategory = placeListByCategory.subList(offset, placeListByCategory.size());
+        // 3) 더이상 값이 없을 경우
+        } else {
+            placeListByCategory = null;
         }
 
         return placeListByCategory.stream().map(place -> PlaceDto.builder()
