@@ -6,10 +6,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.awt.print.Pageable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
+
+    // in절 -> 시간 두고 하기
+    List<Place> findPlacesByContenttypeidIn(List<String> contentTypeIdList);
+
+//    HashMap<String, String> findPlacesByAreacodeInAndSigungucodeIn(String areaCode, String sigunguCode);
 
     // id로 찾기
     Place findPlaceById(Long Id);

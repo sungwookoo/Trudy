@@ -31,13 +31,65 @@ public class PlannerService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    // [READ]해당 유저의 플래너 관련 정보 전부 가져오기
+    //*******************************[CREATE]****************************************//
+    // 플래너 생성
+    public Map addPlanner(Planner plannerInput, Member memberInput){
+        // 1. 들어온 planner을 db에 저장
+        plannerRepository.save(plannerInput);
+        // 2. Dto 만들기
+        PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
+        PlannerDto.PlannerElement plannerElement = modelMapper.map(plannerInput, PlannerDto.PlannerElement.class);
+        PlannerDto.MemberElement memberElement = modelMapper.map(memberInput, PlannerDto.MemberElement.class);
+        plannerCombine = new PlannerDto.PlannerCombine(plannerElement, memberElement);
+        // 3. Map을 통해 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("plannerCombine", plannerCombine);
+        return response;
+    }
+
+    // 데이 생성
+    public Map addDay(Day dayInput, Planner planner){
+        // 1. 들어온 day를 db에 저장
+        dayRepository.save(dayInput);
+        dayInput.setPlannerId(planner);
+        // 2. Dto 만들기
+        DayDto dayDto = modelMapper.map(dayInput, DayDto.class);
+        // 3. Map을 통해 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("dayInfo", dayDto);
+        return response;
+    }
+
+    // 데이 아이템 생성
+    public Map addDayItem(DayItem dayItemInput){
+        // 1. 들어온 dayItem을 db에 저장
+        dayItemRepository.save(dayItemInput);
+        // 2. Dto 만들기
+        DayItemDto dayItemDto = modelMapper.map(dayItemInput, DayItemDto.class);
+        // 3. Map을 통해 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("dayItemInfo", dayItemDto);
+        return response;
+    }
+
+    //**************************************[READ]****************************************//
+    // id로 day 조회
+    public Day findDayById(Long dayId) {
+        return dayRepository.findDayById(dayId);
+    }
+
+    // id로 planner 조회
+    public Planner findPlannerById(Long plannerId) {
+        return plannerRepository.findPlannerById(plannerId);
+    }
+
+    // 해당 유저의 플래너 관련 정보 전부 가져오기
     public List<Map> getPlannersByMemberId(Member member) {
         // 반환값을 담을 변수
         List<Map> response = new ArrayList<>();
 
         // 1. planner list를 가져옴
-        List<Planner> plannerEntityList = plannerRepository.findPlannersByMemberId(member);
+        List<Planner> plannerEntityList = plannerRepository.findPlannersByMemberIdOrderBySequenceAsc(member);
         for(Planner plannerEntity : plannerEntityList) {
             // 2. plannerCombine에 1개의 플래너 상세정보(플래너, 멤버)를 채워넣음
             PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
@@ -54,7 +106,7 @@ public class PlannerService {
             PlannerDto.DayCombine dayCombine = new PlannerDto.DayCombine();
 
             // day Entity List 가져오기
-            List<Day> dayEntityList = dayRepository.findByPlannerId(plannerEntity);
+            List<Day> dayEntityList = dayRepository.findByPlannerIdOrderByDay(plannerEntity);
             List<PlannerDto.DayElement> dayElementList = new ArrayList<>();
             // for(day entity 갯수)
             for (Day dayEntity : dayEntityList) {
@@ -66,7 +118,7 @@ public class PlannerService {
 
                 //3) dayItem List 채우기
                 List<PlannerDto.DayItemElement> dayItemElementList = new ArrayList<>();
-                List<DayItem> dayItemList = dayItemRepository.findByDayId(dayEntity);
+                List<DayItem> dayItemList = dayItemRepository.findByDayIdOrderBySequenceAsc(dayEntity);
 
                 //4) dayItem List 채우기
                 for (DayItem dayItemEntity : dayItemList) {
@@ -97,87 +149,88 @@ public class PlannerService {
         return response;
     }
 
-    //*******************************[CREATE]****************************************//
-    // 플래너 생성
-    public Map addPlanner(Planner plannerInput, Member memberInput){
-        // 1. 들어온 planner을 db에 저장
-        plannerRepository.save(plannerInput);
-        // 2. Dto 만들기
-        PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
-        PlannerDto.PlannerElement plannerElement = modelMapper.map(plannerInput, PlannerDto.PlannerElement.class);
-        PlannerDto.MemberElement memberElement = modelMapper.map(memberInput, PlannerDto.MemberElement.class);
-        plannerCombine = new PlannerDto.PlannerCombine(plannerElement, memberElement);
-        // 3. Map을 통해 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("plannerCombine", plannerCombine);
+    //*************************************[UPDATE]******************************************//
+    // dayItem String 수정
+    public DayItemPutDto updateDayItemString(Long dayItemId,
+                                             String updatedMemo,
+                                             String updatedCustomTitle,
+                                             String updatedCustomImage){
+        // 1. dayItemId로 dayItem을 찾는다.
+        DayItem updatedDayItem = dayItemRepository.findDayItemById(dayItemId);
+        // 2. dayItem을 수정한다.(set)
+        updatedDayItem.setMemo(updatedMemo);
+        updatedDayItem.setCustomTitle(updatedCustomTitle);
+        updatedDayItem.setCustomImage(updatedCustomTitle);
+        // 3. DTO를 만들어서 변환된 값을 반환한다.
+        DayItemPutDto response = new DayItemPutDto();
+        response.setMemo(updatedMemo);
+        response.setSequence(updatedDayItem.getSequence());
+        response.setCustomTitle(updatedCustomTitle);
+        response.setCustomImage(updatedCustomImage);
         return response;
     }
 
-    // 데이 생성
-    public Map addDay(Day dayInput){
-        // 1. 들어온 day를 db에 저장
-        dayRepository.save(dayInput);
-        // 2. Dto 만들기
-        DayDto dayDto = modelMapper.map(dayInput, DayDto.class);
-        // 3. Map을 통해 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("dayInfo", dayDto);
+    // day String 수정
+    public DayPutDto updateDayString(Long dayId,
+                                     String updatedMemo){
+        // 1. dayId로 day를 찾는다.
+        Day updatedDay = dayRepository.findDayById(dayId);
+        // 2. day를 수정한다.(set)
+        updatedDay.setMemo(updatedMemo);
+        // 3. DTO를 만들어서 변환된 값을 반환한다.
+        DayPutDto response = new DayPutDto();
+        response.setMemo(updatedMemo);
         return response;
     }
 
-    // 데이 아이템 생성
-    public Map addDayItem(DayItem dayItemInput){
-        // 1. 들어온 dayItem을 db에 저장
-        dayItemRepository.save(dayItemInput);
-        // 2. Dto 만들기
-        DayItemDto dayItemDto = modelMapper.map(dayItemInput, DayItemDto.class);
-        // 3. Map을 통해 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("dayItemInfo", dayItemDto);
+    // planner String 수정
+    public PlannerPutDto updatePlannerString(Long plannerId,
+                                          String updatedTitle){
+        // 1. plannerId로 planner을 찾는다.
+        Planner updatedPlanner = plannerRepository.findPlannerById(plannerId);
+        // 2. planner을 수정한다.(set)
+        updatedPlanner.setTitle(updatedTitle);
+        // 3. DTO를 만들어서 변환된 값을 반환한다.
+        PlannerPutDto response = new PlannerPutDto();
+        response.setTitle(updatedTitle);
+        response.setSequence(updatedPlanner.getSequence());
         return response;
     }
 
-    // 플래너 제목 수정
-//    public PlannerDto editPlannerTitle(Planner planner, String newTitle){
-//        planner.setTitle(newTitle);
-//        PlannerDto plannerDto = new PlannerDto();
-//        plannerDto.
-//        plannerDto.setMemeberId(planner.getMemberId());
-//        plannerDto.setTitle(planner.getTitle());
-//        plannerDto.setSequence(planner.getSequence());
-//
-//        return plannerDto;
-//    }
+    //*****순서 수정*****//
 
-    // 플래너 순서 수정
-//    public PlannerDto editPlannerSequence(Planner planner, String newSequence){
-//        planner.setTitle(newSequence);
-//        PlannerDto plannerDto = new PlannerDto();
-//        plannerDto.setId(planner.getId());
-//        plannerDto.setMemeberId(planner.getMemberId());
-//        plannerDto.setTitle(planner.getTitle());
-//        plannerDto.setSequence(planner.getSequence());
-//
-//        return plannerDto;
-//    }
 
-    // id값으로 day 받기
-    public Day getDayById(Long dayId){
-        return dayRepository.findDayById(dayId);
+    //************************************[DELETE]****************************************//
+    // dayItem 삭제
+    public void removeDayItem(Long dayItemId){
+        DayItem dayitem = dayItemRepository.findDayItemById(dayItemId);
+        dayItemRepository.delete(dayitem);
     }
 
-    //플래너 삭제
-    public void removePlanner(){
-
+    // day 삭제(해당 day의 dayitem을 먼저 삭제해야한다.)
+    public void removeDay(Long dayId){
+        // 1. 해당 day객체로부터 dayItemList를 찾기
+        Day day = dayRepository.findDayById(dayId);
+        List<DayItem> dayItemList = dayItemRepository.findByDayIdOrderBySequenceAsc(day);
+        // 2. 리스트의 모든 요소를 삭제
+        dayItemRepository.deleteAll(dayItemList);
+        // 3. 해당 일자를 삭제
+        dayRepository.delete(day);
     }
 
-    // id로 day 조회
-    public Day findDayById(Long dayId) {
-        return dayRepository.findDayById(dayId);
-    }
-
-    // id로 planner 조회
-    public Planner findPlannerById(Long plannerId) {
-        return plannerRepository.findPlannerById(plannerId);
+    // planner 삭제(해당 플래너 하위의 모든 day, dayItem을 삭제해야한다.)
+    public void removePlanner(Long plannerId){
+        // 1. 해당 planner객체로부터 day를 찾기
+        Planner planner = plannerRepository.findPlannerById(plannerId);
+        List<Day> dayList = dayRepository.findByPlannerIdOrderByDay(planner);
+        // 2. 리스트를 순회하며 dayItem을 찾고 삭제하기
+        for(Day day: dayList){
+            List<DayItem> dayItemList = dayItemRepository.findByDayIdOrderBySequenceAsc(day);
+            dayItemRepository.deleteAll(dayItemList);
+        }
+        // 3. day 삭제하기
+        dayRepository.deleteAll(dayList);
+        // 4. planner 삭제하기
+        plannerRepository.delete(planner);
     }
 }
