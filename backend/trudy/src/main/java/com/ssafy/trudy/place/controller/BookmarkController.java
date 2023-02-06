@@ -42,7 +42,7 @@ public class BookmarkController {
     @PostMapping("/post")
     public Bookmark bookmarkAdd(@RequestParam Long memberId, @RequestParam Long placeId) {
         Member member = memberService.getById(memberId);
-        Place place = placeService.getById(placeId);
+        Place place = placeService.findPlaceById(placeId);
 
         Bookmark bookmark = new Bookmark(member, place);
         return bookmarkService.addBookmark(bookmark);
@@ -52,7 +52,7 @@ public class BookmarkController {
     @DeleteMapping("/delete")
     public void bookmarkDelete(@RequestParam Long memberId, @RequestParam Long placeId) {
         Member member = memberService.getById(memberId);
-        Place place = placeService.getById(placeId);
+        Place place = placeService.findPlaceById(placeId);
 
         // 삭제할 북마크 조회
         Bookmark bookmark = bookmarkService.findBookMark(member, place);
