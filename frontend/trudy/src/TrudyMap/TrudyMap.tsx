@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import "./TrudyMap.css";
 import Place from "./Place";
+import AreaSelect from "../Filter/BigArea";
+import { areaCode } from "../Filter/AreaCode";
 
 const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
@@ -15,12 +17,16 @@ function TrudyMap() {
   const [zoom, setZoom] = useState(14);
   const [marker, setMarker] = useState({ lat: 37.4602, lng: 126.4407 });
   const [mapVisible, setMapVisible] = useState(true);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: API_KEY,
     language: "en",
   });
   const [map, setMap] = React.useState(null);
+  const handleAreaClick = (id: number, name: string) => {
+    // your logic here when an area code is selected
+  };
 
   const updateCenter = (lat: number, lng: number) => {
     setCenter({ lat, lng });
@@ -44,40 +50,34 @@ function TrudyMap() {
 
   return isLoaded ? (
     <div className="flex h-screen">
-      
+      <>
+        <AreaSelect areaCode={areaCode} onClick={handleAreaClick} />
+      </>
       {mapVisible ? (
-        <>       
-         <div className="w-1/4 h-85 border border-gray-300 overflow-y-scroll">
-        <Place onPlaceClick={updateCenter} />
-      </div>
-        <div className="w-3/4 h-85">
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={zoom}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-          >
-            <MarkerF position={marker} />
-          </GoogleMap>
-       
-        </div>
+        <>
+          <div className="w-1/4 h-85 border border-gray-300 overflow-y-scroll">
+            <Place onPlaceClick={updateCenter} />
+          </div>
+          <div className="w-3/4 h-85">
+            <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom} onLoad={onLoad} onUnmount={onUnmount}>
+              <MarkerF position={marker} />
+            </GoogleMap>
+          </div>
         </>
-
-      ) : <div className="flex flex-wrap">
-      <div className="flex flex-wrap" >
-        <Place />
-      </div>
-    
-  </div>}
-         <button
-            onClick={() => setMapVisible(!mapVisible)}
-            className="mt-2 absolute top-0 right-0"
-          >
-            {mapVisible ? "Hide Map" : "Show Map"}
-          </button>
+      ) : (
+        <div className="flex flex-wrap">
+          <div className="flex flex-wrap">
+            <Place />
+          </div>
+        </div>
+      )}
+      <button onClick={() => setMapVisible(!mapVisible)} className="mt-2 absolute top-0 right-0">
+        {mapVisible ? "Hide Map" : "Show Map"}
+      </button>
     </div>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 }
 
 export default React.memo(TrudyMap);

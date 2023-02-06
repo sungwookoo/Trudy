@@ -9,8 +9,10 @@ import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.security.provider.TokenProvider;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
+import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
+import com.ssafy.trudy.member.model.dto.MemberProfileResponse;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.Post;
@@ -60,6 +62,7 @@ public class MemberAppService {
 
         // 4. RefreshToken 저장
         memberService.createRefreshToken(authentication, customToken.getRefreshToken());
+
 
         // 5. 토큰 발급
         return customToken;
@@ -126,21 +129,7 @@ public class MemberAppService {
         memberService.deleteByMemberId(principal.getMember().getId());
     }
 
-    public MemberResponse me(PrincipalDetails principal) {
-        Member member =  memberService.getById(principal.getMember().getId());
 
-        return MemberResponse.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .name(member.getName())
-                .gender(member.getGender())
-                .birth(member.getBirth())
-                .isLocal(member.getIsLocal())
-                .areaCode(member.getAreaCode())
-                .sigunguCode(member.getSigunguCode())
-                .lastAccess(member.getLastAccess())
-                .build();
-    }
 
     public Page<MemberResponse> getByPageable(PrincipalDetails principal, String name, String email, Pageable pageable) {
         Page<Member> memberPage = memberService.getSearchByPageable(name, email, pageable);
@@ -183,5 +172,38 @@ public class MemberAppService {
         }).collect(Collectors.toList());
 
         return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
+    }
+
+    public MemberResponse me(PrincipalDetails principal) {
+        Member member =  memberService.getById(principal.getMember().getId());
+
+        return MemberResponse.builder()
+                .id(member.getId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .gender(member.getGender())
+                .birth(member.getBirth())
+                .isLocal(member.getIsLocal())
+                .areaCode(member.getAreaCode())
+                .sigunguCode(member.getSigunguCode())
+                .lastAccess(member.getLastAccess())
+                .build();
+    }
+
+    public MemberResponse memberDetail(Long id) {
+        Member member = memberService.getById(id);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        return MemberResponse.builder()
+                .id(member.getId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .gender(member.getGender())
+                .birth(member.getBirth())
+                .isLocal(member.getIsLocal())
+                .areaCode(member.getAreaCode())
+                .sigunguCode(member.getSigunguCode())
+                .lastAccess(member.getLastAccess())
+                .introduceId(introduce)
+                .build();
     }
 }
