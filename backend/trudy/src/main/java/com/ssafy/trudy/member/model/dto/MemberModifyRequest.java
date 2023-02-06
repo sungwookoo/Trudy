@@ -1,9 +1,11 @@
-package com.ssafy.trudy.auth.dto.request;
+package com.ssafy.trudy.member.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
+import com.ssafy.trudy.member.model.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
@@ -12,10 +14,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SignupRequest {
+public class MemberModifyRequest {
     private static final String PHONE_NUMBER_REGEX = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$";
     private static final String USER_NAME_REGEX = "^[a-zA-Z가-힣]*$";
     private static final String USER_NICKNAME_REGEX = "^[a-z]*$";
@@ -25,11 +28,7 @@ public class SignupRequest {
     private String name;
     @NotNull(message = "패스워드는 필수 항목입니다.")
     private String password;
-    @Email(message = "이메일 형식이 아닙니다.")
-    @NotNull(message = "이메일은 필수 항목입니다.")
-    private String email;
     private String gender;
-
     private String birth;
 
     @NotNull(message = "로컬 여부는 필수 항목입니다.")

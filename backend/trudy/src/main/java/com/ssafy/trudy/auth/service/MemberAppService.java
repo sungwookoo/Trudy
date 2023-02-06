@@ -3,7 +3,6 @@ package com.ssafy.trudy.auth.service;
 import com.ssafy.trudy.auth.dto.request.LoginRequest;
 import com.ssafy.trudy.auth.dto.request.SignupRequest;
 import com.ssafy.trudy.auth.dto.request.TokenRequest;
-import com.ssafy.trudy.auth.dto.response.MemberPostResponse;
 import com.ssafy.trudy.auth.dto.response.TokenResponse;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.security.provider.TokenProvider;
@@ -12,8 +11,7 @@ import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
-import com.ssafy.trudy.member.model.dto.MemberProfileResponse;
-import com.ssafy.trudy.member.model.dto.MemberResponse;
+import com.ssafy.trudy.member.model.dto.*;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.service.PostService;
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -93,6 +90,53 @@ public class MemberAppService {
         return customToken;
     }
 
+    public MemberIntroResponse modifyMemberIntro(PrincipalDetails principal, MemberIntroRequest modifyIntroRequest) {
+        Member member = memberService.getById(principal.getMember().getId());
+        Introduce introduce = member.getIntroduceId();
+        introduce.setTitle(modifyIntroRequest.getTitle());
+        introduce.setPlan(modifyIntroRequest.getPlan());
+        introduce.setSelf(modifyIntroRequest.getSelf());
+        introduce.setLanguage(modifyIntroRequest.getLanguage());
+
+        Introduce modifiedIntroduce = memberService.saveIntroduce(introduce);
+
+        return MemberIntroResponse.builder()
+                .title(modifiedIntroduce.getTitle())
+                .plan(modifyIntroRequest.getPlan())
+                .self(modifyIntroRequest.getSelf())
+                .language(modifyIntroRequest.getLanguage())
+                .build();
+    }
+
+    public MemberResponse modifyMember(PrincipalDetails principal, MemberModifyRequest modifyRequest) {
+        modifyRequest.validation();
+
+        Member member = memberService.getById(principal.getMember().getId());
+
+        member.setName(modifyRequest.getName());
+        member.setPassword(passwordEncoder.encode(modifyRequest.getPassword()));
+        member.setGender(modifyRequest.getGender());
+        member.setBirth(modifyRequest.getBirth());
+        member.setIsLocal(modifyRequest.getIsLocal());
+        member.setAreaCode(modifyRequest.getAreaCode());
+        member.setSigunguCode(modifyRequest.getSigunguCode());
+
+        Member modifiedMember = memberService.save(member);
+
+        return MemberResponse.builder()
+                .id(modifiedMember.getId())
+                .email(modifiedMember.getEmail())
+                .name(modifiedMember.getName())
+                .gender(modifiedMember.getGender())
+                .birth(modifiedMember.getBirth())
+                .isLocal(modifiedMember.getIsLocal())
+                .areaCode(modifiedMember.getAreaCode())
+                .sigunguCode(modifiedMember.getSigunguCode())
+                .lastAccess(modifiedMember.getLastAccess())
+                .build();
+
+    }
+
     @Transactional
     public MemberResponse signup(SignupRequest signupRequest) {
         signupRequest.validation();
@@ -130,54 +174,14 @@ public class MemberAppService {
     }
 
 
-
-    public Page<MemberResponse> getByPageable(PrincipalDetails principal, String name, String email, Pageable pageable) {
-        Page<Member> memberPage = memberService.getSearchByPageable(name, email, pageable);
+    public Page<MemberResponse> getByPageable(String name, String gender, String areaCode, String sigunguCode, String isLocal, Pageable pageable) {
+        Page<Member> memberPage = memberService.getSearchByPageable(name, gender, areaCode,sigunguCode, isLocal, pageable);
 
         if (0 == memberPage.getTotalElements()) {
             return new PageImpl<>(new ArrayList<>(), memberPage.getPageable(), memberPage.getTotalElements());
         }
 
-        List<Long> memberIds = memberPage.stream().map(Member::getId)
-                .collect(Collectors.toList());
-//        List<Post> posts = postService.getAllByUserIds(memberIds);
-
-//        Map<Long, MemberPostResponse> postResponseMap = posts.stream()
-//                .collect(Collectors.toMap(post -> post.getMemberId().getId(), post -> MemberPostResponse.builder()
-//                        .id(post.getId())
-//                        .title(post.getTitle())
-//                        .thumbnailImage(post.getThumbnailImage())
-//                        .createdAt(post.getCreatedAt())
-//                        .build()));
-
-        List<MemberResponse> memberResponses = memberPage.stream().map(member -> {
-            MemberPostResponse memberPostResponse = null;
-
-//            if (postResponseMap.containsKey(member.getId())) {
-//                memberPostResponse = postResponseMap.get(member.getId());
-//            }
-
-            return MemberResponse.builder()
-                    .id(member.getId())
-                    .email(member.getEmail())
-                    .name(member.getName())
-                    .gender(member.getGender())
-                    .birth(member.getBirth())
-                    .isLocal(member.getIsLocal())
-                    .areaCode(member.getAreaCode())
-                    .sigunguCode(member.getSigunguCode())
-                    .lastAccess(member.getLastAccess())
-                    .posts(memberPostResponse)
-                    .build();
-        }).collect(Collectors.toList());
-
-        return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
-    }
-
-    public MemberResponse me(PrincipalDetails principal) {
-        Member member =  memberService.getById(principal.getMember().getId());
-
-        return MemberResponse.builder()
+        List<MemberResponse> memberResponses = memberPage.stream().map(member -> MemberResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .name(member.getName())
@@ -187,12 +191,40 @@ public class MemberAppService {
                 .areaCode(member.getAreaCode())
                 .sigunguCode(member.getSigunguCode())
                 .lastAccess(member.getLastAccess())
-                .build();
+                .introduceId(member.getIntroduceId())
+                .build()).collect(Collectors.toList());
+
+        return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
     }
 
+    // 내 프로필
+    public MemberResponse me(PrincipalDetails principal) {
+        Member member = memberService.getById(principal.getMember().getId());
+
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+
+        List<Post> posts = postService.getAllByUserId(member);
+        return getMemberResponse(member, introduce, posts);
+    }
+
+    // 다른 회원 프로필
     public MemberResponse memberDetail(Long id) {
         Member member = memberService.getById(id);
         Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        List<Post> posts = postService.getAllByUserId(member);
+        return getMemberResponse(member, introduce, posts);
+    }
+
+    private MemberResponse getMemberResponse(Member member, Introduce introduce, List<Post> posts) {
+        List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
+                MemberPostResponse.builder()
+                        .id(post.getId())
+                        .memberId(post.getMemberId())
+                        .title(post.getTitle())
+                        .thumbnailImage(post.getThumbnailImage())
+                        .createdAt(post.getCreatedAt())
+                        .build()
+        ).collect(Collectors.toList());
         return MemberResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
@@ -204,6 +236,7 @@ public class MemberAppService {
                 .sigunguCode(member.getSigunguCode())
                 .lastAccess(member.getLastAccess())
                 .introduceId(introduce)
+                .posts(memberPostResponses)
                 .build();
     }
 }

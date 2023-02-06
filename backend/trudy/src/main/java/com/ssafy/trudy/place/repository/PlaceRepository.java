@@ -12,7 +12,7 @@ import java.util.List;
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     // id로 찾기
-    Place getById(Long Id);
+    Place findPlaceById(Long Id);
 
     // contentId로 찾기
     Place getByContentid(String contentId);

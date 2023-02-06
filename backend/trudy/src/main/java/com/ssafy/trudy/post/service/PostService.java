@@ -349,8 +349,8 @@ public class PostService {
         }
     }
 
-    public List<Post> getAllByUserId(Long memberId) {
-        return postRepository.findAllByMemberId(memberId);
+    public List<Post> getAllByUserId(Member member) {
+        return postRepository.findAllByMemberId(member);
     }
 
     public List<Post> getAllByUserIds(List<Long> memberIds) {
