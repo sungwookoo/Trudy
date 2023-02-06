@@ -109,14 +109,15 @@ public class PostService {
 
     }
 
-    //포럼 게시글 수정
+    //포럼 게시글 수정 - ck에디터와 연관
     public void modifyPost(){
 
     }
 
     //포럼 게시글 삭제
     public void removePost(){
-
+        log.info("Service - removePost test");
+        log.info(postRepository.findById(1L).get().toString());
     }
 
     //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작
@@ -179,7 +180,7 @@ public class PostService {
             -> nested_comment entity로 nested_comment like count를 구해온다
          */
 
-        //3. post Entity를 이용해 댓글 정보를 채워 넣음
+        // post Entity를 이용해 댓글 정보를 채워 넣음
         PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
 
         // 댓글 정보만 채우기
@@ -349,8 +350,8 @@ public class PostService {
         }
     }
 
-    public List<Post> getAllByUserId(Long memberId) {
-        return postRepository.findAllByMemberId(memberId);
+    public List<Post> getAllByUserId(Member member) {
+        return postRepository.findAllByMemberId(member);
     }
 
     public List<Post> getAllByUserIds(List<Long> memberIds) {

@@ -1,13 +1,19 @@
 package com.ssafy.trudy.member.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "introduces")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties("hibernateLazyInitializer")
 public class Introduce {
 
@@ -21,6 +27,5 @@ public class Introduce {
 
     private String self;
 
-    @Column(length = 45)
     private String language;
 }

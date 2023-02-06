@@ -39,6 +39,8 @@ public class PostDto {
     }
 
 
+    /////////////////////////////////////////////////////
+
     //요소DTO 모음
     //Comment
     @Data
@@ -146,8 +148,8 @@ public class PostDto {
         private Long areaCode;
         private Long sigunguCode;
         private String birth;
-        private byte isLocal;
-        private byte isPublic;
+        private String isLocal;
+        private String isPublic;
         private LocalDateTime lastAccess;
     }
 
