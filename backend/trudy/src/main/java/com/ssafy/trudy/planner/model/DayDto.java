@@ -11,6 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 public class DayDto {
 
+    private Long id;
+    private String day;
+    private String memo;
+
     public static class DayCombine{
         private Long id;
         private String day;

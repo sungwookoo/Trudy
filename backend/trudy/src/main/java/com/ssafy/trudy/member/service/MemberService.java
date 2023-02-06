@@ -14,11 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,25 +90,25 @@ public class MemberService {
         refreshTokenRepository.deleteAll(refreshTokens);
     }
 
-    public Page<Member> getSearchByPageable(String name, String email, Pageable pageable) {
-        Page<Member> member;
+    /*
+        @RequestParam(required = false) String name,
+                                              @RequestParam(required = false) String email,
+                                              @RequestParam(required = false) String gender,
+                                              @RequestParam(required = false) Long areaCode,
+                                              @RequestParam(required = false) Long sigunguCode,
+                                              @RequestParam(required = false) String isLocal,
+     */
 
-        if (Objects.nonNull(name) && Objects.nonNull(email)) {
-            System.out.println("#######findByNameOrEmail");
-            member = memberRepository.findByNameContainingOrEmailContainingOrderByLastAccessDesc(name, email, pageable);
-        } else if (Objects.nonNull(email)) {
-            System.out.println("#######findByEmail");
-            member = memberRepository.findByEmailContainingOrderByLastAccessDesc(email, pageable);
-        } else if (Objects.nonNull(name)) {
-            System.out.println("#######findByName");
-            member = memberRepository.findByNameContainingOrderByLastAccessDesc(name, pageable);
-        } else {
-            System.out.println("#######findAll");
-            member = memberRepository.findAllByOrderByLastAccessDesc(pageable);
-        }
 
-        return member;
+    public Page<Member> getSearchByPageable(String name, String gender, String areaCode, String sigunguCode, String isLocal, Pageable pageable) {
+        return memberRepository.findAll(MemberSpecification.getSearchByPageable(name, gender, areaCode, sigunguCode, isLocal), pageable);
     }
+
+    public Introduce getByIntroduceId(Long introduceId) {
+        return introduceRepository.findById(introduceId).orElse(null);
+    }
+
+
 
     //구글 연동 회원가입
     public void addGoogle(){
@@ -143,8 +145,8 @@ public class MemberService {
 
     }
 
-    public Introduce getByIntroduceId(Long introduceId) {
-        return introduceRepository.findById(introduceId).orElse(null);
+    public Introduce saveIntroduce(Introduce introduce) {
+        return introduceRepository.save(introduce);
     }
 
 
@@ -154,5 +156,5 @@ public class MemberService {
 //    }
 //
 //    // 필터된 회원 목록 가져오기
-//    public List<Member> findMemberListFiltered(byte userType, String gender) { return memberRepository.findMemberListFiltered(userType, gender); }
+//    public List<Member> findMemberListFiltered(String userType, String gender) { return memberRepository.findMemberListFiltered(userType, gender); }
 }
