@@ -15,11 +15,6 @@ import java.util.stream.Collectors;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
-    // in절 -> 시간 두고 하기
-    List<Place> findPlacesByContenttypeidIn(List<String> contentTypeIdList);
-
-//    HashMap<String, String> findPlacesByAreacodeInAndSigungucodeIn(String areaCode, String sigunguCode);
-
     // id로 찾기
     Place findPlaceById(Long Id);
 
@@ -43,23 +38,22 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     List<Place> findPlacesByAreacodeAndTitleContaining(String areacode, String keyword);
 
     // 3-1) 지역 시군구 값 X, 콘텐츠 타입 O, keyword X
-    List<Place> findPlacesByContenttypeid(String contenttypeid);
-
+    List<Place> findPlacesByContenttypeidIn(List<String> contenttypeid);
     // 3-2) 지역 시군구 값 X, 콘텐츠 타입 O, keyword O
-    List<Place> findPlacesByContenttypeidAndTitleContaining(String contenttypeid, String keyword);
+    List<Place> findPlacesByContenttypeidInAndTitleContaining(List<String> contenttypeid, String keyword);
 
     // 4번은 이중 for문이다.
     // 4-1) 지역 시군구 값 O, 콘텐츠 타입 O, keyword X
     // 4-1-x) 지역값으로 O, 콘텐츠 타입 O, keyword X
-    List<Place> findPlacesByAreacodeAndContenttypeid(String areacode, String contenttypeid);
+    List<Place> findPlacesByAreacodeAndContenttypeidIn(String areacode, List<String> contenttypeid);
     // 4-1-o) 지역 시군구 값 O, 콘텐츠 타입 O, keyword X
-    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeid(String areacode, String sigungucode, String contenttypeid);
+    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeidIn(String areacode, String sigungucode, List<String> contenttypeid);
 
     // 4-2) 지역 시군구 값 O, 콘텐츠 타입 O, keyword O
     // 4-2-x) 지역값으로 O, 콘텐츠 타입 O, keyword O
-    List<Place> findPlacesByAreacodeAndContenttypeidAndTitleContaining(String areacode, String contenttypeid, String keyword);
+    List<Place> findPlacesByAreacodeAndContenttypeidInAndTitleContaining(String areacode, List<String> contenttypeid, String keyword);
     // 4-2-o) 지역 시군구 값 O, 콘텐츠 타입 O, keyword O
-    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(String areacode, String sigungucode, String contenttypeid, String keyword);
+    List<Place> findPlacesByAreacodeAndSigungucodeAndContenttypeidInAndTitleContaining(String areacode, String sigungucode, List<String> contenttypeid, String keyword);
 
     // **areacode로 장소찾기
     List<Place> findPlacesByAreacode(String areacode);
