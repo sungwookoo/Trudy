@@ -27,8 +27,8 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
 
     // id로 검색
-    public Place getById(Long placeId) {
-        return placeRepository.getById(placeId);
+    public Place findPlaceById(Long placeId) {
+        return placeRepository.findPlaceById(placeId);
     }
 
     // contentId로 검색
@@ -41,7 +41,7 @@ public class PlaceService {
         List<Place> placeListByPlacesIds = new ArrayList<>();
         // 장소 id로 장소를 찾고 리스트에 추가
         for (Long placeId : placeIds) {
-            placeListByPlacesIds.add(getById(placeId));
+            placeListByPlacesIds.add(findPlaceById(placeId));
         }
         // Dto 변환 후  반환
         return placeListByPlacesIds.stream().map(place -> PlaceDto.builder()
