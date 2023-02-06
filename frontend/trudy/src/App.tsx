@@ -4,7 +4,7 @@ import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
-import Profile from "./Profile/Profile";
+import MyProfile from "./Profile/MyProfile";
 import ProfileUpdate from "./Profile/ProfileUpdate";
 import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";
@@ -31,7 +31,7 @@ function App() {
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} /> 
         <Route path="/planner" element={<Planner />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<MyProfile />} />
         <Route path="/profileupdate" element={<ProfileUpdate />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

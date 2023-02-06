@@ -1,18 +1,19 @@
-import '../Profile/Profile.css';
+import '../Profile/MyProfile.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { dummyMembers } from '../Forum/Forum';
+// import { dummyMembers } from '../Forum/Forum';
 
 
-export type getUser = {
+interface getUser {
   id: number;
-  username: string;
+  name: string;
   email: string;
 };
 
 function Profile() {
-  const [userInfo, setUserInfo] = useState<getUser[] | null>();
+  // const [userInfo, setUserInfo] = useState<getUser[] | null | any>();
+  const [profile, setProfile] = useState<getUser | null>(null);
 
     const navigate = useNavigate();
     const navigateToProfileUpdate = () => {
@@ -20,37 +21,60 @@ function Profile() {
     };
 
     useEffect(() => {
-        const url = 'https://jsonplaceholder.typicode.com/users'
-        const imageUrl = ''
+      const fetchProfile = async () => {
+        try {
+          const response = await fetch('api/member/me');
+          const profile = await response.json();
+          setProfile(profile);
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
-        axios.get(url).then((res) => {
-            setUserInfo(res.data);
-        });
+    fetchProfile();
     }, []);
-    console.log(userInfo)
+
+    if (!profile) {
+      return <div>Loading...</div>;
+    }
+
+
+    //     const url = 'api/member'
+    //     // const imageUrl = ''
+
+    //     axios.get(url).then((res) => {
+    //         setUserInfo(res.data);
+    //     });
+    // }, []);
+    // console.log(userInfo)
+
     return(
       // 프로필 컨테이너 파란 영역
       <div className='profile-container'>
         {/* 프로필 사진과 유저네임 */}
           <div className='picture-name'>
-            
-            {dummyMembers.map((member:any) => {
+            <h1>{profile.name}</h1>
+            <p>Email: {profile.email}</p>
+            {/* {userInfo.map((member:any) => {
                 return (
                   <div>
                     <div>
-                  <img className='profile-picture'
-                  src={member.image}
-                  alt="profilepicture" 
-                  />
+                      <img className='profile-picture'
+                      src={member.image}
+                      alt="profilepicture" 
+                      />
                     </div>
                   <div className='user-name' key={member.id}>
                     { member.name }
                     {/* { user.username === 'Kamren' ? user.username : '' } */}
-                  </div>
+                  {/* </div>
                   </div>
                 )
               })
             }
+          }
+          //  */}
+
 
           {/* 팔로우 메시지 버튼 */}
             <div>
