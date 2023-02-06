@@ -5,6 +5,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 // 관계 빼고 완료
 @Entity
@@ -29,4 +31,18 @@ public class Post {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    ////////DB에 영향을 주지않을 것들
+    @OneToMany(mappedBy = "postId")
+    private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "postId")
+    private List<PostImage> postImageList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "postId")
+    private List<PostCategory> postCategoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "postId")
+    private List<PostLike> postLikeList = new ArrayList<>();
+
 }
