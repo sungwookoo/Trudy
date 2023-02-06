@@ -43,7 +43,7 @@ useEffect(() => {
                   </button>
                 </div>
                 <div className="forum-detail-header">
-                  <div className="board-header-username"> {board.user.username} </div>
+                  {/* <div className="board-header-username"> {board.user.username} </div> */}
                   
                 </div>
             </div>
