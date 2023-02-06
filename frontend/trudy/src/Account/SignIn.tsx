@@ -1,23 +1,59 @@
-import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
+import axios from "axios";
+import React, {
+  SyntheticEvent,
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+} from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import AuthContext from "../Common/authContext";
 import "./SignIn.css";
 
 // 로그인 페이지
 
 function SignIn() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
   const navigate = useNavigate();
   const navigateToSignUp = () => {
     navigate("/signupselect");
   };
+  const navigateToLanding = () => {
+    navigate("/");
+  };
+  // const [email, setEmail] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
 
-  async function submit(event: SyntheticEvent) {
+  // function Submit(event: SyntheticEvent) {
+  //   event.preventDefault();
+  //   axios
+  //     .post("api/login", { email: email, password: password })
+  //     .then((response) => {
+  //       const accessToken = response.data.accessToken
+  //       navigateToLanding();
+  //       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  //       console.log(response);
+  //     })
+  //     .catch(() => {
+  //       alert("Wrong ID or Password");
+  //     });
+  // }
+
+  const emailInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
+
+  const authCtx = useContext(AuthContext);
+
+  const submit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // await fetch("로그인 url");
-  }
+    const email = emailInput.current!.value;
+    const password = passwordInput.current!.value;
+
+    authCtx.login(email, password);
+    if (authCtx.isSuccess) {
+      navigate("/", { replace: true });
+    }
+  };
 
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -34,12 +70,7 @@ function SignIn() {
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
 
-        <form
-          className="mt-8 space-y-6"
-          action="/api/member/login"
-          method="POST"
-        >
-          <input type="hidden" name="remember" defaultValue="true" />
+        <form className="mt-8 space-y-6" onSubmit={submit}>
           <div className="-space-y-px rounded-md shadow-sm">
             {/* 이메일 주소 입력 */}
             <div>
@@ -54,6 +85,7 @@ function SignIn() {
                 required
                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Email address"
+                ref={emailInput}
               />
             </div>
 
@@ -70,6 +102,7 @@ function SignIn() {
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
+                ref={passwordInput}
               />
             </div>
           </div>
