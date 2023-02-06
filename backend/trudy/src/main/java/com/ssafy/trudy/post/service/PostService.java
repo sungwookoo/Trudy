@@ -104,8 +104,6 @@ public class PostService {
     //포럼 게시글 작성
     public void addPost(){
         // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
-        PostCategory save = postCategoryRepository.save(new PostCategory(CategoryName.Restaurant));
-        log.info("category test ============= " + save.toString());
 
     }
 
@@ -114,10 +112,9 @@ public class PostService {
 
     }
 
-    //포럼 게시글 삭제
-    public void removePost(){
-        log.info("Service - removePost test");
-        log.info(postRepository.findById(1L).get().toString());
+    //포럼 게시글 삭제 - 정상 동작
+    public void removePost(Long postId){
+        postRepository.deleteById(postId);
     }
 
     //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작

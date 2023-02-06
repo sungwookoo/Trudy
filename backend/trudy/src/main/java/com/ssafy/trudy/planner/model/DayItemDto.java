@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DayItemDto {
 
+    private Long id;
     private Place placeId;
     private Day dayId;
     private String memo;
