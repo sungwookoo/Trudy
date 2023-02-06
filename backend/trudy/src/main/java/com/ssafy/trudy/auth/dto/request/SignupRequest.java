@@ -1,5 +1,6 @@
 package com.ssafy.trudy.auth.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SignupRequest {
     private static final String PHONE_NUMBER_REGEX = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$";
     private static final String USER_NAME_REGEX = "^[a-zA-Z가-힣]*$";
@@ -31,7 +33,7 @@ public class SignupRequest {
     private String birth;
 
     @NotNull(message = "로컬 여부는 필수 항목입니다.")
-    private byte isLocal;
+    private String isLocal;
 
     private Long areaCode;
     private Long sigunguCode;
