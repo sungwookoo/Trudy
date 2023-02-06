@@ -27,11 +27,8 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route
-          path="/forumcreate"
-          element={<ForumCreate onSubmit={writeArticle} />}
-        />
-        <Route path="/square" element={<Square />} />
+        <Route path="/forumcreate" element={<ForumCreate />} />
+        <Route path="/square" element={<Square />} /> 
         <Route path="/planner" element={<Planner />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profileupdate" element={<ProfileUpdate />} />

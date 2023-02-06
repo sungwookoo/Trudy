@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
+
 import { useLinkClickHandler } from "react-router-dom";
 import PlaceForm from "./PlaceForm";
 
@@ -30,7 +31,7 @@ function Place(props: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   const [limit, setLimit] = useState<any>(10);
-  const [offset, setOffset] = useState<any>(0);
+  const [offset, setOffset] = useState<any>(1);
   const [areaSigun, setareaSigun] = useState<any>("");
   const [contentTypeId, setcontentTypeId] = useState<any>("");
   const [keyword, setkeyword] = useState<any>("");
@@ -44,7 +45,7 @@ function Place(props: any) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData = await axios<any> ({
+        const resData = await axios<any>({
           // API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
           method: "get",
           url: API_URL,

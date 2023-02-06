@@ -1,4 +1,4 @@
-.w-1/3 {
-  overflow-y: scroll;
-  height: calc(100vh - 60px);
+.trudy-map {
+  width: auto;
+  height: 850px;
 }

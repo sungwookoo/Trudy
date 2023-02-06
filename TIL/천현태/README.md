@@ -509,6 +509,15 @@ LoadScript googleMapsApiKey="API KEY" region="US" language="en">
 
 #### 주 내용
 
+- dotenv 사용하여 API KEY 숨겨주기
+	- .env 폴더에 api key 작성 및 npm install dotenv
+	- 이후 import donev 및 dotenv.config() 하고 서버 실행하니 환경변수 에러
+	> 	에러 내용 : 
+	> 	breaking change: webpack < 5 used to include polyfills for node.js core modules by default. this is no longer the case. verify if you need this module and configure a polyfill for it.
+	> 	
+	> 	알게된 내용 :
+	> 	   해당 프로젝트는 이미 create-react-app을 통해 생성한 react 앱이므로 CRA를 통해 생성한 경우에는 **dotenv를 내장한 채로 생성**되기 때문에 **import 소스 적용이 필요 없다.**
+	> 		따라서, import 와 dotenv.config() 지워주니 성공적으로 렌더링 되었음
 - 바뀐 api 주소에 따라 요청
 - marker 안 띄워지던 오류 수정
   - react 버전이슈로 기존의 Marker -> MarkerF
@@ -536,3 +545,10 @@ LoadScript googleMapsApiKey="API KEY" region="US" language="en">
 
 - body가 아닌 params 라는 점.. 
 - 하나 고치면 오류 하나 더 발생.. 열심히 아자아자
+
+
+
+---
+
+
+## 02.06

@@ -37,6 +37,16 @@ public class DayItem {
     @Column(name = "custom_image")
     private String customImage;
 
+    // place값이 들어오지 않을 때, custom place 생성자
+    public DayItem(Day dayId, String memo, String sequence, String customTitle, String customImage){
+        this.dayId = dayId;
+        this.memo = memo;
+        this.sequence = sequence;
+        this.customTitle = customTitle;
+        this.customImage = customImage;
+    }
+
+    // place값이 들어올 때 만들 생성자
     public DayItem(Place placeId, Day dayId, String memo, String sequence, String customTitle, String customImage) {
         this.placeId = placeId;
         this.dayId = dayId;

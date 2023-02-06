@@ -1,49 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import './ForumCreate.css'
+import Editor from './Editor';
+import parse from 'html-react-parser';
+
+function ForumCreate() {
 
 
-const writeArticle = (title: string, content: string) => {
-  console.log(`Title: ${title} Content: ${content}`);
-};
+  const [title, SetTitle] = useState('제목')
+  const [Content, SetContent] = useState('내용')
+  const [editor, setEditor] = useState(null);
 
-function ForumCreate ( onSubmit: any ) {
-  const [open, setOpen] = useState(false)
-  const [image, setImage] = useState({
-    image_file: '',
-    preview_URL: '',
-  })
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const changeTitle = (e:any) => {
+    SetTitle(e.target.value)
+    console.log(e.target.value)
+  }
 
-  
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit(title, content);
-  };
+  const changeContent = (e:any) => {
+    SetContent(e.target.value)
+    console.log(e.target.value)
+  }
 
-  return (
-    <div className='article-create-container'>
-    <form className='article-form-container' onSubmit={handleSubmit}>
-      {/* <div className='forms-text'> */}
-      <input className='my-10 w-96 h-10 '
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      
-      <textarea className='w-96 h-80 resize-none'
-        placeholder="Content"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-      />
-      {/* </div> */}
-      <button className='bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-5 ml-5 my-10' type="submit">Post</button>
-    </form>
-      
-    
-    </div>
-  );
+return(
+  <>
+    <div>{title}</div>
+      <div>{parse(Content)}</div>
+        <div className='forum-create-container'>
+          <Editor 
+          SetContent={SetContent}
+          // handleChange={(data:any) => {
+          // setEditor(data);
+          // }}
+          data={Content}/>
+
+        </div>
+
+  </>
+
+
+
+  )
+
 }
 
 export default ForumCreate;
