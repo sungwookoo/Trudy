@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "members")
 public class Member {
@@ -46,10 +48,10 @@ public class Member {
     private String birth;
 
     @Column(name = "is_local")
-    private byte isLocal;
+    private String isLocal;
 
     @Column(name = "is_public")
-    private byte isPublic;
+    private String isPublic;
 
     @CollectionTable(
             name = "member_roles",
@@ -73,7 +75,7 @@ public class Member {
 
 
     @Builder(builderMethodName = "signupBuilder")
-    public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, byte isLocal, byte isPublic, LocalDateTime lastAccess) {
+    public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, String isLocal, String isPublic, LocalDateTime lastAccess) {
         this.email = email;
         this.password = password;
         this.name = name;
