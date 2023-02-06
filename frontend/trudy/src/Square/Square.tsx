@@ -176,7 +176,7 @@ function Square() {
                     adipiscing elit. Sed in aliquam magna. Integer tristique,
                     dolor eu dignissim convallis, sapien risus rhoncus neque,
                     non bibendum lectus enim in lorem.
-                    {/* {guide.introduce} */}
+                    {/* {guide.introduceId.self} */}
                   </p>
                 </div>
               </div>

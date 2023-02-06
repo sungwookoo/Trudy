@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
@@ -12,13 +12,12 @@ import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
 import ForumCreate from "./Forum/ForumCreate";
-
+import AuthContext from "./Common/authContext";
 
 function App() {
-
   // Code to handle form submission
-  const writeArticle = (event: React.FormEvent<HTMLFormElement>) => {
-  };
+  const writeArticle = (event: React.FormEvent<HTMLFormElement>) => {};
+  const authCtx = useContext(AuthContext);
 
   return (
     <div>
@@ -28,14 +27,26 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="/forumcreate" element={<ForumCreate onSubmit={writeArticle} />} />
-        <Route path="/square" element={<Square />} /> 
+        <Route
+          path="/forumcreate"
+          element={<ForumCreate onSubmit={writeArticle} />}
+        />
+        <Route path="/square" element={<Square />} />
         <Route path="/planner" element={<Planner />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profileupdate" element={<ProfileUpdate />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signupselect" element={<SignUpSelect />} />
+        <Route
+          path="/signin"
+          element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}
+        />
+        <Route
+          path="/signup"
+          element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUp />}
+        />
+        <Route
+          path="/signupselect"
+          element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpSelect />}
+        />
       </Routes>
     </div>
   );

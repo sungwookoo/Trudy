@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import trudylogo from "../assets/trudylogo.png";
+import AuthContext from "./authContext";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openDropDown = () => {
     setIsOpen(!isOpen);
+  };
+  
+  const authCtx = useContext(AuthContext);
+  const signOut = () => {
+    authCtx.signOut();
+    if (authCtx.isLoggedIn === false) {
+      alert('sign out!')
+    }
   };
 
   return (
@@ -71,6 +80,13 @@ const Nav = () => {
         <NavLink className="nav-link" to="/signupselect">
           Sign Up
         </NavLink>
+      </div>
+
+      {/* 로그아웃*/}
+      <div className="nav-item">
+        <button className="nav-link" onClick={signOut}>
+          Sign Out
+        </button>
       </div>
     </nav>
   );
