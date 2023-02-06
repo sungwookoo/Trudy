@@ -10,12 +10,12 @@ const Nav = () => {
   const openDropDown = () => {
     setIsOpen(!isOpen);
   };
-  
+
   const authCtx = useContext(AuthContext);
   const signOut = () => {
     authCtx.signOut();
     if (authCtx.isLoggedIn === false) {
-      alert('sign out!')
+      alert("sign out!");
     }
   };
 
@@ -62,32 +62,35 @@ const Nav = () => {
       </div>
 
       {/* 프로필 */}
-      <div className="nav-item">
-        <NavLink className="nav-link" to="/profile">
-          Profile
-        </NavLink>
-      </div>
 
       {/* 로그인 */}
-      <div className="nav-item">
-        <NavLink className="nav-link" to="/signin">
-          Sign In
-        </NavLink>
-      </div>
-
-      {/* 회원가입 */}
-      <div className="nav-item">
-        <NavLink className="nav-link" to="/signupselect">
-          Sign Up
-        </NavLink>
-      </div>
-
-      {/* 로그아웃*/}
-      <div className="nav-item">
-        <button className="nav-link" onClick={signOut}>
-          Sign Out
-        </button>
-      </div>
+      {!authCtx.isLoggedIn ? (
+        <>
+          <div className="nav-item">
+            <NavLink className="nav-link" to="/signin">
+              Sign In
+            </NavLink>
+          </div>
+          <div className="nav-item">
+            <NavLink className="nav-link" to="/signupselect">
+              Sign Up
+            </NavLink>
+          </div>{" "}
+        </>
+      ) : (
+        <>
+          <div className="nav-item">
+            <NavLink className="nav-link" to="/profile">
+              Profile
+            </NavLink>
+          </div>
+          <div className="nav-item">
+            <button className="nav-link" onClick={signOut}>
+              Sign Out
+            </button>
+          </div>
+        </>
+      )}
     </nav>
   );
 };
