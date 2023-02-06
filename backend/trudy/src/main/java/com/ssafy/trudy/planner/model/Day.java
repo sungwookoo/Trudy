@@ -28,8 +28,7 @@ public class Day {
 
     private String memo;
 
-    public Day(Long id, Planner plannerId, String day, String memo){
-        this.id = id;
+    public Day(Planner plannerId, String day, String memo){
         this.plannerId = plannerId;
         this.day = day;
         this.memo = memo;

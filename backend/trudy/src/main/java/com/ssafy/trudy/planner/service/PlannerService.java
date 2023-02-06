@@ -24,7 +24,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PlannerService {
     private final DayItemRepository dayItemRepository;
-
     @Autowired
     private final PlannerRepository plannerRepository;
     @Autowired
@@ -32,7 +31,7 @@ public class PlannerService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    // 해당 유저의 플래너 관련 정보 전부 가져오기
+    // [READ]해당 유저의 플래너 관련 정보 전부 가져오기
     public List<Map> getPlannersByMemberId(Member member) {
         // 반환값을 담을 변수
         List<Map> response = new ArrayList<>();
@@ -98,20 +97,44 @@ public class PlannerService {
         return response;
     }
 
-
-
-
-
-    // 플래너에 플랜 생성
-    public void addPlanner(){
-        // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다.
-        // (planners먼저 새기고 id 가져와서 나머지 애들 새긴다.)
-        return;
+    //*******************************[CREATE]****************************************//
+    // 플래너 생성
+    public Map addPlanner(Planner plannerInput, Member memberInput){
+        // 1. 들어온 planner을 db에 저장
+        plannerRepository.save(plannerInput);
+        // 2. Dto 만들기
+        PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
+        PlannerDto.PlannerElement plannerElement = modelMapper.map(plannerInput, PlannerDto.PlannerElement.class);
+        PlannerDto.MemberElement memberElement = modelMapper.map(memberInput, PlannerDto.MemberElement.class);
+        plannerCombine = new PlannerDto.PlannerCombine(plannerElement, memberElement);
+        // 3. Map을 통해 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("plannerCombine", plannerCombine);
+        return response;
     }
 
-    // 아이디로 플래너 조회
-    public Planner getPlannerById(Long id){
-        return plannerRepository.getPlannerById(id);
+    // 데이 생성
+    public Map addDay(Day dayInput){
+        // 1. 들어온 day를 db에 저장
+        dayRepository.save(dayInput);
+        // 2. Dto 만들기
+        DayDto dayDto = modelMapper.map(dayInput, DayDto.class);
+        // 3. Map을 통해 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("dayInfo", dayDto);
+        return response;
+    }
+
+    // 데이 아이템 생성
+    public Map addDayItem(DayItem dayItemInput){
+        // 1. 들어온 dayItem을 db에 저장
+        dayItemRepository.save(dayItemInput);
+        // 2. Dto 만들기
+        DayItemDto dayItemDto = modelMapper.map(dayItemInput, DayItemDto.class);
+        // 3. Map을 통해 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("dayItemInfo", dayItemDto);
+        return response;
     }
 
     // 플래너 제목 수정
@@ -140,12 +163,7 @@ public class PlannerService {
 
     // id값으로 day 받기
     public Day getDayById(Long dayId){
-        return dayRepository.getDayById(dayId);
-    }
-
-    //플래너 조회
-    public void findPlanner(){
-
+        return dayRepository.findDayById(dayId);
     }
 
     //플래너 삭제
@@ -153,4 +171,13 @@ public class PlannerService {
 
     }
 
+    // id로 day 조회
+    public Day findDayById(Long dayId) {
+        return dayRepository.findDayById(dayId);
+    }
+
+    // id로 planner 조회
+    public Planner findPlannerById(Long plannerId) {
+        return plannerRepository.findPlannerById(plannerId);
+    }
 }

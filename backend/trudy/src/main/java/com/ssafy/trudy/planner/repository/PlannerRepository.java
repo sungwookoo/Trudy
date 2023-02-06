@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PlannerRepository extends JpaRepository<Planner, Long> {
 
-    Planner getPlannerById(Long id);
+    Planner findPlannerById(Long id);
 
     List<Planner> findPlannersByMemberId(Member member);
 }
