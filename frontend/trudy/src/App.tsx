@@ -12,7 +12,7 @@ import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
 import ForumCreate from "./Forum/ForumCreate";
-
+import ForumDetail from "./Forum/ForumDetail";
 
 function App() {
 
@@ -28,6 +28,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
+        <Route path="/forum/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} /> 
         <Route path="/planner" element={<Planner />} />

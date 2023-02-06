@@ -7,30 +7,40 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
-interface ForumTypes {
-  content: any
-}
+
 
 function ForumCreate() {
+  
+type ForumTypes = {
+  title: any,
+  content: any,
+}
 
   // const [image, setImage] = useState(null);
   // const [desc, setDesc] = useState("");
-  // const [ckTitle, setCkTitle] = useState("");
-  // const [ckContent, setCkContent] = useState("");
-  
-    
-  // })
+  const [forumtitle, setforumTitle] = useState("");
+  const [forumcontent, setforumContent] = useState("");
+
   // const [viewContent, setViewContent] = useState([]);
 
-const [forumContent, setForumContent] = useState([])
 
+// const url = "api/post";
+
+const forumdata = {
+  'title' : forumtitle,
+  'content' : forumcontent,
+}
 
 
   const submitPost = () => {
-    axios.post('/api/post', {
-    }).then(()=>{
+    console.log(forumdata)
+    axios.post('api/post', forumdata)
+    .then((data)=>{
       alert('등록 완료!');
-      console.log(111111)
+      // console.log(data)
+    })
+    .catch((err)=>{
+      console.log(err)
     })
   };
 
@@ -51,7 +61,7 @@ const [forumContent, setForumContent] = useState([])
   //   setForumContent({
   //     ...forumContent,
   //   })
-  //   console.log(forumContent,1111111111111111111111111111111)
+  //   console.log(forumContent,111111111111111111)
   // };  
 
 
@@ -66,7 +76,8 @@ return(
     
       <div className='forum-create-container'>
         <div className='forum-title-container'>
-        <input className='forum-title' type="text" placeholder='Enter Title Here'/>
+
+        <input className='forum-title' type="text" placeholder='Enter Title Here' onChange={(event) => setforumTitle(event.target.value)}/>
         
         
       <div>
@@ -75,18 +86,18 @@ return(
         config={{
         // extraPlugins: [uploadPlugin],
         }}
-        data={forumContent}
+        data={forumcontent}
         onReady={(editor:any) => {
-          console.log('Editor is ready to use!', editor);
+          // console.log('Editor is ready to use!', editor);
         }}
         onChange={(event:any, editor:any) => {
           const data = editor.getData();
-          // setForumContent(data);
-          setForumContent({
-          ...forumContent,
-          // data
-          });
-          console.log({ event, editor, data})
+          setforumContent(data);
+          // setForumContent({
+          // ...forumContent,
+          // // data
+          // });
+          console.log({ data })
         }}
         onBlur={(event:any, editor:any) => {
           // console.log('Blur.', editor);
