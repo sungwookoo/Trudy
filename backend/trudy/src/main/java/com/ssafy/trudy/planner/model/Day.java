@@ -1,13 +1,18 @@
 package com.ssafy.trudy.planner.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
 @Entity
 @Table(name = "days")
+@NoArgsConstructor
 public class Day {
 
     @Id
@@ -23,4 +28,9 @@ public class Day {
 
     private String memo;
 
+    public Day(Planner plannerId, String day, String memo){
+        this.plannerId = plannerId;
+        this.day = day;
+        this.memo = memo;
+    }
 }
