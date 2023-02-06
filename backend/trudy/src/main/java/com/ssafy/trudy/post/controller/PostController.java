@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Tag(name = "post", description = "게시물 API")
@@ -95,78 +96,65 @@ public class PostController {
 
     }
 
-    //포럼 게시글 상세보기
+    //포럼 게시글 상세보기 - 정상 동작
     @GetMapping("/{post_id}")
-    public void/*ResponseEntity<?>*/ postDetail(@PathVariable("post_id") Long postId){
+    public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
+
         try {
             log.info("post Detail");
-            postService.findPostDetail(postId);
-        } catch (Exception e) {
+            Map<String, Object> response = postService.findPostDetail(postId);
+
+            if(!response.isEmpty() && response != null){
+
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e){
             e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
 
-        //Comment 리스트를 가져옴
-
-        //Comment_id를 이용해서 nested_comments, comment_like 가져옴
-
-        //nested_comment_id를 이용해서 nested_comment_like 가져옴
-
-        //존재하는지 확인 후 전송
-//        try{
-//            Optional<Post> findPost = postService.findPostDetail(postId);
-//
-//            if(findPost.get() != null || findPost.isPresent()){
-//                Post p = findPost.get();
-////                //PostListResponse postListResponse = new PostListResponse(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-////                PostListResponse postListResponse = new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class) );
-//                return ResponseEntity.ok().body("postListResponse");
-//            } else {
-//                return ResponseEntity.noContent().build();
-//            }
-//        } catch (Exception e){
-//            e.getStackTrace();
-//            return ResponseEntity.internalServerError().build();
-//        }
     }
 
-    //포럼 게시글 좋아요
+    //포럼 게시글 좋아요 - 정상 동작
     @PostMapping("/like/{member_id}/{post_id}")
     public void postLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId){
         postService.addPostLike(memberId, postId);
     }
 
-    //포럼 게시글 댓글 작성
+    //포럼 게시글 댓글 작성 - 정상 동작
     @PostMapping("/comment/{member_id}/{post_id}")
     public void postCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId, @RequestParam("content") String content){
         postService.addPostComment(memberId, postId, content);
     }
 
-    //포럼 댓글 좋아요
+    //포럼 댓글 좋아요 - 정상 동작
     @PostMapping("/comment/like/{member_id}/{comment_id}")
     public void postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
         postService.addPostCommentLike(memberId, commentId);
     }
 
-    //댓글 삭제
+    //댓글 삭제 - 정상 동작 - 수정해야 -> 대댓글 없으면 걍 날리는 걸로
     @DeleteMapping("/comment/{comment_id}")
     public void postCommentRemove(@PathVariable("comment_id") Long commentId){
         postService.removePostComment(commentId);
     }
 
-    //대댓글 작성
+    //대댓글 작성 - 정상 동작
     @PostMapping("/nested-comment/{member_id}/{comment_id}")
     public void postNestedCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId, @RequestParam("content") String content){
         postService.addPostNestedComment(memberId, commentId, content);
     }
 
-    //대댓글 좋아요
+    //대댓글 좋아요 - 정상 동작
     @PostMapping("/nested-comment/like/{member_id}/{nested_comment_id}")
     public void postNestedCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("nested_comment_id") Long nestedCommentId){
         log.info("test1");
         postService.addPostNestedCommentLike(memberId, nestedCommentId);
     }
 
-    //대댓글 삭제
+    //대댓글 삭제 - 정상 동작
     @DeleteMapping("/nested-comment/{nested_comment_id}")
     public void postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
         postService.removePostNestedComment(nestedCommentId);

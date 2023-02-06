@@ -5,6 +5,7 @@ import com.ssafy.trudy.auth.dto.request.SignupRequest;
 import com.ssafy.trudy.auth.dto.request.TokenRequest;
 import com.ssafy.trudy.auth.dto.response.TokenResponse;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
+import com.ssafy.trudy.auth.service.EmailService;
 import com.ssafy.trudy.auth.service.MemberAppService;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +25,9 @@ import javax.validation.Valid;
 public class AuthAppController {
     @Autowired
     private MemberAppService memberAppService;
+
+    @Autowired
+    private EmailService emailService;
 
     // 로그인
     @ApiOperation(value = "로그인",
@@ -72,5 +76,19 @@ public class AuthAppController {
     @DeleteMapping("/logout")
     public void logout(@AuthenticationPrincipal PrincipalDetails principal) {
         memberAppService.logout(principal);
+    }
+
+    // 이메일 인증
+    @ApiOperation(value = "이메일 인증",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE)
+            })
+    @PostMapping("/emailConfirm")
+    public String emailConfirm(@RequestParam String email) throws Exception {
+
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return confirm;
     }
 }
