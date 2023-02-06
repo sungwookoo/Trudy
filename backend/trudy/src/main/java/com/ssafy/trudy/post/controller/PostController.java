@@ -43,18 +43,6 @@ public class PostController {
     })
     @GetMapping
     public ResponseEntity<?> postList(){
-        //test
-        // postService.findPostList();
-        //List<Post> findPostList = postService.findPostList();
-        //List<PostListResponse> response = findPostList.stream()
-//                .map(p -> new PostListResponse(
-//                        p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImageId(), p.getCreatedAt(), p.getUpdatedAt(),modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class)
-//                        /*p.getMemberId().getId(), p.getMemberId().getEmail(), p.getMemberId().getName(), p.getMemberId().getImage(), p.getMemberId().getGender(), p.getMemberId().getArea(),
-//                            p.getMemberId().getBirth(), p.getMemberId().getIsLocal(), p.getMemberId().getIsPublic(), p.getMemberId().getLastAccess()*/ ))
-//                .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class)))
-//                .collect(Collectors.toList());
-
-        //return response;
 
         try{
             log.info("========post Controller / postList===========");
@@ -72,8 +60,6 @@ public class PostController {
             e.getStackTrace();
             return ResponseEntity.internalServerError().build();
         }
-        //return "test end";
-
     }
 
     //포럼 게시글 작성
