@@ -1,20 +1,23 @@
 import axios from "axios";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../Common/authContext";
 import "./Square.css";
 
 function Square() {
   const [area, setArea] = useState<number>(1);
-  const [isLocal, setIsLocal] = useState<number>(1);
-  const [gender, setGender] = useState<string>("All");
+  const [isLocal, setIsLocal] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
   const [nameSearch, setNameSearch] = useState<string>();
   const [searchChange, setSearchChange] = useState<string>();
   const [squareData, setSquareData] = useState<[]>([]);
 
   const navigate = useNavigate();
-  const navigateToProfile = (e :React.MouseEvent<HTMLDivElement>) => {
+  const navigateToProfile = (e: React.MouseEvent<HTMLDivElement>) => {
     navigate("/profile");
   };
+
+  const authCtx = useContext(AuthContext);
 
   const imgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src =
@@ -23,36 +26,25 @@ function Square() {
 
   // 검색하고 enter 눌렀을 때
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       setNameSearch(searchChange);
     }
   };
 
   useEffect(() => {
-    // const params = {
-    //   area: area,
-    //   isLocal: isLocal,
-    //   gender: gender,
-    //   name: nameSearch,
-    // };
-    // async function SquareGet() {
-    //     await axios.get("api/member/", { params }).then((response) => {
-    //         setSquareData(response.data.data);
-    //         console.log(response.data);
-    //       });
-    //     }
-    //     SquareGet();
-    //   }, [area, isLocal, gender, nameSearch]);
-        
+    const params = {
+      areaCode: area,
+      isLocal: isLocal,
+      gender: gender,
+      name: nameSearch,
+    };
     async function SquareGet() {
-      await axios.get("api/member/").then((response) => {
+      await axios.get("api/member/", { params }).then((response) => {
         setSquareData(response.data.content);
-        console.log(response.data.content)
       });
     }
     SquareGet();
   }, [area, isLocal, gender, nameSearch]);
-
 
   return (
     <div>
@@ -78,9 +70,10 @@ function Square() {
         <select
           id="isLocal"
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            setIsLocal(parseInt(e.target.value));
+            setIsLocal(e.target.value);
           }}
         >
+          <option value="">All</option>
           <option value="1">Local</option>
           <option value="0">Tourist</option>
         </select>
@@ -92,7 +85,7 @@ function Square() {
             setGender(e.target.value);
           }}
         >
-          <option value="all">all</option>
+          <option value="">All</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
@@ -155,7 +148,7 @@ function Square() {
           ) => {
             return (
               <div
-                className="p-4 inline-block"
+                className="p-4 inline-block hover:bg-blue-800"
                 key={i}
                 onClick={navigateToProfile}
               >

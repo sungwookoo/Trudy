@@ -28,8 +28,12 @@ function App() {
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
-        <Route path="/square" element={<Square />} /> 
-        <Route path="/planner" element={<Planner />} />
+        <Route path="/square" element={<Square />} />
+        <Route
+          path="/planner"
+          // element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
+          element={<Planner />}
+        />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profileupdate" element={<ProfileUpdate />} />
         <Route
