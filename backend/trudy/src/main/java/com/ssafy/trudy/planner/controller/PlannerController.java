@@ -106,7 +106,7 @@ public class PlannerController {
             // response 변수 선언
             Map response;
             // Place 정보가 있다면 -> place dayItem 만들기
-            {
+            if(!placeId.equals("")){
                 Long placeIdL = Long.parseLong(placeId);
                 Place placeInput = placeService.findPlaceById(placeIdL);
                 Day dayInput = plannerService.findDayById(dayId);
