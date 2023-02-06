@@ -26,12 +26,10 @@ const fetchAuth = async (fetchData: FetchData) => {
     
     if(response && response.data.error) {
       console.log((response.data as LoginFailType).error);
-      alert("Wrong ID or Password");
       return null;
     }
 
     if (!response) {
-      alert("false!");
       return null;
     }
 
@@ -43,13 +41,11 @@ const fetchAuth = async (fetchData: FetchData) => {
       const serverError = err as AxiosError<ServerError>;
       if (serverError && serverError.response) {
         console.log(serverError.response.data);
-        alert("failed!");
         return null;
       }
     }
 
     console.log(err);
-    alert("failed!");
     return null;
   }
   

@@ -20,7 +20,14 @@ function Profile() {
       navigate('/profileupdate');
     };
 
-    useEffect(() => {
+    // const 
+    // useEffect(() => {
+    //   get 
+    // }
+
+
+
+
       const fetchProfile = async () => {
         try {
           const response = await fetch('api/member/me');
@@ -31,8 +38,8 @@ function Profile() {
         }
       };
 
-    fetchProfile();
-    }, []);
+    // fetchProfile();
+    // }, []);
 
     if (!profile) {
       return <div>Loading...</div>;

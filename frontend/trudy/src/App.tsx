@@ -31,9 +31,17 @@ function App() {
         <Route path="/forum/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} /> 
-        <Route path="/planner" element={<Planner />} />
         <Route path="/profile" element={<MyProfile />} />
-        <Route path="/profileupdate" element={<ProfileUpdate />} />
+        <Route path="/square" element={<Square />} />
+        <Route
+          path="/planner"
+          // element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
+          element={<Planner />}
+        />
+        <Route
+        path="/profileupdate"
+        element={<ProfileUpdate />}
+        />
         <Route
           path="/signin"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}

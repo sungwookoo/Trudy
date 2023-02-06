@@ -26,6 +26,28 @@ function Editor () {
   //   })
   // };  
 
+  // const customUploadAdapter = async (loader:any) => {
+  //   return {
+  //     upload() {
+  //       if(loader.target.files){
+  //         const uploadFile = loader.target.files[0]
+  //         const formData = new FormData();
+  //         loader.file.then((file:any) => {
+  //           formData.append('files', uploadFile);
+
+  //           await axios({
+  //             method: 'post',
+  //             url: 'api/post',
+  //             data: formData,
+  //             headers: {
+  //               'Content-Type':'multipart/form-data',
+  //             }
+  //           });
+          
+        
+
+
+
   // const customUploadAdapter = (loader:any) => {
   //   return {
   //     upload() {
@@ -35,18 +57,18 @@ function Editor () {
   //           data.append('name', file.name);
   //           data.append('file', file);
 
-          //   axios
-          //     .post('/api/post', data)
-          //     .then((res) => {
-          //       if (!flag) {
-          //         setFlag(true);
-          //         setImage(res.data.filename);
-          //       }
-          //       resolve({
-          //         default: `${imgLink}/${res.data.filename}`,
-          //       });
-          //     })
-          //     .catch((err) => reject(err));
+  //           axios
+  //             .post('/api/post', data)
+  //             .then((res) => {
+  //               if (!flag) {
+  //                 setFlag(true);
+  //                 setImage(res.data.filename);
+  //               }
+  //               resolve({
+  //                 default: `${imgLink}/${res.data.filename}`,
+  //               });
+  //             })
+  //           //   .catch((err) => reject(err));
   //         });
   //       });
   //     },
