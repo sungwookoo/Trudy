@@ -92,8 +92,8 @@ public class PostController {
 
     //포럼 게시글 삭제
     @DeleteMapping("/{post_id}")
-    public void postRemove(){
-
+    public void postRemove(@PathVariable("post_id") Long postId){
+        postService.removePost(postId);
     }
 
     //포럼 게시글 상세보기 - 정상 동작
