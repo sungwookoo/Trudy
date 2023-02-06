@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../Common/authContext";
 import "./Square.css";
 
 function Square() {
@@ -16,6 +17,9 @@ function Square() {
     navigate("/profile");
   };
 
+  const authCtx = useContext(AuthContext);
+  
+
   const imgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src =
       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
@@ -29,29 +33,19 @@ function Square() {
   };
 
   useEffect(() => {
-    // const params = {
-    //   area: area,
-    //   isLocal: isLocal,
-    //   gender: gender,
-    //   name: nameSearch,
-    // };
-    // async function SquareGet() {
-    //     await axios.get("api/member/", { params }).then((response) => {
-    //         setSquareData(response.data.data);
-    //         console.log(response.data);
-    //       });
-    //     }
-    //     SquareGet();
-    //   }, [area, isLocal, gender, nameSearch]);
-        
+    const params = {
+      area: area,
+      isLocal: isLocal,
+      gender: gender,
+      name: nameSearch,
+    };
     async function SquareGet() {
-      await axios.get("api/member/").then((response) => {
-        setSquareData(response.data.content);
-        console.log(response.data.content)
-      });
-    }
-    SquareGet();
-  }, [area, isLocal, gender, nameSearch]);
+        await axios.get("api/member/", { params }).then((response) => {
+            setSquareData(response.data.content);
+          });
+        }
+        SquareGet();
+      }, [area, isLocal, gender, nameSearch]);
 
 
   return (
@@ -152,7 +146,7 @@ function Square() {
               id: number;
             },
             i
-          ) => {
+          ) => { if (guide.gender == gender || 'All')
             return (
               <div
                 className="p-4 inline-block"

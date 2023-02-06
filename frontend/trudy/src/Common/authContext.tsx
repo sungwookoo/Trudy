@@ -87,7 +87,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   }, []);
 
 
-
+// 유저 정보를 가져오는 함수
   const getUserHandler = () => {
     setIsGetSuccess(false);
     const data = authAction.getUserActionHandler(token);
