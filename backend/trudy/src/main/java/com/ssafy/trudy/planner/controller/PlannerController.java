@@ -100,8 +100,8 @@ public class PlannerController {
                                         @RequestParam Long dayId,
                                         @RequestParam(defaultValue = "") String memo,
                                         @RequestParam String sequence,
-                                        @RequestParam(defaultValue = "") String customTitle,
-                                        @RequestParam String customImage){
+                                        @RequestParam(defaultValue = "") String customTitle
+                                        ){
         try {
             // response 변수 선언
             Map response;
@@ -114,6 +114,10 @@ public class PlannerController {
                 DayItem placeDayItem = new DayItem(placeInput, dayInput, memo, sequence, placeInput.getTitle(), placeInput.getFirstimage());
                 response = plannerService.addDayItem(placeDayItem);
             // Place 정보가 없다면 -> custom place dayItem 만들기
+            } else {
+                Day dayInput = plannerService.findDayById(dayId);
+                DayItem customPlaceDayItem = new DayItem(dayInput, memo, sequence, customTitle);
+                response = plannerService.addDayItem(customPlaceDayItem);
             }
 
             if(!response.isEmpty()){
