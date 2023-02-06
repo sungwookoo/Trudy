@@ -72,6 +72,7 @@ export const signInActionHandler = (email: string, password: string) => {
 export const signOutActionHandler = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
+  alert("Sign Out!");
 };
 
 // 유저의 정보를 GET방식으로 호출
@@ -104,3 +105,12 @@ export const getUserActionHandler = (token: string) => {
 //   const response = POST(URL, changePasswordObj, createTokenHeader(token));
 //   return response;
 // };
+
+
+
+// 유저의 Planner 정보를 GET방식으로 호출
+export const getUserPlanner = (userId: number) => {
+  const URL = ""
+  const response = GET(URL, userId)
+  return response
+}

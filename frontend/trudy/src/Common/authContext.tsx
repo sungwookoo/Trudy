@@ -24,6 +24,7 @@ const AuthContext = React.createContext({
   getUser: () => {},
   //   changeNickname: (nickname: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
+  // planner: (userId: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -38,6 +39,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [userObj, setUserObj] = useState({
     email: "",
     nickname: "",
+    // id: 0,
   });
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -59,12 +61,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   //   로그인을 하는 함수
   const loginHandler = (email: string, password: string) => {
     setIsSuccess(false);
-    
     const data = authAction.signInActionHandler(email, password);
     data.then((result) => {
       if (result !== null) {
         const loginData: LoginToken = result.data;
         setToken(loginData.accessToken);
+
         logoutTimer = setTimeout(
           signOutHandler,
           authAction.signInTokenHandler(
@@ -86,8 +88,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     }
   }, []);
 
-
-// 유저 정보를 가져오는 함수
+  // 유저 정보를 가져오는 함수
   const getUserHandler = () => {
     setIsGetSuccess(false);
     const data = authAction.getUserActionHandler(token);
@@ -96,9 +97,17 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
         const userData: UserInfo = result.data;
         setUserObj(userData);
         setIsGetSuccess(true);
+        console.log(result.data);
+        console.log("정보");
+        console.log(userObj);
       }
     });
   };
+
+  // Planner 정보를 가져오는 함수
+  // const getUserPlannerHandler = (userId: number) => {
+  //   authAction.getUserPlanner(userId);
+  // };
 
   //   const changeNicknameHandler = (nickname: string) => {
   //     setIsSuccess(false);
@@ -146,6 +155,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     getUser: getUserHandler,
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,
+    // planner: getUserPlannerHandler,
   };
 
   return (
