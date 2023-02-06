@@ -57,7 +57,6 @@ function Place(props: any) {
             keyword,
           },
         });
-
         setPlaces(resData.data);
       } catch (error) {
         console.log(error);
