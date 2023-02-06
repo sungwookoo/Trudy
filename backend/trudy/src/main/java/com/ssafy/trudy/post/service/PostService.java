@@ -116,7 +116,8 @@ public class PostService {
 
     //포럼 게시글 삭제
     public void removePost(){
-
+        log.info("Service - removePost test");
+        log.info(postRepository.findById(1L).get().toString());
     }
 
     //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작
