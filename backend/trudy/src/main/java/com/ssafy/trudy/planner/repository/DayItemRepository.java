@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface DayItemRepository extends JpaRepository<DayItem, Long> {
 
-    List<DayItem> findByDayId(Day dayId);
+    List<DayItem> findByDayIdOrderBySequenceAsc(Day dayId);
+    DayItem findDayItemById(Long dayItemId);
 }
