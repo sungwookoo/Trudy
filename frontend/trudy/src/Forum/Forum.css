@@ -34,7 +34,7 @@
 
 .forum-content {
 
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -8,27 +8,19 @@ import com.ssafy.trudy.planner.model.*;
 import com.ssafy.trudy.planner.service.PlannerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/planner")
 @Slf4j
 @RequiredArgsConstructor
 public class PlannerController {
-    // DayItem Post생성
-    // DayItem은 커스텀도 있고, 기존 정보로 찾아오는 것도 있다.
-    // customImage는 커스텀일 때만 들어오면 된다.
-//    @PostMapping("/dayitem/post")
-//    private DayItemDto dayItemSave(@RequestParam(required = false) String contentId,
-//                                   @RequestParam Long dayId,
-//                                   @RequestParam(required = false) String memo,
-//                                   @RequestParam(required = false) String customTitle,
-//                                   @RequestParam(required = false) String customImage) {
-//        Place place = placeService.getByContentId(contentId);
-//        Day day = plannerService.getDayById(dayId);
-//
-//          }
     @Autowired
     private final PlannerService plannerService;
     @Autowired
@@ -36,40 +28,122 @@ public class PlannerController {
     @Autowired
     private final PlaceService placeService;
 
-    //플래너에 플랜 생성
-    @PostMapping("/post")
-    public PlannerDto plannerAdd(@RequestParam Long memberId,
-                                 @RequestParam String title,
-                                 @RequestParam String sequence){
-        Member member = memberService.getById(memberId);
+    ModelMapper modelMapper = new ModelMapper();
 
-        Planner planner = new Planner(member, title, sequence);
-        return plannerService.addPlanner(planner);
+    //**************************************[READ]***************************************//
+    // 해당 유저 플래너 정보 전체보기
+    @GetMapping
+    public ResponseEntity<?> plannerInfoByMember(@RequestParam Long memberId) throws Exception{
+        try {
+            Member member = memberService.getById(memberId);
+            List<Map> response = plannerService.getPlannersByMemberId(member);
+
+            if(!response.isEmpty() && response != null){
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    //**************************************[CREATE]***************************************//
+    // 플래너 생성
+    @PostMapping("/post")
+    public ResponseEntity<?> plannerAdd(@RequestParam Long memberId,
+                                 @RequestParam(defaultValue = "new planner") String title,
+                                 @RequestParam String sequence){
+        try {
+            Member member = memberService.getById(memberId);
+            Planner planner = new Planner(member, title, sequence);
+            Map response = plannerService.addPlanner(planner, member);
+
+            if(!response.isEmpty() && response != null){
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // 데이 생성
+    @PostMapping("/day/post")
+    public ResponseEntity<?> dayAdd(@RequestParam Long plannerId,
+                                    @RequestParam String day,
+                                    @RequestParam String memo){
+        try {
+            Planner planner = plannerService.findPlannerById(plannerId);
+            Day newDay = new Day(planner, day, memo);
+            Map response = plannerService.addDay(newDay);
+
+            if(!response.isEmpty() && response != null){
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // 데이 아이템 생성*******
+    @PostMapping("/dayitem/post")
+    public ResponseEntity<?> dayItemAdd(@RequestParam(defaultValue = "") String placeId,
+                                        @RequestParam Long dayId,
+                                        @RequestParam(defaultValue = "") String memo,
+                                        @RequestParam String sequence,
+                                        @RequestParam(defaultValue = "") String customTitle,
+                                        @RequestParam String customImage){
+        try {
+            // response 변수 선언
+            Map response;
+            // Place 정보가 있다면 -> place dayItem 만들기
+            if(!placeId.equals("")) {
+                Long placeIdL = Long.parseLong(placeId);
+                Place placeInput = placeService.findPlaceById(placeIdL);
+                Day dayInput = plannerService.findDayById(dayId);
+                // place 정보가 있기 때문에, 타이틀과 이미지는 place 객체에서 받아온다.
+                DayItem placeDayItem = new DayItem(placeInput, dayInput, memo, sequence, placeInput.getTitle(), placeInput.getFirstimage());
+                response = plannerService.addDayItem(placeDayItem);
+            // Place 정보가 없다면 -> custom place dayItem 만들기
+            } else {
+                Day dayInput = plannerService.findDayById(dayId);
+                DayItem customPlaceDayItem = new DayItem(dayInput, memo, sequence, customTitle, customImage);
+                response = plannerService.addDayItem(customPlaceDayItem);
+            }
+
+            if(!response.isEmpty() && response != null){
+                return ResponseEntity.ok().body(response);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     // 플래너 수정(제목)
-    @PutMapping("/updata/title")
-    public PlannerDto plannerUpdateTitle(@RequestParam Long plannerId,
-                                    @RequestParam String newTitle){
-        Planner planner = plannerService.getPlannerById(plannerId);
-        return plannerService.editPlannerTitle(planner, newTitle);
-    }
+//    @PutMapping("/updata/title")
+//    public PlannerDto plannerUpdateTitle(@RequestParam Long plannerId,
+//                                    @RequestParam String newTitle){
+//        Planner planner = plannerService.getPlannerById(plannerId);
+//        return plannerService.editPlannerTitle(planner, newTitle);
+//    }
 
     // 플래너 수정(순서)
-    @PutMapping("/updata/sequence")
-    public PlannerDto plannerUpdateSequence(@RequestParam Long plannerId,
-                                         @RequestParam String newSequence){
-        Planner planner = plannerService.getPlannerById(plannerId);
-        return plannerService.editPlannerSequence(planner, newSequence);
-    }
-
-    //플래너 조회
-    @GetMapping("/{member_id}/{planner_id}")
-    public void plannerDetail(@RequestParam Long member_id,
-                              @RequestParam Long planner_id){
-        // 해당 멤거
-
-    }
+//    @PutMapping("/updata/sequence")
+//    public PlannerDto plannerUpdateSequence(@RequestParam Long plannerId,
+//                                         @RequestParam String newSequence){
+//        Planner planner = plannerService.getPlannerById(plannerId);
+//        return plannerService.editPlannerSequence(planner, newSequence);
+//    }
 
     //플래너 삭제 - dayItem 삭재 -> day 삭제 -> planner 삭제
     @DeleteMapping("/{member_id}")
