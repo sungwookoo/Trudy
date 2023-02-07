@@ -34,7 +34,7 @@ public class PostController {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    //포럼 게시글 목록 가져오기
+
     @Operation(summary = "get posts", description = "포럼 게시글 목록 가져오기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
@@ -43,17 +43,18 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
+
+    //포럼 게시글 목록 가져오기
     @GetMapping
     public ResponseEntity<?> postList(){
 
         try{
-            log.info("========post Controller / postList===========");
+            //log.info("========post Controller / postList===========");
             List<PostDto.PostCombine> findPostCombines = postService.findPostList();
             if(findPostCombines != null || !findPostCombines.isEmpty()){
                 /*List<PostListResponse> response = findPostList.stream()
                         .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
                         .collect(Collectors.toList());*/
-
                 return ResponseEntity.ok().body(findPostCombines);
             } else {
                 return ResponseEntity.noContent().build();
@@ -93,7 +94,13 @@ public class PostController {
 
     //포럼 게시글 수정
     @PutMapping("/{post_id}")
-    public void postModify(){
+    public void postModify(@RequestParam Long postId,
+                           @RequestParam String title,
+                           @RequestParam String content,
+//                        @RequestParam MultipartFile[] upload,
+                           @RequestParam Long[] sigunguIdList,
+                           @RequestParam Long memberId,
+                           @RequestParam CategoryName[] categoryList){
 
     }
 
