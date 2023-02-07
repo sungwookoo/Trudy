@@ -112,37 +112,37 @@ public class MemberService {
 
 
     //구글 연동 회원가입
-    public void addGoogle(){
+    public void addGoogle() {
 
     }
 
     //비밀번호 찾기
-    public void modifyPassword(){
+    public void modifyPassword() {
 
     }
 
     //팔로워 리스트 가져오기
-    public void findFollowerList(){
+    public void findFollowerList() {
 
     }
 
     //팔로우 리스트 가져오기
-    public void findFollowingList(){
+    public void findFollowingList() {
 
     }
 
     //팔로잉 하기
-    public void addFollowing(){
+    public void addFollowing() {
 
     }
 
     //차단하기
-    public void addBan(){
+    public void addBan() {
 
     }
 
     //자기 소개 정보 가져오기
-    public void findMemberDetail(){
+    public void findMemberDetail() {
 
     }
 
@@ -150,7 +150,12 @@ public class MemberService {
         return introduceRepository.save(introduce);
     }
 
-
+    public Member changePublicState(Member member) {
+        if (member.getIsPublic().equals("1")) {
+            member.setIsPublic("0");
+        } else member.setIsPublic("1");
+        return memberRepository.save(member);
+    }
 
 
     //회원 목록 가져오기 - 조회시 최근 접속일자를 내림차순

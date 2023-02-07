@@ -35,6 +35,6 @@ public class FileController {
 
     @PostMapping("/planner/upload")
     public DayItem plannerUpload(@RequestParam("file") MultipartFile multipartFile, Long dayItemId) throws IOException {
-        return awsS3Uploader.createDayItemFile(multipartFile, "planner", dayItemId);
+        return awsS3Uploader.createCustomDayItemFile(multipartFile, "planner", dayItemId);
     }
 }
