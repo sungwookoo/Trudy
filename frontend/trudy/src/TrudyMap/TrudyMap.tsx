@@ -36,7 +36,7 @@ function TrudyMap() {
     setCenter({ lat, lng });
     setZoom(20);
     setMarker({ lat, lng });
-    console.log(marker);
+    console.log(center);
   };
 
   const onLoad = React.useCallback(
@@ -54,14 +54,14 @@ function TrudyMap() {
 
   return isLoaded ? (
     <div className="flex h-screen">
-      <div>
-        <button className="mb-2" onClick={() => setIsCollapsed(!isCollapsed)}>
-          Select
-        </button>
-        {!isCollapsed && <AreaSelect areaCode={areaCode} onClick={handleAreaClick} />}
-      </div>
       {mapVisible ? (
         <>
+          <p>
+            <button className="mb-2" onClick={() => setIsCollapsed(!isCollapsed)}>
+              Select
+            </button>
+            {!isCollapsed && <AreaSelect key={1} areaCode={areaCode} onClick={handleAreaClick} />}
+          </p>
           <div className="w-1/4 h-full border border-gray-300 overflow-y-scroll">
             <Place onPlaceClick={updateCenter} />
           </div>
@@ -72,11 +72,19 @@ function TrudyMap() {
           </div>
         </>
       ) : (
-        <div className="flex flex-wrap">
+        <>
+          <p>
+            <button className="mb-2" onClick={() => setIsCollapsed(!isCollapsed)}>
+              Select
+            </button>
+            <p>{!isCollapsed && <AreaSelect key={1} areaCode={areaCode} onClick={handleAreaClick} />}</p>
+          </p>
           <div className="flex flex-wrap">
-            <Place />
+            <div className="flex flex-wrap">
+              <Place />
+            </div>
           </div>
-        </div>
+        </>
       )}
       <button onClick={() => setMapVisible(!mapVisible)} className="mt-2 absolute top-0 right-0">
         {mapVisible ? "Hide Map" : "Show Map"}

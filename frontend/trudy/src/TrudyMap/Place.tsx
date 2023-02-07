@@ -1,7 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useCallback } from "react";
-
-import { useLinkClickHandler } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import PlaceForm from "./PlaceForm";
 
 export type mapPlaceType = {
@@ -32,38 +30,38 @@ function Place(props: any) {
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   const [limit, setLimit] = useState<any>(10);
   const [offset, setOffset] = useState<any>(1);
-  const [areaSigun, setareaSigun] = useState<any>("");
-  const [contentTypeId, setcontentTypeId] = useState<any>("");
+  const [areaSigun, setareaSigun] = useState<Array<any>>([]);
+  const [contentTypeId, setcontentTypeId] = useState<Array<number>>([]);
   const [keyword, setkeyword] = useState<any>("");
   const API_URL: string = "api/place";
 
   const handlePlaceClick = (place: mapPlaceType) => {
     setSelectedPlace(place);
-    // props.setCenter({ lat: parseInt(place.mapy), lng: parseInt(place.mapx) });
     props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData = await axios<any>({
-          // API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
-          method: "get",
-          url: API_URL,
+        const resData = await axios.get<mapPlaceType[]>(API_URL, {
           params: {
             limit,
             offset,
+            // areaSigun: encodeURIComponent(JSON.stringify(areaSigun)),
             areaSigun,
+            // contentTypeId: encodeURIComponent(JSON.stringify(contentTypeId)),
             contentTypeId,
             keyword,
           },
         });
         setPlaces(resData.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchData();
   }, []);
+
   return (
     <>
       {places.map((data, i) => {
