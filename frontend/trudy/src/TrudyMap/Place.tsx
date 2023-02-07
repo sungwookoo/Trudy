@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PlaceForm from "./PlaceForm";
-
+import qs from "qs";
 export type mapPlaceType = {
   id: number;
   addr1: string;
@@ -25,6 +25,10 @@ export type mapPlaceType = {
   zipcode: string | undefined;
 };
 
+type PP = {
+  paramsSerializer: any;
+};
+
 function Place(props: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
@@ -43,16 +47,15 @@ function Place(props: any) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData = await axios.get<mapPlaceType[]>(API_URL, {
+        const resData: any = await axios.get<any>(API_URL, {
           params: {
             limit,
             offset,
-            // areaSigun: encodeURIComponent(JSON.stringify(areaSigun)),
             areaSigun,
-            // contentTypeId: encodeURIComponent(JSON.stringify(contentTypeId)),
             contentTypeId,
             keyword,
           },
+          paramsSerializer: (params: any) => qs.stringify(params, { arrayFormat: "repeat" }),
         });
         setPlaces(resData.data);
       } catch (error) {
