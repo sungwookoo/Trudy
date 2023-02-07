@@ -28,8 +28,8 @@ function Profile() {
     };
 
     const url = 'api/member/me'
-    
-    const token = 'Bearer ' + localStorage.getItem("token")
+     
+    const token = 'bearer ' + localStorage.getItem("token")
     useEffect(() => {
       // const params = {
       //   token: token
