@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -102,8 +103,56 @@ public class PostService {
     }
 
     //포럼 게시글 작성
-    public void addPost(){
-        // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
+    public void addPost(String title,
+                        String content,
+                        MultipartFile[] upload,
+                        String[] sigunguId,
+                        Long memberId,
+                        String[] category){
+        //entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
+        //추가 사항 : 사진 가져와서 content 태그에 처리 어찌할건지,
+        //          썸네일을 어찌 선정할 것인지,
+
+        //1. 수동 글쓰기 및 수정
+        // post entity 저장, -> postId로 category, area(sigungu entity 구하고 - 한개씩 여러번 넣어),
+        // 또 entity 다 찾아섯 수정
+        //2. 자동 글쓰기 및 수정
+        // post entity 만들고 안에 (image, category, area 만들어 넣기)
+        // post entity만 가져와서 수정
+
+//        //2번 방법 :
+//        //1. post entity를 만듦(member entity, title, content만 채움) -> thumbnail 따로 추가필요
+//        Post postEntityInsert = new Post(memberRepository.findById(memberId).get(), title, content);
+//
+//
+//        Post
+//        //2. member entity를 만듦 -> post entity에 추가
+//        //postEntityInsert.setMemberId(memberRepository.findById(memberId).get());
+//
+//        //2. postimage entity[]를 만듦 -> post entity에 추가
+//        List<PostImage> postImageEntityList =
+//        //postEntityInsert.set
+//
+//        //3. postCategory entity를 만듦 -> post entity에 추가
+//
+//        //4. postArea entity를 만듦 -> sigungu 테이블에서 area_code, code로 검색해서 가져와서 sigungu entity 저장
+//        //-> post entity에 추가
+
+        //1. post entity 만들어서 저장 후 id 가져오기 -> thumbnail 은 나중에 따로 추가
+//        Post postEntityInsert = new Post(memberRepository.findById(memberId).get(), title, content);
+//        postRepository.save(postEntityInsert);
+//
+//        log.info("postId test ======= " + postEntityInsert);
+//
+//        //2. image, category, area 저장
+//        List<PostImage> postImageEntityList = new ArrayList<>();
+//        for(int i =1; i<2; i++){
+//            PostImage postImageEntity = new PostImage();
+//            postImageEntity.
+//            postImageEntityList.add()
+//        }
+
+
 
     }
 
