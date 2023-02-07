@@ -4,7 +4,7 @@ import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
-import Profile from "./Profile/Profile";
+import MyProfile from "./Profile/MyProfile";
 import ProfileUpdate from "./Profile/ProfileUpdate";
 import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";
@@ -12,6 +12,7 @@ import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
 import ForumCreate from "./Forum/ForumCreate";
+import ForumDetail from "./Forum/ForumDetail"
 import AuthContext from "./Common/authContext";
 import axios from "axios";
 import * as authAction from "./Common/authAction";
@@ -49,15 +50,20 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
+        <Route path="/forum/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
+        <Route path="/square" element={<Square />} /> 
+        <Route path="/profile" element={<MyProfile />} />
         <Route path="/square" element={<Square />} />
         <Route
           path="/planner"
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
           // element={<Planner />}
         />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profileupdate" element={<ProfileUpdate />} />
+        <Route
+        path="/profileupdate"
+        element={<ProfileUpdate />}
+        />
         <Route
           path="/signin"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}

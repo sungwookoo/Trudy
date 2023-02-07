@@ -16,8 +16,9 @@ import Link from '@ckeditor/ckeditor5-link/src/link.js';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import Title from '@ckeditor/ckeditor5-heading/src/title.js';
+import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 
-class Editor extends ClassicEditor {}
+class Editor extends ClassicEditorBase {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
@@ -33,7 +34,8 @@ Editor.builtinPlugins = [
 	Link,
 	MediaEmbed,
 	Paragraph,
-	Title
+	Title,
+	UploadAdapter,
 ];
 
 // Editor configuration.
@@ -47,7 +49,7 @@ Editor.defaultConfig = {
 			'outdent',
 			'indent',
 			'|',
-			'imageUpload',
+			// 'imageUpload',
 			'mediaEmbed',
 			'undo',
 			'redo'

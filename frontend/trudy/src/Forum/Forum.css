@@ -16,12 +16,12 @@
 }  
 
 .cat-selectors {
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* justify-content: center; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   /* width: 200px; */
   /* width: 150px; */
-  /* height: 45%; */
+  height: 45%;
 }
 
 .forum-container {

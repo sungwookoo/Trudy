@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -64,10 +65,27 @@ public class PostController {
 
     //포럼 게시글 작성
     @PostMapping
-    public void postAdd(){
+    public void postAdd(@RequestParam String title,
+                        @RequestParam String content,
+                        @RequestParam MultipartFile[] upload,
+                        @RequestParam String[] sigunguId,
+                        @RequestParam Long memberId,
+                        @RequestParam String[] category){
         //1. dto안에 dto를 key, body 형식으로 받아온다.
-        postService.addPost();
+        // title, content, image[], category[], sigunguId[](갖고오기), memberId(갖고오기),
+        // PostCombine{PostElement, MemberElement,  }
+        log.info("Controller - postAdd Test");
+        log.info("title =============== " + title);
+        log.info("content ============ " + content);
+        for(MultipartFile m : upload){
+            log.info("upload ============== " + m.getOriginalFilename());
+        }
+        log.info("sigungu ============ " + sigunguId.toString());
+        log.info("memberId ====== " + memberId.toString());
+        log.info("memberId ====== " + category.toString());
 
+        //postService.addPost(title, content, upload, sigunguId, memberId, category);
+        //postService.addPost(title, content, memberId);
     }
 
     //포럼 게시글 수정
