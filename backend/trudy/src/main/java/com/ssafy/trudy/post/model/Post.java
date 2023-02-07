@@ -2,10 +2,13 @@ package com.ssafy.trudy.post.model;
 
 import com.ssafy.trudy.member.model.Member;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
@@ -18,6 +21,8 @@ import java.util.List;
 @Data
 @Table(name = "posts")
 @ToString(exclude = {"commentList", "postImageList", "postCategoryList", "postAreaList","postLikeList"})
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
     @Id
     @GeneratedValue
@@ -39,6 +44,8 @@ public class Post {
     @Column(name = "updated_at")
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+
 
     //insert 전용 생성자
     public Post(Member memberId, String title, String content) {
