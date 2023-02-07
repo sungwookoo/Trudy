@@ -6,6 +6,7 @@ import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
+import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
@@ -148,6 +149,8 @@ public class MemberService {
     public Introduce saveIntroduce(Introduce introduce) {
         return introduceRepository.save(introduce);
     }
+
+
 
 
     //회원 목록 가져오기 - 조회시 최근 접속일자를 내림차순

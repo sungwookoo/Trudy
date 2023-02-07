@@ -4,26 +4,30 @@ import com.ssafy.trudy.member.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "nested_comments")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"nestedCommentLikeList"})
 public class NestedComment {
     
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment commentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member memberId;
     
@@ -38,4 +42,10 @@ public class NestedComment {
         this.content = content;
         this.createdAt = createdAt;
     }
+
+    //DB에 없는 필드(대댓글 좋아요)
+
+    @OneToMany(mappedBy = "nestedCommentId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<NestedCommentLike> nestedCommentLikeList = new ArrayList<>();
+
 }

@@ -36,6 +36,9 @@ public class Member {
 
     private String image;
 
+    @Column(name = "image_file_name")
+    private String imageFileName;
+
     @Column
     private String gender;
 
@@ -75,7 +78,7 @@ public class Member {
 
 
     @Builder(builderMethodName = "signupBuilder")
-    public Member(String email, String password, String name, String image, String gender, Long areaCode, Long sigunguCode ,String birth, String isLocal, String isPublic, LocalDateTime lastAccess) {
+    public Member(String email, String password, String name, String gender, Long areaCode, Long sigunguCode ,String birth, String isLocal, String isPublic, LocalDateTime lastAccess) {
         this.email = email;
         this.password = password;
         this.name = name;
