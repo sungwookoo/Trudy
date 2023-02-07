@@ -7,8 +7,6 @@ import Category from '../Common/ForumCategory';
 import ForumSearch from './ForumSearch';
 import {ThreeCircles} from 'react-loader-spinner';
 
-
-
 interface IgetForumResponse {
   id: number;
   member_id: number;
@@ -19,28 +17,6 @@ interface IgetForumResponse {
   update_at: string;
   postelement: object;
 }
-
-// interface IgetForumResponse2 {
-//   id: number;
-//   post_id: number;
-//   url: string;
-// }
-
-// interface IgetForumResponse3 {
-//   id: number;
-//   image: string;
-// }
-
-// export const getForumData = (url: IgetForumData) => {
-  
-// }
-
-
-// interface articlePostType {
-//   title: string;
-//   content: string;
-// }
-
 
 function ForumPage() {
 
@@ -75,7 +51,7 @@ function ForumPage() {
           });
       } catch (error) {
         console.log(error);
-        setForumLoading(null);
+        // setForumLoading(null);
       }
     };
   
@@ -83,23 +59,22 @@ function ForumPage() {
   }, []);
 
         // 로딩 시 Spinner 띄움
-        if (!forumloading)
-        return(
-        <div>
-        <ThreeCircles
-        height="100"
-        width="100"
-        color="#4fa94d"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-        ariaLabel="three-circles-rotating"
-        outerCircleColor=""
-        innerCircleColor=""
-        middleCircleColor=""
-        />
-        </div>
-        )
+        {!forumloading && 
+          <div>
+          <ThreeCircles
+          height="100"
+          width="100"
+          color="#4fa94d"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="three-circles-rotating"
+          outerCircleColor=""
+          innerCircleColor=""
+          middleCircleColor=""
+          />
+          </div>
+        }
   
   return(
 
