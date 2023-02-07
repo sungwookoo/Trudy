@@ -12,15 +12,4 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long>, JpaSpecificationExecutor<Member> {
     Optional<Member> findByEmail(String email);
-
-
-//    Page<Member> findByNameAndGend (String name, String gender, String isLocal, String areaCode, String sigunguCode, Pageable pageable);
-//
-//
-//
-//    Page<Member> findByEmailContainingOrderByLastAccessDesc(String email, Pageable pageable);
-//
-//    Page<Member> findByNameContainingOrderByLastAccessDesc(String name, Pageable pageable);
-//
-//    Page<Member> findAllByOrderByLastAccessDesc(Pageable pageable);
 }
