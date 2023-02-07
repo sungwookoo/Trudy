@@ -28,8 +28,7 @@ function Profile() {
     };
 
     const url = 'api/member/me'
-    
-    const token = 'Bearer ' + localStorage.getItem("token")
+    const token = 'bearer ' + localStorage.getItem("token")
     useEffect(() => {
       // const params = {
       //   token: token
@@ -41,10 +40,8 @@ function Profile() {
           Authorization: token
         },
       })
-        
         .then((res) => {setProfile(res.data)
           console.log(profile)}
-          
           )
         .catch((err:any) => 
         console.error(err));
@@ -71,8 +68,8 @@ function Profile() {
       <div className='profile-container'>
         {/* 프로필 사진과 유저네임 */}
           <div className='picture-name'>
-            {/* <h1>{profile.name}</h1>
-            <p className='mt-10'>{profile.email}</p> */}
+            <h1>{profile.name}</h1>
+            {/* <p className='mt-10'>{profile.email}</p> */}
             {/* {userInfo.map((member:any) => {
                 return (
                   <div>

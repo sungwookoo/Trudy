@@ -12,7 +12,7 @@ import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
 import ForumCreate from "./Forum/ForumCreate";
-import ForumDetail from "./Forum/ForumDetail"
+import ForumDetail from "./Forum/ForumDetail";
 import AuthContext from "./Common/authContext";
 import axios from "axios";
 import * as authAction from "./Common/authAction";
@@ -50,7 +50,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="/forum/:id" element={<ForumDetail />} />
+        <Route path="/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} /> 
         <Route path="/profile" element={<MyProfile />} />

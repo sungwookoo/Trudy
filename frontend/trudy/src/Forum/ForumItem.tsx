@@ -19,8 +19,14 @@ function ForumItem(props: any) {
   const forumImageData = props.post.postImageElementList
   console.log(forumImageData.length)
 
+
+  const navigate = useNavigate();
+  const navigateToForumDetail = () => {
+    navigate('/ForumDetail');
+  };
+
   return(
-    <div className="forum-item-container">
+    <div className="forum-item-container" onClick={navigateToForumDetail}>
       {/* 포럼 아이템 개별 상자 */}
       <div className='forum-item-box my-2 mx-2'>
         {/* Post_image 테이블 더미 */}
