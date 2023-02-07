@@ -17,7 +17,7 @@ function Planner() {
           navigate("/signin");
         }
         // authCtx.planner(authCtx.userObj.id)
-        authCtx.getUser()
+        authCtx.getUser({})
       },
     []
   );
