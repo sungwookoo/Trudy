@@ -18,4 +18,6 @@ public class DayItemDto {
     private String customTitle;
     private String customImage;
 
+    private String customImageFileName;
+
 }

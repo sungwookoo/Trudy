@@ -233,4 +233,17 @@ public class PlannerService {
         // 4. planner 삭제하기
         plannerRepository.delete(planner);
     }
+
+
+    // 생성된 DayItem의 이미지 URL 갱신
+    public DayItem saveDayItemImage(String uploadImageUrl, String fileName,  Long dayItemId) {
+        DayItem dayItem = dayItemRepository.findById(dayItemId).orElseThrow(() -> new RuntimeException("존재하지 않는 DayItem"));
+        dayItem.setCustomImage(uploadImageUrl);
+        dayItem.setCustomImageFileName(fileName);
+        return dayItemRepository.save(dayItem);
+    }
+
+    public DayItem getDayItemById(Long dayItemId) {
+        return dayItemRepository.findById(dayItemId).orElseThrow(() -> new RuntimeException("존재하지 않는 DayItem"));
+    }
 }
