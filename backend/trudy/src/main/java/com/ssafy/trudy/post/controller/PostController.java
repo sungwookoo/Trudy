@@ -1,5 +1,6 @@
 package com.ssafy.trudy.post.controller;
 
+import com.ssafy.trudy.post.model.CategoryName;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.model.PostDto;
 import com.ssafy.trudy.post.repository.PostCategoryRepository;
@@ -33,7 +34,7 @@ public class PostController {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    //포럼 게시글 목록 가져오기
+
     @Operation(summary = "get posts", description = "포럼 게시글 목록 가져오기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
@@ -42,17 +43,18 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
+
+    //포럼 게시글 목록 가져오기
     @GetMapping
     public ResponseEntity<?> postList(){
 
         try{
-            log.info("========post Controller / postList===========");
+            //log.info("========post Controller / postList===========");
             List<PostDto.PostCombine> findPostCombines = postService.findPostList();
             if(findPostCombines != null || !findPostCombines.isEmpty()){
                 /*List<PostListResponse> response = findPostList.stream()
                         .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
                         .collect(Collectors.toList());*/
-
                 return ResponseEntity.ok().body(findPostCombines);
             } else {
                 return ResponseEntity.noContent().build();
@@ -67,30 +69,38 @@ public class PostController {
     @PostMapping
     public void postAdd(@RequestParam String title,
                         @RequestParam String content,
-                        @RequestParam MultipartFile[] upload,
-                        @RequestParam String[] sigunguId,
+//                        @RequestParam MultipartFile[] upload,
+                        @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
-                        @RequestParam String[] category){
+                        @RequestParam CategoryName[] categoryList){
         //1. dto안에 dto를 key, body 형식으로 받아온다.
         // title, content, image[], category[], sigunguId[](갖고오기), memberId(갖고오기),
         // PostCombine{PostElement, MemberElement,  }
-        log.info("Controller - postAdd Test");
-        log.info("title =============== " + title);
-        log.info("content ============ " + content);
-        for(MultipartFile m : upload){
-            log.info("upload ============== " + m.getOriginalFilename());
-        }
-        log.info("sigungu ============ " + sigunguId.toString());
-        log.info("memberId ====== " + memberId.toString());
-        log.info("memberId ====== " + category.toString());
+//        log.info("Controller - postAdd Test");
+//        log.info("title =============== " + title);
+//        log.info("content ============ " + content);
+//        for(MultipartFile m : upload){
+//            log.info("upload ============== " + m.getOriginalFilename());
+//        }
+//        log.info("sigungu ============ " + sigunguId.toString());
+//        log.info("memberId ====== " + memberId.toString());
+//        for(String s : category){
+//            log.info("category ====== " + s);
+//        }
 
-        //postService.addPost(title, content, upload, sigunguId, memberId, category);
-        //postService.addPost(title, content, memberId);
+//        postService.addPost(title, content, upload, sigunguId, memberId, category);
+        postService.addPost(title, content, sigunguIdList,memberId, categoryList);
     }
 
     //포럼 게시글 수정
     @PutMapping("/{post_id}")
-    public void postModify(){
+    public void postModify(@RequestParam Long postId,
+                           @RequestParam String title,
+                           @RequestParam String content,
+//                        @RequestParam MultipartFile[] upload,
+                           @RequestParam Long[] sigunguIdList,
+                           @RequestParam Long memberId,
+                           @RequestParam CategoryName[] categoryList){
 
     }
 
