@@ -94,13 +94,13 @@ public class PostController {
 
     //포럼 게시글 수정
     @PutMapping("/{post_id}")
-    public void postModify(@RequestParam Long postId,
+    public void postModify(@PathVariable("post_id") Long postId,
                            @RequestParam String title,
                            @RequestParam String content,
 //                        @RequestParam MultipartFile[] upload,
                            @RequestParam Long[] sigunguIdList,
-                           @RequestParam Long memberId,
                            @RequestParam CategoryName[] categoryList){
+        postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
 
     }
 

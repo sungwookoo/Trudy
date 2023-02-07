@@ -14,4 +14,6 @@ public interface NestedCommentRepository extends JpaRepository<NestedComment, Lo
 
 
     List<NestedComment> findByCommentId(Comment commentEntity);
+
+    int countByCommentId(Comment comment);
 }

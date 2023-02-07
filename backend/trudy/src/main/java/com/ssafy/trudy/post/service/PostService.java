@@ -187,13 +187,47 @@ public class PostService {
     }
 
     //포럼 게시글 수정 - ck에디터와 연관
-    public void modifyPost(/*post real Id를 포함해서 가져와야함*/){
+    @Transactional
+    public void modifyPost(Long postId, String title, String content, /*MultipartFile[] upload,*/
+                           Long[] sigunguIdList, CategoryName[] categoryList){
+        // post는 수정, postImage, postArea, postCategory는 삭제 후 다시 저장
+            //사진 보류
+            //사진 post entity로 검색 -> 리스트 가져오고 디비에 삭제 -> aws 사진 삭제
+            Post postEntityFind = postRepository.findById(postId).get();
 
-        //사진 post entity로 검색 -> 리스트 가져오고 디비에 삭제 -> aws 사진 삭제
+            // 사진 리스트 가져오기
+            List<PostImage> imageListForDelete = postImageRepository.findByPostId(postEntityFind);
+            //List<String> imageEntityFileName = imageListForDelete.stream().map(p -> p.)
 
-        //post와 친구들 삭제못함 => post 관련 애들 수정해야함
+        // PostArea, PostCategory 삭제
+        postAreaRepository.deleteByPostId(postEntityFind);
+        postCategoryRepository.deleteByPostId(postEntityFind);
 
-        //post 그대로 다시 저장
+        // PostArea, PostCategory 저장
+        List<PostArea> postAreaList = new ArrayList<>();
+        for(Long sigunguid : sigunguIdList){
+            PostArea postArea = PostArea.builder()
+                    .postId(postEntityFind)
+                    .sigunguCode(sigunguRepository.findById(sigunguid).get())
+                    .build();
+            postAreaList.add(postArea);
+        }
+        postAreaRepository.saveAll(postAreaList);
+
+        List<PostCategory> postCategoryList = new ArrayList<>();
+        for(CategoryName categoryName : categoryList){
+            PostCategory postCategory = PostCategory.builder()
+                    .postId(postEntityFind)
+                    .categoryName(categoryName).build();
+            postCategoryList.add(postCategory);
+        }
+        postCategoryRepository.saveAll(postCategoryList);
+
+        //post entity 수정(comment 때문에 post 삭제 안함)
+        postEntityFind.setTitle(title);
+        postEntityFind.setContent(content);
+
+        log.info("put 완료");
     }
 
     //포럼 게시글 삭제 - 정상 동작
@@ -203,9 +237,6 @@ public class PostService {
 
     //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작
     public Map /*Optional<Post>*/ findPostDetail(Long postId) throws Exception{
-
-        //log.info("postService - findPostDetail");
-        //postId = 1L;
 
         //1. post entity를 가져옴
         log.info("1");
@@ -381,16 +412,21 @@ public class PostService {
         else commentLikeRepository.delete(commentLikeFind);
     }
 
-    //댓글 삭제 - 정상 동작
+    //댓글 삭제 - 정상 동작 - 대댓글 없을 때 있을 때 나눠서 작업해야 -> 했고 확인해야함
     @Transactional
     public void removePostComment(Long commentId){
         //Comment entity 가져옴
         Optional<Comment> commentEntity = commentRepository.findById(commentId);
-
+        int nestedCommentCount = nestedCommentRepository.countByCommentId(commentEntity.get());
         //Comment entity 내용 수정 후 저장
-        if(commentEntity.isPresent()){
+        // comment 존재 & nested comment 존재 시
+        if(commentEntity.isPresent() && nestedCommentCount > 0){
             commentEntity.get().setIsDeleted((byte) 1);
             commentEntity.get().setContent("삭제된 댓글 입니다");
+        }
+        // comment 만 존재 시 -> 삭제
+        else if(commentEntity.isPresent()){
+            commentRepository.deleteById(commentEntity.get().getId());
         }
     }
 
