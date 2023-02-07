@@ -4,14 +4,21 @@ import "./styles/tailwind.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+import { AuthContextProvider } from "./Common/authContext";
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+axios.defaults.withCredentials = true;
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <AuthContextProvider>
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,41 @@
+
+.forum-item-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+}
+
+
+.forum-item-box {
+  /* width: 30%; */
+
+  border-width: 4px;
+  border-color: black;
+  border-radius: 5%;
+  padding: 8px;
+  /* margin-left: 20px; */
+}
+
+.forum-thumbnail-image {
+  width: 400px;
+  height: 250px;
+}
+
+.forum-member-image {
+  width: 25%;
+  border-radius: 70%;
+  margin-top: -12%;
+  margin-left: 30px;
+}
+
+.forum-txt-content {
+  overflow: hidden;
+  width: 300px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.2em;
+}

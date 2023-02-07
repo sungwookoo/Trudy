@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import trudylogo from "../assets/trudylogo.png";
+import AuthContext from "./authContext";
 
 const Nav = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const openDropDown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const authCtx = useContext(AuthContext);
+  const signOut = () => {
+    authCtx.signOut();
+    if (authCtx.isLoggedIn === false) {
+      alert("sign out!");
+    }
+  };
+
   return (
     // 네비게이션바
     <nav className="nav-bar">
@@ -47,25 +62,35 @@ const Nav = () => {
       </div>
 
       {/* 프로필 */}
-      <div className="nav-item">
-        <NavLink className="nav-link" to="/profile">
-          Profile
-        </NavLink>
-      </div>
 
       {/* 로그인 */}
-      <div className="nav-item">
-        <NavLink className="nav-link" to="/signin">
-          Sign In
-        </NavLink>
-      </div>
-
-      {/* 회원가입 */}
-      <div className="nav-item">
-        <NavLink className="nav-link" to="/signupselect">
-          Sign Up
-        </NavLink>
-      </div>
+      {!authCtx.isLoggedIn ? (
+        <>
+          <div className="nav-item">
+            <NavLink className="nav-link" to="/signin">
+              Sign In
+            </NavLink>
+          </div>
+          <div className="nav-item">
+            <NavLink className="nav-link" to="/signupselect">
+              Sign Up
+            </NavLink>
+          </div>{" "}
+        </>
+      ) : (
+        <>
+          <div className="nav-item">
+            <NavLink className="nav-link" to="/profile">
+              Profile
+            </NavLink>
+          </div>
+          <div className="nav-item">
+            <button className="nav-link" onClick={signOut}>
+              Sign Out
+            </button>
+          </div>
+        </>
+      )}
     </nav>
   );
 };
