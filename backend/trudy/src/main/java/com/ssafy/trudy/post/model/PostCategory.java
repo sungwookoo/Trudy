@@ -1,6 +1,7 @@
 package com.ssafy.trudy.post.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "post_category", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PostCategory {
     @Id
     @GeneratedValue
@@ -29,4 +31,5 @@ public class PostCategory {
     }
 
     //    private String name;
+
 }

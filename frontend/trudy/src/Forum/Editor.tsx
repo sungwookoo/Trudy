@@ -1,71 +1,115 @@
 import React, { useState } from 'react';
-import { CKEditor, CKEditorProps } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from 'ckeditor5-custom-build/build/ckeditor';
+import axios from 'axios';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const API_URL = 'api/post';
+// type Props = {
+//   setDesc: (data: string) => void;
+//   desc: string;
+//   setImage: (data :any) => void;
+// }; { setDesc, desc, setImage }
 
-interface EditorProps {
-  SetContent: (data: string) => void;
-  // handleChange: any
-  data: string;
-}
+function Editor () {
+  // const [flag, setFlag] = useState(false);
+  // const imgLink = '/api/post';
 
-const Editor: React.FC<EditorProps> = ({ SetContent }) => {
-  function uploadAdapter(loader: any) {
-    return {
-      upload: () => {
-        return new Promise((resolve, reject) => {
-          const body = new FormData();
-          loader.file.then((file: any) => {
-            body.append('files', file);
-            fetch(`${API_URL}/`, {
-              method: 'post',
-              body: body,
-            })
-              // .then((res: any) => res.json())
-              .then((res) => {
-                resolve({
-                  default: `${API_URL}/${res.url}`
-                });
-              })
-              .catch((err) => {
-                reject(err);
-              });
-          });
-        });
-      },
-    };
-  }
+  const [forumContent, setForumContent] = useState<string>()
+  
+  // const [viewContent, setViewContent] = useState([]);
 
-  function uploadPlugin(editor: any) {
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
-      return uploadAdapter(loader);
-    };
-  }
+
+  // const getValue = (e:any) => {
+  //   const {name, value} = e.target;
+  //   setForumContent({
+  //     ...forumContent,
+  //     [name]: value
+  //   })
+  // };  
+
+  // const customUploadAdapter = async (loader:any) => {
+  //   return {
+  //     upload() {
+  //       if(loader.target.files){
+  //         const uploadFile = loader.target.files[0]
+  //         const formData = new FormData();
+  //         loader.file.then((file:any) => {
+  //           formData.append('files', uploadFile);
+
+  //           await axios({
+  //             method: 'post',
+  //             url: 'api/post',
+  //             data: formData,
+  //             headers: {
+  //               'Content-Type':'multipart/form-data',
+  //             }
+  //           });
+          
+        
+
+
+
+  // const customUploadAdapter = (loader:any) => {
+  //   return {
+  //     upload() {
+  //       return new Promise((resolve, reject) => {
+  //         const data = new FormData();
+  //         loader.file.then((file:any) => {
+  //           data.append('name', file.name);
+  //           data.append('file', file);
+
+  //           axios
+  //             .post('/api/post', data)
+  //             .then((res) => {
+  //               if (!flag) {
+  //                 setFlag(true);
+  //                 setImage(res.data.filename);
+  //               }
+  //               resolve({
+  //                 default: `${imgLink}/${res.data.filename}`,
+  //               });
+  //             })
+  //           //   .catch((err) => reject(err));
+  //         });
+  //       });
+  //     },
+  //   };
+  // };
+
+  // function uploadPlugin(editor:any) {
+  //   editor.plugins.get('FileRepository').createUploadAdapter = (loader:any) => {
+  //     return customUploadAdapter(loader);
+  //   };
+  // }
 
   return (
-    <div className="forum-form-wrapper">
-      <CKEditor
-        editor={ClassicEditor}
-        config={{
-          extraPlugins: [uploadPlugin],
-        }}
-        onReady={(editor: any) => {
-          console.log('Editor is ready to use!', editor);
-        }}
-        onChange={(event: any, editor: any) => {
-          const data = editor.getData();
-          SetContent(data);
-          console.log({ event, editor, data });
-        }}
-        onBlur={(event: any, editor: any) => {
-          console.log('Blur.', editor);
-        }}
-        onFocus={(event: any, editor: any) => {
-          console.log('Focus.', editor);
-        }}
-      />
-    </div>
+  <div>
+    <CKEditor
+      editor={ClassicEditor}
+      config={{
+        // extraPlugins: [uploadPlugin],
+      }}
+      data={forumContent}
+      onReady={(editor:any) => {
+        console.log('Editor is ready to use!', editor);
+      }}
+      onChange={(event:any, editor:any) => {
+        const data = editor.getData();
+        setForumContent(data);
+        // setForumContent({
+        //   ...forumContent,
+        //   content:data
+        // });
+        console.log({ event, editor, data})
+      }}
+      onBlur={(event:any, editor:any) => {
+        // console.log('Blur.', editor);
+      }}
+      onFocus={(event:any, editor:any) => {
+        // console.log('Focus.', editor);
+      }}
+    />
+      
+  </div>
   );
 };
 

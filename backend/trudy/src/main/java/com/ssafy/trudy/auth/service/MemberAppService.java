@@ -220,6 +220,7 @@ public class MemberAppService {
     public MemberResponse saveMemberImage(String uploadImageUrl, String fileName, PrincipalDetails principal) {
         Member member = principal.getMember();
         List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
         List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
                 MemberPostResponse.builder()
                         .id(post.getId())
@@ -236,7 +237,7 @@ public class MemberAppService {
                 .birth(member.getBirth())
                 .lastAccess(member.getLastAccess())
                 .isLocal(member.getIsLocal())
-                .introduceId(member.getIntroduceId())
+                .introduceId(introduce)
                 .areaCode(member.getAreaCode())
                 .sigunguCode(member.getSigunguCode())
                 .email(member.getEmail())
@@ -268,5 +269,14 @@ public class MemberAppService {
                 .posts(memberPostResponses)
                 .image(member.getImage())
                 .build();
+    }
+
+    public MemberResponse changePublicState(PrincipalDetails principal) {
+        Member member = principal.getMember();
+        List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        memberService.changePublicState(member);
+        return getMemberResponse(member, introduce, posts);
+
     }
 }

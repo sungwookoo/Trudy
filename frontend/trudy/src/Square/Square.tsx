@@ -38,10 +38,10 @@ function Square() {
       gender: gender,
       name: nameSearch,
     };
+
     async function SquareGet() {
-      await axios.get("api/member/", { params }).then((response) => {
-        setSquareData(response.data.content);
-      });
+      const res: any = await authCtx.getUser(params);
+      setSquareData(res.data.content);
     }
     SquareGet();
   }, [area, isLocal, gender, nameSearch]);

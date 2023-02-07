@@ -91,8 +91,55 @@ public class MemberController {
     @PutMapping("/intro")
     public MemberIntroResponse modifyMemberIntro(@AuthenticationPrincipal PrincipalDetails principal, @RequestBody MemberIntroRequest modifyIntroRequest) {
         return memberAppService.modifyMemberIntro(principal, modifyIntroRequest);
+    }
+
+    @ApiOperation(value = "정보공개 여부 토글",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @PutMapping("/public")
+    public MemberResponse changePublicState(@AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.changePublicState(principal);
+    }
+
+
+//    @ApiOperation(value = "팔로워 리스트 가져오기",
+//            produces = MediaType.APPLICATION_JSON_VALUE,
+//            responseHeaders = {
+//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+//            })
+//    @GetMapping
+//    public Page<MemberResponse> followerList(@AuthenticationPrincipal PrincipalDetails principal, @PageableDefault(size = 9, sort = "id") Pageable pageable) {
+//
+//
+//    }
+
+//    @ApiOperation(value = "팔로잉 리스트 가져오기",
+//            produces = MediaType.APPLICATION_JSON_VALUE,
+//            responseHeaders = {
+//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+//            })
+//    @GetMapping("/following/{id}")
+//    public FollowResponse followingList(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long id) {
+//
+//    }
+
+    //팔로잉 하기
+    @PostMapping("/follow/{follow_from}/{follow_to}")
+    public void followingAdd() {
 
     }
+
+    //차단하기
+    @PostMapping("/ban/{ban_from}/{ban_to}")
+    public void banAdd() {
+
+    }
+
 
     // 회원 삭제
 //    @DeleteMapping("/{id}")
@@ -115,31 +162,6 @@ public class MemberController {
     //비밀번호 찾기
     @PutMapping("/lost")
     public void passwordModify() {
-
-    }
-
-
-    //팔로워 리스트 가져오기
-    @GetMapping("/follower/{member_id}")
-    public void followerList() {
-
-    }
-
-    //팔로우 리스트 가져오기
-    @GetMapping("/following/{member_id}")
-    public void followingList() {
-
-    }
-
-    //팔로잉 하기
-    @PostMapping("/follow/{follow_from}/{follow_to}")
-    public void followingAdd() {
-
-    }
-
-    //차단하기
-    @PostMapping("/ban/{ban_from}/{ban_to}")
-    public void banAdd() {
 
     }
 

@@ -6,16 +6,17 @@ import { useSelector } from "react-redux";
 
 
 function ForumDetail() {
-const {post_id} = useParams();
+const post_id = 1;
 const [ForumItem, setForumItem] = useState({});
 const [isForumLoaded, setIsForumLoaded] = useState(false);
-const token = useSelector((state: any) => state.Auth.token);
+// const token = useSelector((state: any) => state.Auth.token);
 const navigate = useNavigate
 
 
 useEffect(() => {
     const getForumItem = async () => {
     const {data} = await axios.get(`api/post/${post_id}`);
+    console.log(data,"data")
     return data;
     }
     getForumItem().then(result => setForumItem(result)).then(() => setIsForumLoaded(true));
@@ -23,6 +24,7 @@ useEffect(() => {
 
     return(
     <div>
+      123
         {isForumLoaded && (
             <div>
                 {
