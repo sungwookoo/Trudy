@@ -1,14 +1,9 @@
 package com.ssafy.trudy.member.service;
 
 import com.ssafy.trudy.member.model.Member;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 public interface MemberSpecification {
 

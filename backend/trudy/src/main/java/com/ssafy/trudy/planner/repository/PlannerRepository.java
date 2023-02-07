@@ -10,5 +10,5 @@ public interface PlannerRepository extends JpaRepository<Planner, Long> {
 
     Planner findPlannerById(Long id);
 
-    List<Planner> findPlannersByMemberId(Member member);
+    List<Planner> findPlannersByMemberIdOrderBySequenceAsc(Member member);
 }

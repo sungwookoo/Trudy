@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DayRepository extends JpaRepository<Day, Long> {
     Day findDayById(Long id);
-    List<Day> findByPlannerId(Planner plannerId);
+    List<Day> findByPlannerIdOrderByDay(Planner plannerId);
 }

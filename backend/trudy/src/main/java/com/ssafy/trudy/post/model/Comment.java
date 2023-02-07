@@ -2,19 +2,19 @@ package com.ssafy.trudy.post.model;
 
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.post.model.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "comments")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"nestedCommentList", "commentLikeList"})
 public class Comment {
 
     @Id
@@ -25,7 +25,7 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post postId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member memberId;
 
@@ -45,4 +45,11 @@ public class Comment {
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
     }
+
+    ////////DB에 없는 필드(대댓글, 댓글좋아요)
+    @OneToMany(mappedBy = "commentId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<NestedComment> nestedCommentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "commentId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<CommentLike> commentLikeList= new ArrayList<>();
 }
