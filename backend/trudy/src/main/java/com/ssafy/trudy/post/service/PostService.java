@@ -1,8 +1,10 @@
 package com.ssafy.trudy.post.service;
 
+import com.ssafy.trudy.etc.repository.SigunguRepository;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
+import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.*;
 import com.ssafy.trudy.post.repository.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -36,10 +39,15 @@ public class PostService {
 
 
     //member Entity Repository
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     private final IntroduceRepository introduceRepository;
 
+    //area entity Repository
+    private final SigunguRepository sigunguRepository;
+
+    // AWS S3
+    private final PostAwsS3Service postAwsS3Service;
     ModelMapper modelMapper = new ModelMapper();
 
     //포럼 게시글 목록 가져오기
@@ -102,14 +110,90 @@ public class PostService {
     }
 
     //포럼 게시글 작성
-    public void addPost(){
-        // dto안에 dto를 각각 접근하여 entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
+    public void addPost(String title,
+                        String content,
+                        /*MultipartFile[] upload,*/
+                        Long[] sigunguIdList,
+                        Long memberId,
+                        CategoryName[] categoryList){
+        //entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
+        //추가 사항 : 사진 가져와서 content 태그에 처리 어찌할건지,
+        //          썸네일을 어찌 선정할 것인지,
 
+        //1. 수동 글쓰기 및 수정
+        // post entity 저장, -> postId로 category, area(sigungu entity 구하고 - 한개씩 여러번 넣어),
+        // 또 entity 다 찾아섯 수정
+        //2. 자동 글쓰기 및 수정
+        // post entity 만들고 안에 (image, category, area 만들어 넣기)
+        // post entity만 가져와서 수정
+
+//        //2번 방법 :
+//        //1. post entity를 만듦(member entity, title, content만 채움) -> thumbnail 따로 추가필요
+//        Post postEntityInsert = new Post(memberRepository.findById(memberId).get(), title, content);
+//
+//
+//        Post
+//        //2. member entity를 만듦 -> post entity에 추가
+//        //postEntityInsert.setMemberId(memberRepository.findById(memberId).get());
+//
+//        //2. postimage entity[]를 만듦 -> post entity에 추가
+//        List<PostImage> postImageEntityList =
+//        //postEntityInsert.set
+//
+//        //3. postCategory entity를 만듦 -> post entity에 추가
+//
+//        //4. postArea entity를 만듦 -> sigungu 테이블에서 area_code, code로 검색해서 가져와서 sigungu entity 저장
+//        //-> post entity에 추가
+
+        //1. post entity 만들어서 저장 후 id 가져오기 -> thumbnail 은 나중에 따로 추가
+        Post postEntityInsert = new Post(memberService.getById(memberId), title, content);
+        postRepository.save(postEntityInsert);
+        log.info("postId test ======= " + postEntityInsert);
+
+        //2. image, category, area 저장
+//        List<PostImage> postImageEntityList = new ArrayList<>();
+//        for(int i =1; i<2; i++){
+//            PostImage postImageEntity = PostImage.builder()
+//                                    .postId(postEntityInsert)
+//                                    .url("test").build();
+//            postImageEntityList.add(postImageEntity);
+//        }
+//        postImageRepository.saveAll(postImageEntityList);
+
+        List<PostArea> postAreaList = new ArrayList<>();
+        for(Long sigunguid : sigunguIdList){
+            PostArea postArea = PostArea.builder()
+                    .postId(postEntityInsert)
+                    .sigunguCode(sigunguRepository.findById(sigunguid).get())
+                    .build();
+            postAreaList.add(postArea);
+        }
+        postAreaRepository.saveAll(postAreaList);
+
+        List<PostCategory> postCategoryList = new ArrayList<>();
+        for(CategoryName categoryName : categoryList){
+            PostCategory postCategory = PostCategory.builder()
+                    .postId(postEntityInsert)
+                    .categoryName(categoryName).build();
+            postCategoryList.add(postCategory);
+        }
+        postCategoryRepository.saveAll(postCategoryList);
+
+        //3. thumbnail 이미지 저장
+        postEntityInsert.setThumbnailImage("test");
+
+
+        log.info("썸네일 테스트 ======== " + postEntityInsert.toString());
     }
 
     //포럼 게시글 수정 - ck에디터와 연관
-    public void modifyPost(){
+    public void modifyPost(/*post real Id를 포함해서 가져와야함*/){
 
+        //사진 post entity로 검색 -> 리스트 가져오고 디비에 삭제 -> aws 사진 삭제
+
+        //post와 친구들 삭제못함 => post 관련 애들 수정해야함
+
+        //post 그대로 다시 저장
     }
 
     //포럼 게시글 삭제 - 정상 동작
@@ -258,7 +342,7 @@ public class PostService {
     public void addPostLike(Long memberId, Long postId){
 
         //postLike Entity의 존재 확인을 위해 Member Entity와 Post Entity를 찾아온다.
-        Member memberEntity = memberRepository.findById(memberId).get();
+        Member memberEntity = memberService.getById(memberId);
         Post postEntity = postRepository.findById(postId).get();
 
         //member Entity와 post Entity로 구성된 postLike Entity가 있는지 확인하고, 없으면 저장하기 위한 postLikeEntity
@@ -274,7 +358,7 @@ public class PostService {
     //포럼 게시글 댓글 작성 - 정상 동작
     public void addPostComment(Long memebrId, Long postId, String content){
         //준비물 준비 : memebr Entity, post Entity,
-        Member memberEntity = memberRepository.findById(memebrId).get();
+        Member memberEntity = memberService.getById(memebrId);
         Post postEntity = postRepository.findById(postId).get();
 
         //PostCommentRepository에 저장하기 위핸 PostComment Entity 준비 및 저장
@@ -285,7 +369,7 @@ public class PostService {
     //포럼 댓글 좋아요 - 정상 동작
     public void addPostCommentLike(Long memberId, Long commentId){
         //CommentLike Entity의 존재 확인을 위해 Member Entity와 Comment Entity를 찾아온다.
-        Member memberEntity = memberRepository.findById(memberId).get();
+        Member memberEntity = memberService.getById(memberId);
         Comment commentEntity = commentRepository.findById(commentId).get();
 
         //Member Entity와 Comment Entity로 구성된 postLike Entity가 있는지 확인하고, 없으면 저장하기 위한 postLikeEntity
@@ -313,7 +397,7 @@ public class PostService {
     //대댓글 작성 - 정상 동작
     public void addPostNestedComment(Long memebrId, Long commentId, String content){
         //준비물 준비 : memebr Entity, comment Entity,
-        Member memberEntity = memberRepository.findById(memebrId).get();
+        Member memberEntity = memberService.getById(memebrId);
         Comment commentEntity = commentRepository.findById(commentId).get();
 
         //PostCommentRepository에 저장하기 위핸 PostComment Entity 준비 및 저장
@@ -324,7 +408,7 @@ public class PostService {
     //대댓글 좋아요 - 정상 동작
     public void addPostNestedCommentLike(Long memberId, Long nestedCommentId){
         //NestedCommentLike entity의 존재 확인을 위해 Member entity와 NestedComment entity를 찾아온다.
-        Member memberEntity = memberRepository.findById(memberId).get();
+        Member memberEntity = memberService.getById(memberId);
         NestedComment nestedCommentEntity = nestedCommentRepository.findById(nestedCommentId).get();
 
         //member Entity와 nestedComment Entity로 구성된 nestedCommentLike Entity가 있는지 확인하고, 없으면 저장하기 위한 NestedCommentLike를 만듦
@@ -356,3 +440,9 @@ public class PostService {
     }
 
 }
+// 포스트 서비스에서
+// 포스트이미지 repository에 save하잖아.
+// s3 서비스에서 먼저 s3 저장하고 그 저장된 결과에 따라 response를 활용해서 포스트이미지 repository에 save
+
+// 프론트입장에서는 /api/post/upload 먼저함 -> post_image 테이블 insert
+// /api/post/ 해서 먼저 만든
