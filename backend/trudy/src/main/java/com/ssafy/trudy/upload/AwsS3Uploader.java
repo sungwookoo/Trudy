@@ -1,13 +1,11 @@
 package com.ssafy.trudy.upload;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
-import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.planner.model.DayItem;
 import com.ssafy.trudy.planner.service.PlannerService;
 import lombok.RequiredArgsConstructor;
@@ -84,7 +82,7 @@ public class AwsS3Uploader {
         return uploadImageUrl;
     }
 
-    public DayItem createDayItemFile(MultipartFile multipartFile, String dirName, Long dayItemId) throws IOException {
+    public DayItem createCustomDayItemFile(MultipartFile multipartFile, String dirName, Long dayItemId) throws IOException {
         File uploadFile = convert(multipartFile)        // 파일 생성
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File convert fail"));
 

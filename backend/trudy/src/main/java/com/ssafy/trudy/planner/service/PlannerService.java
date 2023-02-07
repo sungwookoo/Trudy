@@ -8,6 +8,7 @@ import com.ssafy.trudy.planner.repository.PlannerRepository;
 import com.ssafy.trudy.post.model.Comment;
 import com.ssafy.trudy.post.model.NestedComment;
 import com.ssafy.trudy.post.model.PostDto;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -48,7 +49,7 @@ public class PlannerService {
     }
 
     // 데이 생성
-    public Map addDay(Day dayInput, Planner planner){
+    public Map addDay(Day dayInput, Planner planner) {
         // 1. 들어온 day를 db에 저장
         dayRepository.save(dayInput);
         dayInput.setPlannerId(planner);
@@ -61,7 +62,7 @@ public class PlannerService {
     }
 
     // 데이 아이템 생성
-    public Map addDayItem(DayItem dayItemInput){
+    public Map addDayItem(DayItem dayItemInput) {
         // 1. 들어온 dayItem을 db에 저장
         dayItemRepository.save(dayItemInput);
         // 2. Dto 만들기
@@ -90,7 +91,7 @@ public class PlannerService {
 
         // 1. planner list를 가져옴
         List<Planner> plannerEntityList = plannerRepository.findPlannersByMemberIdOrderBySequenceAsc(member);
-        for(Planner plannerEntity : plannerEntityList) {
+        for (Planner plannerEntity : plannerEntityList) {
             // 2. plannerCombine에 1개의 플래너 상세정보(플래너, 멤버)를 채워넣음
             PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
 
@@ -154,7 +155,7 @@ public class PlannerService {
     public DayItemPutDto updateDayItemString(Long dayItemId,
                                              String updatedMemo,
                                              String updatedCustomTitle,
-                                             String updatedCustomImage){
+                                             String updatedCustomImage) {
         // 1. dayItemId로 dayItem을 찾는다.
         DayItem updatedDayItem = dayItemRepository.findDayItemById(dayItemId);
         // 2. dayItem을 수정한다.(set)
@@ -172,7 +173,7 @@ public class PlannerService {
 
     // day String 수정
     public DayPutDto updateDayString(Long dayId,
-                                     String updatedMemo){
+                                     String updatedMemo) {
         // 1. dayId로 day를 찾는다.
         Day updatedDay = dayRepository.findDayById(dayId);
         // 2. day를 수정한다.(set)
@@ -185,7 +186,7 @@ public class PlannerService {
 
     // planner String 수정
     public PlannerPutDto updatePlannerString(Long plannerId,
-                                          String updatedTitle){
+                                             String updatedTitle) {
         // 1. plannerId로 planner을 찾는다.
         Planner updatedPlanner = plannerRepository.findPlannerById(plannerId);
         // 2. planner을 수정한다.(set)
@@ -202,16 +203,17 @@ public class PlannerService {
 
     //************************************[DELETE]****************************************//
     // dayItem 삭제
-    public void removeDayItem(Long dayItemId){
-        DayItem dayitem = dayItemRepository.findDayItemById(dayItemId);
-        dayItemRepository.delete(dayitem);
+    public void removeDayItem(Long dayItemId) {
+        DayItem dayItem = dayItemRepository.findDayItemById(dayItemId);
+        dayItemRepository.delete(dayItem);
     }
 
     // day 삭제(해당 day의 dayitem을 먼저 삭제해야한다.)
-    public void removeDay(Long dayId){
+    public void removeDay(Long dayId) {
         // 1. 해당 day객체로부터 dayItemList를 찾기
         Day day = dayRepository.findDayById(dayId);
         List<DayItem> dayItemList = dayItemRepository.findByDayIdOrderBySequenceAsc(day);
+
         // 2. 리스트의 모든 요소를 삭제
         dayItemRepository.deleteAll(dayItemList);
         // 3. 해당 일자를 삭제
@@ -219,12 +221,12 @@ public class PlannerService {
     }
 
     // planner 삭제(해당 플래너 하위의 모든 day, dayItem을 삭제해야한다.)
-    public void removePlanner(Long plannerId){
+    public void removePlanner(Long plannerId) {
         // 1. 해당 planner객체로부터 day를 찾기
         Planner planner = plannerRepository.findPlannerById(plannerId);
         List<Day> dayList = dayRepository.findByPlannerIdOrderByDay(planner);
         // 2. 리스트를 순회하며 dayItem을 찾고 삭제하기
-        for(Day day: dayList){
+        for (Day day : dayList) {
             List<DayItem> dayItemList = dayItemRepository.findByDayIdOrderBySequenceAsc(day);
             dayItemRepository.deleteAll(dayItemList);
         }
@@ -236,7 +238,7 @@ public class PlannerService {
 
 
     // 생성된 DayItem의 이미지 URL 갱신
-    public DayItem saveDayItemImage(String uploadImageUrl, String fileName,  Long dayItemId) {
+    public DayItem saveDayItemImage(String uploadImageUrl, String fileName, Long dayItemId) {
         DayItem dayItem = dayItemRepository.findById(dayItemId).orElseThrow(() -> new RuntimeException("존재하지 않는 DayItem"));
         dayItem.setCustomImage(uploadImageUrl);
         dayItem.setCustomImageFileName(fileName);
