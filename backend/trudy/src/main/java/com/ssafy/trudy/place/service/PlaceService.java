@@ -188,7 +188,7 @@ public class PlaceService {
         // Split each row into individual values
         String[][] array = new String[rows.length][];
         for (int i = 0; i < rows.length; i++) {
-            array[i] = rows[i].split(", ");
+            array[i] = rows[i].split(",");
         }
         return array;
     }
