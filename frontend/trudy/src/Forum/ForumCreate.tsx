@@ -5,6 +5,10 @@ import parse from 'html-react-parser';
 import axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ForumImageUpload from './ForumImageUpload';
+import Images from './Forumimage';
+
+
 
 // type ForumTypes = {
 //   title: any,
@@ -22,47 +26,82 @@ function ForumCreate() {
 const forumdata = {
   'title' : forumtitle,
   'content' : forumcontent,
-  // 'image_file' : forumimage,
+  // "upload": ,
+  "sigunguId": 12,
+  'memberId': 1,
+  "category": 1,
+  // 'image_file' : `${Image}`,
 }
 
-  const submitPost = () => {
-    console.log(forumdata)
-    axios.post('api/post', forumdata)
-    .then((data)=>{
-      alert('등록 완료!');
-      console.log(data)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  };
 
-  const customUploadAdapter = async (loader:any) => {
-    return {
-      upload() {
-        if(loader.target.files){
-          const uploadFile = loader.target.files[0]
-          const formData = new FormData();
-          loader.file.then((file:any) => {
-            formData.append('files', uploadFile);
-          
-            axios({
-              method: 'post',
-              url: 'api/post',
-              data: formData,
-              headers: {
-                'Content-Type':'multipart/form-data',
-                },
-          });
-        });
-    }
-  }
-};
+  const imgLink ='api/post'
+  const [flag, setFlag] = useState(false);
+
+
+  const customUploadAdapter = (loader:any) => {
+      return {
+        upload() {
+          return new Promise((resolve, reject) => {
+            const data = new FormData();
+            loader.file.then((file:any) => {
+              data.append('name', file.name);
+              data.append('file', file);
+
+              axios.post('/api/post', data)
+              .then((res:any) => {
+                setImage(res.data.filename);
+                console.log(res.data.filename)
+                })
+                
+                  
+                })
+              })
+            }
+          }
+        }
+
+
+        const submitPost = () => {
+          console.log(forumdata)
+          axios.post('api/post', forumdata)
+          .then((data)=>{
+            alert('등록 완료!');
+            console.log(data)
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+        };
+      
+
+  // const customUploadAdapter = async (loader: any) => {
+  //   return {
+  //     upload() {
+  //       if (loader.target.files) {
+  //         const uploadFile = loader.target.files[0];
+  //         const formData = new FormData();
+  //         loader.file.then((file: any) => {
+  //           formData.append('files', uploadFile);
+  
+  //           axios({
+  //             method: 'post',
+  //             url: 'api/post',
+  //             data: formData,
+  //             headers: {
+  //               'Content-Type': 'multipart/form-data',
+  //             },
+  //           });
+  //         });
+  //       }
+  //     },
+  //   };
+  // };
 
           function uploadPlugin(editor:any) {
               editor.plugins.get('FileRepository').createUploadAdapter = (loader:any) => {
                 return customUploadAdapter(loader);
       };
+    }
   
 
 return(
@@ -86,6 +125,7 @@ return(
         onChange={(event:any, editor:any) => {
           const data = editor.getData();
           setforumContent(data);
+          // setImage(data);
           //
           console.log({ data })
         }}
@@ -100,13 +140,15 @@ return(
         <button onClick={submitPost}>
           제출합니다
         </button>
-          </div>
 
+        <ForumImageUpload />
+          </div>
+      <Images />
     </div>
     </>
     );
   }
-  }
-}
+
+
 
   export default ForumCreate;

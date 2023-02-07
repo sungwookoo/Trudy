@@ -2,51 +2,62 @@ import '../Profile/MyProfile.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import AuthContext from "../Common/authContext";
+import { useContext } from 'react';
+
+// authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
 
-
 interface getUser {
-  id: number;
+  // id: number;
   name: string;
   email: string;
 };
 
 function Profile() {
   // const [userInfo, setUserInfo] = useState<getUser[] | null | any>();
+
+  // const authCtx = useContext(AuthContext);
+
   const [profile, setProfile] = useState<getUser | null>(null);
+  const [profileImg, setProfileImg] = useState<string | null>(null);
 
     const navigate = useNavigate();
     const navigateToProfileUpdate = () => {
       navigate('/profileupdate');
     };
 
-    // const 
-    // useEffect(() => {
-    //   get 
-    // }
+    const url = 'api/member/me'
+    
+    const token = 'Bearer ' + localStorage.getItem("token")
+    useEffect(() => {
+      // const params = {
+      //   token: token
+      // } 
+      // console.log(params)
 
-
-
-
-      const fetchProfile = async () => {
-        try {
-          const response = await fetch('api/member/me');
-          const profile = await response.json();
-          setProfile(profile);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-    // fetchProfile();
-    // }, []);
-
-    if (!profile) {
-      return <div>Loading...</div>;
+        axios.get(url, {
+        headers: {
+          Authorization: token
+        },
+      })
+        
+        .then((res) => {setProfile(res.data)
+          console.log(profile)}
+          
+          )
+        .catch((err:any) => 
+        console.error(err));
+      },[])
+      console.log(profile)  
+      
+      
+    if (profile===null) {
+      return <div>해당유저가 없습니다...</div>;
     }
 
 
-    //     const url = 'api/member'
+        
     //     // const imageUrl = ''
 
     //     axios.get(url).then((res) => {
@@ -60,8 +71,8 @@ function Profile() {
       <div className='profile-container'>
         {/* 프로필 사진과 유저네임 */}
           <div className='picture-name'>
-            <h1>{profile.name}</h1>
-            <p>Email: {profile.email}</p>
+            {/* <h1>{profile.name}</h1>
+            <p className='mt-10'>{profile.email}</p> */}
             {/* {userInfo.map((member:any) => {
                 return (
                   <div>
