@@ -1,3 +1,4 @@
+import axios from "axios";
 import { GET, POST } from "./authAxios";
 
 // 토큰을 만드는 함수
@@ -18,8 +19,13 @@ const calculateRemainingTime = (expirationTime: number) => {
 };
 
 // 토큰값과 만료시간을 localStorage에 저장하는 함수
-export const signInTokenHandler = (token: string, expirationTime: number) => {
+export const signInTokenHandler = (
+  token: string,
+  refreshToken: string,
+  expirationTime: number
+) => {
   localStorage.setItem("token", token);
+  localStorage.setItem("refreshToken", refreshToken);
   localStorage.setItem("expirationTime", String(expirationTime));
 
   const remainingTime = calculateRemainingTime(expirationTime);
@@ -33,16 +39,30 @@ export const retrieveStoredToken = () => {
 
   const remaingTime = calculateRemainingTime(+storedExpirationDate);
 
-  if (remaingTime <= 1000) {
+  if (remaingTime <= 10) {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
-    return null;
+    return {
+      token: null,
+      duration: 0,
+    };
   }
 
   return {
     token: storedToken,
     duration: remaingTime,
   };
+};
+
+// 토큰을 재발행하는 함수
+export const refreshTokenHandler = (
+  accessToken: string,
+  refreshToken: string
+) => {
+  const URL = "/api/reissuance";
+  const token = { accessToken, refreshToken };
+  const response = POST(URL, token, {});
+  console.log("토큰 재발행", response);
 };
 
 // 회원가입 url을 POST방식으로 호출하는 함수
@@ -63,7 +83,7 @@ export const signInActionHandler = (email: string, password: string) => {
   const URL = "/api/login";
   const loginObject = { email, password };
   const response = POST(URL, loginObject, {});
-
+  
   return response;
 };
 
@@ -72,13 +92,13 @@ export const signInActionHandler = (email: string, password: string) => {
 export const signOutActionHandler = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
-  alert("Sign Out!");
 };
 
 // 유저의 정보를 GET방식으로 호출
-export const getUserActionHandler = (token: string) => {
+export const getUserActionHandler = (params: any) => {
   const URL = "api/member/";
-  const response = GET(URL, createTokenHeader(token));
+  const response = GET(URL, { params });
+
   return response;
 };
 
@@ -106,11 +126,9 @@ export const getUserActionHandler = (token: string) => {
 //   return response;
 // };
 
-
-
 // 유저의 Planner 정보를 GET방식으로 호출
 export const getUserPlanner = (userId: number) => {
-  const URL = ""
-  const response = GET(URL, userId)
-  return response
-}
+  const URL = "api/planner";
+  const response = GET(URL, userId);
+  return response;
+};

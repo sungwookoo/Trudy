@@ -1,3 +1,4 @@
+import { access } from "fs";
 import React, { useState, useEffect, useCallback } from "react";
 import * as authAction from "./authAction";
 
@@ -8,6 +9,7 @@ type UserInfo = { email: string; nickname: string };
 type LoginToken = {
   grantType: string;
   accessToken: string;
+  refreshToken: string;
   accessTokenExpiresIn: number;
 };
 
@@ -21,7 +23,7 @@ const AuthContext = React.createContext({
   signup: (email: string, password: string, nickname: string) => {},
   login: (email: string, password: string) => {},
   signOut: () => {},
-  getUser: () => {},
+  getUser: (params: any) => {},
   //   changeNickname: (nickname: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
   // planner: (userId: number) => {},
@@ -66,17 +68,19 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       if (result !== null) {
         const loginData: LoginToken = result.data;
         setToken(loginData.accessToken);
-
         logoutTimer = setTimeout(
           signOutHandler,
           authAction.signInTokenHandler(
             loginData.accessToken,
+            loginData.refreshToken,
             loginData.accessTokenExpiresIn
           )
         );
         setIsSuccess(true);
+      } else {
+        alert("Wrong ID or Password!")
       }
-    });
+    })
   };
 
   //   로그아웃을 하는 함수
@@ -89,25 +93,25 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   }, []);
 
   // 유저 정보를 가져오는 함수
-  const getUserHandler = () => {
+  const getUserHandler = async (params: any) => {
     setIsGetSuccess(false);
-    const data = authAction.getUserActionHandler(token);
-    data.then((result) => {
-      if (result !== null) {
-        const userData: UserInfo = result.data;
-        setUserObj(userData);
-        setIsGetSuccess(true);
-        console.log(result.data);
-        console.log("정보");
-        console.log(userObj);
-      }
-    });
-  };
+    // 토큰이 만료되지 않았으면 재발행
+    // if (tokenData.duration > 0) {
+    //   console.log('재발행 시도')
+    // }
 
-  // Planner 정보를 가져오는 함수
-  // const getUserPlannerHandler = (userId: number) => {
-  //   authAction.getUserPlanner(userId);
-  // };
+    const data = await authAction.getUserActionHandler(params);
+    // data.then((result) => {
+    if (data !== null) {
+      const userData: UserInfo = data.data;
+      setUserObj(userData);
+      setIsGetSuccess(true);
+      // }
+    }
+    // console.log("data    1", data.data);
+    // console.log("data    2", data.data.content[0]);
+    return data;
+  };
 
   //   const changeNicknameHandler = (nickname: string) => {
   //     setIsSuccess(false);
@@ -136,6 +140,11 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   //       }
   //     });
   //   };
+
+  // Planner 정보를 가져오는 함수
+  const getUserPlannerHandler = (userId: number) => {
+    authAction.getUserPlanner(userId);
+  };
 
   useEffect(() => {
     if (tokenData) {

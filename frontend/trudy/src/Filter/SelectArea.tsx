@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SigunguSelect from "./SelectSigungu";
 import { sigunguCode } from "./SigunguCode";
+import Place from "../TrudyMap/Place";
 
 type AreaCodeType = {
   areaCode: Array<{
@@ -13,7 +14,7 @@ type AreaCodeType = {
 const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
   const [selectedAreaCode, setSelectedAreaCode] = useState<number | null>(null);
   const [selectedSigungu, setSelectedSigungu] = useState<number[]>([]);
-  console.log(selectedSigungu);
+
   return (
     <div>
       <div>
@@ -35,8 +36,15 @@ const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
         ))}
       </div>
       {selectedAreaCode && (
-        <SigunguSelect sigunguCode={sigunguCode} area={selectedAreaCode} selectedSigungu={selectedSigungu} setSelectedSigungu={setSelectedSigungu} />
+        <SigunguSelect
+          key={selectedAreaCode}
+          sigunguCode={sigunguCode}
+          area={selectedAreaCode}
+          selectedSigungu={selectedSigungu}
+          setSelectedSigungu={setSelectedSigungu}
+        />
       )}
+      {/* {selectedSigungu.length > 0 && <Place selectedSigungu={selectedSigungu} />} */}
     </div>
   );
 };
