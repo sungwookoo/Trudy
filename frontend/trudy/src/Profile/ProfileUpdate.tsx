@@ -15,7 +15,7 @@ const initialUserData: UserData = {
   profilePicture: "https://picsum.photos/200"
 };
 
-function ProfileUpdate() {
+function ProfileUpdate(props: any) {
   const [userData, setUserData] = useState<UserData>(initialUserData);
 
   const navigate = useNavigate();

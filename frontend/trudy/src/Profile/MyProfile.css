@@ -3,7 +3,7 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
   background-color: blue;
 }
 
@@ -12,19 +12,25 @@
   height: 200px;
   border-radius: 70%;
   overflow: hidden;
-  margin-right: 20px;
+  margin-right: 50px;
+  /* margin-top: 20px; */
   border-color: lightgrey;
   border-width: 3px;
+  /* background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNp4mzcs1BH8IuUc_uUycTYcidZuYzx4O9ieIQGBArb795K5HUP90u6seUotwG8MwCxAg&usqp=CAU) ; */
+  background-position: center;
+  
 }
 
-.user-name {
+.myprofile-username {
   font-size: 50px;
-  font-weight: 600;
+  font-weight: bolder;
+  margin-right: 70px;
   /* margin-left: 100px; */
 }
 
-.picture-name{
+.picture-name-container{
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   width: 1000px;
@@ -32,8 +38,51 @@
   background-color: blueviolet;
 }
 
+.picture-name-row {
+  display: flex;
+  flex-direction: row;
+  background-color: orange;
+  width: 50%;
+  height: 50%;
+}
+
+
+.myprofile-gender{
+  text-transform: capitalize;
+}
+
+
+
 .content-box {
   width: 1300px;
   height: 400px;
   background-color: aqua;
+}
+
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+
+.about-post{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bolder;
+  font-display: none;
+}
+
+
+.edit-toggle-follow-container{
+  background-color: red;
+  height: 50%;
+}
+
+.myprofile-intro{
+  border: 2px;
+  border-color: black;
+  width: 500px;
+
 }
