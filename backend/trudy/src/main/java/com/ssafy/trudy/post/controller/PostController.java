@@ -65,25 +65,26 @@ public class PostController {
                         @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
                         @RequestParam CategoryName[] categoryList*/
-            /*@RequestBody PostDto.InsertPost insertPostDto*/
-            @RequestParam(value="upload", required = false) MultipartFile[] upload){
+            @RequestBody PostDto.InsertPost insertPostDto
+            /*@RequestParam(value="upload", required = false) MultipartFile[] upload*/){
 
 
 
         try{
-            //        postService.addPost(title, content, upload, sigunguId, memberId, category);
-            //postService.addPost(title, content, sigunguIdList,memberId, categoryList);
-            //postService.addPost(insertPostDto);
-            log.info("============== test complete ===========");
+ /*           //        postService.addPost(title, content, upload, sigunguId, memberId, category);
+            //postService.addPost(title, content, sigunguIdList,memberId, categoryList);*/
+            postService.addPost(insertPostDto);
+           /* log.info("============== test complete ===========");
 
             log.info("check : " + upload[0].getOriginalFilename());
             //log.info(insertPostDto.getUpload().toString());
-            log.info("controller ========== try ok");
+            log.info("controller ========== try ok");*/
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
-            log.info("controller ========== try bad");
-            return ResponseEntity.ok().build();
+            //log.info("controller ========== try bad");
+            //return ResponseEntity.ok().build();
+            return ResponseEntity.internalServerError().build();
         }
     }
 
