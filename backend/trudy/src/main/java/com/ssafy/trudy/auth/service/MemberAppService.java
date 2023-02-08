@@ -231,8 +231,29 @@ public class MemberAppService {
                 .build()).collect(Collectors.toList());
 
         return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
+    }
 
+    public Page<MemberResponse> getByFollowingPageable(Long id, Pageable pageable, PrincipalDetails principal) {
+        Page<Follow> memberPage = memberService.getFollowingByPageable(id, pageable);
+        if (0 == memberPage.getTotalElements()) {
+            return new PageImpl<>(new ArrayList<>(), memberPage.getPageable(), memberPage.getTotalElements());
+        }
 
+        List<MemberResponse> memberResponses = memberPage.stream().map(member -> MemberResponse.builder()
+                .id(member.getFollowTo().getId())
+                .email(member.getFollowTo().getEmail())
+                .name(member.getFollowTo().getName())
+                .gender(member.getFollowTo().getGender())
+                .birth(member.getFollowTo().getBirth())
+                .isLocal(member.getFollowTo().getIsLocal())
+                .areaCode(member.getFollowTo().getAreaCode())
+                .sigunguCode(member.getFollowTo().getSigunguCode())
+                .lastAccess(member.getFollowTo().getLastAccess())
+                .introduceId(member.getFollowTo().getIntroduceId())
+                .isFollow(isFollow(principal, member.getFollowTo()))
+                .build()).collect(Collectors.toList());
+
+        return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
     }
 
     private String isFollow( PrincipalDetails principal, Member targetMember) {
@@ -328,5 +349,6 @@ public class MemberAppService {
     public boolean emailCheck(String email) {
         return memberService.emailCheck(email);
     }
+
 
 }

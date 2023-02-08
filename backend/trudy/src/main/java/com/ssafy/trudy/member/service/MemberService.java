@@ -170,8 +170,16 @@ public class MemberService {
         return followRepository.findAllByFollowTo(member, pageable);
     }
 
+    // 현재 프로필 회원이 팔로우하고있는 회원 목록
+    public Page<Follow> getFollowingByPageable(Long id, Pageable pageable) {
+        Member member = memberRepository.findById(id).orElseThrow(() ->new ApiException(ServiceErrorType.NOT_FOUND));
+        return followRepository.findAllByFollowFrom(member, pageable);
+    }
+
     // 나 -> targetId 회원 팔로우 여부 : 했으면 true(팔로잉불가상태), 안했으면 false(팔로잉가능상태)
     public boolean isFollow(PrincipalDetails principal, Member targetMember) {
         return followRepository.existsByFollowFromAndFollowTo(principal.getMember(), targetMember);
     }
+
+
 }
