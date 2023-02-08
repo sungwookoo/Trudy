@@ -5,28 +5,20 @@ type PlaceFormProps = {
     id: number;
     addr1: string;
     addr2: string | undefined;
-    cat1: string;
-    cat2: string | undefined;
-    cat3: string | undefined;
-    contentId: string | undefined;
-    contentTypeId: string | undefined;
-    createdTime: string | undefined;
+    contenttypeid: string | undefined;
     firstimage: any;
     firstimage2: string | undefined;
     mapx: any;
     mapy: any;
     title: string;
-    mlevel: string | undefined;
-    modifiedTime: string | undefined;
-    readCount: string | undefined;
-    singunguCode: string;
+    singungucode: string;
     tel: string | undefined;
     zipcode: string | undefined;
   };
   onClick: (mapx: string | number, mapy: string | number) => void;
 };
 
-function PlaceForm({ data, onClick }: PlaceFormProps) {
+function PlaceForm({ data, onClick }: any) {
   const handleClick = useCallback(() => {
     onClick(data.mapy, data.mapx);
   }, [onClick]);
