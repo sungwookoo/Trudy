@@ -3,7 +3,6 @@ package com.ssafy.trudy.place.service;
 
 import com.ssafy.trudy.place.model.Place;
 import com.ssafy.trudy.place.model.PlaceDto;
-import com.ssafy.trudy.place.repository.BookmarkRepository;
 import com.ssafy.trudy.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -81,7 +80,7 @@ public class PlaceService {
 
         // 2) 지역시군구 값 O, 콘텐츠 타입 값 X
         } else if (areaSigunguCash.length() != 0 && contentTypeIdCash.length() == 0) {
-            String[][] areaSigungu = parseFunction(areaSigunguCash);
+            List<String[]> areaSigungu = parseFunction(areaSigunguCash);
             // 2-1) keyword X -> 지역 시군구로만 찾기
             if(keyword.length() == 0) {
                 for (String[] strings : areaSigungu) {
@@ -106,38 +105,32 @@ public class PlaceService {
                 }
             }
 
-        // 3) 지역 시군구 값 X, 콘텐츠 타입 값 O
-        } else if (areaSigunguCash.length() == 0 && contentTypeIdCash.length() != 0) {
+        // 3) 지역 시군구 값 X, 콘텐츠 타입 값 O -> 로직은 단순회 contentType값이 있다는 조건이 자동 true.
+        } else if (areaSigunguCash.length() == 0) {
             String[] contentTypeId = parseFunction2(contentTypeIdCash);
+            List<String> contentTypeIdList = Arrays.asList(contentTypeId);
             // 3-1) keyword X -> 콘텐츠 타입만으로
             if(keyword.length() == 0) {
-                for (String s : contentTypeId) {
-                    placeListByCategory.addAll(placeRepository.findPlacesByContenttypeid(s));
-                }
+                placeListByCategory.addAll(placeRepository.findPlacesByContenttypeidIn(contentTypeIdList));
             // 3-2) keyword O -> 콘텐츠 타입 & keyword
             } else {
-                for (String s : contentTypeId) {
-                    placeListByCategory.addAll(placeRepository.findPlacesByContenttypeidAndTitleContaining(s, keyword));
-                }
+                placeListByCategory.addAll(placeRepository.findPlacesByContenttypeidInAndTitleContaining(contentTypeIdList, keyword));
             }
 
         // 4) 지역 시군구 값 O, 콘텐츠 타입 값 O
         } else {
-            String[][] areaSigungu = parseFunction(areaSigunguCash);
+            List<String[]> areaSigungu = parseFunction(areaSigunguCash);
             String[] contentTypeId = parseFunction2(contentTypeIdCash);
+            List<String> contentTypeIdList = Arrays.asList(contentTypeId);
             // 4-1) keyword X -> 지역 시군구 값 & 콘텐츠 타입 값
             if(keyword.length() == 0) {
                 for (String[] strings : areaSigungu) {
                     // 4-1-x) sigungucode = 100이 들어온 경우, areacode와 컨텐츠타입으로 하기
                     if (strings[1].equals("100")) {
-                        for (String s : contentTypeId) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeid(strings[0], s));
-                        }
-                        // 4-1-o) sigungucode가 정상적으로 들어온 경우, areacode & sigungucode & contenttypeid
+                        placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeidIn(strings[0], contentTypeIdList));
+                    // 4-1-o) sigungucode가 정상적으로 들어온 경우, areacode & sigungucode & contenttypeid
                     } else {
-                        for (String s : contentTypeId) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeid(strings[0], strings[1], s));
-                        }
+                        placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeidIn(strings[0], strings[1], contentTypeIdList));
                     }
                 }
             // 4-2) keyword O -> 지역 시군구 값 & 콘텐츠 타입 값 & 키워드
@@ -145,14 +138,10 @@ public class PlaceService {
                 for (String[] strings : areaSigungu) {
                     // 4-2-x) sigungucode = 100이 들어온 경우, areacode와 컨텐츠타입과 키워드로 하기
                     if (strings[1].equals("100")) {
-                        for (String s : contentTypeId) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeidAndTitleContaining(strings[0], s, keyword));
-                        }
-                        // 4-2-o) sigungu가 정상적으로 들어온 경우, areacode & sigungucode & cotenttypeid & keyword
+                        placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndContenttypeidInAndTitleContaining(strings[0], contentTypeIdList, keyword));
+                    // 4-2-o) sigungu가 정상적으로 들어온 경우, areacode & sigungucode & cotenttypeid & keyword
                     } else {
-                        for (String s : contentTypeId) {
-                            placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeidAndTitleContaining(strings[0], strings[1], s, keyword));
-                        }
+                        placeListByCategory.addAll(placeRepository.findPlacesByAreacodeAndSigungucodeAndContenttypeidInAndTitleContaining(strings[0], strings[1], contentTypeIdList, keyword));
                     }
                 }
             }
@@ -167,7 +156,7 @@ public class PlaceService {
             placeListByCategory = placeListByCategory.subList(offset, placeListByCategory.size());
         // 3) 더이상 값이 없을 경우
         } else {
-            placeListByCategory = null;
+            return null;
         }
 
         return placeListByCategory.stream().map(place -> PlaceDto.builder()
@@ -187,26 +176,21 @@ public class PlaceService {
                 .build()).collect(Collectors.toList());
     }
 
-    // String -> String[][]
-    public String[][] parseFunction(String input) {
+    // String -> List<String[]>
+    public List<String[]> parseFunction(String input) {
         // Remove square brackets from start and end of input string
-        input = input.substring(1, input.length() - 1);
-        input = input.substring(1, input.length() - 1);
-
-        // Split input string into rows
-        String[] rows = input.split("\\], \\[");
-
-        // Split each row into individual values
-        String[][] array = new String[rows.length][];
-        for (int i = 0; i < rows.length; i++) {
-            array[i] = rows[i].split(", ");
+        String[] elements = input.split(",");
+        List<String[]> pairs = new ArrayList<>();
+        for(int i = 0; i < elements.length; i += 2){
+            String[] pair = { elements[i], elements[i+1]};
+            pairs.add(pair);
         }
-        return array;
+        return pairs;
     }
 
     // String -> String[]
     public String[] parseFunction2(String input) {
-        String[] result = Arrays.stream(input.substring(1, input.length() - 1).split(","))
+        String[] result = Arrays.stream(input.split(","))
                 .map(String::trim)
                 .toArray(String[]::new);
         return result;

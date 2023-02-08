@@ -23,6 +23,8 @@ public class MemberResponse {
     private String password;
     private String name;
     private String image;
+
+    private String imageFileName;
     private String gender;
     private Long areaCode;
     private Long sigunguCode;

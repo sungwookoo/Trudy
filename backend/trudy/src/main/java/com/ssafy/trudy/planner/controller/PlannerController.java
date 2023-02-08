@@ -5,6 +5,7 @@ import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.place.model.Place;
 import com.ssafy.trudy.place.service.PlaceService;
 import com.ssafy.trudy.planner.model.*;
+import com.ssafy.trudy.planner.repository.DayItemRepository;
 import com.ssafy.trudy.planner.service.PlannerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class PlannerController {
+    private final DayItemRepository dayItemRepository;
     @Autowired
     private final PlannerService plannerService;
     @Autowired
@@ -79,7 +81,7 @@ public class PlannerController {
         try {
             Planner planner = plannerService.findPlannerById(plannerId);
             Day newDay = new Day(planner, day, memo);
-            Map response = plannerService.addDay(newDay);
+            Map response = plannerService.addDay(newDay, planner);
 
             if(!response.isEmpty() && response != null){
                 return ResponseEntity.ok().body(response);
@@ -92,19 +94,19 @@ public class PlannerController {
         }
     }
 
-    // 데이 아이템 생성*******
+    // 데이 아이템 생성
     @PostMapping("/dayitem/post")
     public ResponseEntity<?> dayItemAdd(@RequestParam(defaultValue = "") String placeId,
                                         @RequestParam Long dayId,
                                         @RequestParam(defaultValue = "") String memo,
                                         @RequestParam String sequence,
-                                        @RequestParam(defaultValue = "") String customTitle,
-                                        @RequestParam String customImage){
+                                        @RequestParam(defaultValue = "") String customTitle
+                                        ){
         try {
             // response 변수 선언
             Map response;
             // Place 정보가 있다면 -> place dayItem 만들기
-            if(!placeId.equals("")) {
+            if(!placeId.equals("")){
                 Long placeIdL = Long.parseLong(placeId);
                 Place placeInput = placeService.findPlaceById(placeIdL);
                 Day dayInput = plannerService.findDayById(dayId);
@@ -114,11 +116,11 @@ public class PlannerController {
             // Place 정보가 없다면 -> custom place dayItem 만들기
             } else {
                 Day dayInput = plannerService.findDayById(dayId);
-                DayItem customPlaceDayItem = new DayItem(dayInput, memo, sequence, customTitle, customImage);
+                DayItem customPlaceDayItem = new DayItem(dayInput, memo, sequence, customTitle);
                 response = plannerService.addDayItem(customPlaceDayItem);
             }
 
-            if(!response.isEmpty() && response != null){
+            if(!response.isEmpty()){
                 return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.noContent().build();
@@ -129,25 +131,57 @@ public class PlannerController {
         }
     }
 
-    // 플래너 수정(제목)
-//    @PutMapping("/updata/title")
-//    public PlannerDto plannerUpdateTitle(@RequestParam Long plannerId,
-//                                    @RequestParam String newTitle){
-//        Planner planner = plannerService.getPlannerById(plannerId);
-//        return plannerService.editPlannerTitle(planner, newTitle);
-//    }
+    //**************************************[UPDATE]********************************************//
+    // dayItem 수정(메모, 제목, 이미지)
+    @PutMapping("/dayitem/update/string")
+    public DayItemPutDto dayItemStringUpdate(@RequestParam Long dayItemId,
+                                             @RequestParam String updatedMemo,
+                                             @RequestParam String updatedCustomTitle,
+                                             @RequestParam String updatedCustomImage){
+        return plannerService.updateDayItemString(dayItemId, updatedMemo, updatedCustomTitle, updatedCustomImage);
+    }
 
-    // 플래너 수정(순서)
-//    @PutMapping("/updata/sequence")
-//    public PlannerDto plannerUpdateSequence(@RequestParam Long plannerId,
-//                                         @RequestParam String newSequence){
-//        Planner planner = plannerService.getPlannerById(plannerId);
-//        return plannerService.editPlannerSequence(planner, newSequence);
-//    }
+    // day 수정(메모)
+    @PutMapping("/day/update/string")
+    public DayPutDto dayStringUpdate(@RequestParam Long dayId,
+                                     @RequestParam String updatedMemo){
+        return plannerService.updateDayString(dayId, updatedMemo);
+    }
 
-    //플래너 삭제 - dayItem 삭재 -> day 삭제 -> planner 삭제
-    @DeleteMapping("/{member_id}")
-    public void plannerRemove(){
+    // planner 수정(제목)
+    @PutMapping("/planner/update/string")
+    public PlannerPutDto plannerStringUpdate(@RequestParam Long plannerId,
+                                          @RequestParam String title){
+        return plannerService.updatePlannerString(plannerId, title);
+    }
 
+    /*
+    순서를 받는 방법은 아래와 같다.
+     */
+    // dayItem 수정(순서)
+//    @PutMapping("/planner/update/order")
+//    public void dayItemOrderUpdate(@Request List)
+
+    // day 수정(순서)
+
+    // planner 수정(메모)
+
+    //*********************************[delete]*************************************//
+    // dayItem 삭제
+    @DeleteMapping("/dayitem/delete")
+    public void dayItemRemove(@RequestParam Long dayItemId){
+        plannerService.removeDayItem(dayItemId);
+    }
+
+    // day 삭제
+    @DeleteMapping("/day/delete")
+    public void dayRemove(@RequestParam Long dayId){
+        plannerService.removeDay(dayId);
+    }
+
+    // planner 삭제
+    @DeleteMapping("/planner/delete")
+    public void plannerRemove(@RequestParam Long plannerId){
+        plannerService.removePlanner(plannerId);
     }
 }

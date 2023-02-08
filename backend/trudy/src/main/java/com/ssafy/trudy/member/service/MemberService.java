@@ -6,6 +6,7 @@ import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
+import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
@@ -111,42 +112,49 @@ public class MemberService {
 
 
     //구글 연동 회원가입
-    public void addGoogle(){
+    public void addGoogle() {
 
     }
 
     //비밀번호 찾기
-    public void modifyPassword(){
+    public void modifyPassword() {
 
     }
 
     //팔로워 리스트 가져오기
-    public void findFollowerList(){
+    public void findFollowerList() {
 
     }
 
     //팔로우 리스트 가져오기
-    public void findFollowingList(){
+    public void findFollowingList() {
 
     }
 
     //팔로잉 하기
-    public void addFollowing(){
+    public void addFollowing() {
 
     }
 
     //차단하기
-    public void addBan(){
+    public void addBan() {
 
     }
 
     //자기 소개 정보 가져오기
-    public void findMemberDetail(){
+    public void findMemberDetail() {
 
     }
 
     public Introduce saveIntroduce(Introduce introduce) {
         return introduceRepository.save(introduce);
+    }
+
+    public Member changePublicState(Member member) {
+        if (member.getIsPublic().equals("1")) {
+            member.setIsPublic("0");
+        } else member.setIsPublic("1");
+        return memberRepository.save(member);
     }
 
 

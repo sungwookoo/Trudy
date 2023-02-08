@@ -15,6 +15,7 @@ import com.ssafy.trudy.member.model.dto.*;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.service.PostService;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -41,7 +42,6 @@ public class MemberAppService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TokenProvider tokenProvider;
-
     @Autowired
     private PostService postService;
 
@@ -120,6 +120,7 @@ public class MemberAppService {
         member.setIsLocal(modifyRequest.getIsLocal());
         member.setAreaCode(modifyRequest.getAreaCode());
         member.setSigunguCode(modifyRequest.getSigunguCode());
+
 
         Member modifiedMember = memberService.save(member);
 
@@ -210,9 +211,38 @@ public class MemberAppService {
     // 다른 회원 프로필
     public MemberResponse memberDetail(Long id) {
         Member member = memberService.getById(id);
-        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
         List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
         return getMemberResponse(member, introduce, posts);
+    }
+
+    // 회원 이미지 저장
+    public MemberResponse saveMemberImage(String uploadImageUrl, String fileName, PrincipalDetails principal) {
+        Member member = principal.getMember();
+        List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
+                MemberPostResponse.builder()
+                        .id(post.getId())
+                        .memberId(post.getMemberId())
+                        .title(post.getTitle())
+                        .thumbnailImage(post.getThumbnailImage())
+                        .createdAt(post.getCreatedAt())
+                        .build()
+        ).collect(Collectors.toList());
+        return MemberResponse.builder()
+                .id(member.getId())
+                .image(uploadImageUrl)
+                .imageFileName(fileName)
+                .birth(member.getBirth())
+                .lastAccess(member.getLastAccess())
+                .isLocal(member.getIsLocal())
+                .introduceId(introduce)
+                .areaCode(member.getAreaCode())
+                .sigunguCode(member.getSigunguCode())
+                .email(member.getEmail())
+                .posts(memberPostResponses)
+                .build();
     }
 
     private MemberResponse getMemberResponse(Member member, Introduce introduce, List<Post> posts) {
@@ -237,6 +267,16 @@ public class MemberAppService {
                 .lastAccess(member.getLastAccess())
                 .introduceId(introduce)
                 .posts(memberPostResponses)
+                .image(member.getImage())
                 .build();
+    }
+
+    public MemberResponse changePublicState(PrincipalDetails principal) {
+        Member member = principal.getMember();
+        List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        memberService.changePublicState(member);
+        return getMemberResponse(member, introduce, posts);
+
     }
 }
