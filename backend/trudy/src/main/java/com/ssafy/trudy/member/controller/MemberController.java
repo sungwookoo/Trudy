@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
 
-
     @Autowired
     private final MemberAppService memberAppService;
 
@@ -116,16 +115,16 @@ public class MemberController {
         return memberAppService.getByFollowerPageable(id ,pageable, principal);
     }
 
-//    @ApiOperation(value = "팔로잉 리스트 가져오기",
-//            produces = MediaType.APPLICATION_JSON_VALUE,
-//            responseHeaders = {
-//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
-//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
-//            })
-//    @GetMapping("/following")
-//    public Page<MemberResponse> followingList(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long id) {
-//
-//    }
+    @ApiOperation(value = "팔로잉 리스트 가져오기",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/following/{id}")
+    public Page<MemberResponse> followingList(@PathVariable Long id, @PageableDefault(size = 10, sort = "id") Pageable pageable, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.getByFollowingPageable(id ,pageable, principal);
+    }
 
     //팔로잉 하기
     @PostMapping("/follow/{follow_from}/{follow_to}")
