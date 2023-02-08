@@ -35,4 +35,6 @@ public class MemberResponse {
     private LocalDateTime lastAccess;
     private Introduce introduceId;
     private List<MemberPostResponse> posts;
+
+    private String isFollow;
 }

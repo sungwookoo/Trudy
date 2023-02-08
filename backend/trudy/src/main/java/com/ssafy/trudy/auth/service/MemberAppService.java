@@ -8,6 +8,7 @@ import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.security.provider.TokenProvider;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
+import com.ssafy.trudy.member.model.Follow;
 import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
@@ -30,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -207,6 +209,40 @@ public class MemberAppService {
         return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
     }
 
+
+    public Page<MemberResponse> getByFollowerPageable(Long id, Pageable pageable, PrincipalDetails principal) {
+        Page<Follow> memberPage = memberService.getFollowerByPageable(id, pageable);
+        if (0 == memberPage.getTotalElements()) {
+            return new PageImpl<>(new ArrayList<>(), memberPage.getPageable(), memberPage.getTotalElements());
+        }
+
+        List<MemberResponse> memberResponses = memberPage.stream().map(member -> MemberResponse.builder()
+                .id(member.getFollowFrom().getId())
+                .email(member.getFollowFrom().getEmail())
+                .name(member.getFollowFrom().getName())
+                .gender(member.getFollowFrom().getGender())
+                .birth(member.getFollowFrom().getBirth())
+                .isLocal(member.getFollowFrom().getIsLocal())
+                .areaCode(member.getFollowFrom().getAreaCode())
+                .sigunguCode(member.getFollowFrom().getSigunguCode())
+                .lastAccess(member.getFollowFrom().getLastAccess())
+                .introduceId(member.getFollowFrom().getIntroduceId())
+                .isFollow(isFollow(principal, member.getFollowFrom()))
+                .build()).collect(Collectors.toList());
+
+        return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
+
+
+    }
+
+    private String isFollow( PrincipalDetails principal, Member targetMember) {
+        if(Objects.equals(principal.getMember().getId(), targetMember.getId())) {
+            return "me";
+        }
+        return memberService.isFollow(principal, targetMember)?"follow":"none-follow";
+    }
+
+
     // 내 프로필
     public MemberResponse me(PrincipalDetails principal) {
         Member member = memberService.getById(principal.getMember().getId());
@@ -292,4 +328,5 @@ public class MemberAppService {
     public boolean emailCheck(String email) {
         return memberService.emailCheck(email);
     }
+
 }

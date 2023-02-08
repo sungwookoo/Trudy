@@ -3,10 +3,12 @@ package com.ssafy.trudy.member.service;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
+import com.ssafy.trudy.member.model.Follow;
 import com.ssafy.trudy.member.model.Introduce;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.RefreshToken;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
+import com.ssafy.trudy.member.repository.FollowRepository;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
@@ -40,6 +42,9 @@ public class MemberService {
 
     @Autowired
     private final IntroduceRepository introduceRepository;
+
+    @Autowired
+    private final FollowRepository followRepository;
 
     public Member getByEmail(String email) {
         return memberRepository.findByEmail(email)
@@ -121,16 +126,6 @@ public class MemberService {
 
     }
 
-    //팔로워 리스트 가져오기
-    public void findFollowerList() {
-
-    }
-
-    //팔로우 리스트 가져오기
-    public void findFollowingList() {
-
-    }
-
     //팔로잉 하기
     public void addFollowing() {
 
@@ -169,12 +164,14 @@ public class MemberService {
         return memberRepository.existsByName(name);
     }
 
+    // 현재 프로필 회원을 팔로우하는 회원 목록
+    public Page<Follow> getFollowerByPageable(Long id, Pageable pageable) {
+        Member member = memberRepository.findById(id).orElseThrow(() ->new ApiException(ServiceErrorType.NOT_FOUND));
+        return followRepository.findAllByFollowTo(member, pageable);
+    }
 
-    //회원 목록 가져오기 - 조회시 최근 접속일자를 내림차순
-//    public List<Member> findMemberList(){
-//        return memberRepository.findMemberList();
-//    }
-//
-//    // 필터된 회원 목록 가져오기
-//    public List<Member> findMemberListFiltered(String userType, String gender) { return memberRepository.findMemberListFiltered(userType, gender); }
+    // 나 -> targetId 회원 팔로우 여부 : 했으면 true(팔로잉불가상태), 안했으면 false(팔로잉가능상태)
+    public boolean isFollow(PrincipalDetails principal, Member targetMember) {
+        return followRepository.existsByFollowFromAndFollowTo(principal.getMember(), targetMember);
+    }
 }
