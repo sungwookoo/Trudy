@@ -16,7 +16,8 @@ const [ForumItem, setForumItem] = useState({});
 useEffect(() => {
     const getForumItem = async () => {
     const data = await axios.get(`api/post/${post_id}`);
-    console.log(data.data.postCombine)
+    // const 
+    console.log(data.data.postCombine.postElement)
     return data;
     }
     getForumItem()
