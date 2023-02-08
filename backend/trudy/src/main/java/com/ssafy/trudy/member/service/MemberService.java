@@ -158,6 +158,18 @@ public class MemberService {
     }
 
 
+    // 중복 이메일 검사 중복:1
+    public boolean emailCheck(String email) {
+        return memberRepository.existsByEmail(email);
+
+    }
+
+    // 중복 닉네임 검사 중복:1
+    public boolean nameCheck(String name) {
+        return memberRepository.existsByName(name);
+    }
+
+
     //회원 목록 가져오기 - 조회시 최근 접속일자를 내림차순
 //    public List<Member> findMemberList(){
 //        return memberRepository.findMemberList();

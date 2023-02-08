@@ -90,6 +90,7 @@ public class MemberAppService {
         return customToken;
     }
 
+    @Transactional
     public MemberIntroResponse modifyMemberIntro(PrincipalDetails principal, MemberIntroRequest modifyIntroRequest) {
         Member member = memberService.getById(principal.getMember().getId());
         Introduce introduce = member.getIntroduceId();
@@ -108,6 +109,7 @@ public class MemberAppService {
                 .build();
     }
 
+    @Transactional
     public MemberResponse modifyMember(PrincipalDetails principal, MemberModifyRequest modifyRequest) {
         modifyRequest.validation();
 
@@ -142,6 +144,11 @@ public class MemberAppService {
     public MemberResponse signup(SignupRequest signupRequest) {
         signupRequest.validation();
 
+        if(memberService.nameCheck(signupRequest.getName())) {
+            throw new ApiException(ServiceErrorType.DUPLICATE_USER_NAME);
+        }
+
+
         Member member = Member.signupBuilder()
                 .email(signupRequest.getEmail())
                 .name(signupRequest.getName())
@@ -168,6 +175,8 @@ public class MemberAppService {
                 .lastAccess(newMember.getLastAccess())
                 .build();
     }
+
+
 
     @Transactional
     public void logout(PrincipalDetails principal) {
@@ -278,5 +287,9 @@ public class MemberAppService {
         memberService.changePublicState(member);
         return getMemberResponse(member, introduce, posts);
 
+    }
+
+    public boolean emailCheck(String email) {
+        return memberService.emailCheck(email);
     }
 }
