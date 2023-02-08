@@ -51,8 +51,6 @@
   text-transform: capitalize;
 }
 
-
-
 .content-box {
   width: 1300px;
   height: 400px;
@@ -73,7 +71,6 @@ input:checked ~ .dot {
   font-weight: bolder;
   font-display: none;
 }
-
 
 .edit-toggle-follow-container{
   background-color: red;

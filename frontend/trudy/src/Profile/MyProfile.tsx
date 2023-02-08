@@ -20,6 +20,7 @@ interface getUser {
   self: string;
   title: string;
   introduction: string;
+  introduceId: any;
 };
 
 
@@ -33,7 +34,7 @@ function Profile() {
   // const [userInfo, setUserInfo] = useState<getUser[] | null | any>();
 
   // const authCtx = useContext(AuthContext);
-
+  const [getmypost, setGetMyPost] = useState<any>([]); 
   const [profile, setProfile] = useState<getUser | null>(null);
   // const [getmypost, setGetMyPost] = useState<string | null>(null);
 
@@ -56,33 +57,32 @@ function Profile() {
         },
       })
         .then((res) => {setProfile(res.data)
-          console.log(res.data, 11111)}
+          console.log(res.data)}
           )
         .catch((err:any) => 
         console.error(err));
       },[])
-      console.log(profile)  
+      // console.log(profile)  
       
-      
+    
+
     if (profile===null) {
       return <div className='flex justify-center'>유저 찾는중.....</div>;
     }
 
-    // const getMyPosts = () => {
-    //   const url = 'api/post'
-    //   axios.get(url)
-    //   .then((response) => {setGetMyPost(response.data)
-    //     console.log(response.data, 22222)})
-    //   .catch((error:any) => console.error(error));
-    // }
     
 
-
-
+    const getMyPosts = () => {
+      const url = 'api/post'
+      axios.get(url)
+      .then((res) => {setGetMyPost(res.data)
+        console.log(res.data)})
+      .catch((error:any) => console.error(error));
+    }
 
     const memberdetails = {
       id: profile.id,
-      name: profile.name,
+      // name: profile.name,
     } 
 
     // console.log(mymemberdetails)
@@ -97,7 +97,7 @@ function Profile() {
     //     });
     // }, []);
     // console.log(userInfo)
-
+    console.log(profile.id, 444)
     return(
       // 프로필 컨테이너 파란 영역
       <div className='profile-container'>
@@ -150,17 +150,17 @@ function Profile() {
               </div>
               {/* 토글 바 끝 */}
               <div className='flex flex-col py-10'>
-                  <div className='flex flex-row bg-green-500 ml-2'>
-                    <div className="w-12 mx-6 font-bold">{getFollow.follower}</div>
-                    <div className="w-12 mx-6 font-bold">{getFollow.following}</div>
+                  <div className='flex flex-row bg-green-500'>
+                    <div className="w-12 mx-9 font-bold">{getFollow.follower}</div>
+                    <div className="w-12 mx-3 font-bold">{getFollow.following}</div>
                   </div>
                   <div className='flex flex-row bg-green-500'>
-                  <div className="mx-3 font-bold">
-                    Follower
-                  </div>
-                  <div className="mx-3 font-bold">
-                    Following
-                  </div>
+                    <div className="mx-3 font-bold">
+                      Follower
+                    </div>
+                    <div className="mx-3 font-bold">
+                      Following
+                    </div>
                   <div className='myprofile-gender mx-3 font-bold'>
                     {profile.gender}
                   </div>
@@ -168,24 +168,73 @@ function Profile() {
               </div>
             </div>
             <div className='myprofile-intro'>
-              {profile.introduction}
+              {profile.introduceId.self}
             </div>
           </div>
           
             
           
-          <div>
-
+            <div>
           </div>
           <div className='content-box'>
-            <hr className='border-black border-1 mx-12 mt-2'></hr>
-            <div className='about-post'>
-              <div className='mx-12'>About</div>
-              <div className='mx-12'>Post</div>
-              <ProfileMyPost />
-              
-            </div>
+            <hr className='border-black border-1 mx-12 mt-2 mb-2'></hr>
+              <div className='about-post flex flex-row'>
+                  <div className='mx-16 bg-red-500'>
+                  About
+                  </div>
+                
+                  <div className='mx-16 bg-red-500' onClick={getMyPosts}>
+                  Posts
+                  </div>
+              </div>
+                  <div className='bg-red-500 flex flex-col mt-10'>
+                    <div className='flex flex-row'>
+                      <div className='ml-12'>
+                        I will show you
+                      </div>
+                      <div className='ml-36'>
+                        {profile.introduceId.plan}
+                      </div>
+                    </div>
+                    <div className='flex flex-row mt-20'>
+                      <div className='ml-12'>
+                        About me
+                      </div>
+                      <div className='ml-44'>
+                        {profile.introduceId.title}
+                      </div>
+                    </div>
+                    <div className='flex flex-row mt-20'>
+                      <div className='ml-12 font'>
+                        Language
+                      </div>
+                      <div className='ml-44'>
+                        {profile.introduceId.language}
+                      </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                  <div>
+                  {getmypost.map((post:any, i:any) => (
+                  <ProfileMyPost
+                  key={i}
+                  post={post}
+                  memberdetails={profile.id}
+                  />
+                  ))}
+                  </div>
+                
+                {/* <ProfileMyPost id={profile.id}/> */}
+              {/* <ProfileMyPost /> */}
             
+            <hr className='border-black border-1 mx-12 mt-2 mb-2'></hr>
           </div>
       </div>
         
