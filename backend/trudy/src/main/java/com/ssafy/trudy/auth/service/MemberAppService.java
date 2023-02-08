@@ -351,4 +351,22 @@ public class MemberAppService {
     }
 
 
+    public MemberResponse addFollow(Long id, PrincipalDetails principal) {
+        Member member = principal.getMember();
+        Member targetMember = memberService.addFollow(id, member);
+        return MemberResponse.builder()
+                .name(targetMember.getName())
+                .build();
+
+    }
+
+
+    public MemberResponse removeFollow(Long id, PrincipalDetails principal) {
+        Member member = principal.getMember();
+        Member targetMember = memberService.removeFollow(id, member);
+        return MemberResponse.builder()
+                .name(targetMember.getName())
+                .build();
+
+    }
 }
