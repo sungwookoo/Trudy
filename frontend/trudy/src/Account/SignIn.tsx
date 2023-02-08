@@ -8,35 +8,15 @@ import React, {
 } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
-import "./SignIn.css";
 
 // 로그인 페이지
 
 function SignIn() {
   const navigate = useNavigate();
-  const navigateToSignUp = () => {
+  const navigateToSignUpSelect = () => {
     navigate("/signupselect");
   };
-  const navigateToLanding = () => {
-    navigate("/");
-  };
-  // const [email, setEmail] = useState<string>("");
-  // const [password, setPassword] = useState<string>("");
 
-  // function Submit(event: SyntheticEvent) {
-  //   event.preventDefault();
-  //   axios
-  //     .post("api/login", { email: email, password: password })
-  //     .then((response) => {
-  //       const accessToken = response.data.accessToken
-  //       navigateToLanding();
-  //       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  //       console.log(response);
-  //     })
-  //     .catch(() => {
-  //       alert("Wrong ID or Password");
-  //     });
-  // }
 
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -151,7 +131,7 @@ function SignIn() {
             <button
               type="submit"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={navigateToSignUp}
+              onClick={navigateToSignUpSelect}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Sign up

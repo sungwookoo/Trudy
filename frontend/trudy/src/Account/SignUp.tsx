@@ -1,5 +1,5 @@
-import { SyntheticEvent, useState, useEffect, useRef } from "react";
-import "./SignUp.css";
+import { SyntheticEvent, useState, useEffect, useContext } from "react";
+import AuthContext from "../Common/authContext";
 
 // 로그인 페이지
 
@@ -11,6 +11,18 @@ function SignUp() {
   const [islocal, setIslocal] = useState<number>(0);
   const [region, setRegion] = useState<string[]>([]);
   const [regionDetail, setRegionDetail] = useState<string[]>([]);
+  
+  const authCtx = useContext(AuthContext)
+
+
+
+  useEffect(() => {
+    const a = 1
+    return(
+      authCtx.defaultVerified
+    )
+  }, [])
+
 
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
