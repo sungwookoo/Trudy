@@ -12,6 +12,7 @@ import com.ssafy.trudy.member.repository.FollowRepository;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +186,7 @@ public class MemberService {
         Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
         follow.setFollowTo(targetMember);
         followRepository.save(follow);
+
         return targetMember;
     }
 
