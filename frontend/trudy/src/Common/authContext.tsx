@@ -20,7 +20,11 @@ const AuthContext = React.createContext({
   isLoggedIn: false,
   isSuccess: false,
   isGetSuccess: false,
+  isVerified: false,
   signup: (email: string, password: string, nickname: string) => {},
+  sendCode: (email: string) => {},
+  emailVerified: () => {},
+  defaultVerified: () => {},
   login: (email: string, password: string) => {},
   signOut: () => {},
   getUser: (params: any) => {},
@@ -46,8 +50,35 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
 
   const userIsLoggedIn = !!token;
+
+  // 이메일 중복을 확인하고 인증 코드를 보내는 함수
+  const sendCode = async (email: string) => {
+    const response: any = await authAction.verifyEmail(email);
+    console.log(response);
+    if (response === 6) {
+      alert("this email is already in use!!");
+
+      return null;
+    }
+
+    console.log("context  ", response);
+    return response;
+  };
+
+  // 이메일 인증을 완료하고 isVerified를 true로 만드는 함수
+  const emailVerified = () => {
+    setIsVerified(true)
+  }
+
+  // isVerified를 false로 만드는 함수
+  // signup 페이지로의 비정상 접근을 막는다
+  const defaultVerified = () => {
+    setIsVerified(false)
+  }
+
 
   //  회원가입을 하는 함수
   const signupHandler = (email: string, password: string, nickname: string) => {
@@ -78,29 +109,29 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
         );
         setIsSuccess(true);
       } else {
-        alert("Wrong ID or Password!")
+        alert("Wrong ID or Password!");
       }
-    })
+    });
   };
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(() => {
     setToken("");
-    authAction.signOutActionHandler();
+    authAction.signOutActionHandler(token);
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
   }, []);
 
   // 유저 정보를 가져오는 함수
-  const getUserHandler = async (params: any) => {
+  const getUserHandler = async (headers: any) => {
     setIsGetSuccess(false);
     // 토큰이 만료되지 않았으면 재발행
     // if (tokenData.duration > 0) {
     //   console.log('재발행 시도')
     // }
 
-    const data = await authAction.getUserActionHandler(params);
+    const data = await authAction.getUserActionHandler(headers);
     // data.then((result) => {
     if (data !== null) {
       const userData: UserInfo = data.data;
@@ -146,11 +177,11 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     authAction.getUserPlanner(userId);
   };
 
-  useEffect(() => {
-    if (tokenData) {
-      logoutTimer = setTimeout(signOutHandler, tokenData.duration);
-    }
-  }, [tokenData, signOutHandler]);
+  // useEffect(() => {
+  //   if (tokenData) {
+  //     logoutTimer = setTimeout(signOutHandler, tokenData.duration);
+  //   }
+  // }, [tokenData, signOutHandler]);
 
   const contextValue = {
     token,
@@ -158,6 +189,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     isLoggedIn: userIsLoggedIn,
     isSuccess,
     isGetSuccess,
+    isVerified,
+    sendCode: sendCode,
+    emailVerified: emailVerified,
+    defaultVerified: defaultVerified,
     signup: signupHandler,
     login: loginHandler,
     signOut: signOutHandler,

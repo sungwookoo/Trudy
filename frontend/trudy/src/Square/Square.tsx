@@ -32,7 +32,7 @@ function Square() {
   };
 
   useEffect(() => {
-    const params = {
+    const headers = {
       areaCode: area,
       isLocal: isLocal,
       gender: gender,
@@ -40,7 +40,7 @@ function Square() {
     };
 
     async function SquareGet() {
-      const res: any = await authCtx.getUser(params);
+      const res: any = await authCtx.getUser(headers);
       setSquareData(res.data.content);
     }
     SquareGet();

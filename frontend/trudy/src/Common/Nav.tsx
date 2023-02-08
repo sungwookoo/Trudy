@@ -14,9 +14,6 @@ const Nav = () => {
   const authCtx = useContext(AuthContext);
   const signOut = () => {
     authCtx.signOut();
-    if (authCtx.isLoggedIn === false) {
-      alert("sign out!");
-    }
   };
 
   return (
