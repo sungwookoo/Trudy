@@ -18,9 +18,7 @@ function SignUpSelect() {
       <div className="w-full max-w-md space-y-8">
         <div>
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Connect with Local Life!
-          </h2>
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Connect with Local Life!</h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
         <form className="mt-8 space-y-6" action="#" method="POST">
