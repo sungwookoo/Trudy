@@ -11,6 +11,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/place")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PlaceController {
 
     @Autowired
