@@ -115,7 +115,7 @@ public class PostService {
                         Long[] sigunguIdList,
                         Long memberId,
                         CategoryName[] categoryList*/
-                        PostDto.InsertPost insertPostDto){
+                         PostDto.InsertPost insertPostDto){
         //entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
 
         //1. post entity 만들어서 저장 후 id 가져오기 -> thumbnail 은 나중에 따로 추가

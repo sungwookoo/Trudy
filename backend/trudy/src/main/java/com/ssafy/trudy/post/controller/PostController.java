@@ -41,7 +41,7 @@ public class PostController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
 
-    //포럼 게시글 목록 가져오기
+    //포럼 게시글 목록 가져오기 - 정상 동작
     @GetMapping
     public ResponseEntity<?> postList(){
         try{
@@ -57,7 +57,7 @@ public class PostController {
         }
     }
 
-    //포럼 게시글 작성
+    //포럼 게시글 작성 - 정상 동작
     @PostMapping
     public ResponseEntity<?> postAdd(/*@RequestParam String title,
                         @RequestParam String content,
@@ -65,22 +65,29 @@ public class PostController {
                         @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
                         @RequestParam CategoryName[] categoryList*/
-            @RequestBody PostDto.InsertPost insertPostDto){
+            /*@RequestBody PostDto.InsertPost insertPostDto*/
+            @RequestParam(value="upload", required = false) MultipartFile[] upload){
 
-//        postService.addPost(title, content, upload, sigunguId, memberId, category);
-        //postService.addPost(title, content, sigunguIdList,memberId, categoryList);
-        postService.addPost(insertPostDto);
+
 
         try{
-            List<PostDto.PostCombine> findPostCombines = postService.findPostList();
+            //        postService.addPost(title, content, upload, sigunguId, memberId, category);
+            //postService.addPost(title, content, sigunguIdList,memberId, categoryList);
+            //postService.addPost(insertPostDto);
+            log.info("============== test complete ===========");
+
+            log.info("check : " + upload[0].getOriginalFilename());
+            //log.info(insertPostDto.getUpload().toString());
+            log.info("controller ========== try ok");
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
+            log.info("controller ========== try bad");
+            return ResponseEntity.ok().build();
         }
     }
 
-    //포럼 게시글 수정
+    //포럼 게시글 수정 - 정상 동작
     @PutMapping("/{post_id}")
     public ResponseEntity<?> postModify(@PathVariable("post_id") Long postId,
                            /*@RequestParam String title,
@@ -99,7 +106,7 @@ public class PostController {
         }
     }
 
-    //포럼 게시글 삭제
+    //포럼 게시글 삭제 - 정상 작동
     @DeleteMapping("/{post_id}")
     public ResponseEntity<?> postRemove(@PathVariable("post_id") Long postId){
         try{
