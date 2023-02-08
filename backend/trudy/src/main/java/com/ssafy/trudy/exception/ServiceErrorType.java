@@ -17,6 +17,10 @@ public enum ServiceErrorType {
     INVALID_USER_NICKNAME(HttpStatus.BAD_REQUEST, 2, "별명은 영문 소문자만 허용합니다."),
     INVALID_USER_PASSWORD(HttpStatus.BAD_REQUEST, 3, "비밀번호는 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상씩 포함합니다."),
     INVALID_USER_PHONE_NUMBER(HttpStatus.BAD_REQUEST, 4, "휴대폰 번호는 숫자만 허용합니다."),
+
+    DUPLICATE_USER_NAME(HttpStatus.BAD_REQUEST, 5, "중복된 닉네임 이름입니다."),
+    DUPLICATE_USER_EMAIL(HttpStatus.BAD_REQUEST, 6, "이미 가입된 이메일 주소입니다.")
+
     ;
 
     HttpStatus httpStatus;

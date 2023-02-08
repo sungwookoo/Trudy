@@ -1,5 +1,6 @@
 package com.ssafy.trudy.post.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.trudy.member.model.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Post {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member memberId;

@@ -1,0 +1,10 @@
+declare module "@ckeditor/ckeditor5-core/src/plugin"
+declare module 'ckeditor5-custom-build/build/ckeditor';
+declare module '@ckeditor/ckeditor5-react';
+declare module '@ckeditor/ckeditor5-build-classic';
+declare module "lodash";
+declare module "@ckeditor/ckeditor5-upload/src/ui/filedialogbuttonview"
+declare module "@ckeditor/ckeditor5-upload/src/filerepository"
+declare module "@ckeditor/ckeditor5-ui/src/notification/notification"
+declare module "@ckeditor/ckeditor5-core/src/command"
+declare module '@ckeditor/ckeditor5-widget/src/utils'

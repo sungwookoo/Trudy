@@ -80,9 +80,12 @@ function Landing() {
       outerDivRefCurrent.removeEventListener('wheel', wheelHandler);
     };
   }, []);
+
   const Item = ({ text }: any) => {
     return text;
   };
+
+
 
 
 // 이하 html
