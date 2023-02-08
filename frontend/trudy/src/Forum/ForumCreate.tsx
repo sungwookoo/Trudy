@@ -19,38 +19,49 @@ function ForumCreate() {
   
   const [forumtitle, setforumTitle] = useState("");
   const [forumcontent, setforumContent] = useState("");
-  const [forumimage, setImage] = useState(null);
+  const [forumcategory, setCategory] = useState([]);
+  const [forummember, setMember] = useState(null);
+  const [forumsigun, setSigun] = useState(null);
+  const [forumimage, setImage] = useState(undefined);
 
+  // const [forumupload, setUpload] = useState(null);
   // const [viewContent, setViewContent] = useState([]);
 
 const forumdata = {
   'title' : forumtitle,
   'content' : forumcontent,
-  // "upload": ,
-  "sigunguId": 12,
+  "sigunguIdList": [1, 2, 3],
   'memberId': 1,
-  "category": 1,
-  // 'image_file' : `${Image}`,
+  "categoryList": ['Hotel', 'Restaurant', 'Sport'],
+  // "upload": forumimage,
+  // 'image_file' : `${Image.name}`,
+  
 }
 
+// const forumdata2 = JSON.stringify(forumdata);
+// console.log(forumdata2)
 
-  const imgLink ='api/post'
-  const [flag, setFlag] = useState(false);
+  // const imgLink ='api/post/'
+  // const [flag, setFlag] = useState(false);
 
 
   const customUploadAdapter = (loader:any) => {
       return {
         upload() {
           return new Promise((resolve, reject) => {
-            const data = new FormData();
+            const imagedata = new FormData();
             loader.file.then((file:any) => {
-              data.append('name', file.name);
-              data.append('file', file);
+              imagedata.append('name', file.name);
+              imagedata.append('upload', file);
+                // console.log(file.name)
+                console.log(imagedata.get('upload'))
 
-              axios.post('/api/post', data)
+
+              axios.post('/api/post', imagedata)
               .then((res:any) => {
-                setImage(res.data.filename);
-                console.log(res.data.filename)
+                alert('이미지 업로드 완료!')
+                // setImage(res.data.filename);
+                console.log(res.data.file.name)
                 })
                 
                   
@@ -64,12 +75,13 @@ const forumdata = {
         const submitPost = () => {
           console.log(forumdata)
           axios.post('api/post', forumdata)
-          .then((data)=>{
+          .then((res)=>{
             alert('등록 완료!');
-            console.log(data)
+            console.log(res)
           })
           .catch((err)=>{
             console.log(err)
+            alert('등록 실패!');
           })
         };
       
@@ -79,9 +91,9 @@ const forumdata = {
   //     upload() {
   //       if (loader.target.files) {
   //         const uploadFile = loader.target.files[0];
-  //         const formData = new FormData();
+  //         const imageData = new FormData();
   //         loader.file.then((file: any) => {
-  //           formData.append('files', uploadFile);
+  //           imageData.append('files', uploadFile);
   
   //           axios({
   //             method: 'post',
@@ -109,7 +121,8 @@ return(
       <div className='forum-create-container'>
         <div className='forum-title-container'>
 
-        <input className='forum-title' type="text" placeholder='Enter Title Here' onChange={(event) => setforumTitle(event.target.value)}/>
+        <input className='forum-title' type="text" placeholder='Enter Title Here' 
+        onChange={(event) => setforumTitle(event.target.value)}/>
         
         
       <div>
