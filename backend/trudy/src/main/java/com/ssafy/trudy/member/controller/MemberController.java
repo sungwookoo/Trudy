@@ -3,6 +3,7 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
+import com.ssafy.trudy.member.model.Follow;
 import com.ssafy.trudy.member.model.dto.MemberIntroRequest;
 import com.ssafy.trudy.member.model.dto.MemberIntroResponse;
 import com.ssafy.trudy.member.model.dto.MemberModifyRequest;
@@ -126,11 +127,18 @@ public class MemberController {
         return memberAppService.getByFollowingPageable(id ,pageable, principal);
     }
 
-    //팔로잉 하기
-    @PostMapping("/follow/{follow_from}/{follow_to}")
-    public void followingAdd() {
-
+    // 팔로우
+    @PostMapping("/follow/{id}")
+    public MemberResponse followAdd(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.addFollow(id, principal);
     }
+
+    // 언팔로우
+    @DeleteMapping("/follow/{id}")
+    public MemberResponse followRemove(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.removeFollow(id, principal);
+    }
+
 
     //차단하기
     @PostMapping("/ban/{ban_from}/{ban_to}")

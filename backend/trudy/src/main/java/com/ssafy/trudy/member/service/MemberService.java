@@ -12,6 +12,7 @@ import com.ssafy.trudy.member.repository.FollowRepository;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.repository.RefreshTokenRepository;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,10 +127,6 @@ public class MemberService {
 
     }
 
-    //팔로잉 하기
-    public void addFollowing() {
-
-    }
 
     //차단하기
     public void addBan() {
@@ -182,4 +179,22 @@ public class MemberService {
     }
 
 
+    // 팔로우
+    public Member addFollow(Long target, Member member) {
+        Follow follow = new Follow();
+        follow.setFollowFrom(member);
+        Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
+        follow.setFollowTo(targetMember);
+        followRepository.save(follow);
+
+        return targetMember;
+    }
+
+    // 언팔로우 (언팔로우 한 회원 리턴)
+    public Member removeFollow(Long target, Member member) {
+        Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
+        followRepository.findByFollowFromAndFollowTo(member, targetMember);
+        return targetMember;
+
+    }
 }
