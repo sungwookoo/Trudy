@@ -32,9 +32,6 @@ public class PostController {
 
     private final PostService postService;
 
-    ModelMapper modelMapper = new ModelMapper();
-
-
     @Operation(summary = "get posts", description = "포럼 게시글 목록 가져오기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
@@ -47,14 +44,9 @@ public class PostController {
     //포럼 게시글 목록 가져오기
     @GetMapping
     public ResponseEntity<?> postList(){
-
         try{
-            //log.info("========post Controller / postList===========");
             List<PostDto.PostCombine> findPostCombines = postService.findPostList();
             if(findPostCombines != null || !findPostCombines.isEmpty()){
-                /*List<PostListResponse> response = findPostList.stream()
-                        .map(p -> new PostListResponse(modelMapper.map(p, PostDto.PostRequest.class), modelMapper.map(p.getMemberId(), PostDto.MemberRequest.class), p.get) )
-                        .collect(Collectors.toList());*/
                 return ResponseEntity.ok().body(findPostCombines);
             } else {
                 return ResponseEntity.noContent().build();
@@ -67,47 +59,56 @@ public class PostController {
 
     //포럼 게시글 작성
     @PostMapping
-    public void postAdd(@RequestParam String title,
+    public ResponseEntity<?> postAdd(/*@RequestParam String title,
                         @RequestParam String content,
 //                        @RequestParam MultipartFile[] upload,
                         @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
-                        @RequestParam CategoryName[] categoryList){
-        //1. dto안에 dto를 key, body 형식으로 받아온다.
-        // title, content, image[], category[], sigunguId[](갖고오기), memberId(갖고오기),
-        // PostCombine{PostElement, MemberElement,  }
-//        log.info("Controller - postAdd Test");
-//        log.info("title =============== " + title);
-//        log.info("content ============ " + content);
-//        for(MultipartFile m : upload){
-//            log.info("upload ============== " + m.getOriginalFilename());
-//        }
-//        log.info("sigungu ============ " + sigunguId.toString());
-//        log.info("memberId ====== " + memberId.toString());
-//        for(String s : category){
-//            log.info("category ====== " + s);
-//        }
+                        @RequestParam CategoryName[] categoryList*/
+            @RequestBody PostDto.InsertPost insertPostDto){
 
 //        postService.addPost(title, content, upload, sigunguId, memberId, category);
-        postService.addPost(title, content, sigunguIdList,memberId, categoryList);
+        //postService.addPost(title, content, sigunguIdList,memberId, categoryList);
+        postService.addPost(insertPostDto);
+
+        try{
+            List<PostDto.PostCombine> findPostCombines = postService.findPostList();
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //포럼 게시글 수정
     @PutMapping("/{post_id}")
-    public void postModify(@PathVariable("post_id") Long postId,
-                           @RequestParam String title,
+    public ResponseEntity<?> postModify(@PathVariable("post_id") Long postId,
+                           /*@RequestParam String title,
                            @RequestParam String content,
 //                        @RequestParam MultipartFile[] upload,
                            @RequestParam Long[] sigunguIdList,
-                           @RequestParam CategoryName[] categoryList){
-        postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
-
+                           @RequestParam CategoryName[] categoryList*/
+                                @RequestBody PostDto.InsertPost insertPostDto){
+        try{
+            //postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
+            postService.modifyPost(postId, insertPostDto);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //포럼 게시글 삭제
     @DeleteMapping("/{post_id}")
-    public void postRemove(@PathVariable("post_id") Long postId){
-        postService.removePost(postId);
+    public ResponseEntity<?> postRemove(@PathVariable("post_id") Long postId){
+        try{
+            postService.removePost(postId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //포럼 게시글 상세보기 - 정상 동작
@@ -115,11 +116,8 @@ public class PostController {
     public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
 
         try {
-            log.info("post Detail");
             Map<String, Object> response = postService.findPostDetail(postId);
-
             if(!response.isEmpty() && response != null){
-
                 return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.noContent().build();
@@ -133,45 +131,86 @@ public class PostController {
 
     //포럼 게시글 좋아요 - 정상 동작
     @PostMapping("/like/{member_id}/{post_id}")
-    public void postLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId){
-        postService.addPostLike(memberId, postId);
+    public ResponseEntity<?> postLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId){
+        try{
+            postService.addPostLike(memberId, postId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //포럼 게시글 댓글 작성 - 정상 동작
     @PostMapping("/comment/{member_id}/{post_id}")
-    public void postCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId, @RequestParam("content") String content){
-        postService.addPostComment(memberId, postId, content);
+    public ResponseEntity<?> postCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId, @RequestParam("content") String content){
+        try{
+            postService.addPostComment(memberId, postId, content);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //포럼 댓글 좋아요 - 정상 동작
     @PostMapping("/comment/like/{member_id}/{comment_id}")
-    public void postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
-        postService.addPostCommentLike(memberId, commentId);
+    public ResponseEntity<?> postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
+        try{
+            postService.addPostCommentLike(memberId, commentId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //댓글 삭제 - 정상 동작 - 수정해야 -> 대댓글 없으면 걍 날리는 걸로
     @DeleteMapping("/comment/{comment_id}")
-    public void postCommentRemove(@PathVariable("comment_id") Long commentId){
-        postService.removePostComment(commentId);
+    public ResponseEntity<?> postCommentRemove(@PathVariable("comment_id") Long commentId){
+        try{
+            postService.removePostComment(commentId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //대댓글 작성 - 정상 동작
     @PostMapping("/nested-comment/{member_id}/{comment_id}")
-    public void postNestedCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId, @RequestParam("content") String content){
-        postService.addPostNestedComment(memberId, commentId, content);
+    public ResponseEntity<?> postNestedCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId, @RequestParam("content") String content){
+        try{
+            postService.addPostNestedComment(memberId, commentId, content);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //대댓글 좋아요 - 정상 동작
     @PostMapping("/nested-comment/like/{member_id}/{nested_comment_id}")
-    public void postNestedCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("nested_comment_id") Long nestedCommentId){
-        log.info("test1");
-        postService.addPostNestedCommentLike(memberId, nestedCommentId);
+    public ResponseEntity<?> postNestedCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("nested_comment_id") Long nestedCommentId){
+        try{
+            postService.addPostNestedCommentLike(memberId, nestedCommentId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //대댓글 삭제 - 정상 동작
     @DeleteMapping("/nested-comment/{nested_comment_id}")
-    public void postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
-        postService.removePostNestedComment(nestedCommentId);
+    public ResponseEntity<?> postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
+        try{
+            postService.removePostNestedComment(nestedCommentId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 

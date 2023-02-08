@@ -6,6 +6,7 @@ import com.ssafy.trudy.member.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -36,6 +37,19 @@ public class PostDto {
     @NoArgsConstructor
     public static class CommentCombine{
         private List<CommentElement> commentElementList;
+    }
+
+    //포럼 글 받기
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class InsertPost{
+        private String title;
+        private String content;
+        //private MultipartFile[] upload;
+        private Long[] sigunguIdList;
+        private Long memberId;
+        private CategoryName[] categoryList;
     }
 
 
