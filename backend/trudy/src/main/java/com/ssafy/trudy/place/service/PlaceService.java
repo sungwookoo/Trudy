@@ -80,7 +80,7 @@ public class PlaceService {
 
         // 2) 지역시군구 값 O, 콘텐츠 타입 값 X
         } else if (areaSigunguCash.length() != 0 && contentTypeIdCash.length() == 0) {
-            String[][] areaSigungu = parseFunction(areaSigunguCash);
+            List<String[]> areaSigungu = parseFunction(areaSigunguCash);
             // 2-1) keyword X -> 지역 시군구로만 찾기
             if(keyword.length() == 0) {
                 for (String[] strings : areaSigungu) {
@@ -119,7 +119,7 @@ public class PlaceService {
 
         // 4) 지역 시군구 값 O, 콘텐츠 타입 값 O
         } else {
-            String[][] areaSigungu = parseFunction(areaSigunguCash);
+            List<String[]> areaSigungu = parseFunction(areaSigunguCash);
             String[] contentTypeId = parseFunction2(contentTypeIdCash);
             List<String> contentTypeIdList = Arrays.asList(contentTypeId);
             // 4-1) keyword X -> 지역 시군구 값 & 콘텐츠 타입 값
@@ -176,26 +176,21 @@ public class PlaceService {
                 .build()).collect(Collectors.toList());
     }
 
-    // String -> String[][]
-    public String[][] parseFunction(String input) {
+    // String -> List<String[]>
+    public List<String[]> parseFunction(String input) {
         // Remove square brackets from start and end of input string
-        input = input.substring(1, input.length() - 1);
-        input = input.substring(1, input.length() - 1);
-
-        // Split input string into rows
-        String[] rows = input.split("\\], \\[");
-
-        // Split each row into individual values
-        String[][] array = new String[rows.length][];
-        for (int i = 0; i < rows.length; i++) {
-            array[i] = rows[i].split(",");
+        String[] elements = input.split(",");
+        List<String[]> pairs = new ArrayList<>();
+        for(int i = 0; i < elements.length; i += 2){
+            String[] pair = { elements[i], elements[i+1]};
+            pairs.add(pair);
         }
-        return array;
+        return pairs;
     }
 
     // String -> String[]
     public String[] parseFunction2(String input) {
-        String[] result = Arrays.stream(input.substring(1, input.length() - 1).split(","))
+        String[] result = Arrays.stream(input.split(","))
                 .map(String::trim)
                 .toArray(String[]::new);
         return result;
