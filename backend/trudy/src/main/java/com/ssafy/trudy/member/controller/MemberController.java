@@ -105,17 +105,16 @@ public class MemberController {
     }
 
 
-//    @ApiOperation(value = "팔로워 리스트 가져오기",
-//            produces = MediaType.APPLICATION_JSON_VALUE,
-//            responseHeaders = {
-//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
-//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
-//            })
-//    @GetMapping
-//    public Page<MemberResponse> followerList(@AuthenticationPrincipal PrincipalDetails principal, @PageableDefault(size = 9, sort = "id") Pageable pageable) {
-//
-//
-//    }
+    @ApiOperation(value = "팔로워 리스트 가져오기",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/follower/{id}")
+    public Page<MemberResponse> followerList(@PathVariable Long id, @PageableDefault(size = 10, sort = "id") Pageable pageable, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.getByFollowerPageable(id ,pageable, principal);
+    }
 
 //    @ApiOperation(value = "팔로잉 리스트 가져오기",
 //            produces = MediaType.APPLICATION_JSON_VALUE,
@@ -123,8 +122,8 @@ public class MemberController {
 //                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
 //                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
 //            })
-//    @GetMapping("/following/{id}")
-//    public FollowResponse followingList(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long id) {
+//    @GetMapping("/following")
+//    public Page<MemberResponse> followingList(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long id) {
 //
 //    }
 
