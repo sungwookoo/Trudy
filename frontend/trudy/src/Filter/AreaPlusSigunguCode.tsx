@@ -233,5 +233,5 @@ export const AreaPlusSigungu: any = [
   [38, 23],
   [38, 24],
   [39, 3],
-  0,
+  [39, 4],
 ];
