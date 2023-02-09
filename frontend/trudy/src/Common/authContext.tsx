@@ -21,7 +21,7 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
-  signup: (email: string, password: string, nickname: string) => {},
+  signup: (password: string, nickname: string, gender: string, birthday: string, isLocal: string, areaCode: number, sigunguCode: number) => {},
   sendCode: (email: string) => {},
   emailVerified: (email: string) => {},
   defaultVerified: () => {},
@@ -72,13 +72,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return response;
   };
 
-  // 이메일 인증을 완료하고 isVerified를 true로 만드는 함수
+  // 이메일 인증을 완료했음을 기록하는 함수
   const emailVerified = (email: string) => {
     setIsVerified(true)
     setVerifiedEmail(email)
   }
 
-  // isVerified를 false로 만드는 함수
+  // 이메일 인증상태를 초기화 시킨다
   // signup 페이지로의 비정상 접근을 막는다
   const defaultVerified = () => {
     setIsVerified(false)
@@ -86,9 +86,9 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
 
   //  회원가입을 하는 함수
-  const signupHandler = (email: string, password: string, nickname: string) => {
+  const signupHandler = (password: string, nickname: string, gender: string, birthday: string, isLocal: string, areaCode: number, sigunguCode: number) => {
     setIsSuccess(false);
-    const response = authAction.signUpActionHandler(email, password, nickname);
+    const response = authAction.signUpActionHandler(verifiedEmail, password, nickname, gender, birthday, isLocal, areaCode, sigunguCode);
     response.then((result) => {
       if (result !== null) {
         setIsSuccess(true);
