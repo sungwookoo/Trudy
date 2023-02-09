@@ -23,14 +23,14 @@ const AuthContext = React.createContext({
   isVerified: false,
   signup: (email: string, password: string, nickname: string) => {},
   sendCode: (email: string) => {},
-  emailVerified: () => {},
+  emailVerified: (email: string) => {},
   defaultVerified: () => {},
   login: (email: string, password: string) => {},
   signOut: () => {},
   getUser: (params: any) => {},
   //   changeNickname: (nickname: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
-  // planner: (userId: number) => {},
+  planner: (memberId: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -51,26 +51,31 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [verifiedEmail, setVerifiedEmail] = useState<string>("")
+
 
   const userIsLoggedIn = !!token;
+
+
+
+// Account
 
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
   const sendCode = async (email: string) => {
     const response: any = await authAction.verifyEmail(email);
-    console.log(response);
     if (response === 6) {
       alert("this email is already in use!!");
 
       return null;
     }
-
-    console.log("context  ", response);
+    alert("Verification code has been sent")
     return response;
   };
 
   // 이메일 인증을 완료하고 isVerified를 true로 만드는 함수
-  const emailVerified = () => {
+  const emailVerified = (email: string) => {
     setIsVerified(true)
+    setVerifiedEmail(email)
   }
 
   // isVerified를 false로 만드는 함수
@@ -132,15 +137,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // }
 
     const data = await authAction.getUserActionHandler(headers);
-    // data.then((result) => {
     if (data !== null) {
       const userData: UserInfo = data.data;
       setUserObj(userData);
       setIsGetSuccess(true);
       // }
     }
-    // console.log("data    1", data.data);
-    // console.log("data    2", data.data.content[0]);
     return data;
   };
 
@@ -172,9 +174,15 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   //     });
   //   };
 
+
+
+// Planner
+
   // Planner 정보를 가져오는 함수
-  const getUserPlannerHandler = (userId: number) => {
-    authAction.getUserPlanner(userId);
+  const getPlannerHandler = (memberId: number) => {
+    const response = authAction.getPlanner(memberId);
+
+    return response
   };
 
   // useEffect(() => {
@@ -199,7 +207,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     getUser: getUserHandler,
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,
-    // planner: getUserPlannerHandler,
+    planner: getPlannerHandler,
   };
 
   return (
