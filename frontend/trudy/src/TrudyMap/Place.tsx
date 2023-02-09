@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import PlaceForm from "./PlaceForm";
 import CategoryButtons from "../Filter/SelectCategory";
 import AreaSelect from "../Filter/SelectArea";
-import { areaCode } from "../Filter/AreaCode";
-import { sigunguCode } from "../Filter/SigunguCode";
+import { areaList } from "../Filter/AreaCode";
+import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
 
 export type mapPlaceType = {
@@ -39,7 +39,6 @@ function Place(props: any) {
   // 시군구 filter
   const [selectedSigungu, setSelectedSigungu] = useState<number[]>([]);
   // 시군구 선택시 지역 + 시군구 변환
-  const [convertSigunguCode, setConvertSigungu] = useState<any>([]);
 
   // 카테고리 버튼 on/off
   const handleCategoryClick = (categoryId: number) => {
@@ -54,7 +53,6 @@ function Place(props: any) {
   const handleAreaClick = (id: number) => {
     setSelectedAreaCode(id);
   };
-
   // 소분류 선택시 areaSigungu 변경하기
   const handleSigunguClick = (sigunguId: any) => {
     setareaSigun([...areaSigun, sigunguId]);
@@ -65,7 +63,6 @@ function Place(props: any) {
     setSelectedPlace(place);
     props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
-  console.log(areaSigun);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +72,7 @@ function Place(props: any) {
         );
         setPlaces(resData.data);
       } catch (error) {
-        // console.error(error);
+        console.error(error);
       }
     };
     fetchData();
@@ -88,16 +85,15 @@ function Place(props: any) {
         Area Select
       </button>
 
-      {!isCollapsed && <AreaSelect key={0} areaCode={areaCode} onClick={handleAreaClick} />}
+      {!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}
       {!isCollapsed && selectedAreaCode && (
         <SigunguSelect
           key={selectedAreaCode}
-          sigunguCode={sigunguCode}
+          selectSigunguCode={sigunguList}
           area={selectedAreaCode}
           selectedSigungu={selectedSigungu}
           setSelectedSigungu={setSelectedSigungu}
           setConvertSigungu={setareaSigun}
-          areaSigun={areaSigun}
         />
       )}
 

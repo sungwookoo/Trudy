@@ -1,30 +1,36 @@
 import { SyntheticEvent, useState, useEffect, useContext } from "react";
 import AuthContext from "../Common/authContext";
 import EmailConfirm from "./EmailConfirm";
-
+import AreaSelect from "../Filter/SelectArea";
+import { areaList } from "../Filter/AreaCode";
+import { sigunguList } from "../Filter/SigunguCode";
+import SigunguSelect from "../Filter/SelectSigungu";
 // 로그인 페이지
 
 function SignUp() {
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [isLocal, setIsLocal] = useState<string>("");
   const [areaCode, setAreaCode] = useState<number>(0);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
 
+
+  // 지역 filter
+const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
   
   const authCtx = useContext(AuthContext)
-
-  
+  const handleAreaClick = (id: number) => {
+    setSelectedAreaCode(id);
+  };
   useEffect(() => {
     return(
       authCtx.defaultVerified
     )
   }, [])
-
-
+console.log(selectedAreaCode)
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -75,7 +81,7 @@ function SignUp() {
               Nickname
               <input
                 id="nickname"
-                name="name"
+                name="nickname"
                 type="text"
                 autoComplete="nickname"
                 required
@@ -83,7 +89,7 @@ function SignUp() {
                 maxLength={16}
                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setNickname(e.target.value)}
               />
             </div>
           </div>
@@ -165,17 +171,26 @@ function SignUp() {
 
             {/* 지역 */}
             {isLocal === '1' ? 
-            <div className="-space-y-px rounded-md">
-              <div>
-                <label htmlFor="Region">Region</label>
-                <br />
-                <div>
-                  <input id="region" name="region" type="radio" required />
-                  region
+            <>
+            <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
+            {selectedAreaCode && (
+              <div className="flex flex-col">
+              {sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
+                <div key={i} className="flex items-center mb-2">
+                  <input
+                    className="mr-2"
+                    name = "sigungu-select"
+                    type="radio"
+                    id={`sigungu-${sigunguInfo.id}`}
+                    // checked={selectedSigungu.includes(sigunguInfo.id)}
+                    onChange={() => setSigunguCode(sigunguInfo.code)}
+                  />
+                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
                 </div>
-              </div>
+              ))}
             </div>
-            : <div></div>}
+            )}</>
+            : ''}
           </div>
 
           <div></div>
@@ -183,8 +198,11 @@ function SignUp() {
           {/* 회원가입 완료 버튼 */}
           <div>
             <button
-              type="submit"
+              type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={(e) => {
+                authCtx.signup(password, nickname, gender, birthday, isLocal, areaCode, sigunguCode)
+              }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Submit

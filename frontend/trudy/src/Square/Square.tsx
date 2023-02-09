@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
-import "./Square.css";
 import CategoryButtons from "../Filter/SelectCategory";
 import UserProfile from "../Profile/UserProfile";
 

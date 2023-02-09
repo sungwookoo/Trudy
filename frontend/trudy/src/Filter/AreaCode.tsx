@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const areaCode = [
+export const areaList = [
   {
     id: 1,
     name: "Seoul",

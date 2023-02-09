@@ -73,6 +73,7 @@ function App() {
         {/* 로그인한 상태면 랜딩페이지로 */}
         {/* 로그인 안했는데 이메일 인증 안했으면 이메일 인증 페이지로 */}
         {/* 로그인 안했는데 이메일 인증은 했으면 회원가입 페이지로 */}
+        {/* <Route path="/signup" element={(authCtx.isLoggedIn) ? <Navigate to="/" /> : (authCtx.isVerified) ? <SignUp /> : <SignUpSelect />} /> */}
         <Route path="/signup" element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUp />} />
         <Route path="/signupselect" element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpSelect />} />
       </Routes>
