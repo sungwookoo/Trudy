@@ -19,6 +19,8 @@ import * as authAction from "./Common/authAction";
 import * as axiosInterceptor from "./Common/axiosInterceptor";
 import EmailConfirm from "./Account/EmailConfirm";
 import UserProfile from "./Profile/UserProfile";
+import TestGround from "./Common/TestGround";
+
 
 function App() {
   // Code to handle form submission
@@ -58,6 +60,7 @@ function App() {
         <Route path= "/profile/:id" element={<UserProfile />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/square" element={<Square />} />
+        <Route path="/testground" element={<TestGround />} />
         <Route
           path="/planner"
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
