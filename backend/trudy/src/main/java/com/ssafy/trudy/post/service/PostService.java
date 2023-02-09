@@ -62,17 +62,6 @@ public class PostService {
                                    Pageable pageable){
         log.info("============Post Service / findPostList==========");
 
-        //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
-        //List<Post> postEntityList = postRepository.findAll();
-        //log.info("postEntity=========== " + postEntityList.toString());
-
-        //Dto를 담을 리스트()
-//        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
-//            log.info(postRepository.findById(1L).get().toString());
-//        log.info(postRepository.findById(1L).get().getPostImageList().toString());
-//        log.info(postRepository.findById(1L).get().getPostCategoryList().toString());
-//        log.info(postRepository.findById(1L).get().getPostAreaList().toString());
-
         Page<Post> filteredPost = postRepository.findAll(PostSpecification.getSearchByPageable(title, content, sigunguIdList, categoryList), pageable);
 
 
@@ -108,17 +97,15 @@ public class PostService {
                 .sigunguCodeList(p.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
 
-
-        for(int i=0; i<postCombineList.size(); i++){
-            log.info(i + " ============ " + postCombineList.get(i));
-        }
+//test
+//        for(int i=0; i<postCombineList.size(); i++){
+//            log.info(i + " ============ " + postCombineList.get(i));
+//        }
 
         log.info("============findPostList 종료=================");
         return new PageImpl<>(postCombineList, filteredPost.getPageable(), filteredPost.getTotalElements());
 
-        //return postCombineList;
-
-        //
+//before ver
         /*for(Post postEntity : filteredPost){
             PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
 
@@ -158,11 +145,6 @@ public class PostService {
             log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
             log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
         }*/
-
-       // return postCombineList;
-
-
-
 
 
     }
