@@ -3,7 +3,7 @@ import React, { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
 import "./Square.css";
-import CategoryButtons from '../Filter/SelectCategory';
+import CategoryButtons from "../Filter/SelectCategory";
 import UserProfile from "../Profile/UserProfile";
 
 function Square() {
@@ -16,7 +16,7 @@ function Square() {
   const [squareData, setSquareData] = useState<[]>([]);
 
   const navigate = useNavigate();
-  const navigateToUserProfile = (id : number) => {
+  const navigateToUserProfile = (id: number) => {
     navigate(`/profile/${id}`);
   };
 
@@ -27,13 +27,9 @@ function Square() {
       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
   };
 
-  
-  
-
-
   // 카테고리
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
-  // 카테고리 버튼 on/off 
+  // 카테고리 버튼 on/off
   const handleClick = (categoryId: number) => {
     if (selectedCategories.includes(categoryId)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== categoryId));
@@ -41,7 +37,7 @@ function Square() {
       setSelectedCategories([...selectedCategories, categoryId]);
     }
   };
-  console.log(selectedCategories, '카테고리')
+  console.log(selectedCategories, "카테고리");
 
   // 검색하고 enter 눌렀을 때
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -61,14 +57,11 @@ function Square() {
     async function SquareGet() {
       const res: any = await authCtx.getUser(headers);
       setSquareData(res.data.content);
-      
-      
     }
     SquareGet();
-    
   }, [area, isLocal, gender, nameSearch]);
 
-  console.log(squareData, '스퀘어데이터');
+  console.log(squareData, "스퀘어데이터");
   return (
     <div>
       {/* 검색창 */}
@@ -120,19 +113,8 @@ function Square() {
                 setNameSearch(searchChange);
               }}
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </button>
           </div>
@@ -140,58 +122,39 @@ function Square() {
       </div>
       <br />
       <br />
+      {/* ------------------------------------------------------------------------------------------- */}
 
-      {/* 게시물 */}
+      {/* ---------------------------------------게시물--------------------------------------------------------- */}
       <div id="guidesGrid" className="p-4 grid grid-cols-3 relative">
-        {squareData.map(
-          (
-            guide: {
-              image: string;
-              name: string;
-              gender: string;
-              areacode: number;
-              isLocal: number;
-              id: number;
-            },
-            i
-          ) => {
-            return (
-              <div
-                className="p-4 inline-block hover:bg-blue-800"
-                key={i}
-                onClick={() => {navigateToUserProfile(guide.id); setSquareId(guide);}}
-              >
-
-              {squareId && 
-              <UserProfile
+        {squareData.map((guide: any, i) => {
+          return (
+            <div
+              className="p-4 inline-block hover:bg-blue-800"
               key={i}
-              userProfileId = {squareId}
-              />}
-              
-                <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
-                  <img
-                    src={guide.image}
-                    onError={imgError}
-                    className="h-64 w-full object-cover rounded relative"
-                  />
-                </div>
-                <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
-                  <h3 className="text-lg font-bold">{guide.name}</h3>
-                  <p className="text-gray-600">{guide.gender}</p>
-                  <p className="text-gray-600">areacode : {guide.areacode}</p>
-                  <p className="text-gray-600">isLocal : {guide.isLocal}</p>
-                  <p className="mt-2 truncate">
-                    Introduce: Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Sed in aliquam magna. Integer tristique,
-                    dolor eu dignissim convallis, sapien risus rhoncus neque,
-                    non bibendum lectus enim in lorem.
-                    {/* {guide.introduceId.self} */}
-                  </p>
-                </div>
+              onClick={() => {
+                navigate(`/profile/${guide.id}`, { state: guide });
+              }}
+            >
+              {/* 세부정보 */}
+              {/* {squareId && <UserProfile key={i} userProfileId={squareId} />} */}
+
+              <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
+                <img src={guide.image} alt="userThumbnail" onError={imgError} className="h-64 w-full object-cover rounded relative" />
               </div>
-            );
-          }
-        )}
+              <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
+                <h3 className="text-lg font-bold">{guide.name}</h3>
+                <p className="text-gray-600">{guide.gender}</p>
+                <p className="text-gray-600">areacode : {guide.areacode}</p>
+                <p className="text-gray-600">isLocal : {guide.isLocal}</p>
+                <p className="mt-2 truncate">
+                  Introduce: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in aliquam magna. Integer tristique, dolor eu dignissim convallis,
+                  sapien risus rhoncus neque, non bibendum lectus enim in lorem.
+                  {/* {guide.introduceId.self} */}
+                </p>
+              </div>
+            </div>
+          );
+        })}
 
         {/* {guidesList} */}
       </div>
