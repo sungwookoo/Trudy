@@ -55,7 +55,7 @@ public class PostService {
     ModelMapper modelMapper = new ModelMapper();
 
     //포럼 게시글 목록 가져오기1
-    public Page<PostDto.PostElement> findPostList(String title,
+    public Page<PostDto.PostCombine> findPostList(String title,
                                    String content,
                                    List<Long> sigunguIdList,
                                    List<CategoryName> categoryList,
@@ -91,13 +91,32 @@ public class PostService {
         // 전송용 DTO
 //        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
 
-        List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(post -> PostDto.PostCombine.builder()
+        /*List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(post -> PostDto.PostCombine.builder()
                 .postElement(post.get)
                 .memberElement()
                 .postAreaElementList()
                 .postCategoryElementList()
+                .build()).collect(Collectors.toList());*/
+
+        //변형 -> DTO 수정해야
+        List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(p-> PostDto.PostCombine.builder()
+                .postElement(new PostDto.PostElement(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImage(), p.getCreatedAt(), p.getUpdatedAt()))
+                .memberElement(modelMapper.map(p.getMemberId(), PostDto.MemberElement.class))
+                /*.postAreaElementList(p.getPostAreaList().stream().map(a ->
+                        new PostDto.PostAreaElement(new PostDto.AreaElement(a.), new PostDto.SigunguElement())))*/
+                .categoryNameList(p.getPostCategoryList().stream().map(c->c.getCategoryName()).collect(Collectors.toList()))
+                .sigunguCodeList(p.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
 
+
+        for(int i=0; i<postCombineList.size(); i++){
+            log.info(i + " ============ " + postCombineList.get(i));
+        }
+
+        log.info("============findPostList 종료=================");
+        return new PageImpl<>(postCombineList, filteredPost.getPageable(), filteredPost.getTotalElements());
+
+        //return postCombineList;
 
         //
         /*for(Post postEntity : filteredPost){
@@ -144,8 +163,8 @@ public class PostService {
 
 
 
-         log.info("============findPostList 종료=================");
-        return ;
+
+
     }
 
     //포럼 게시글 목록 가져오기2
@@ -337,7 +356,16 @@ public class PostService {
         //postLikeCount 정보 가져옴
         int postLikeCount = postLikeRepository.countByPostId(postEntity);
 
-        postCombine = new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount);
+//        postCombine = new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount);
+        //DTO 수정
+        postCombine = PostDto.PostCombine.builder()
+                .postElement(postElement)
+                .memberElement(memberElement)
+                .postImageElementList(postImageElementList)
+                .postAreaElementList(postAreaElementList)
+                .postCategoryElementList(postCategoryElementLIst)
+                .postLikeCount(postLikeCount)
+                .build();
 
         // post detail test
 //        log.info("postCombine =========== " );

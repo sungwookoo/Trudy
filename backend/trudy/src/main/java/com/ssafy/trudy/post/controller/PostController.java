@@ -47,7 +47,7 @@ public class PostController {
 
     //포럼 게시글 목록 가져오기 - 정상 동작
     @GetMapping
-    public void /*Page<?>*/ postList(@RequestParam(required = false) String title,
+    public Page<PostDto.PostCombine> /*Page<?>*/ postList(@RequestParam(required = false) String title,
                             @RequestParam(required = false) String content,
                             @RequestParam(required = false) List<Long> sigunguIdList,
                             @RequestParam(required = false) List<CategoryName> categoryList,
@@ -55,7 +55,7 @@ public class PostController {
         //try{
             /*List<PostDto.PostCombine> findPostCombines =*/
 
-        postService.findPostList(title,
+        return postService.findPostList(title,
                     content,
                     sigunguIdList,
                     categoryList,
