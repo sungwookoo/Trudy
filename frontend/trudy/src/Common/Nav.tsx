@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.css";
-import trudylogo from "../assets/trudylogo.png";
+import NewLogo from "../assets/NewLogo.png";
 import AuthContext from "./authContext";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -11,6 +12,10 @@ const Nav = () => {
     setIsOpen(!isOpen);
   };
 
+
+  // const navigateToProfile = useNavigate()
+  // navigateToProfile('/profile')
+
   const authCtx = useContext(AuthContext);
   const signOut = () => {
     authCtx.signOut();
@@ -18,17 +23,18 @@ const Nav = () => {
 
   return (
     // 네비게이션바
-    <nav className="nav-bar">
+  <nav className="nav-bar">
+    <div className="all-fuctions">
       <NavLink to="/">
-        <img className="nav-logo" src={trudylogo} alt="TrudyLogo"></img>
+        <img className="nav-logo" src={NewLogo} alt="TrudyLogo"></img>
       </NavLink>
 
       {/* 랜딩페이지 */}
-      <div className="nav-item-logo">
+      {/* <div className="nav-item-logo">
         <NavLink className="nav-link" to="/">
           Trudy
         </NavLink>
-      </div>
+      </div> */}
 
       {/* 지도 */}
       <div className="nav-item">
@@ -57,7 +63,9 @@ const Nav = () => {
           Planner
         </NavLink>
       </div>
+    </div>
 
+    <div className="profile-signout">
       {/* 프로필 */}
 
       {/* 로그인 */}
@@ -76,7 +84,12 @@ const Nav = () => {
         </>
       ) : (
         <>
-          <div className="nav-item">
+          <div className="nav-item flex flex-row items-center">
+            <img 
+            className="nav-profile-img"
+            src="https://blog.kakaocdn.net/dn/FSvHG/btrzdoAbEI0/WA1kfeo9BFC8n8GOe39U31/img.webp"
+            alt="navProfileImage"
+            />
             <NavLink className="nav-link" to="/profile">
               Profile
             </NavLink>
@@ -88,7 +101,8 @@ const Nav = () => {
           </div>
         </>
       )}
-    </nav>
+    </div>
+  </nav>
   );
 };
 

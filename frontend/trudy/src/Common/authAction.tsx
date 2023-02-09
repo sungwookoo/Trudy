@@ -82,10 +82,15 @@ export const verifyEmail = (
 export const signUpActionHandler = (
   email: string,
   password: string,
-  nickname: string
+  nickname: string,
+  gender: string,
+  birthday: string,
+  isLocal: string,
+  areaCode: number,
+  sigunguCode: number
 ) => {
   const url = "/api/signup";
-  const signupObject = { email, password, nickname };
+  const signupObject = { email, password, nickname, gender, birthday, isLocal, areaCode, sigunguCode };
 
   const response = POST(url, signupObject, {});
   return response;
