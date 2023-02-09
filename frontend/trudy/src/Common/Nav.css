@@ -1,14 +1,18 @@
 .nav-bar {
     height: 5vh;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    width: 100%;;
+    width: 100%;
+    border-width: 1px;
+    border-color: black;
 }
 
 .nav-logo{
+    width: 120px;
     height: 40px;
-    margin-left: 80px;
-    margin-right: 15px;
+    margin-left: 40px;
+    /* margin-right: 40px; */
 }
 
 .nav-item-logo {
@@ -17,7 +21,7 @@
 }
 
 .nav-item {
-    margin-left: 60px;
+    margin-left: 10%;
     font-size: 28px;
     font-weight: bold;
 }
@@ -26,4 +30,32 @@
     text-decoration: none;
     /* font-size: 28px;
     font-weight: bold; */
+}
+
+.all-fuctions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    height: 100%;
+    font-weight: bold;
+    margin-left: 2%;
+}
+
+
+.profile-signout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    margin-left: 20%;
+}
+
+.nav-profile-img{
+    width: 44px;
+    height: 42px;
+    margin-right: 1rem;
+    border-radius: 70%;
 }
