@@ -51,8 +51,6 @@
   text-transform: capitalize;
 }
 
-
-
 .content-box {
   width: 1300px;
   height: 400px;
@@ -74,15 +72,14 @@ input:checked ~ .dot {
   font-display: none;
 }
 
-
 .edit-toggle-follow-container{
   background-color: red;
   height: 50%;
 }
 
 .myprofile-intro{
-  border: 2px;
+  border-width: 2px;
   border-color: black;
-  width: 500px;
+  width: 700px;
 
 }

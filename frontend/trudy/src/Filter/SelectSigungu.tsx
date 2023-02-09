@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { AreaPlusSigungu } from "../Filter/AreaPlusSigunguCode";
 
 type SigunguCodeType = {
   [key: number]: Array<{
@@ -16,10 +17,19 @@ type Props = {
   area: number;
   sigunguCode: SigunguCodeType;
   selectedSigungu: number[];
+  areaSigun: any;
+  setConvertSigungu: React.Dispatch<React.SetStateAction<any>>;
   setSelectedSigungu: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
-const SigunguSelect = ({ area, sigunguCode, selectedSigungu, setSelectedSigungu }: Props) => {
+const SigunguSelect = ({ area, sigunguCode, areaSigun, selectedSigungu, setSelectedSigungu, setConvertSigungu }: Props) => {
+  useEffect(() => {
+    const tempSigunCodeArray: any = [];
+    selectedSigungu.map((codeId: any, i: any) => {
+      tempSigunCodeArray.push(...AreaPlusSigungu[codeId]);
+    });
+    setConvertSigungu(tempSigunCodeArray);
+  }, [selectedSigungu]);
   return (
     <div className="flex flex-col">
       {sigunguCode[area].map((sigunguInfo: any, i: number) => (
@@ -28,7 +38,7 @@ const SigunguSelect = ({ area, sigunguCode, selectedSigungu, setSelectedSigungu 
             className="mr-2"
             type="checkbox"
             id={`sigungu-${sigunguInfo.id}`}
-            checked={selectedSigungu.includes(sigunguInfo.id)}
+            // checked={selectedSigungu.includes(sigunguInfo.id)}
             onChange={() => {
               if (selectedSigungu.includes(sigunguInfo.id)) {
                 const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);

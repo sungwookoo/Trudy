@@ -3,6 +3,7 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
+import com.ssafy.trudy.member.model.Follow;
 import com.ssafy.trudy.member.model.dto.MemberIntroRequest;
 import com.ssafy.trudy.member.model.dto.MemberIntroResponse;
 import com.ssafy.trudy.member.model.dto.MemberModifyRequest;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class MemberController {
-
 
     @Autowired
     private final MemberAppService memberAppService;
@@ -66,8 +66,8 @@ public class MemberController {
                     @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
             })
     @GetMapping("/{id}")
-    public MemberResponse memberDetail(@PathVariable("id") Long id) {
-        return memberAppService.memberDetail(id);
+    public MemberResponse memberDetail(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable("id") Long id ) {
+        return memberAppService.memberDetail(principal, id);
     }
 
     @ApiOperation(value = "개인정보 수정",
@@ -105,40 +105,87 @@ public class MemberController {
     }
 
 
-//    @ApiOperation(value = "팔로워 리스트 가져오기",
-//            produces = MediaType.APPLICATION_JSON_VALUE,
-//            responseHeaders = {
-//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
-//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
-//            })
-//    @GetMapping
-//    public Page<MemberResponse> followerList(@AuthenticationPrincipal PrincipalDetails principal, @PageableDefault(size = 9, sort = "id") Pageable pageable) {
-//
-//
-//    }
+    @ApiOperation(value = "팔로워 리스트 가져오기",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/follower/{id}")
+    public Page<MemberResponse> followerList(@PathVariable Long id, @PageableDefault(size = 10, sort = "id") Pageable pageable, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.getByFollowerPageable(id ,pageable, principal);
+    }
 
-//    @ApiOperation(value = "팔로잉 리스트 가져오기",
-//            produces = MediaType.APPLICATION_JSON_VALUE,
-//            responseHeaders = {
-//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
-//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
-//            })
-//    @GetMapping("/following/{id}")
-//    public FollowResponse followingList(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long id) {
-//
-//    }
+    @ApiOperation(value = "팔로잉 리스트 가져오기",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/following/{id}")
+    public Page<MemberResponse> followingList(@PathVariable Long id, @PageableDefault(size = 10, sort = "id") Pageable pageable, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.getByFollowingPageable(id ,pageable, principal);
+    }
 
-    //팔로잉 하기
-    @PostMapping("/follow/{follow_from}/{follow_to}")
-    public void followingAdd() {
+    // 팔로우
+    @ApiOperation(value = "팔로우",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @PostMapping("/follow/{id}")
+    public MemberResponse followAdd(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.addFollow(id, principal);
+    }
 
+    // 언팔로우
+    @ApiOperation(value = "언팔로우",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @DeleteMapping("/follow/{id}")
+    public MemberResponse followRemove(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.removeFollow(id, principal);
+    }
+
+    @ApiOperation(value = "내 차단 리스트",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/ban")
+    public Page<MemberResponse> banList(@PageableDefault(size = 10, sort = "id") Pageable pageable, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.getByBanPageable(pageable, principal);
     }
 
     //차단하기
-    @PostMapping("/ban/{ban_from}/{ban_to}")
-    public void banAdd() {
-
+    @ApiOperation(value = "차단하기",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @PostMapping("/ban/{id}")
+    public MemberResponse banAdd(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.addBan(id, principal);
     }
+
+    @ApiOperation(value = "차단 해제",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @DeleteMapping("/ban/{id}")
+    public MemberResponse banRemove(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.removeBan(id, principal);
+    }
+
+
 
 
     // 회원 삭제

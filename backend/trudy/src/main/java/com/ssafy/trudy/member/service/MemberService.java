@@ -3,13 +3,10 @@ package com.ssafy.trudy.member.service;
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
-import com.ssafy.trudy.member.model.Introduce;
-import com.ssafy.trudy.member.model.Member;
-import com.ssafy.trudy.member.model.RefreshToken;
+import com.ssafy.trudy.member.model.*;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
-import com.ssafy.trudy.member.repository.IntroduceRepository;
-import com.ssafy.trudy.member.repository.MemberRepository;
-import com.ssafy.trudy.member.repository.RefreshTokenRepository;
+import com.ssafy.trudy.member.repository.*;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,12 @@ public class MemberService {
 
     @Autowired
     private final IntroduceRepository introduceRepository;
+
+    @Autowired
+    private final FollowRepository followRepository;
+
+    @Autowired
+    private final BanRepository banRepository;
 
     public Member getByEmail(String email) {
         return memberRepository.findByEmail(email)
@@ -121,26 +124,6 @@ public class MemberService {
 
     }
 
-    //팔로워 리스트 가져오기
-    public void findFollowerList() {
-
-    }
-
-    //팔로우 리스트 가져오기
-    public void findFollowingList() {
-
-    }
-
-    //팔로잉 하기
-    public void addFollowing() {
-
-    }
-
-    //차단하기
-    public void addBan() {
-
-    }
-
     //자기 소개 정보 가져오기
     public void findMemberDetail() {
 
@@ -158,11 +141,82 @@ public class MemberService {
     }
 
 
-    //회원 목록 가져오기 - 조회시 최근 접속일자를 내림차순
-//    public List<Member> findMemberList(){
-//        return memberRepository.findMemberList();
-//    }
-//
-//    // 필터된 회원 목록 가져오기
-//    public List<Member> findMemberListFiltered(String userType, String gender) { return memberRepository.findMemberListFiltered(userType, gender); }
+    // 중복 이메일 검사 중복:1
+    public boolean emailCheck(String email) {
+        return memberRepository.existsByEmail(email);
+
+    }
+
+    // 중복 닉네임 검사 중복:1
+    public boolean nameCheck(String name) {
+        return memberRepository.existsByName(name);
+    }
+
+    // 현재 프로필 회원을 팔로우하는 회원 목록
+    public Page<Follow> getFollowerByPageable(Long id, Pageable pageable) {
+        Member member = memberRepository.findById(id).orElseThrow(() ->new ApiException(ServiceErrorType.NOT_FOUND));
+        return followRepository.findAllByFollowTo(member, pageable);
+    }
+
+    // 현재 프로필 회원이 팔로우하고있는 회원 목록
+    public Page<Follow> getFollowingByPageable(Long id, Pageable pageable) {
+        Member member = memberRepository.findById(id).orElseThrow(() ->new ApiException(ServiceErrorType.NOT_FOUND));
+        return followRepository.findAllByFollowFrom(member, pageable);
+    }
+
+    // 나 -> targetId 회원 팔로우 여부 : 했으면 true(팔로잉불가상태), 안했으면 false(팔로잉가능상태)
+    public boolean isFollow(PrincipalDetails principal, Member targetMember) {
+        return followRepository.existsByFollowFromAndFollowTo(principal.getMember(), targetMember);
+    }
+
+
+    // 팔로우
+    public Member addFollow(Long target, Member member) {
+        Follow follow = new Follow();
+        follow.setFollowFrom(member);
+        Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
+        follow.setFollowTo(targetMember);
+        followRepository.save(follow);
+
+        return targetMember;
+    }
+
+    // 언팔로우 (언팔로우 한 회원 리턴)
+    public Member removeFollow(Long target, Member member) {
+        Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
+        Follow follow = followRepository.findByFollowFromAndFollowTo(member, targetMember);
+        followRepository.delete(follow);
+        return targetMember;
+
+    }
+
+    // 차단 목록
+    public Page<Ban> getBanByPageable(Member member, Pageable pageable) {
+        return banRepository.findAllByBanFrom(member, pageable);
+    }
+
+    // 차단 여부
+    public boolean isBan(Member fromMember, Member targetMember) {
+        return banRepository.existsByBanFromAndBanTo(fromMember, targetMember);
+    }
+
+    // 차단 등록
+    public Member addBan(Long target, Member member) {
+        Ban ban = new Ban();
+        ban.setBanFrom(member);
+        Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
+        ban.setBanTo(targetMember);
+        banRepository.save(ban);
+
+        return targetMember;
+    }
+
+    // 차단 해제
+    public Member removeBan(Long target, Member member) {
+        Member targetMember = memberRepository.findById(target).orElseThrow(()->new ApiException(ServiceErrorType.NOT_FOUND));
+        Ban ban = banRepository.findByBanFromAndBanTo(member, targetMember);
+        banRepository.delete(ban);
+        return targetMember;
+
+    }
 }
