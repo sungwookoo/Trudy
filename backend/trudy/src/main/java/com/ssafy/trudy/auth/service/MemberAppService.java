@@ -8,10 +8,7 @@ import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.security.provider.TokenProvider;
 import com.ssafy.trudy.exception.ApiException;
 import com.ssafy.trudy.exception.ServiceErrorType;
-import com.ssafy.trudy.member.model.Follow;
-import com.ssafy.trudy.member.model.Introduce;
-import com.ssafy.trudy.member.model.Member;
-import com.ssafy.trudy.member.model.RefreshToken;
+import com.ssafy.trudy.member.model.*;
 import com.ssafy.trudy.member.model.dto.*;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.Post;
@@ -210,6 +207,95 @@ public class MemberAppService {
     }
 
 
+    // 내 프로필
+    public MemberResponse me(PrincipalDetails principal) {
+        Member member = memberService.getById(principal.getMember().getId());
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        List<Post> posts = postService.getAllByUserId(member);
+        return getMemberResponse(member, introduce, posts, principal);
+    }
+
+    // 다른 회원 프로필
+    public MemberResponse memberDetail(PrincipalDetails principal, Long id) {
+        Member member = memberService.getById(id);
+        List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        return getMemberResponse(member, introduce, posts, principal);
+    }
+
+    // 회원 이미지 저장
+    public MemberResponse saveMemberImage(String uploadImageUrl, String fileName, PrincipalDetails principal) {
+        Member member = principal.getMember();
+        List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
+                MemberPostResponse.builder()
+                        .id(post.getId())
+                        .memberId(post.getMemberId())
+                        .title(post.getTitle())
+                        .thumbnailImage(post.getThumbnailImage())
+                        .createdAt(post.getCreatedAt())
+                        .build()
+        ).collect(Collectors.toList());
+        return MemberResponse.builder()
+                .id(member.getId())
+                .image(uploadImageUrl)
+                .imageFileName(fileName)
+                .birth(member.getBirth())
+                .lastAccess(member.getLastAccess())
+                .isLocal(member.getIsLocal())
+                .isPublic(member.getIsPublic())
+                .introduceId(introduce)
+                .areaCode(member.getAreaCode())
+                .sigunguCode(member.getSigunguCode())
+                .email(member.getEmail())
+                .posts(memberPostResponses)
+                .build();
+    }
+
+    private MemberResponse getMemberResponse(Member member, Introduce introduce, List<Post> posts, PrincipalDetails principal) {
+        List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
+                MemberPostResponse.builder()
+                        .id(post.getId())
+                        .memberId(post.getMemberId())
+                        .title(post.getTitle())
+                        .thumbnailImage(post.getThumbnailImage())
+                        .createdAt(post.getCreatedAt())
+                        .build()
+        ).collect(Collectors.toList());
+        return MemberResponse.builder()
+                .id(member.getId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .gender(member.getGender())
+                .birth(member.getBirth())
+                .isLocal(member.getIsLocal())
+                .isPublic(member.getIsPublic())
+                .areaCode(member.getAreaCode())
+                .sigunguCode(member.getSigunguCode())
+                .lastAccess(member.getLastAccess())
+                .introduceId(introduce)
+                .posts(memberPostResponses)
+                .image(member.getImage())
+                .isBan(isBan(principal, member))
+                .isFollow(isFollow(principal, member))
+                .build();
+    }
+
+    public MemberResponse changePublicState(PrincipalDetails principal) {
+        Member member = principal.getMember();
+        List<Post> posts = postService.getAllByUserId(member);
+        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
+        memberService.changePublicState(member);
+        return getMemberResponse(member, introduce, posts, principal);
+
+    }
+
+    public boolean emailCheck(String email) {
+        return memberService.emailCheck(email);
+    }
+
+
     public Page<MemberResponse> getByFollowerPageable(Long id, Pageable pageable, PrincipalDetails principal) {
         Page<Follow> memberPage = memberService.getFollowerByPageable(id, pageable);
         if (0 == memberPage.getTotalElements()) {
@@ -262,95 +348,6 @@ public class MemberAppService {
         }
         return memberService.isFollow(principal, targetMember)?"follow":"none-follow";
     }
-
-
-    // 내 프로필
-    public MemberResponse me(PrincipalDetails principal) {
-        Member member = memberService.getById(principal.getMember().getId());
-
-        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
-
-        List<Post> posts = postService.getAllByUserId(member);
-        return getMemberResponse(member, introduce, posts);
-    }
-
-    // 다른 회원 프로필
-    public MemberResponse memberDetail(Long id) {
-        Member member = memberService.getById(id);
-        List<Post> posts = postService.getAllByUserId(member);
-        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
-        return getMemberResponse(member, introduce, posts);
-    }
-
-    // 회원 이미지 저장
-    public MemberResponse saveMemberImage(String uploadImageUrl, String fileName, PrincipalDetails principal) {
-        Member member = principal.getMember();
-        List<Post> posts = postService.getAllByUserId(member);
-        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
-        List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
-                MemberPostResponse.builder()
-                        .id(post.getId())
-                        .memberId(post.getMemberId())
-                        .title(post.getTitle())
-                        .thumbnailImage(post.getThumbnailImage())
-                        .createdAt(post.getCreatedAt())
-                        .build()
-        ).collect(Collectors.toList());
-        return MemberResponse.builder()
-                .id(member.getId())
-                .image(uploadImageUrl)
-                .imageFileName(fileName)
-                .birth(member.getBirth())
-                .lastAccess(member.getLastAccess())
-                .isLocal(member.getIsLocal())
-                .introduceId(introduce)
-                .areaCode(member.getAreaCode())
-                .sigunguCode(member.getSigunguCode())
-                .email(member.getEmail())
-                .posts(memberPostResponses)
-                .build();
-    }
-
-    private MemberResponse getMemberResponse(Member member, Introduce introduce, List<Post> posts) {
-        List<MemberPostResponse> memberPostResponses = posts.stream().map(post ->
-                MemberPostResponse.builder()
-                        .id(post.getId())
-                        .memberId(post.getMemberId())
-                        .title(post.getTitle())
-                        .thumbnailImage(post.getThumbnailImage())
-                        .createdAt(post.getCreatedAt())
-                        .build()
-        ).collect(Collectors.toList());
-        return MemberResponse.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .name(member.getName())
-                .gender(member.getGender())
-                .birth(member.getBirth())
-                .isLocal(member.getIsLocal())
-                .areaCode(member.getAreaCode())
-                .sigunguCode(member.getSigunguCode())
-                .lastAccess(member.getLastAccess())
-                .introduceId(introduce)
-                .posts(memberPostResponses)
-                .image(member.getImage())
-                .build();
-    }
-
-    public MemberResponse changePublicState(PrincipalDetails principal) {
-        Member member = principal.getMember();
-        List<Post> posts = postService.getAllByUserId(member);
-        Introduce introduce = memberService.getByIntroduceId(member.getIntroduceId().getId());
-        memberService.changePublicState(member);
-        return getMemberResponse(member, introduce, posts);
-
-    }
-
-    public boolean emailCheck(String email) {
-        return memberService.emailCheck(email);
-    }
-
-
     public MemberResponse addFollow(Long id, PrincipalDetails principal) {
         Member member = principal.getMember();
         Member targetMember = memberService.addFollow(id, member);
@@ -364,6 +361,56 @@ public class MemberAppService {
     public MemberResponse removeFollow(Long id, PrincipalDetails principal) {
         Member member = principal.getMember();
         Member targetMember = memberService.removeFollow(id, member);
+        return MemberResponse.builder()
+                .name(targetMember.getName())
+                .build();
+
+    }
+
+
+
+    public Page<MemberResponse> getByBanPageable(Pageable pageable, PrincipalDetails principal) {
+        Page<Ban> memberPage = memberService.getBanByPageable(principal.getMember(),pageable);
+        if (0 == memberPage.getTotalElements()) {
+            return new PageImpl<>(new ArrayList<>(), memberPage.getPageable(), memberPage.getTotalElements());
+        }
+
+        List<MemberResponse> memberResponses = memberPage.stream().map(member -> MemberResponse.builder()
+                .id(member.getBanTo().getId())
+                .email(member.getBanTo().getEmail())
+                .name(member.getBanTo().getName())
+                .gender(member.getBanTo().getGender())
+                .birth(member.getBanTo().getBirth())
+                .isLocal(member.getBanTo().getIsLocal())
+                .areaCode(member.getBanTo().getAreaCode())
+                .sigunguCode(member.getBanTo().getSigunguCode())
+                .lastAccess(member.getBanTo().getLastAccess())
+                .introduceId(member.getBanTo().getIntroduceId())
+                .isBan(isBan(principal, member.getBanTo()))
+                .build()).collect(Collectors.toList());
+
+        return new PageImpl<>(memberResponses, memberPage.getPageable(), memberPage.getTotalElements());
+    }
+
+    private String isBan( PrincipalDetails principal, Member targetMember) {
+        Member member = principal.getMember();
+        if(Objects.equals(principal.getMember().getId(), targetMember.getId())) {
+            return "me";
+        }
+        return memberService.isBan(member, targetMember)?"ban":"none-ban";
+    }
+
+    public MemberResponse addBan(Long id, PrincipalDetails principal) {
+        Member member = principal.getMember();
+        Member targetMember = memberService.addBan(id, member);
+        return MemberResponse.builder()
+                .name(targetMember.getName())
+                .build();
+    }
+
+    public MemberResponse removeBan(Long id, PrincipalDetails principal) {
+        Member member = principal.getMember();
+        Member targetMember = memberService.removeBan(id, member);
         return MemberResponse.builder()
                 .name(targetMember.getName())
                 .build();
