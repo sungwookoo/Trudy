@@ -3,6 +3,7 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
+import com.ssafy.trudy.member.model.Follow;
 import com.ssafy.trudy.member.model.dto.MemberIntroRequest;
 import com.ssafy.trudy.member.model.dto.MemberIntroResponse;
 import com.ssafy.trudy.member.model.dto.MemberModifyRequest;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class MemberController {
-
 
     @Autowired
     private final MemberAppService memberAppService;
@@ -116,22 +116,29 @@ public class MemberController {
         return memberAppService.getByFollowerPageable(id ,pageable, principal);
     }
 
-//    @ApiOperation(value = "팔로잉 리스트 가져오기",
-//            produces = MediaType.APPLICATION_JSON_VALUE,
-//            responseHeaders = {
-//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
-//                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
-//            })
-//    @GetMapping("/following")
-//    public Page<MemberResponse> followingList(@AuthenticationPrincipal PrincipalDetails principal, @PathVariable Long id) {
-//
-//    }
-
-    //팔로잉 하기
-    @PostMapping("/follow/{follow_from}/{follow_to}")
-    public void followingAdd() {
-
+    @ApiOperation(value = "팔로잉 리스트 가져오기",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @GetMapping("/following/{id}")
+    public Page<MemberResponse> followingList(@PathVariable Long id, @PageableDefault(size = 10, sort = "id") Pageable pageable, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.getByFollowingPageable(id ,pageable, principal);
     }
+
+    // 팔로우
+    @PostMapping("/follow/{id}")
+    public MemberResponse followAdd(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.addFollow(id, principal);
+    }
+
+    // 언팔로우
+    @DeleteMapping("/follow/{id}")
+    public MemberResponse followRemove(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return memberAppService.removeFollow(id, principal);
+    }
+
 
     //차단하기
     @PostMapping("/ban/{ban_from}/{ban_to}")
