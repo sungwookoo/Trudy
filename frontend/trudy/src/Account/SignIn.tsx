@@ -89,7 +89,7 @@ function SignIn() {
 
           <div className="flex items-center justify-between">
             {/* 아이디, 비밀번호 저장 */}
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <input
                 id="remember-me"
                 name="remember-me"
@@ -102,7 +102,7 @@ function SignIn() {
               >
                 Remember me
               </label>
-            </div>
+            </div> */}
 
             {/* 비밀번호 찾기 */}
             <div className="text-sm">
@@ -110,7 +110,7 @@ function SignIn() {
                 href="#"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                Forgot your password?
+                {/* Forgot your password? */}
               </a>
             </div>
           </div>

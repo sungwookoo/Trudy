@@ -1,23 +1,24 @@
 import { SyntheticEvent, useState, useEffect, useContext } from "react";
 import AuthContext from "../Common/authContext";
+import EmailConfirm from "./EmailConfirm";
 
 // 로그인 페이지
 
 function SignUp() {
   const [password, setPassword] = useState<string>("");
-  const [nickname, setNickname] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
-  const [birthday, setBirthday] = useState<Date>(new Date());
-  const [islocal, setIslocal] = useState<number>(0);
-  const [region, setRegion] = useState<string[]>([]);
-  const [regionDetail, setRegionDetail] = useState<string[]>([]);
+  const [birthday, setBirthday] = useState<string>("");
+  const [isLocal, setIsLocal] = useState<string>("");
+  const [areaCode, setAreaCode] = useState<number>(0);
+  const [sigunguCode, setSigunguCode] = useState<number>(0);
+
   
   const authCtx = useContext(AuthContext)
 
-
-
+  
   useEffect(() => {
-    const a = 1
     return(
       authCtx.defaultVerified
     )
@@ -44,6 +45,7 @@ function SignUp() {
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
@@ -59,6 +61,10 @@ function SignUp() {
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password Confirm"
+                onChange={
+                  (e) => setPasswordConfirm(e.target.value)
+                }
+
               />
             </div>
           </div>
@@ -77,6 +83,7 @@ function SignUp() {
                 maxLength={16}
                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
@@ -92,6 +99,7 @@ function SignUp() {
                   type="radio"
                   value="Male"
                   required
+                  onChange={(e) => setGender(e.target.value)}
                 />
                 Male
               </label>
@@ -104,12 +112,16 @@ function SignUp() {
                 type="radio"
                 value="Female"
                 required
+                onChange={(e) => setGender(e.target.value)}
               />
               <label htmlFor="female">Female</label>
             </div>
 
             <div>
-              <input id="unknown" name="gender" type="radio" required />
+              <input id="unknown" name="gender" type="radio" required 
+                  value="unknown"
+                  onChange={(e) => setGender(e.target.value)}
+              />
               <label htmlFor="unknown">I prefer not to say</label>
             </div>
           </div>
@@ -119,7 +131,9 @@ function SignUp() {
             <div>
               <label htmlFor="birthday">Birthday</label>
               <br />
-              <input id="birthday" name="birthday" type="month" required />
+              <input id="birthday" name="birthday" type="month" required 
+                  onChange={(e) => setBirthday(e.target.value)} 
+              />
             </div>
           </div>
 
@@ -132,22 +146,25 @@ function SignUp() {
                 id="local"
                 name="islocal"
                 type="radio"
-                value={parseInt("1")}
+                value="1"
                 required
+                onChange={(e) => setIsLocal(e.target.value)} 
               />
               Local
               <input
                 id="tourist"
                 name="islocal"
                 type="radio"
-                value={parseInt("0")}
+                value="0"
                 required
+                onChange={(e) => setIsLocal(e.target.value)} 
               />
               Tourist
             </div>
             <br />
 
             {/* 지역 */}
+            {isLocal === '1' ? 
             <div className="-space-y-px rounded-md">
               <div>
                 <label htmlFor="Region">Region</label>
@@ -156,17 +173,9 @@ function SignUp() {
                   <input id="region" name="region" type="radio" required />
                   region
                 </div>
-                <div>
-                  <input
-                    id="regionDetail"
-                    name="regionDetail"
-                    type="radio"
-                    required
-                  />
-                  regionDetail
-                </div>
               </div>
             </div>
+            : <div></div>}
           </div>
 
           <div></div>
