@@ -18,6 +18,7 @@ import axios from "axios";
 import * as authAction from "./Common/authAction";
 import * as axiosInterceptor from "./Common/axiosInterceptor";
 import EmailConfirm from "./Account/EmailConfirm";
+import UserProfile from "./Profile/UserProfile";
 
 function App() {
   // Code to handle form submission
@@ -54,6 +55,7 @@ function App() {
         <Route path="/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} />
+        <Route path= "/profile/:id" element={<UserProfile />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/square" element={<Square />} />
         <Route

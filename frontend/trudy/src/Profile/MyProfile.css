@@ -78,8 +78,8 @@ input:checked ~ .dot {
 }
 
 .myprofile-intro{
-  border: 2px;
+  border-width: 2px;
   border-color: black;
-  width: 500px;
+  width: 700px;
 
 }

@@ -6,6 +6,7 @@ import axios from 'axios';
 import Category from '../Common/ForumCategory';
 import ForumSearch from './ForumSearch';
 import {ThreeCircles} from 'react-loader-spinner';
+import ForumDetail from './ForumDetail';
 
 interface IgetForumResponse {
   id: number;
@@ -18,7 +19,12 @@ interface IgetForumResponse {
   postelement: object;
 }
 
+
+
+
 function ForumPage() {
+  const [selectedId, setSelectedId] = useState<any>(null)
+  const [forumItem, setForumItem] = useState<any>(null);
 
   const [forumResponse, setForumResponse] = useState<IgetForumResponse[]>([]);
   const [forumloading, setForumLoading] = useState(null);
@@ -31,6 +37,10 @@ function ForumPage() {
   const navigate = useNavigate();
   const navigateToCreateArticle = () => {
     navigate('/ForumCreate');
+  };
+
+  const handleClick = (id: any) => {
+    setSelectedId(id);
   };
 
   // const arr = new Array(1, 2)
@@ -81,10 +91,6 @@ function ForumPage() {
         <ForumSearch />
         <div className='cat-selectors mt-4'>
           <Category />
-        {/* <button className='rounded-full bg-green-500 w-48 h-10'>Food</button>
-        <button className='rounded-full bg-green-500 w-48 h-10'>Hotel</button>
-        <button className='rounded-full bg-green-500 w-48 h-10'>Attraction</button>
-        <button className='rounded-full bg-green-500 w-48 h-10'>Festival</button> */}
         </div>
         <div className='bg-red-700 mx-5'>
           <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
@@ -98,8 +104,12 @@ function ForumPage() {
             <ForumItem
             key={i}
             post={post}
+            onClick={() => handleClick(post.id)}
           />
           ))}
+          {/* {selectedId && (
+            <ForumDetail setForumItem={forumItem} />
+          )} */}
         </div>
     
   </div>
