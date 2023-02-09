@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
 import "./Square.css";
 import CategoryButtons from '../Filter/SelectCategory';
+import UserProfile from "../Profile/UserProfile";
 
 function Square() {
+  const [squareId, setSquareId] = useState<any>(null);
   const [area, setArea] = useState<number>(1);
   const [isLocal, setIsLocal] = useState<string>("");
   const [gender, setGender] = useState<string>("");
@@ -14,8 +16,8 @@ function Square() {
   const [squareData, setSquareData] = useState<[]>([]);
 
   const navigate = useNavigate();
-  const navigateToProfile = (e: React.MouseEvent<HTMLDivElement>) => {
-    navigate("/profile");
+  const navigateToUserProfile = (id : number) => {
+    navigate(`/profile/${id}`);
   };
 
   const authCtx = useContext(AuthContext);
@@ -24,6 +26,10 @@ function Square() {
     e.currentTarget.src =
       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
   };
+
+  
+  
+
 
   // 카테고리
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
@@ -35,7 +41,7 @@ function Square() {
       setSelectedCategories([...selectedCategories, categoryId]);
     }
   };
-  console.log(selectedCategories)
+  console.log(selectedCategories, '카테고리')
 
   // 검색하고 enter 눌렀을 때
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -55,10 +61,14 @@ function Square() {
     async function SquareGet() {
       const res: any = await authCtx.getUser(headers);
       setSquareData(res.data.content);
+      
+      
     }
     SquareGet();
+    
   }, [area, isLocal, gender, nameSearch]);
 
+  console.log(squareData, '스퀘어데이터');
   return (
     <div>
       {/* 검색창 */}
@@ -149,8 +159,15 @@ function Square() {
               <div
                 className="p-4 inline-block hover:bg-blue-800"
                 key={i}
-                onClick={navigateToProfile}
+                onClick={() => {navigateToUserProfile(guide.id); setSquareId(guide);}}
               >
+
+              {squareId && 
+              <UserProfile
+              key={i}
+              userProfileId = {squareId}
+              />}
+              
                 <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
                   <img
                     src={guide.image}

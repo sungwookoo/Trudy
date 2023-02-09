@@ -5,9 +5,17 @@ import { useSelector } from "react-redux";
 
 
 
+interface IForumDetailProps {
+  post_id: number;
+  // setForumItem: (post: IgetForumResponse) => void;
+}
+
+
 function ForumDetail() {
-const post_id = 1;
-const [ForumItem, setForumItem] = useState({});
+
+const post_id = 1
+// const {post_id, setForumItem } = props;
+const [ForumItem, setForumItem] = useState<any>(null);
 // const [isForumLoaded, setIsForumLoaded] = useState(false);
 // const token = useSelector((state: any) => state.Auth.token);
 // const navigate = useNavigate
