@@ -6,6 +6,7 @@ import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.*;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.repository.*;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +18,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.Predicate;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -43,6 +44,9 @@ public class MemberService {
 
     @Autowired
     private final BanRepository banRepository;
+
+    @Autowired
+    private AwsS3Uploader awsS3Uploader;
 
     public Member getByEmail(String email) {
         return memberRepository.findByEmail(email)
@@ -218,5 +222,23 @@ public class MemberService {
         banRepository.delete(ban);
         return targetMember;
 
+    }
+
+    public Map<String, String> createMemberFile(MultipartFile multipartFile, String dirName, PrincipalDetails principal) throws IOException {
+        Member member = principal.getMember();
+        // 이미지가 비어 있는 상태로 저장할 경우
+        if(multipartFile == null || multipartFile.isEmpty()) {
+            Map<String, String> map = new HashMap<>();
+            awsS3Uploader.delete(member.getImageFileName());
+            map.put("response", "empty");
+            map.put("deleteFile", member.getImageFileName());
+            return map;
+        }
+
+        Map<String, String> map = awsS3Uploader.createMemberFile(multipartFile, dirName, principal);
+        member.setImageFileName(map.get("fileName"));
+        member.setImage(map.get("imageUrl"));
+        memberRepository.save(member);
+        return map;
     }
 }
