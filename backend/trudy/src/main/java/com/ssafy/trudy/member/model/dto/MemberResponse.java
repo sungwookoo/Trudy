@@ -37,4 +37,6 @@ public class MemberResponse {
     private List<MemberPostResponse> posts;
 
     private String isFollow;
+
+    private String isBan;
 }
