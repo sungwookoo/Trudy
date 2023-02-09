@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
-import "./Square.css";
 import CategoryButtons from "../Filter/SelectCategory";
 import UserProfile from "../Profile/UserProfile";
 
@@ -132,7 +131,7 @@ function Square() {
               className="p-4 inline-block hover:bg-blue-800"
               key={i}
               onClick={() => {
-                navigate(`/profile/${guide.id}`, { state: guide });
+                navigate(`/profile/${guide.id}`);
               }}
             >
               {/* 세부정보 */}
