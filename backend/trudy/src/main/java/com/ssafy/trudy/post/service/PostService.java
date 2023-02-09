@@ -104,7 +104,7 @@ public class PostService {
                 .memberElement(modelMapper.map(p.getMemberId(), PostDto.MemberElement.class))
                 /*.postAreaElementList(p.getPostAreaList().stream().map(a ->
                         new PostDto.PostAreaElement(new PostDto.AreaElement(a.), new PostDto.SigunguElement())))*/
-                .categoryNameList(p.getPostCategoryList().stream().map(c->c.getCategoryName()).collect(Collectors.toList()))
+                .categoryNameList(p.getPostCategoryList().stream().map(PostCategory::getCategoryName).collect(Collectors.toList()))
                 .sigunguCodeList(p.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
 
