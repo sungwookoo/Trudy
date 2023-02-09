@@ -70,8 +70,7 @@ function Profile() {
       return <div className='flex justify-center'>유저 찾는중.....</div>;
     }
 
-    
-
+  // 나의 게시글 가져오기
     const getMyPosts = () => {
       const url = 'api/post'
       axios.get(url)
@@ -80,10 +79,10 @@ function Profile() {
       .catch((error:any) => console.error(error));
     }
 
-    const memberdetails = {
-      id: profile.id,
-      // name: profile.name,
-    } 
+    // const memberdetails = {
+    //   id: profile.id,
+    //   // name: profile.name,
+    // } 
 
     // console.log(mymemberdetails)
     // useEffect(() => {
