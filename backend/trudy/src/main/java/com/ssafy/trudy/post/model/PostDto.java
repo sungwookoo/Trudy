@@ -27,9 +27,9 @@ public class PostDto {
     public static class PostCombine {
         private PostElement postElement;
         private MemberElement memberElement;
-        private List<PostImageElement> postImageElementList;
-        private List<PostAreaElement> postAreaElementList;
-        private List<PostCategoryElement> postCategoryElementList;
+//        private List<PostImageElement> postImageElementList;
+//        private List<PostAreaElement> postAreaElementList;
+//        private List<PostCategoryElement> postCategoryElementList;
         private int postLikeCount;
         private List<Long> sigunguCodeList;
         private List<CategoryName> categoryNameList;
@@ -39,6 +39,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class CommentCombine{
         private List<CommentElement> commentElementList;
     }

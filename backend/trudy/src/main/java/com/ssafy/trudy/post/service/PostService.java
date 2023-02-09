@@ -303,12 +303,96 @@ public class PostService {
     }
 
     //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작
-    public Map /*Optional<Post>*/ findPostDetail(Long postId) throws Exception{
+    public Map findPostDetail(Long postId) throws Exception{
 
         //1. post entity를 가져옴
         log.info("1");
         Post postEntity = postRepository.findById(postId).get();
 
+        PostDto.PostCombine postCombine = PostDto.PostCombine.builder()
+                .postElement(new PostDto.PostElement(postEntity.getId(), postEntity.getTitle(), postEntity.getContent(), postEntity.getThumbnailImage(), postEntity.getCreatedAt(), postEntity.getUpdatedAt()))
+                .memberElement(modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class))
+                .categoryNameList(postEntity.getPostCategoryList().stream().map(PostCategory::getCategoryName).collect(Collectors.toList()))
+                .sigunguCodeList(postEntity.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
+                .build();
+
+        log.info("test : ============= ");
+        log.info(postCombine.toString());
+
+        // post Entity를 이용해 댓글 정보를 채워 넣음
+        PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
+
+        List<PostDto.CommentElement> commentElementList = new ArrayList<>();
+
+        //for(comment entity 갯수) {comment_like count를 구한다 + {nested_comment entity를 구한다. + nested_comment_like count를 구한다.}}
+        for(Comment commentEntity : postEntity.getCommentList()){
+            //1. Comment DTO 생성
+            PostDto.CommentElement commentElement = new PostDto.CommentElement();
+
+            //2. Comment DTO에 Comment entity를 DTO로 변환후 저장
+            commentElement = modelMapper.map(commentEntity, PostDto.CommentElement.class);
+
+            //3. Comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
+            commentElement.setCustomMemberForComment(modelMapper.map(commentEntity.getPostId().getMemberId(), PostDto.CustomMemberForComment.class));
+
+            //4. comment DTO에 comment_like count 저장
+            commentElement.setCommentLikeCount(commentLikeRepository.countByCommentId(commentEntity));
+
+            //log.info("commentElement res ============== " + commentElement.toString());
+
+            //5. nested_comment List 채우기
+            List<PostDto.NestedCommentElement> nestedCommentElementList= new ArrayList<>();
+            List<NestedComment> nestedCommentList = nestedCommentRepository.findByCommentId(commentEntity);
+
+            for(NestedComment nestedCommentEntity : nestedCommentList){
+                // 5-1. nested_comment DTO 생성
+                PostDto.NestedCommentElement nestedCommentElement = new PostDto.NestedCommentElement();
+
+                // 5-2. nested_comment DTO에 nested_comment entity를 DTO로 변환후 저장
+                nestedCommentElement = modelMapper.map(nestedCommentEntity, PostDto.NestedCommentElement.class);
+
+                // 5-3. nested_comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
+                nestedCommentElement.setCustomMemberForComment(modelMapper.map(nestedCommentEntity.getMemberId(), PostDto.CustomMemberForComment.class));
+
+                // 5-4. nested_comment DTO에 nested_comment_like count 저장
+                nestedCommentElement.setNestedCommentLikeCount(nestedCommentLikeRepository.countByNestedCommentId(nestedCommentEntity));
+
+                // nested_comment List에 add
+                nestedCommentElementList.add(nestedCommentElement);
+            }
+
+            // Comment Element의 요소인 nestedCommentList를 저장
+            commentElement.setNestedCommentList(nestedCommentElementList);
+
+            // commentElement List에 add
+            commentElementList.add(commentElement);
+
+            //commentCombine(자세한 구조는 PostDto.CommentCombine 참고)에 commentElementList 저장
+            commentCombine.setCommentElementList(commentElementList);
+        }
+
+        // comment DTO 정보 test
+        for(PostDto.CommentElement commentElement : commentElementList){
+            log.info("result ==================== " );
+            log.info("id ========= " + commentElement.getId());
+            log.info("conent ========= " + commentElement.getContent());
+            log.info("isdeleted ========= " + commentElement.getIsDeleted());
+            log.info("created at========= " + commentElement.getCreatedAt());
+            log.info("custom member for comment ========= " + commentElement.getCustomMemberForComment());
+            log.info("nestedcommentlist ========= " + commentElement.getNestedCommentList());
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("postCombine", postCombine);
+        response.put("commentCombine", commentCombine);
+
+        return response;
+
+
+
+
+
+/*
         //2. postCombine에 1개 글 상세정보(게시글, member, image, area, category, like_Count)를 채워 넣음
         PostDto.PostCombine postCombine = new PostDto.PostCombine();
 
@@ -360,13 +444,13 @@ public class PostService {
 
 
 
-         /* commentElementList 채우기
+         *//* commentElementList 채우기
             post entity를 가져옴
         comments entity 를 전부 구해옴
         해당 comments entity로
         -> comment_like count를 구한다, nested_comment entity를 구해옴
             -> nested_comment entity로 nested_comment like count를 구해온다
-         */
+         *//*
 
         // post Entity를 이용해 댓글 정보를 채워 넣음
         PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
@@ -443,6 +527,7 @@ public class PostService {
         response.put("commentCombine", commentCombine);
 
         return response;
+*/
     }
 
     //포럼 게시글 좋아요 - 정상 동작
