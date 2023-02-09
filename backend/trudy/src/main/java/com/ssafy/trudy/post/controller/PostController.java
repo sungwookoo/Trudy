@@ -1,5 +1,6 @@
 package com.ssafy.trudy.post.controller;
 
+import com.ssafy.trudy.etc.model.Sigungu;
 import com.ssafy.trudy.post.model.CategoryName;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.model.PostDto;
@@ -14,11 +15,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -45,22 +47,29 @@ public class PostController {
 
     //포럼 게시글 목록 가져오기 - 정상 동작
     @GetMapping
-    public ResponseEntity<?> postList(@RequestParam(required = false) String title,
-                                      @RequestParam(required = false) String content,
-                                      @RequestParam(required = false) String[] sigunguIdList,
-                                      @RequestParam(required = false) String[] categoryList,
-                                      @PageableDefault(size = 9, sort = "id") Pageable pageable){
-        try{
-            List<PostDto.PostCombine> findPostCombines = postService.findPostList(title, content, sigunguIdList, categoryList, pageable);
-            if(findPostCombines != null || !findPostCombines.isEmpty()){
-                return ResponseEntity.ok().body(findPostCombines);
-            } else {
-                return ResponseEntity.noContent().build();
-            }
-        } catch (Exception e){
-            e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+    public void /*Page<?>*/ postList(@RequestParam(required = false) String title,
+                            @RequestParam(required = false) String content,
+                            @RequestParam(required = false) List<Long> sigunguIdList,
+                            @RequestParam(required = false) List<CategoryName> categoryList,
+                            @PageableDefault(size = 5, sort = "id" ,direction = Sort.Direction.ASC) Pageable pageable){
+        //try{
+            /*List<PostDto.PostCombine> findPostCombines =*/
+
+        postService.findPostList(title,
+                    content,
+                    sigunguIdList,
+                    categoryList,
+                    pageable);
+
+//            if(findPostCombines != null || !findPostCombines.isEmpty()){
+//                return ResponseEntity.ok().body(findPostCombines);
+//            } else {
+//                return ResponseEntity.noContent().build();
+//            }
+//        } catch (Exception e){
+//            e.getStackTrace();
+//            return ResponseEntity.internalServerError().build();
+//        }
     }
 
     //포럼 게시글 작성 - 정상 동작

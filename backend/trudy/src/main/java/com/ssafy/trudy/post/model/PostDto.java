@@ -4,6 +4,7 @@ import com.ssafy.trudy.etc.model.Area;
 import com.ssafy.trudy.etc.model.Sigungu;
 import com.ssafy.trudy.member.model.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class PostCombine {
         private PostElement postElement;
         private MemberElement memberElement;

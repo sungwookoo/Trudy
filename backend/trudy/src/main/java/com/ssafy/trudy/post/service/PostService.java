@@ -1,7 +1,9 @@
 package com.ssafy.trudy.post.service;
 
+import com.ssafy.trudy.etc.model.Sigungu;
 import com.ssafy.trudy.etc.repository.SigunguRepository;
 import com.ssafy.trudy.member.model.Member;
+import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
 import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.service.MemberService;
@@ -11,12 +13,14 @@ import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,11 +55,11 @@ public class PostService {
     ModelMapper modelMapper = new ModelMapper();
 
     //포럼 게시글 목록 가져오기1
-    public List<PostDto.PostCombine> findPostList(String title,
-                                                  String content,
-                                                  String[] sigunguIdList,
-                                                  String[] categoryList,
-                                                  Pageable pageable){
+    public Page<PostDto.PostElement> findPostList(String title,
+                                   String content,
+                                   List<Long> sigunguIdList,
+                                   List<CategoryName> categoryList,
+                                   Pageable pageable){
         log.info("============Post Service / findPostList==========");
 
         //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
@@ -63,16 +67,85 @@ public class PostService {
         //log.info("postEntity=========== " + postEntityList.toString());
 
         //Dto를 담을 리스트()
-        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
-        log.info(postRepository.findById(1L).get().toString());
-        log.info(postRepository.findById(1L).get().getPostImageList().toString());
-        log.info(postRepository.findById(1L).get().getPostCategoryList().toString());
-        log.info(postRepository.findById(1L).get().getPostAreaList().toString());
+//        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
+//            log.info(postRepository.findById(1L).get().toString());
+//        log.info(postRepository.findById(1L).get().getPostImageList().toString());
+//        log.info(postRepository.findById(1L).get().getPostCategoryList().toString());
+//        log.info(postRepository.findById(1L).get().getPostAreaList().toString());
 
-        postRepository.findAll(PostSpecification.getSearchByPageable(title, content, sigunguIdList, categoryList), pageable);
+        Page<Post> filteredPost = postRepository.findAll(PostSpecification.getSearchByPageable(title, content, sigunguIdList, categoryList), pageable);
 
 
-        return postCombineList;
+        if (0 == filteredPost.getTotalElements()) {
+            return new PageImpl<>(new ArrayList<>(), filteredPost.getPageable(), filteredPost.getTotalElements());
+        }
+
+//        log.info("검사 합니다.");
+//        log.info(postRepository.findAll(PostSpecification.getSearchByPageable(title, content, sigunguIdList, categoryList), pageable).toString());
+
+//         for(Object t : filteredPost){
+//            log.info("start");
+//            log.info(t.);
+//        }
+
+        // 전송용 DTO
+//        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
+
+        List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(post -> PostDto.PostCombine.builder()
+                .postElement(post.get)
+                .memberElement()
+                .postAreaElementList()
+                .postCategoryElementList()
+                .build()).collect(Collectors.toList());
+
+
+        //
+        /*for(Post postEntity : filteredPost){
+            PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
+
+            PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
+
+            //image 정보 리스트 가져와서 DTO에 저장
+            List<PostDto.PostImageElement> postImageElementList = postEntity.getPostImageList()
+                    .stream()
+                    .map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
+
+            //area 정보 리스트 가져와서 DTO에 저장
+            List<PostDto.PostAreaElement> postAreaElementList = postEntity.getPostAreaList()
+                    .stream()
+                    .map(p -> new PostDto.PostAreaElement(
+                            modelMapper.map(p.getSigunguCode().getAreaCode(), PostDto.AreaElement.class),
+                            modelMapper.map(p.getSigunguCode(), PostDto.SigunguElement.class)
+                    )).collect(Collectors.toList());
+
+            //category 정보 리스트 가져와서 DTO에 저장
+            List<PostDto.PostCategoryElement> postCategoryElementLIst = postCategoryRepository
+                    .findByPostId(postEntity)
+                    .stream()
+                    .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());
+
+            //postLikeCount 정보 가져옴
+            int postLikeCount = postLikeRepository.countByPostId(postEntity);
+
+            //한개 포럼글에 대한 정보를 묶음
+            postCombineList.add(new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount));
+
+        }
+        for(int i=0; i<postCombineList.size(); i++) {
+            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
+            log.info(i + " member+++++++ : " + postCombineList.get(i).getMemberElement().toString());
+            log.info(i + " image+++++++ : " + postCombineList.get(i).getPostImageElementList().toString());
+            log.info(i + " area+++++++ : " + postCombineList.get(i).getPostAreaElementList().toString());
+            log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
+            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
+        }*/
+
+       // return postCombineList;
+
+
+
+         log.info("============findPostList 종료=================");
+        return ;
     }
 
     //포럼 게시글 목록 가져오기2
