@@ -230,8 +230,8 @@ public class MemberService {
         if(multipartFile == null || multipartFile.isEmpty()) {
             Map<String, String> map = new HashMap<>();
             awsS3Uploader.delete(member.getImageFileName());
-            map.put("response", "empty");
-            map.put("deleteFile", member.getImageFileName());
+            map.put("fileName", member.getImage());
+            map.put("imageUrl", member.getImageFileName());
             return map;
         }
 
