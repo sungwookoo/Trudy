@@ -17,7 +17,7 @@ interface propsTypes {
 function ForumItem(props: any) {
   const forumTextData = props.post.postElement
   const forumImageData = props.post.postImageElementList
-  console.log(forumImageData.length)
+  // console.log(forumImageData.length)
 
 
   const navigate = useNavigate();

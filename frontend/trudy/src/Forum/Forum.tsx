@@ -33,8 +33,6 @@ function ForumPage() {
     navigate('/ForumCreate');
   };
 
-
-
   // const arr = new Array(1, 2)
   // for (let i = 0; i < arr.length; i++) {
   //   console.log(arr[i])
