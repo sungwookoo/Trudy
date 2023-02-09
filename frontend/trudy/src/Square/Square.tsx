@@ -3,6 +3,7 @@ import React, { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
 import "./Square.css";
+import CategoryButtons from '../Filter/SelectCategory';
 
 function Square() {
   const [area, setArea] = useState<number>(1);
@@ -23,6 +24,18 @@ function Square() {
     e.currentTarget.src =
       "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
   };
+
+  // 카테고리
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  // 카테고리 버튼 on/off 
+  const handleClick = (categoryId: number) => {
+    if (selectedCategories.includes(categoryId)) {
+      setSelectedCategories(selectedCategories.filter((c) => c !== categoryId));
+    } else {
+      setSelectedCategories([...selectedCategories, categoryId]);
+    }
+  };
+  console.log(selectedCategories)
 
   // 검색하고 enter 눌렀을 때
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -50,21 +63,7 @@ function Square() {
     <div>
       {/* 검색창 */}
       <div className="">
-        <div id="regionSelect" className="float-left">
-          <div id="">
-            <label>
-              <input type="checkbox" id="seoul" name="" />
-              서울
-            </label>
-            <label>
-              <input type="checkbox" id="busan" name="" />
-              부산
-            </label>
-          </div>
-          <div id="regionDetail" className="">
-            <input type="checkbox" id="regionDetail" name="regionDetail" />
-          </div>
-        </div>
+        <CategoryButtons onClick={handleClick} selectedCategories={selectedCategories} />
 
         {/* isLocal 드랍박스 */}
         <select
