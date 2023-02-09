@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface PostImageRepository extends JpaRepository<PostImage, Long> {
     public List<PostImage> findByPostId(Post post);
+
 }
