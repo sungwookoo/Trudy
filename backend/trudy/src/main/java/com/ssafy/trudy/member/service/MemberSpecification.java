@@ -31,6 +31,8 @@ public interface MemberSpecification {
                 predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("isLocal"), isLocal));
             }
 
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("isPublic"), "1"));
+
             return predicate;
         };
     }
