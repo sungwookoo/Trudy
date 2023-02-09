@@ -113,7 +113,7 @@ export const signOutActionHandler = (
   return response;
 };
 
-// 유저의 정보를 GET방식으로 호출
+// 스퀘어 유저의 정보를 GET방식으로 호출
 export const getUserActionHandler = (headers: any) => {
   const url = "/api/member/";
   const response = GET(url, { headers });
@@ -146,8 +146,12 @@ export const getUserActionHandler = (headers: any) => {
 // };
 
 // 유저의 Planner 정보를 GET방식으로 호출
-export const getUserPlanner = (userId: number) => {
-  const url = "api/planner";
-  const response = GET(url, userId);
+export const getPlanner = (memberId: number) => {
+  const url = "/api/planner";
+  // const params = { memberId: memberId }
+  const params = { memberId: 1 }
+  const response = GET(url, {params}
+    );
+
   return response;
 };

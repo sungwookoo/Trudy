@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState, useEffect, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
+import SignUp from "./SignUp"
 
 // 이메일 인증 페이지
 
@@ -13,6 +14,8 @@ function EmailConfirm() {
   const [code, setCode] = useState<string>("");
 
   const authCtx = useContext(AuthContext);
+
+  
 
   const navigate = useNavigate();
   function navigateToSignUp (){
@@ -64,8 +67,8 @@ function EmailConfirm() {
 
   //   인증 코드를 확인하는 함수
   function checkCode() {
-    if (inputCode === code) {
-      const verify = authCtx.emailVerified;
+    if (inputCode !== "" && inputCode === code) {
+      const verify = authCtx.emailVerified(email);
       navigateToSignUp()
     } else {
       alert("Incorrect Code!");
@@ -105,6 +108,7 @@ function EmailConfirm() {
             verify email
           </button>
         </div>
+
         <div>
           <input
             id="verifyCode"
