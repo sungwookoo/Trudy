@@ -19,7 +19,11 @@ const calculateRemainingTime = (expirationTime: number) => {
 };
 
 // 토큰값과 만료시간을 localStorage에 저장하는 함수
-export const signInTokenHandler = (token: string, refreshToken: string, expirationTime: number) => {
+export const signInTokenHandler = (
+  token: string,
+  refreshToken: string,
+  expirationTime: number
+) => {
   localStorage.setItem("token", token);
   localStorage.setItem("refreshToken", refreshToken);
   localStorage.setItem("expirationTime", String(expirationTime));
@@ -51,7 +55,10 @@ export const retrieveStoredToken = () => {
 };
 
 // 토큰을 재발행하는 함수
-export const refreshTokenHandler = (accessToken: string, refreshToken: string) => {
+export const refreshTokenHandler = (
+  accessToken: string,
+  refreshToken: string
+) => {
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
   const response = POST(url, token, {});
@@ -71,7 +78,7 @@ export const verifyEmail = (email: string) => {
 export const signUpActionHandler = (
   email: string,
   password: string,
-  nickname: string,
+  name: string,
   gender: string,
   birthday: string,
   isLocal: string,
@@ -79,9 +86,18 @@ export const signUpActionHandler = (
   sigunguCode: number
 ) => {
   const url = "/api/signup";
-  const signupObject = { email, password, nickname, gender, birthday, isLocal, areaCode, sigunguCode };
-
-  const response = POST(url, signupObject, {});
+  const data = {
+    email,
+    password,
+    name,
+    gender,
+    birthday,
+    isLocal,
+    areaCode,
+    sigunguCode,
+  };
+  console.log(data)
+  const response = POST(url, data, {});
   return response;
 };
 
