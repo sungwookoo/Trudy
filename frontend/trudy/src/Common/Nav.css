@@ -21,7 +21,7 @@
 }
 
 .nav-item {
-    margin-left: 10%;
+    margin-left: 5%;
     font-size: 28px;
     font-weight: bold;
 }
@@ -37,10 +37,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 60%;
     height: 100%;
     font-weight: bold;
-    margin-left: 2%;
+    margin-left: 5%;
+    /* background-color: aqua; */
 }
 
 
@@ -48,9 +49,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 30%;
+    /* justify-content: space-between; */
+    width: 25%;
     height: 100%;
     margin-left: 20%;
+    margin-right: 5%;
+    /* background-color: blue; */
 }
 
 .nav-profile-img{
