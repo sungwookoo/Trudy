@@ -263,8 +263,11 @@ function SignUp() {
                   areaCode,
                   sigunguCode
                 );
-                response.then(() => {
+                response.then((res: any) => {
+                  if (res !== null) {
+                  console.log('가입 성공')
                   navigateToLending();
+                }
                 });
               }}
             >
