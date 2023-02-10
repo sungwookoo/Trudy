@@ -35,7 +35,7 @@ function SignUp() {
   useEffect(() => {
     return authCtx.defaultVerified;
   }, []);
-
+  console.log(nickname);
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -71,11 +71,7 @@ function SignUp() {
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
                 onChange={(e) => {
-                  if (
-                    !/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(
-                      e.target.value
-                    )
-                  ) {
+                  if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(e.target.value)) {
                     setIsPassword(false);
                   } else {
                     setIsPassword(true);
@@ -120,7 +116,9 @@ function SignUp() {
                 maxLength={16}
                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
-                onChange={(e) => {setNickname(e.target.value)}}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -130,39 +128,18 @@ function SignUp() {
             <div>
               <h1>Gender</h1>
               <label htmlFor="male">
-                <input
-                  id="male"
-                  name="gender"
-                  type="radio"
-                  value="Male"
-                  required
-                  onChange={(e) => setGender(e.target.value)}
-                />
+                <input id="male" name="gender" type="radio" value="Male" required onChange={(e) => setGender(e.target.value)} />
                 Male
               </label>
             </div>
 
             <div>
-              <input
-                id="female"
-                name="gender"
-                type="radio"
-                value="Female"
-                required
-                onChange={(e) => setGender(e.target.value)}
-              />
+              <input id="female" name="gender" type="radio" value="Female" required onChange={(e) => setGender(e.target.value)} />
               <label htmlFor="female">Female</label>
             </div>
 
             <div>
-              <input
-                id="unknown"
-                name="gender"
-                type="radio"
-                required
-                value="unknown"
-                onChange={(e) => setGender(e.target.value)}
-              />
+              <input id="unknown" name="gender" type="radio" required value="unknown" onChange={(e) => setGender(e.target.value)} />
               <label htmlFor="unknown">I prefer not to say</label>
             </div>
           </div>
@@ -172,13 +149,7 @@ function SignUp() {
             <div>
               <label htmlFor="birthday">Birthday</label>
               <br />
-              <input
-                id="birthday"
-                name="birthday"
-                type="month"
-                required
-                onChange={(e) => setBirthday(e.target.value)}
-              />
+              <input id="birthday" name="birthday" type="month" required onChange={(e) => setBirthday(e.target.value)} />
             </div>
           </div>
 
@@ -187,23 +158,9 @@ function SignUp() {
             <div>
               <label htmlFor="Local">Local</label>
               <br />
-              <input
-                id="local"
-                name="islocal"
-                type="radio"
-                value="1"
-                required
-                onChange={(e) => setIsLocal(e.target.value)}
-              />
+              <input id="local" name="islocal" type="radio" value="1" required onChange={(e) => setIsLocal(e.target.value)} />
               Local
-              <input
-                id="tourist"
-                name="islocal"
-                type="radio"
-                value="0"
-                required
-                onChange={(e) => setIsLocal(e.target.value)}
-              />
+              <input id="tourist" name="islocal" type="radio" value="0" required onChange={(e) => setIsLocal(e.target.value)} />
               Tourist
             </div>
             <br />
@@ -211,40 +168,29 @@ function SignUp() {
             {/* 지역 */}
             {isLocal === "1" ? (
               <>
-                <AreaSelect
-                  key={0}
-                  areaCode={areaList}
-                  onClick={handleAreaClick}
-                />
+                <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
                 {areaCode && (
                   <div className="flex flex-col">
-                    {sigunguList[areaCode].map(
-                      (sigunguInfo: any, i: number) => (
-                        <div key={i} className="flex items-center mb-2">
-                          <input
-                            className="mr-2"
-                            name="sigungu-select"
-                            type="radio"
-                            id={`sigungu-${sigunguInfo.id}`}
-                            checked={sigunguCode === sigunguInfo.id}
-                            onChange={() => setSigunguCode(sigunguInfo.id)}
-                          />
-                          <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-                            {sigunguInfo.name}
-                            {sigunguInfo.id}
-                          </label>
-                        </div>
-                      )
-                    )}
+                    {sigunguList[areaCode].map((sigunguInfo: any, i: number) => (
+                      <div key={i} className="flex items-center mb-2">
+                        <input
+                          className="mr-2"
+                          name="sigungu-select"
+                          type="radio"
+                          id={`sigungu-${sigunguInfo.id}`}
+                          checked={sigunguCode === sigunguInfo.id}
+                          onChange={() => setSigunguCode(sigunguInfo.id)}
+                        />
+                        <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
+                      </div>
+                    ))}
                   </div>
                 )}
               </>
             ) : (
-              ""
+              <></>
             )}
           </div>
-
-          <div></div>
 
           {/* 회원가입 완료 버튼 */}
           <div>

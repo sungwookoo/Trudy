@@ -21,16 +21,7 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
-  signup: (
-    email: string,
-    password: string,
-    nickname: string,
-    gender: string,
-    birthday: string,
-    isLocal: string,
-    areaCode: number,
-    sigunguCode: number
-  ) => {},
+  signup: (email: string, password: string, nickname: string, gender: string, birthday: string, isLocal: string, areaCode: number, sigunguCode: number) => {},
   sendCode: (email: string) => {},
   emailVerified: (email: string) => {},
   defaultVerified: () => {},
@@ -126,14 +117,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       if (result !== null) {
         const loginData: LoginToken = result.data;
         setToken(loginData.accessToken);
-        logoutTimer = setTimeout(
-          signOutHandler,
-          authAction.signInTokenHandler(
-            loginData.accessToken,
-            loginData.refreshToken,
-            loginData.accessTokenExpiresIn
-          )
-        );
+        logoutTimer = setTimeout(signOutHandler, authAction.signInTokenHandler(loginData.accessToken, loginData.refreshToken, loginData.accessTokenExpiresIn));
         setIsSuccess(true);
       } else {
         alert("Wrong ID or Password!");
@@ -230,11 +214,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     planner: getPlannerHandler,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
 };
 
 export default AuthContext;
