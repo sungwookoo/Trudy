@@ -40,7 +40,7 @@ function Planner() {
       setPlanner(data.data)
     }
     GetPlanner()
-  }, [memberId])
+  }, [memberId, TourPlanList])
 
 
   return (

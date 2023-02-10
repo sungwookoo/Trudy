@@ -68,12 +68,14 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
   const sendCode = async (email: string) => {
     const response: any = await authAction.verifyEmail(email);
-    if (response === 6) {
+    console.log(response)
+    if (response === null) {
       alert("this email is already in use!!");
 
       return null;
     }
     alert("Verification code has been sent");
+
     return response;
   };
 
