@@ -39,10 +39,10 @@ public class SignupRequest {
     private Long sigunguCode;
 
     public void validation() {
-//        if (ObjectUtils.isEmpty(this.name)
-//                || !this.name.matches(USER_NICKNAME_REGEX)) {
-//            throw new ApiException(ServiceErrorType.INVALID_USER_NAME);
-//        }
+        if (ObjectUtils.isEmpty(this.name)
+                || !this.name.matches(USER_NAME_REGEX)) {
+            throw new ApiException(ServiceErrorType.INVALID_USER_NAME);
+        }
 
         if (ObjectUtils.isEmpty(this.password)
                 || !this.password.matches(USER_PASSWORD_REGEX)) {
