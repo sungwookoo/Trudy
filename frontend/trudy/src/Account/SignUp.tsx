@@ -263,12 +263,11 @@ function SignUp() {
                   areaCode,
                   sigunguCode
                 );
-                response.then((res: any) => {
-                  if (res !== null) {
-                  console.log('가입 성공')
-                  navigateToLending();
+                
+                  if (response !== null) {
+                    authCtx.login(email, password)
+                    navigateToLending();
                 }
-                });
               }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>

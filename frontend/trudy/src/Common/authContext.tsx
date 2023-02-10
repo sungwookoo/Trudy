@@ -68,15 +68,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
   const sendCode = async (email: string) => {
     const response: any = await authAction.verifyEmail(email);
-    console.log(response)
-    if (response === null) {
-      alert("this email is already in use!!");
-
-      return null;
+      if (response === null) {
+        alert("this email is already in use!!");
+      } else {
+      alert("Verification code has been sent");
+      return response;
     }
-    alert("Verification code has been sent");
-
-    return response;
   };
 
   // 이메일 인증을 완료했음을 기록하는 함수
@@ -113,10 +110,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       sigunguCode
     );
     response.then((result) => {
-      if (result !== null) {
-        setIsSuccess(true);
-      }
-    });
+      setIsSuccess(true);
+      return result
+    })
+    .catch((error) => 
+    alert(error.data.errorMessage)
+    );
   };
 
   //   로그인을 하는 함수

@@ -70,7 +70,6 @@ export const verifyEmail = (email: string) => {
   const url = "api/emailConfirm";
   const params = { email };
   const response = POST(url, {}, { params });
-
   return response;
 };
 
@@ -96,7 +95,6 @@ export const signUpActionHandler = (
     areaCode,
     sigunguCode,
   };
-  console.log(data)
   const response = POST(url, data, {});
   return response;
 };
