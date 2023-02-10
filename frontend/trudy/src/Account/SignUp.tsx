@@ -5,6 +5,7 @@ import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
+import { useLocation } from "react-router-dom";
 // 로그인 페이지
 
 function SignUp() {
@@ -16,27 +17,40 @@ function SignUp() {
   const [isLocal, setIsLocal] = useState<string>("");
   const [areaCode, setAreaCode] = useState<number>(0);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
-
+  const { state } = useLocation();
+  const email = state;
 
   // 지역 filter
-const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
-  
-  const authCtx = useContext(AuthContext)
+  const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
+
+  const authCtx = useContext(AuthContext);
   const handleAreaClick = (id: number) => {
     setSelectedAreaCode(id);
   };
   useEffect(() => {
-    return(
-      authCtx.defaultVerified
-    )
-  }, [])
-console.log(selectedAreaCode)
+    return authCtx.defaultVerified;
+  }, []);
+
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
           <p className="mt-2 text-center text-sm text-gray-600"></p>
+        </div>
+
+        <div className="-space-y-px rounded-md shadow-md">
+          <div>
+            Email
+            <input
+              id="email"
+              name="email"
+              type="email"
+              disabled
+              className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 placeholder-gray-900 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder= {email}
+            />
+          </div>
         </div>
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
@@ -67,10 +81,7 @@ console.log(selectedAreaCode)
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password Confirm"
-                onChange={
-                  (e) => setPasswordConfirm(e.target.value)
-                }
-
+                onChange={(e) => setPasswordConfirm(e.target.value)}
               />
             </div>
           </div>
@@ -124,9 +135,13 @@ console.log(selectedAreaCode)
             </div>
 
             <div>
-              <input id="unknown" name="gender" type="radio" required 
-                  value="unknown"
-                  onChange={(e) => setGender(e.target.value)}
+              <input
+                id="unknown"
+                name="gender"
+                type="radio"
+                required
+                value="unknown"
+                onChange={(e) => setGender(e.target.value)}
               />
               <label htmlFor="unknown">I prefer not to say</label>
             </div>
@@ -137,8 +152,12 @@ console.log(selectedAreaCode)
             <div>
               <label htmlFor="birthday">Birthday</label>
               <br />
-              <input id="birthday" name="birthday" type="month" required 
-                  onChange={(e) => setBirthday(e.target.value)} 
+              <input
+                id="birthday"
+                name="birthday"
+                type="month"
+                required
+                onChange={(e) => setBirthday(e.target.value)}
               />
             </div>
           </div>
@@ -154,7 +173,7 @@ console.log(selectedAreaCode)
                 type="radio"
                 value="1"
                 required
-                onChange={(e) => setIsLocal(e.target.value)} 
+                onChange={(e) => setIsLocal(e.target.value)}
               />
               Local
               <input
@@ -163,34 +182,45 @@ console.log(selectedAreaCode)
                 type="radio"
                 value="0"
                 required
-                onChange={(e) => setIsLocal(e.target.value)} 
+                onChange={(e) => setIsLocal(e.target.value)}
               />
               Tourist
             </div>
             <br />
 
             {/* 지역 */}
-            {isLocal === '1' ? 
-            <>
-            <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
-            {selectedAreaCode && (
-              <div className="flex flex-col">
-              {sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
-                <div key={i} className="flex items-center mb-2">
-                  <input
-                    className="mr-2"
-                    name = "sigungu-select"
-                    type="radio"
-                    id={`sigungu-${sigunguInfo.id}`}
-                    // checked={selectedSigungu.includes(sigunguInfo.id)}
-                    onChange={() => setSigunguCode(sigunguInfo.code)}
-                  />
-                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
-                </div>
-              ))}
-            </div>
-            )}</>
-            : ''}
+            {isLocal === "1" ? (
+              <>
+                <AreaSelect
+                  key={0}
+                  areaCode={areaList}
+                  onClick={handleAreaClick}
+                />
+                {selectedAreaCode && (
+                  <div className="flex flex-col">
+                    {sigunguList[selectedAreaCode].map(
+                      (sigunguInfo: any, i: number) => (
+                        <div key={i} className="flex items-center mb-2">
+                          <input
+                            className="mr-2"
+                            name="sigungu-select"
+                            type="radio"
+                            id={`sigungu-${sigunguInfo.id}`}
+                            // checked={selectedSigungu.includes(sigunguInfo.id)}
+                            onChange={() => setSigunguCode(sigunguInfo.code)}
+                          />
+                          <label htmlFor={`sigungu-${sigunguInfo.id}`}>
+                            {sigunguInfo.name}
+                          </label>
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </>
+            ) : (
+              ""
+            )}
           </div>
 
           <div></div>
@@ -201,7 +231,16 @@ console.log(selectedAreaCode)
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={(e) => {
-                authCtx.signup(password, nickname, gender, birthday, isLocal, areaCode, sigunguCode)
+                authCtx.signup(
+                  email,
+                  password,
+                  nickname,
+                  gender,
+                  birthday,
+                  isLocal,
+                  areaCode,
+                  sigunguCode
+                );
               }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
