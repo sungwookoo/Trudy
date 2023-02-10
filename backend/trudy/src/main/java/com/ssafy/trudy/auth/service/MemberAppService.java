@@ -24,10 +24,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -43,6 +46,8 @@ public class MemberAppService {
     private TokenProvider tokenProvider;
     @Autowired
     private PostService postService;
+
+
 
     @Transactional
     public TokenResponse login(LoginRequest loginRequest) {
@@ -415,5 +420,9 @@ public class MemberAppService {
                 .name(targetMember.getName())
                 .build();
 
+    }
+
+    public Map<String, String> createMemberFile(MultipartFile multipartFile, String dirName, PrincipalDetails principal) throws IOException {
+        return memberService.createMemberFile(multipartFile, dirName, principal);
     }
 }

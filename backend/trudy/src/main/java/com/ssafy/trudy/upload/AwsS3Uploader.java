@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,9 +29,6 @@ import java.util.UUID;
 public class AwsS3Uploader {
 
     private final AmazonS3Client amazonS3Client;
-
-    @Autowired
-    private final MemberAppService memberAppService;
 
     @Autowired
     private final PlannerService plannerService;
@@ -54,32 +53,37 @@ public class AwsS3Uploader {
         return uploadImageUrl;
     }
 
-    public MemberResponse createMemberFile(MultipartFile multipartFile, String dirName, PrincipalDetails principal) throws IOException {
+    public Map<String, String> createMemberFile(MultipartFile multipartFile, String dirName, PrincipalDetails principal) throws IOException {
         File uploadFile = convert(multipartFile)        // 파일 생성
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File convert fail"));
 
         return memberUpload(uploadFile, dirName, principal);
     }
-    public MemberResponse memberUpload(File uploadFile, String dirName, PrincipalDetails principal) {
+    public Map<String, String> memberUpload(File uploadFile, String dirName, PrincipalDetails principal) {
+        Map<String, String> map = new HashMap<>();
         String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);    // s3로 업로드
+        map.put("fileName",fileName);
+        map.put("imageUrl",uploadImageUrl);
         removeNewFile(uploadFile);
         delete(principal.getMember().getImageFileName());
-        return memberAppService.saveMemberImage(uploadImageUrl, fileName, principal);
+        return map;
     }
 
-    public String createPostFile(MultipartFile multipartFile, String dirName) throws IOException {
+    public Map<String, String> createPostFile(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)        // 파일 생성
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File convert fail"));
 
         return postUpload(uploadFile, dirName);
     }
-    public String postUpload(File uploadFile, String dirName) {
+    public Map<String, String> postUpload(File uploadFile, String dirName) {
+        Map<String, String> map = new HashMap<>();
         String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);    // s3로 업로드
+        map.put("fileName",fileName);
+        map.put("imageUrl",uploadImageUrl);
         removeNewFile(uploadFile);
-
-        return uploadImageUrl;
+        return map;
     }
 
     public DayItem createCustomDayItemFile(MultipartFile multipartFile, String dirName, Long dayItemId) throws IOException {
