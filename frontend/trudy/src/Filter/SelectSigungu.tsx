@@ -29,8 +29,9 @@ const SigunguSelect = ({ area, selectSigunguCode, selectedSigungu, setSelectedSi
     });
     setConvertSigungu(tempSigunCodeArray);
   }, [selectedSigungu]);
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-row flex-wrap nowrap">
       {selectSigunguCode[area].map((sigunguInfo: any, i: number) => (
         <div key={i} className="flex items-center mb-2">
           <input

@@ -38,7 +38,6 @@ function Place(props: any) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   // 시군구 filter
   const [selectedSigungu, setSelectedSigungu] = useState<number[]>([]);
-  // 시군구 선택시 지역 + 시군구 변환
 
   // 카테고리 버튼 on/off
   const handleCategoryClick = (categoryId: number) => {
@@ -52,10 +51,6 @@ function Place(props: any) {
   // 대분류 선택시 해당 대분류 id 가진 세부지역 checkbox 표시하기
   const handleAreaClick = (id: number) => {
     setSelectedAreaCode(id);
-  };
-  // 소분류 선택시 areaSigungu 변경하기
-  const handleSigunguClick = (sigunguId: any) => {
-    setareaSigun([...areaSigun, sigunguId]);
   };
 
   // 지역 위도 경도 따오기
@@ -78,6 +73,7 @@ function Place(props: any) {
     fetchData();
     // 필터 값 바뀌면 limit 값 변경해주기
   }, [limit, offset, areaSigun, contentTypeId, keyword]);
+
   return (
     <>
       {/* 지역 버튼 */}
