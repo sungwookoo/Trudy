@@ -166,9 +166,7 @@ function Square() {
                 <p className="text-gray-600">areacode : {guide.areacode}</p>
                 <p className="text-gray-600">isLocal : {guide.isLocal}</p>
                 <p className="mt-2 truncate">
-                  Introduce: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in aliquam magna. Integer tristique, dolor eu dignissim convallis,
-                  sapien risus rhoncus neque, non bibendum lectus enim in lorem.
-                  {/* {guide.introduceId.self} */}
+                  {guide.introduceId.self}
                 </p>
               </div>
             </div>
