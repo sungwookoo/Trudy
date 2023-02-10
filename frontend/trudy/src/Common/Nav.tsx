@@ -21,6 +21,11 @@ const Nav = () => {
     authCtx.signOut();
   };
 
+
+
+
+// 이하 HTML
+
   return (
     // 네비게이션바
   <nav className="nav-bar">
@@ -71,12 +76,12 @@ const Nav = () => {
       {/* 로그인 */}
       {!authCtx.isLoggedIn ? (
         <>
-          <div className="nav-item">
+          <div className="nav-item mx-6">
             <NavLink className="nav-link" to="/signin">
               Sign In
             </NavLink>
           </div>
-          <div className="nav-item">
+          <div className="nav-item mx-6">
             <NavLink className="nav-link" to="/signupselect">
               Sign Up
             </NavLink>
@@ -86,7 +91,7 @@ const Nav = () => {
         <>
           <div className="nav-item flex flex-row items-center">
             <img 
-            className="nav-profile-img"
+            className="nav-profile-img mr-12"
             src="https://blog.kakaocdn.net/dn/FSvHG/btrzdoAbEI0/WA1kfeo9BFC8n8GOe39U31/img.webp"
             alt="navProfileImage"
             />
@@ -95,7 +100,7 @@ const Nav = () => {
             </NavLink>
           </div>
           <div className="nav-item">
-            <button className="nav-link" onClick={signOut}>
+            <button className="nav-link ml-4 mr-12" onClick={signOut}>
               Sign Out
             </button>
           </div>

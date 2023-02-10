@@ -6,6 +6,7 @@ import UserProfile from "../Profile/UserProfile";
 import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
+import { transform } from "typescript";
 
 function Square() {
   const [squareId, setSquareId] = useState<any>(null);
@@ -60,81 +61,85 @@ function Square() {
 
   console.log(squareData, "스퀘어데이터");
   return (
-    <div>
+    <div className="">
       {/* 검색창 */}
-      <div className="">
-        {/* isLocal 드랍박스 */}
-        <select
-          id="isLocal"
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            setIsLocal(e.target.value);
-          }}
-        >
-          <option value="">All</option>
-          <option value="1">Local</option>
-          <option value="0">Tourist</option>
-        </select>
+      <div className="border-2 flex flex-row justify-center justify-evenly px-12">
+        {/* isLocal (UserType) 드랍박스 */}
+        <div className="flex flex-row justify-center mx-24  w-1/4  ml-96">
+          <select
+            className="justify-center w-2/3 rounded-md border-gray-500 shadow-sm px-2 py-2 mr-12 "
+            id="isLocal"
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setIsLocal(e.target.value);
+            }}
+          >
+            <option value="">UserType</option>
+            <option value="1">Local</option>
+            <option value="0">Tourist</option>
+          </select>
 
-        {/* gender 드랍박스 */}
-        <select
-          id="gender"
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            setGender(e.target.value);
-          }}
-        >
-          <option value="">All</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-
-        {/* 검색 */}
-        <div className="flex">
-          <div className="relative">
-            <input
-              type="search"
-              id="default-search"
-              className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search Name"
-              required
-              onKeyDown={pressEnter}
-              onChange={(e) => {
-                setSearchChange(e.target.value);
-              }}
-            />
-            <button
-              type="submit"
-              className="absolute flex inset-y-0 right-0 p-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              onClick={(e) => {
-                setNameSearch(searchChange);
-              }}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </button>
-          </div>
+          {/* gender 드랍박스 */}
+          <select
+            className="justify-center w-2/3 rounded-md border-gray-500 shadow-sm px-2 py-2 "
+            id="gender"
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setGender(e.target.value);
+            }}
+          >
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
         </div>
-        <>
+        {/* 검색 */}
+        <div className="flex flex-row justify-center w-1/4">
+          <input
+            type="search"
+            id="default-search"
+            className="block p-3 w-3/5 text-sm text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+            placeholder="Search Name"
+            required
+            onKeyDown={pressEnter}
+            onChange={(e) => {
+              setSearchChange(e.target.value);
+            }}
+          />
+          <button
+            type="submit"
+            className="flex inset-y-0 right-0 p-3 text-sm font-medium bg-white rounded-md border hover:bg-green-700 ml-4 border-gray-500 shadow-sm"
+            onClick={(e) => {
+              setNameSearch(searchChange);
+            }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <>
+        <div className="bg-yellow-500 flex flex-row">
           <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
           {selectedAreaCode && (
-            <div className="flex flex-col">
+            <div className="flex flex-row flex-wrap mx-2">
               {sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
-                <div key={i} className="flex items-center mb-2">
+                <div key={i} className="flex items-center h-1/5 my-1">
                   <input
-                    className="mr-2"
+                    className="ml-3 mr-1"
                     name="sigungu-select"
                     type="radio"
                     id={`sigungu-${sigunguInfo.id}`}
-                    // checked={selectedSigungu.includes(sigunguInfo.id)}
-                    onChange={() => setSigunguCode(sigunguInfo.code)}
+                    checked={sigunguInfo.id === sigunguCode}
+                    onClick={() => setSigunguCode(sigunguInfo.Id)}
                   />
                   <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
                 </div>
               ))}
             </div>
           )}
-        </>
-      </div>
+        </div>
+      </>
+
       <br />
       <br />
       {/* ------------------------------------------------------------------------------------------- */}
@@ -144,7 +149,7 @@ function Square() {
         {squareData.map((guide: any, i) => {
           return (
             <div
-              className="p-4 inline-block hover:bg-blue-800"
+              className="mx-1 p-1 inline-block hover:bg-green-500"
               key={i}
               onClick={() => {
                 navigate(`/profile/${guide.id}`);
@@ -165,9 +170,7 @@ function Square() {
                 <p className="text-gray-600">{guide.gender}</p>
                 <p className="text-gray-600">areacode : {guide.areacode}</p>
                 <p className="text-gray-600">isLocal : {guide.isLocal}</p>
-                <p className="mt-2 truncate">
-                  {guide.introduceId.self}
-                </p>
+                <p className="mt-2 truncate">{guide.introduceId.self}</p>
               </div>
             </div>
           );
