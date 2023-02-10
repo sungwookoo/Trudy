@@ -40,7 +40,7 @@ public class SignupRequest {
 
     public void validation() {
         if (ObjectUtils.isEmpty(this.name)
-                || !this.name.matches(USER_NAME_REGEX)) {
+                || !this.name.matches(USER_NICKNAME_REGEX)) {
             throw new ApiException(ServiceErrorType.INVALID_USER_NAME);
         }
 
