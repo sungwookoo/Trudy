@@ -17,13 +17,17 @@ function EmailConfirm() {
 
   const navigate = useNavigate();
   function navigateToSignUp() {
-    navigate("/signup");
+    navigate("/signup", { state: email });
   }
 
   //   인증 코드 전송 버튼을 누르는 함수
   function clickSendCode() {
-    setEmail(inputEmail);
-    setSend(send + 1);
+    if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(inputEmail) === true) {
+      setEmail(inputEmail);
+      setSend(send + 1);
+    } else {
+      alert("Wrong Email!");
+    }
   }
 
   //   Enter를 눌렀을 때 clickSendCode를 실행시키는 함수
@@ -101,7 +105,7 @@ function EmailConfirm() {
             onClick={clickSendCode}
             className="absolute flex inset-y-0 right-0 p-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            verify email
+            send code
           </button>
         </div>
 

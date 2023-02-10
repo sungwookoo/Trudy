@@ -4,6 +4,8 @@ import EmailConfirm from "./EmailConfirm";
 import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
+import SigunguSelect from "../Filter/SelectSigungu";
+import { useLocation } from "react-router-dom";
 // 로그인 페이지
 
 function SignUp() {
@@ -15,6 +17,8 @@ function SignUp() {
   const [isLocal, setIsLocal] = useState<string>("");
   const [areaCode, setAreaCode] = useState<number>(0);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
+  const { state } = useLocation();
+  const email = state;
 
   // 지역 filter
   const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
@@ -26,13 +30,27 @@ function SignUp() {
   useEffect(() => {
     return authCtx.defaultVerified;
   }, []);
-  console.log(selectedAreaCode);
+
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
           <p className="mt-2 text-center text-sm text-gray-600"></p>
+        </div>
+
+        <div className="-space-y-px rounded-md shadow-md">
+          <div>
+            Email
+            <input
+              id="email"
+              name="email"
+              type="email"
+              disabled
+              className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 placeholder-gray-900 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder={email}
+            />
+          </div>
         </div>
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
