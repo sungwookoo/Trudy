@@ -148,31 +148,45 @@ function Square() {
       <div id="guidesGrid" className="p-4 grid grid-cols-3 relative">
         {squareData.map((guide: any, i) => {
           return (
-            <div
-              className="mx-1 p-1 inline-block hover:bg-green-500"
-              key={i}
-              onClick={() => {
-                navigate(`/profile/${guide.id}`);
-              }}
-            >
-              {/* 세부정보 */}
-              {/* {squareId && <UserProfile key={i} userProfileId={squareId} />} */}
+            <>
+              {authCtx.loggedEmail !== guide.email ? (
+                <div
+                  className="mx-1 p-1 inline-block hover:bg-green-500"
+                  key={i}
+                  onClick={() => {
+                    navigate(`/profile/${guide.id}`);
+                  }}
+                >
+                  {/* 세부정보 */}
+                  {/* {squareId && <UserProfile key={i} userProfileId={squareId} />} */}
 
-              <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
-                {guide.img ? (
-                  <img src={guide.img} alt="userThumbnail" className="h-64 w-full object-cover rounded relative" />
-                ) : (
-                  <img src={imgURL} alt="userThumbnail" className="h-64 w-full object-cover rounded relative" />
-                )}
-              </div>
-              <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
-                <h3 className="text-lg font-bold">{guide.name}</h3>
-                <p className="text-gray-600">{guide.gender}</p>
-                <p className="text-gray-600">areacode : {guide.areacode}</p>
-                <p className="text-gray-600">isLocal : {guide.isLocal}</p>
-                <p className="mt-2 truncate">{guide.introduceId.self}</p>
-              </div>
-            </div>
+                  <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
+                    {guide.img ? (
+                      <img
+                        src={guide.img}
+                        alt="userThumbnail"
+                        className="h-64 w-full object-cover rounded relative"
+                      />
+                    ) : (
+                      <img
+                        src={imgURL}
+                        alt="userThumbnail"
+                        className="h-64 w-full object-cover rounded relative"
+                      />
+                    )}
+                  </div>
+                  <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
+                    <h3 className="text-lg font-bold">{guide.name}</h3>
+                    <p className="text-gray-600">{guide.gender}</p>
+                    <p className="text-gray-600">areacode : {guide.areacode}</p>
+                    <p className="text-gray-600">isLocal : {guide.isLocal}</p>
+                    <p className="mt-2 truncate">{guide.introduceId.self}</p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </>
           );
         })}
 

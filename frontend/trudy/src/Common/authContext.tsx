@@ -21,7 +21,17 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
-  signup: (email: string, password: string, nickname: string, gender: string, birthday: string, isLocal: string, areaCode: number, sigunguCode: number) => {},
+  loggedEmail: "",
+  signup: (
+    email: string,
+    password: string,
+    nickname: string,
+    gender: string,
+    birthday: string,
+    isLocal: string,
+    areaCode: number,
+    sigunguCode: number
+  ) => {},
   sendCode: (email: string) => {},
   emailVerified: (email: string) => {},
   defaultVerified: () => {},
@@ -51,6 +61,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [loggedEmail, setLoggedEmail] = useState<string>("");
 
   const userIsLoggedIn = !!token;
 
@@ -59,9 +70,9 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
   const sendCode = async (email: string) => {
     const response: any = await authAction.verifyEmail(email);
-      if (response === null) {
-        alert("this email is already in use!!");
-      } else {
+    if (response === null) {
+      alert("this email is already in use!!");
+    } else {
       alert("Verification code has been sent");
       return response;
     }
@@ -100,13 +111,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       areaCode,
       sigunguCode
     );
-    response.then((result) => {
-      setIsSuccess(true);
-      return result
-    })
-    .catch((error) => 
-    alert(error.data.errorMessage)
-    );
+    response
+      .then((result) => {
+        setIsSuccess(true);
+        return result;
+      })
+      .catch((error) => alert(error.data.errorMessage));
   };
 
   //   로그인을 하는 함수
@@ -117,7 +127,15 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       if (result !== null) {
         const loginData: LoginToken = result.data;
         setToken(loginData.accessToken);
-        logoutTimer = setTimeout(signOutHandler, authAction.signInTokenHandler(loginData.accessToken, loginData.refreshToken, loginData.accessTokenExpiresIn));
+        logoutTimer = setTimeout(
+          signOutHandler,
+          authAction.signInTokenHandler(
+            loginData.accessToken,
+            loginData.refreshToken,
+            loginData.accessTokenExpiresIn
+          )
+        );
+        setLoggedEmail(email);
         setIsSuccess(true);
       } else {
         alert("Wrong ID or Password!");
@@ -129,6 +147,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const signOutHandler = useCallback(() => {
     setToken("");
     authAction.signOutActionHandler(token);
+    setLoggedEmail("");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
@@ -202,6 +221,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     isSuccess,
     isGetSuccess,
     isVerified,
+    loggedEmail,
     sendCode: sendCode,
     emailVerified: emailVerified,
     defaultVerified: defaultVerified,
@@ -214,7 +234,11 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     planner: getPlannerHandler,
   };
 
-  return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {props.children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContext;
