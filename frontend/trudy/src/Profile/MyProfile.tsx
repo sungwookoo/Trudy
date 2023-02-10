@@ -45,11 +45,6 @@ function Profile() {
   const url = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
   useEffect(() => {
-    // const params = {
-    //   token: token
-    // }
-    // console.log(params)
-
     axios
       .get(url, {
         headers: {
@@ -132,11 +127,17 @@ function Profile() {
         <div className="edit-toggle-follow-container">
           {/* <ProfileUpdate /> */}
           <div className="flex items-center justify-center w-full mt-6">
-            <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5" onClick={navigateToProfileUpdate}>
+            <button
+              className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5"
+              onClick={navigateToProfileUpdate}
+            >
               Edit Profile
             </button>
             {/* 토글 바 */}
-            <label htmlFor="toggleB" className="flex items-center cursor-pointer">
+            <label
+              htmlFor="toggleB"
+              className="flex items-center cursor-pointer"
+            >
               <div className="relative">
                 <input type="checkbox" id="toggleB" className="sr-only" />
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
@@ -146,45 +147,57 @@ function Profile() {
           </div>
           {/* 토글 바 끝 */}
           <div className="flex flex-col py-10">
-            <div className="flex flex-row bg-green-500">
+            <div className="flex flex-row">
               <div className="w-12 mx-9 font-bold">{getFollow.follower}</div>
               <div className="w-12 mx-3 font-bold">{getFollow.following}</div>
             </div>
-            <div className="flex flex-row bg-green-500">
+            <div className="flex flex-row">
               <div className="mx-3 font-bold">Follower</div>
               <div className="mx-3 font-bold">Following</div>
-              <div className="myprofile-gender mx-3 font-bold">{profile.gender}</div>
+              <div className="myprofile-gender mx-3 font-bold">
+                {profile.gender}
+              </div>
             </div>
           </div>
         </div>
-        <div className="myprofile-intro">{profile.introduceId.self}</div>
+        <div className="myprofile-intro mb-5">{profile.introduceId.self}</div>
       </div>
 
-      <div></div>
-      <div className="content-box">
-        <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr>
-        <div className="about-post flex flex-row">
-          <div className="mx-16 bg-red-500" onClick={() => setViewPost(!viewPost)}>
-            About
-          </div>
-
-          <div className="mx-16 bg-red-500" onClick={() => setViewPost(!viewPost)}>
-            Posts
-          </div>
+      <div className="content-box grid grid-cols-2 place-content-center">
+        {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
+        {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
+        <div
+          className="mx-16 flex place-content-center text-4xl"
+          onClick={() => setViewPost(!viewPost)}
+        >
+          About
         </div>
+
+        <div
+          className="mx-16 flex place-content-center text-4xl"
+          onClick={() => setViewPost(!viewPost)}
+        >
+          Posts
+        </div>
+      </div>
+      {/* </div> */}
+      <div className="about-me grid grid-cols-1">
         {!viewPost ? (
-          <div className="bg-red-500 flex flex-col mt-10">
-            <div className="flex flex-row">
-              <div className="ml-12">I will show you</div>
-              <div className="ml-36">{profile.introduceId.plan}</div>
+          <div className="grid grid-rows-4 grid-flow-row gap-24 mt-3 w-96 about-box">
+            <div className="">
+              <div className="text-xl mt-5">
+                I will show you : {profile.introduceId.plan}
+              </div>
             </div>
-            <div className="flex flex-row mt-20">
-              <div className="ml-12">About me</div>
-              <div className="ml-44">{profile.introduceId.title}</div>
+            <div className="">
+              <div className="text-xl">
+                About me : {profile.introduceId.title}
+              </div>
             </div>
-            <div className="flex flex-row mt-20">
-              <div className="ml-12 font">Language</div>
-              <div className="ml-44">{profile.introduceId.language}</div>
+            <div className="">
+              <div className="text-xl">
+                Language : {profile.introduceId.language}
+              </div>
             </div>
           </div>
         ) : (
@@ -194,12 +207,11 @@ function Profile() {
             ))}
           </div>
         )}
-
-        {/* <ProfileMyPost id={profile.id}/> */}
-        {/* <ProfileMyPost /> */}
-
-        <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr>
       </div>
+      {/* <ProfileMyPost id={profile.id}/> */}
+      {/* <ProfileMyPost /> */}
+
+      {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
     </div>
   );
 }
