@@ -130,7 +130,7 @@ function Square() {
       </div>
       <>
         <div className="bg-yellow-500 flex flex-row">
-          <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
+          <AreaSelect areaCode={areaList} onClick={handleAreaClick} />
           {selectedAreaCode && (
             <div className="flex flex-row flex-wrap mx-2">
               {sigunguList[selectedAreaCode].map(

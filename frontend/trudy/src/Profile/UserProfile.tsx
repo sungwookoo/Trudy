@@ -30,7 +30,7 @@ const UseruserInfo = () => {
     axios
       .get(`/${API_URL}/${userId.id}`, {
         headers: {
-          Authorization: token,
+          Authorization: token, 
         },
       })
       .then((res) => {

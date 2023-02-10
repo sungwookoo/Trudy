@@ -5,7 +5,7 @@ import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 // 로그인 페이지
 
 function SignUp() {
@@ -21,16 +21,21 @@ function SignUp() {
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
-  console.log(sigunguCode, "2222222222222222222222222");
 
   const authCtx = useContext(AuthContext);
   const handleAreaClick = (id: number) => {
     setAreaCode(id);
   };
+
+  const navigate = useNavigate();
+  function navigateToLending() {
+    navigate("/");
+  }
+
   useEffect(() => {
     return authCtx.defaultVerified;
   }, []);
-
+  console.log(nickname);
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -111,7 +116,9 @@ function SignUp() {
                 maxLength={16}
                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
-                onChange={(e) => setNickname(e.target.value)}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -174,21 +181,16 @@ function SignUp() {
                           checked={sigunguCode === sigunguInfo.id}
                           onChange={() => setSigunguCode(sigunguInfo.id)}
                         />
-                        <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-                          {sigunguInfo.name}
-                          {sigunguInfo.id}
-                        </label>
+                        <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
                       </div>
                     ))}
                   </div>
                 )}
               </>
             ) : (
-              ""
+              <></>
             )}
           </div>
-
-          <div></div>
 
           {/* 회원가입 완료 버튼 */}
           <div>
@@ -196,7 +198,16 @@ function SignUp() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={(e) => {
-                authCtx.signup(email, password, nickname, gender, birthday, isLocal, areaCode, sigunguCode);
+                const response: any = authCtx.signup(email, password, nickname, gender, birthday, isLocal, areaCode, sigunguCode);
+                response.then((res: any) => {
+                  console.log(res, 1111111);
+                  if (res !== null) {
+                    console.log("가입 성공");
+                    navigateToLending();
+                  } else {
+                    console.log(res);
+                  }
+                });
               }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
