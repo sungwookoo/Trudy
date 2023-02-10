@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState, useEffect, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
-import SignUp from "./SignUp"
+import SignUp from "./SignUp";
 
 // 이메일 인증 페이지
 
@@ -15,11 +15,9 @@ function EmailConfirm() {
 
   const authCtx = useContext(AuthContext);
 
-  
-
   const navigate = useNavigate();
-  function navigateToSignUp (){
-    navigate("/signup")
+  function navigateToSignUp() {
+    navigate("/signup");
   }
 
   //   인증 코드 전송 버튼을 누르는 함수
@@ -60,8 +58,8 @@ function EmailConfirm() {
         if (res !== null) {
           setCode(res.data);
         }
-    }
-    SendCode();
+      }
+      SendCode();
     }
   }, [send]);
 
@@ -69,7 +67,7 @@ function EmailConfirm() {
   function checkCode() {
     if (inputCode !== "" && inputCode === code) {
       const verify = authCtx.emailVerified(email);
-      navigateToSignUp()
+      navigateToSignUp();
     } else {
       alert("Incorrect Code!");
     }
@@ -80,9 +78,7 @@ function EmailConfirm() {
       <div className="w-full max-w-md space-y-8">
         <div>
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Connect with Local Life!
-          </h2>
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Connect with Local Life!</h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
         <div className="relative -space-y-px rounded-md shadow-sm">
