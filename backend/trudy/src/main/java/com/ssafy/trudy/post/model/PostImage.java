@@ -22,6 +22,9 @@ public class PostImage {
 
     private String url;
 
+    @Column(name = "file_name")
+    private String fileName;
+
     @Builder
     public PostImage(Long id, Post postId, String url) {
         this.id = id;

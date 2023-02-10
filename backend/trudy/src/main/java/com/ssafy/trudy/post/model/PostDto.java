@@ -4,8 +4,10 @@ import com.ssafy.trudy.etc.model.Area;
 import com.ssafy.trudy.etc.model.Sigungu;
 import com.ssafy.trudy.member.model.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -21,6 +23,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class PostCombine {
         private PostElement postElement;
         private MemberElement memberElement;
@@ -28,6 +31,8 @@ public class PostDto {
         private List<PostAreaElement> postAreaElementList;
         private List<PostCategoryElement> postCategoryElementList;
         private int postLikeCount;
+        private List<Long> sigunguCodeList;
+        private List<CategoryName> categoryNameList;
     }
 
     //포럼 글 마다 댓글+좋아요 개수, 댓글의 대댓글+좋아요 구조로 가져옴
@@ -36,6 +41,19 @@ public class PostDto {
     @NoArgsConstructor
     public static class CommentCombine{
         private List<CommentElement> commentElementList;
+    }
+
+    //포럼 글 받기
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class InsertPost{
+        private String title;
+        private String content;
+        private MultipartFile[] upload;
+        private Long[] sigunguIdList;
+        private Long memberId;
+        private CategoryName[] categoryList;
     }
 
 
@@ -102,6 +120,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class PostElement{
         private Long id;
         private String title;
@@ -114,6 +133,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class PostAreaElement{
 
         private AreaElement areaElement;
@@ -123,6 +143,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class PostCategoryElement{
         private String name;
     }
@@ -130,6 +151,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class PostImageElement{
         private Long id;
         private String url;
@@ -139,6 +161,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class MemberElement{
         private Long id;
         private String email;
@@ -157,6 +180,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class AreaElement{
         private int code;
         private String name;
@@ -165,6 +189,7 @@ public class PostDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class SigunguElement{
         private Long id;
         private int code;

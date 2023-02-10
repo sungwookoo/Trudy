@@ -9,4 +9,6 @@ import java.util.List;
 public interface PostAreaRepository extends JpaRepository<PostArea, Long> {
     public List<PostArea> findByPostId(Post post);
 
+    public void deleteByPostId(Post postId);
+
 }
