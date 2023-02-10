@@ -1,3 +1,4 @@
+
 .nav-bar {
     height: 5vh;
     display: flex;
@@ -15,15 +16,16 @@
     /* margin-right: 40px; */
 }
 
-.nav-item-logo {
+/* .nav-item-logo {
     font-size: 28px;
     font-weight: bold;
-}
+} */
 
 .nav-item {
     margin-left: 5%;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }
 
 .nav-link {
