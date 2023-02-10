@@ -15,7 +15,7 @@ function SignUp() {
   const [gender, setGender] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [isLocal, setIsLocal] = useState<string>("");
-  const [areaCode, setAreaCode] = useState<number>(0);
+  const [areaCode, setAreaCode] = useState<any>(null);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
 
   const [isPassword, setIsPassword] = useState<boolean>(false);
