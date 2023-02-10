@@ -21,17 +21,16 @@ import java.io.IOException;
 public class FileController {
     private final AwsS3Uploader awsS3Uploader;
 
-    @PostMapping("/member/upload")
-    public MemberResponse memberUpload(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
-        return awsS3Uploader.createMemberFile(multipartFile, "member", principal);
+//    @PostMapping("/member/upload")
+//    public MemberResponse memberUpload(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
+//        return awsS3Uploader.createMemberFile(multipartFile, "member", principal);
+//    }
 
-    }
-
-    @PostMapping("/post/upload")
-    public String postUpload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        String fileName = awsS3Uploader.createPostFile(multipartFile, "post");
-        return fileName;
-    }
+//    @PostMapping("/post/upload")
+//    public String postUpload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+//        String fileName = awsS3Uploader.createPostFile(multipartFile, "post");
+//        return fileName;
+//    }
 
     @PostMapping("/planner/upload")
     public DayItem plannerUpload(@RequestParam("file") MultipartFile multipartFile, Long dayItemId) throws IOException {
