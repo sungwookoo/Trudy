@@ -73,7 +73,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
       return null;
     }
-    alert("Verification code has been sent");
     return response;
   };
 

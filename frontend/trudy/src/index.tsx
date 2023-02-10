@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(
 axios.defaults.withCredentials = true;
 root.render(
   <AuthContextProvider>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </AuthContextProvider>
 );
 

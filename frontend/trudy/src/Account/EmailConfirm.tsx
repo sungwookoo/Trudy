@@ -59,6 +59,7 @@ function EmailConfirm() {
       }, 30000);
       async function SendCode() {
         const res: any = await authCtx.sendCode(email);
+        alert("Verification code has been sent");
         if (res !== null) {
           setCode(res.data);
         }
@@ -70,7 +71,7 @@ function EmailConfirm() {
   //   인증 코드를 확인하는 함수
   function checkCode() {
     if (inputCode !== "" && inputCode === code) {
-      const verify = authCtx.emailVerified(email);
+      authCtx.emailVerified(email);
       navigateToSignUp();
     } else {
       alert("Incorrect Code!");
@@ -82,7 +83,9 @@ function EmailConfirm() {
       <div className="w-full max-w-md space-y-8">
         <div>
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Connect with Local Life!</h2>
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            Connect with Local Life!
+          </h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
         <div className="relative -space-y-px rounded-md shadow-sm">
