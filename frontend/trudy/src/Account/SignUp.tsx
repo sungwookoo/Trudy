@@ -198,16 +198,22 @@ function SignUp() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={(e) => {
-                const response: any = authCtx.signup(email, password, nickname, gender, birthday, isLocal, areaCode, sigunguCode);
-                response.then((res: any) => {
-                  console.log(res, 1111111);
-                  if (res !== null) {
-                    console.log("가입 성공");
+
+                const response: any = authCtx.signup(
+                  email,
+                  password,
+                  nickname,
+                  gender,
+                  birthday,
+                  isLocal,
+                  areaCode,
+                  sigunguCode
+                );
+                
+                  if (response !== null) {
+                    authCtx.login(email, password)
                     navigateToLending();
-                  } else {
-                    console.log(res);
-                  }
-                });
+                }
               }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>

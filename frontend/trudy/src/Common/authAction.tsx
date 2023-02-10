@@ -63,7 +63,6 @@ export const verifyEmail = (email: string) => {
   const url = "api/emailConfirm";
   const params = { email };
   const response = POST(url, {}, { params });
-
   return response;
 };
 
