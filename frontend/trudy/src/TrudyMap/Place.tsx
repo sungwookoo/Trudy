@@ -53,11 +53,6 @@ function Place(props: any) {
     setSelectedAreaCode(id);
   };
 
-  // // 소분류 선택시 areaSigungu 변경하기
-  // const handleSigunguClick = (sigunguId: any) => {
-  //   setareaSigun([...areaSigun, sigunguId]);
-  // };
-
   // 지역 위도 경도 따오기
   const handlePlaceClick = (place: mapPlaceType) => {
     setSelectedPlace(place);
