@@ -38,7 +38,7 @@ const SigunguSelect = ({ area, selectSigunguCode, selectedSigungu, setSelectedSi
             className="mr-2"
             type="checkbox"
             id={`sigungu-${sigunguInfo.id}`}
-            // checked={selectedSigungu.includes(sigunguInfo.id)}
+            checked={selectedSigungu.includes(sigunguInfo.id)}
             onChange={() => {
               if (selectedSigungu.includes(sigunguInfo.id)) {
                 const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
