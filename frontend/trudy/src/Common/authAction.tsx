@@ -19,11 +19,7 @@ const calculateRemainingTime = (expirationTime: number) => {
 };
 
 // 토큰값과 만료시간을 localStorage에 저장하는 함수
-export const signInTokenHandler = (
-  token: string,
-  refreshToken: string,
-  expirationTime: number
-) => {
+export const signInTokenHandler = (token: string, refreshToken: string, expirationTime: number) => {
   localStorage.setItem("token", token);
   localStorage.setItem("refreshToken", refreshToken);
   localStorage.setItem("expirationTime", String(expirationTime));
@@ -55,10 +51,7 @@ export const retrieveStoredToken = () => {
 };
 
 // 토큰을 재발행하는 함수
-export const refreshTokenHandler = (
-  accessToken: string,
-  refreshToken: string
-) => {
+export const refreshTokenHandler = (accessToken: string, refreshToken: string) => {
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
   const response = POST(url, token, {});
@@ -96,8 +89,8 @@ export const signUpActionHandler = (
     areaCode,
     sigunguCode,
   };
-  console.log(data)
   const response = POST(url, data, {});
+  console.log(response, 333333333333333333333);
   return response;
 };
 
