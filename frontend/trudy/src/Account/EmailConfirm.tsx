@@ -59,7 +59,6 @@ function EmailConfirm() {
       }, 30000);
       async function SendCode() {
         const res: any = await authCtx.sendCode(email);
-        alert("Verification code has been sent");
         if (res !== null) {
           setCode(res.data);
         }

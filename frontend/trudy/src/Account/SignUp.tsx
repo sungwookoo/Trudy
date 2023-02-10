@@ -21,7 +21,6 @@ function SignUp() {
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
-  console.log(sigunguCode, "2222222222222222222222222");
 
   const authCtx = useContext(AuthContext);
   const handleAreaClick = (id: number) => {
@@ -121,7 +120,7 @@ function SignUp() {
                 maxLength={16}
                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
-                onChange={(e) => setNickname(e.target.value)}
+                onChange={(e) => {setNickname(e.target.value)}}
               />
             </div>
           </div>
@@ -253,6 +252,7 @@ function SignUp() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={(e) => {
+
                 const response: any = authCtx.signup(
                   email,
                   password,
@@ -263,8 +263,11 @@ function SignUp() {
                   areaCode,
                   sigunguCode
                 );
-                response.then(() => {
+                response.then((res: any) => {
+                  if (res !== null) {
+                  console.log('가입 성공')
                   navigateToLending();
+                }
                 });
               }}
             >
