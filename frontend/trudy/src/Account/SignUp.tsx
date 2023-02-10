@@ -17,6 +17,8 @@ function SignUp() {
   const [isLocal, setIsLocal] = useState<string>("");
   const [areaCode, setAreaCode] = useState<number>(0);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
+
+  const [isPassword, setIsPassword] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
 
@@ -65,7 +67,18 @@ function SignUp() {
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  if (
+                    !/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(
+                      e.target.value
+                    )
+                  ) {
+                    setIsPassword(false);
+                  } else {
+                    setIsPassword(true);
+                    setPassword(e.target.value);
+                  }
+                }}
               />
             </div>
           </div>
@@ -75,13 +88,17 @@ function SignUp() {
             <div>
               Password Confirm
               <input
-                id="password-confirm"
-                name="password-confirm"
+                id="passwordConfirm"
+                name="passwordConfirm"
                 type="password"
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password Confirm"
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+                onChange={(e) => {
+                  setPasswordConfirm(e.target.value);
+                  if (password !== passwordConfirm) {
+                  }
+                }}
               />
             </div>
           </div>
@@ -110,18 +127,39 @@ function SignUp() {
             <div>
               <h1>Gender</h1>
               <label htmlFor="male">
-                <input id="male" name="gender" type="radio" value="Male" required onChange={(e) => setGender(e.target.value)} />
+                <input
+                  id="male"
+                  name="gender"
+                  type="radio"
+                  value="Male"
+                  required
+                  onChange={(e) => setGender(e.target.value)}
+                />
                 Male
               </label>
             </div>
 
             <div>
-              <input id="female" name="gender" type="radio" value="Female" required onChange={(e) => setGender(e.target.value)} />
+              <input
+                id="female"
+                name="gender"
+                type="radio"
+                value="Female"
+                required
+                onChange={(e) => setGender(e.target.value)}
+              />
               <label htmlFor="female">Female</label>
             </div>
 
             <div>
-              <input id="unknown" name="gender" type="radio" required value="unknown" onChange={(e) => setGender(e.target.value)} />
+              <input
+                id="unknown"
+                name="gender"
+                type="radio"
+                required
+                value="unknown"
+                onChange={(e) => setGender(e.target.value)}
+              />
               <label htmlFor="unknown">I prefer not to say</label>
             </div>
           </div>
@@ -131,7 +169,13 @@ function SignUp() {
             <div>
               <label htmlFor="birthday">Birthday</label>
               <br />
-              <input id="birthday" name="birthday" type="month" required onChange={(e) => setBirthday(e.target.value)} />
+              <input
+                id="birthday"
+                name="birthday"
+                type="month"
+                required
+                onChange={(e) => setBirthday(e.target.value)}
+              />
             </div>
           </div>
 
@@ -140,9 +184,23 @@ function SignUp() {
             <div>
               <label htmlFor="Local">Local</label>
               <br />
-              <input id="local" name="islocal" type="radio" value="1" required onChange={(e) => setIsLocal(e.target.value)} />
+              <input
+                id="local"
+                name="islocal"
+                type="radio"
+                value="1"
+                required
+                onChange={(e) => setIsLocal(e.target.value)}
+              />
               Local
-              <input id="tourist" name="islocal" type="radio" value="0" required onChange={(e) => setIsLocal(e.target.value)} />
+              <input
+                id="tourist"
+                name="islocal"
+                type="radio"
+                value="0"
+                required
+                onChange={(e) => setIsLocal(e.target.value)}
+              />
               Tourist
             </div>
             <br />
@@ -150,22 +208,30 @@ function SignUp() {
             {/* 지역 */}
             {isLocal === "1" ? (
               <>
-                <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
+                <AreaSelect
+                  key={0}
+                  areaCode={areaList}
+                  onClick={handleAreaClick}
+                />
                 {selectedAreaCode && (
                   <div className="flex flex-col">
-                    {sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
-                      <div key={i} className="flex items-center mb-2">
-                        <input
-                          className="mr-2"
-                          name="sigungu-select"
-                          type="radio"
-                          id={`sigungu-${sigunguInfo.id}`}
-                          // checked={selectedSigungu.includes(sigunguInfo.id)}
-                          onChange={() => setSigunguCode(sigunguInfo.code)}
-                        />
-                        <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
-                      </div>
-                    ))}
+                    {sigunguList[selectedAreaCode].map(
+                      (sigunguInfo: any, i: number) => (
+                        <div key={i} className="flex items-center mb-2">
+                          <input
+                            className="mr-2"
+                            name="sigungu-select"
+                            type="radio"
+                            id={`sigungu-${sigunguInfo.id}`}
+                            // checked={selectedSigungu.includes(sigunguInfo.id)}
+                            onChange={() => setSigunguCode(sigunguInfo.code)}
+                          />
+                          <label htmlFor={`sigungu-${sigunguInfo.id}`}>
+                            {sigunguInfo.name}
+                          </label>
+                        </div>
+                      )
+                    )}
                   </div>
                 )}
               </>
@@ -182,7 +248,16 @@ function SignUp() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={(e) => {
-                authCtx.signup(password, nickname, gender, birthday, isLocal, areaCode, sigunguCode);
+                authCtx.signup(
+                  email,
+                  password,
+                  nickname,
+                  gender,
+                  birthday,
+                  isLocal,
+                  areaCode,
+                  sigunguCode
+                );
               }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
