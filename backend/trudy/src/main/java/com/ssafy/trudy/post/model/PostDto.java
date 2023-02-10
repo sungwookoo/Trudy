@@ -32,7 +32,7 @@ public class PostDto {
 //        private List<PostCategoryElement> postCategoryElementList;
         private int postLikeCount;
         private List<Long> sigunguCodeList;
-        private List<CategoryName> categoryNameList;
+        private List<String> categoryNameList;
     }
 
     //포럼 글 마다 댓글+좋아요 개수, 댓글의 대댓글+좋아요 구조로 가져옴
@@ -54,7 +54,8 @@ public class PostDto {
         private MultipartFile[] upload;
         private Long[] sigunguIdList;
         private Long memberId;
-        private CategoryName[] categoryList;
+        //private CategoryName[] categoryList;
+        private String[] categoryList;
     }
 
 
@@ -131,23 +132,23 @@ public class PostDto {
         private LocalDateTime updatedAt;
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class PostAreaElement{
+//    @Data
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class PostAreaElement{
+//
+//        private AreaElement areaElement;
+//        private SigunguElement sigunguElement;
+//    }
 
-        private AreaElement areaElement;
-        private SigunguElement sigunguElement;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class PostCategoryElement{
-        private String name;
-    }
+//    @Data
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class PostCategoryElement{
+//        private String name;
+//    }
 
     @Data
     @AllArgsConstructor

@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -47,11 +48,11 @@ public class PostController {
 
     //포럼 게시글 목록 가져오기 - 정상 동작
     @GetMapping
-    public Page<PostDto.PostCombine> /*Page<?>*/ postList(@RequestParam(required = false) String title,
-                            @RequestParam(required = false) String content,
-                            @RequestParam(required = false) List<Long> sigunguIdList,
-                            @RequestParam(required = false) List<CategoryName> categoryList,
-                            @PageableDefault(size = 5, sort = "id" ,direction = Sort.Direction.ASC) Pageable pageable){
+    public  Page<PostDto.PostCombine> postList(@RequestParam(required = false) String title,
+                                                          @RequestParam(required = false) String content,
+                                                          @RequestParam(required = false) List<Long> sigunguIdList,
+                                                          @RequestParam(required = false) List<String> categoryList,
+                                                          @PageableDefault(size = 5, sort = "id" ) Pageable pageable){
         //try{
             /*List<PostDto.PostCombine> findPostCombines =*/
 
@@ -80,20 +81,20 @@ public class PostController {
                         @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
                         @RequestParam CategoryName[] categoryList*/
-            @RequestBody PostDto.InsertPost insertPostDto
-            /*@RequestParam(value="upload", required = false) MultipartFile[] upload*/){
+            /*@RequestBody PostDto.InsertPost insertPostDto*/
+            @RequestParam(value="upload", required = false) MultipartFile[] upload){
 
 
 
         try{
  /*           //        postService.addPost(title, content, upload, sigunguId, memberId, category);
             //postService.addPost(title, content, sigunguIdList,memberId, categoryList);*/
-            postService.addPost(insertPostDto);
-           /* log.info("============== test complete ===========");
+           // postService.addPost(insertPostDto);
+            log.info("============== test complete ===========");
 
-            log.info("check : " + upload[0].getOriginalFilename());
+            for(int i=0; i<upload.length; i++)log.info( i + "check : " + upload[i].getOriginalFilename());
             //log.info(insertPostDto.getUpload().toString());
-            log.info("controller ========== try ok");*/
+            log.info("controller ========== try ok");
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
@@ -114,6 +115,7 @@ public class PostController {
                                 @RequestBody PostDto.InsertPost insertPostDto){
         try{
             //postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
+            log.info("controller - update ");
             postService.modifyPost(postId, insertPostDto);
             return ResponseEntity.ok().build();
         } catch (Exception e){

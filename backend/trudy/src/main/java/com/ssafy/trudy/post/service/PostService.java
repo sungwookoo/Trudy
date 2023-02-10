@@ -58,7 +58,7 @@ public class PostService {
     public Page<PostDto.PostCombine> findPostList(String title,
                                    String content,
                                    List<Long> sigunguIdList,
-                                   List<CategoryName> categoryList,
+                                   List<String> categoryList,
                                    Pageable pageable){
         log.info("============Post Service / findPostList==========");
 
@@ -87,16 +87,14 @@ public class PostService {
                 .postCategoryElementList()
                 .build()).collect(Collectors.toList());*/
 
+        log.info("카테고리 에러1");
         //변형 -> DTO 수정해야
         List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(p-> PostDto.PostCombine.builder()
                 .postElement(new PostDto.PostElement(p.getId(), p.getTitle(), p.getContent(), p.getThumbnailImage(), p.getCreatedAt(), p.getUpdatedAt()))
                 .memberElement(modelMapper.map(p.getMemberId(), PostDto.MemberElement.class))
-                /*.postAreaElementList(p.getPostAreaList().stream().map(a ->
-                        new PostDto.PostAreaElement(new PostDto.AreaElement(a.), new PostDto.SigunguElement())))*/
-                .categoryNameList(p.getPostCategoryList().stream().map(PostCategory::getCategoryName).collect(Collectors.toList()))
+                .categoryNameList(p.getPostCategoryList().stream().map(c->c.getCategoryName()).collect(Collectors.toList()))
                 .sigunguCodeList(p.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
-
 //test
 //        for(int i=0; i<postCombineList.size(); i++){
 //            log.info(i + " ============ " + postCombineList.get(i));
@@ -149,65 +147,6 @@ public class PostService {
 
     }
 
-    //포럼 게시글 목록 가져오기2
-    /*public List<PostDto.PostCombine> findPostList(){
-        log.info("============Post Service / findPostList==========");
-
-//        log.info("postEntity=========== " + postRepository.findById(1L).get().toString());
-//        log.info("postEntity=========== " + postRepository.findById(2L).get().toString());
-//        log.info("postEntity=========== " + postRepository.findById(3L).get().toString());
-        //Post Entity를 담을 리스트(post Entity로 postImage, postArea, postCategory, postLikeCount를 검색해서 가져옴)
-    List<Post> postEntityList = postRepository.findAll();
-        //log.info("postEntity=========== " + postEntityList.toString());
-
-
-        //Dto를 담을 리스트()
-        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
-
-        for(Post postEntity : postEntityList){
-            PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
-
-            PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
-
-            //image 정보 리스트 가져와서 DTO에 저장
-            List<PostDto.PostImageElement> postImageElementList = postImageRepository.findByPostId(postEntity)
-                    .stream()
-                    .map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
-
-            //area 정보 리스트 가져와서 DTO에 저장
-            List<PostDto.PostAreaElement> postAreaElementList = postAreaRepository
-                    .findByPostId(postEntity)
-                    .stream()
-                    .map(p -> new PostDto.PostAreaElement(
-                            modelMapper.map(p.getSigunguCode().getAreaCode(), PostDto.AreaElement.class),
-                            modelMapper.map(p.getSigunguCode(), PostDto.SigunguElement.class)
-                    )).collect(Collectors.toList());
-
-            //category 정보 리스트 가져와서 DTO에 저장
-            List<PostDto.PostCategoryElement> postCategoryElementLIst = postCategoryRepository
-                    .findByPostId(postEntity)
-                    .stream()
-                    .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());
-
-            //postLikeCount 정보 가져옴
-            int postLikeCount = postLikeRepository.countByPostId(postEntity);
-
-            //한개 포럼글에 대한 정보를 묶음
-            postCombineList.add(new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount));
-
-        }
-        for(int i=0; i<postCombineList.size(); i++) {
-            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
-            log.info(i + " member+++++++ : " + postCombineList.get(i).getMemberElement().toString());
-            log.info(i + " image+++++++ : " + postCombineList.get(i).getPostImageElementList().toString());
-            log.info(i + " area+++++++ : " + postCombineList.get(i).getPostAreaElementList().toString());
-            log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
-            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
-        }
-
-        return postCombineList;
-    }*/
-
     //포럼 게시글 작성
     public void addPost(/*String title,
                         String content,
@@ -237,7 +176,7 @@ public class PostService {
         postAreaRepository.saveAll(postAreaList);
 
         List<PostCategory> postCategoryList = new ArrayList<>();
-        for(CategoryName categoryName : insertPostDto.getCategoryList()){
+        for(String categoryName : insertPostDto.getCategoryList()){
             PostCategory postCategory = PostCategory.builder()
                     .postId(postEntityInsert)
                     .categoryName(categoryName).build();
@@ -257,11 +196,11 @@ public class PostService {
     public void modifyPost(Long postId, /*String title, String content, *//*MultipartFile[] upload,*//*
                            Long[] sigunguIdList, CategoryName[] categoryList*/
                             PostDto.InsertPost insertPostDto){
+        log.info("service - update start");
         // post는 수정, postImage, postArea, postCategory는 삭제 후 다시 저장
             //사진 보류
             //사진 post entity로 검색 -> 리스트 가져오고 디비에 삭제 -> aws 사진 삭제
             Post postEntityFind = postRepository.findById(postId).get();
-
             // 사진 리스트 가져오기
             List<PostImage> imageListForDelete = postImageRepository.findByPostId(postEntityFind);
             //List<String> imageEntityFileName = imageListForDelete.stream().map(p -> p.)
@@ -270,23 +209,30 @@ public class PostService {
         postAreaRepository.deleteByPostId(postEntityFind);
         postCategoryRepository.deleteByPostId(postEntityFind);
 
-        // PostArea, PostCategory 저장
+        // postArea 갱신 (insertPostDto.getSigunguIdList가 있으면 -> 새로운 정보 삽입, 없으면 다 삭제)
         List<PostArea> postAreaList = new ArrayList<>();
-        for(Long sigunguid : insertPostDto.getSigunguIdList()){
-            PostArea postArea = PostArea.builder()
-                    .postId(postEntityFind)
-                    .sigunguCode(sigunguRepository.findById(sigunguid).get())
-                    .build();
-            postAreaList.add(postArea);
+
+        if(insertPostDto.getSigunguIdList() != null){
+            for(Long sigunguid : insertPostDto.getSigunguIdList()){
+                PostArea postArea = PostArea.builder()
+                        .postId(postEntityFind)
+                        .sigunguCode(sigunguRepository.findById(sigunguid).get())
+                        .build();
+                postAreaList.add(postArea);
+            }
         }
         postAreaRepository.saveAll(postAreaList);
 
+        // category 갱신 (insertPostDto.getCategoryList가 있으면 -> 새로운 정보 삽입, 없으면 다 삭제)
         List<PostCategory> postCategoryList = new ArrayList<>();
-        for(CategoryName categoryName : insertPostDto.getCategoryList()){
-            PostCategory postCategory = PostCategory.builder()
-                    .postId(postEntityFind)
-                    .categoryName(categoryName).build();
-            postCategoryList.add(postCategory);
+
+        if(insertPostDto.getCategoryList() != null) {
+            for (String categoryName : insertPostDto.getCategoryList()) {
+                PostCategory postCategory = PostCategory.builder()
+                        .postId(postEntityFind)
+                        .categoryName(categoryName).build();
+                postCategoryList.add(postCategory);
+            }
         }
         postCategoryRepository.saveAll(postCategoryList);
 
@@ -297,12 +243,12 @@ public class PostService {
         log.info("put 완료");
     }
 
-    //포럼 게시글 삭제 - 정상 동작
+    //포럼 게시글 삭제 - 정상 동작1
     public void removePost(Long postId){
         postRepository.deleteById(postId);
     }
 
-    //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작
+    //포럼 게시글 상세보기(게시글 + 댓글) - 정상 동작1
     public Map findPostDetail(Long postId) throws Exception{
 
         //1. post entity를 가져옴
@@ -388,146 +334,6 @@ public class PostService {
 
         return response;
 
-
-
-
-
-/*
-        //2. postCombine에 1개 글 상세정보(게시글, member, image, area, category, like_Count)를 채워 넣음
-        PostDto.PostCombine postCombine = new PostDto.PostCombine();
-
-        PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
-        PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
-
-        //image 정보 리스트 가져와서 DTO에 저장
-        List<PostDto.PostImageElement> postImageElementList = postImageRepository.findByPostId(postEntity)
-                .stream()
-                .map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
-
-        //area 정보 리스트 가져와서 DTO에 저장
-        List<PostDto.PostAreaElement> postAreaElementList = postAreaRepository
-                .findByPostId(postEntity)
-                .stream()
-                .map(p -> new PostDto.PostAreaElement(
-                        modelMapper.map(p.getSigunguCode().getAreaCode(), PostDto.AreaElement.class),
-                        modelMapper.map(p.getSigunguCode(), PostDto.SigunguElement.class)
-                )).collect(Collectors.toList());
-
-        //category 정보 리스트 가져와서 DTO에 저장
-        List<PostDto.PostCategoryElement> postCategoryElementLIst = postCategoryRepository
-                .findByPostId(postEntity)
-                .stream()
-                .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());
-
-        //postLikeCount 정보 가져옴
-        int postLikeCount = postLikeRepository.countByPostId(postEntity);
-
-//        postCombine = new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount);
-        //DTO 수정
-        postCombine = PostDto.PostCombine.builder()
-                .postElement(postElement)
-                .memberElement(memberElement)
-                .postImageElementList(postImageElementList)
-                .postAreaElementList(postAreaElementList)
-                .postCategoryElementList(postCategoryElementLIst)
-                .postLikeCount(postLikeCount)
-                .build();
-
-        // post detail test
-//        log.info("postCombine =========== " );
-//        log.info("PostElement =========== " + postCombine.getPostElement());
-//        log.info("MemberElement =========== " + postCombine.getMemberElement());
-//        log.info("PostImageElementList =========== " + postCombine.getPostImageElementList());
-//        log.info("PostAreaElementList=========== " + postCombine.getPostAreaElementList());
-//        log.info("PostCategoryElementList =========== " + postCombine.getPostCategoryElementList());
-//        log.info("PostLikeCount =========== " + postCombine.getPostLikeCount());
-
-
-
-         *//* commentElementList 채우기
-            post entity를 가져옴
-        comments entity 를 전부 구해옴
-        해당 comments entity로
-        -> comment_like count를 구한다, nested_comment entity를 구해옴
-            -> nested_comment entity로 nested_comment like count를 구해온다
-         *//*
-
-        // post Entity를 이용해 댓글 정보를 채워 넣음
-        PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
-
-        // 댓글 정보만 채우기
-//        PostDto.CommentElement commentElement = modelMapper.map(commentRepository.findByPostId(postEntity), PostDto.CommentElement.class);
-
-        // comment entity List 가져옴
-        List<Comment> commentEntityList = commentRepository.findByPostId(postEntity);
-        //log.info("1번 글 댓글 ========= " + commentEntityList);
-
-        List<PostDto.CommentElement> commentElementList = new ArrayList<>();
-
-        //for(comment entity 갯수) {comment_like count를 구한다 + {nested_comment entity를 구한다. + nested_comment_like count를 구한다.}}
-        for(Comment commentEntity : commentEntityList){
-            //1. Comment DTO 생성
-            PostDto.CommentElement commentElement = new PostDto.CommentElement();
-
-            //2. Comment DTO에 Comment entity를 DTO로 변환후 저장
-            commentElement = modelMapper.map(commentEntity, PostDto.CommentElement.class);
-
-            //3. Comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
-            commentElement.setCustomMemberForComment(modelMapper.map(commentEntity.getPostId().getMemberId(), PostDto.CustomMemberForComment.class));
-
-            //4. comment DTO에 comment_like count 저장
-            commentElement.setCommentLikeCount(commentLikeRepository.countByCommentId(commentEntity));
-
-            //log.info("commentElement res ============== " + commentElement.toString());
-
-            //5. nested_comment List 채우기
-            List<PostDto.NestedCommentElement> nestedCommentElementList= new ArrayList<>();
-            List<NestedComment> nestedCommentList = nestedCommentRepository.findByCommentId(commentEntity);
-
-            for(NestedComment nestedCommentEntity : nestedCommentList){
-                // 5-1. nested_comment DTO 생성
-                PostDto.NestedCommentElement nestedCommentElement = new PostDto.NestedCommentElement();
-
-                // 5-2. nested_comment DTO에 nested_comment entity를 DTO로 변환후 저장
-                nestedCommentElement = modelMapper.map(nestedCommentEntity, PostDto.NestedCommentElement.class);
-
-                // 5-3. nested_comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
-                nestedCommentElement.setCustomMemberForComment(modelMapper.map(nestedCommentEntity.getMemberId(), PostDto.CustomMemberForComment.class));
-
-                // 5-4. nested_comment DTO에 nested_comment_like count 저장
-                nestedCommentElement.setNestedCommentLikeCount(nestedCommentLikeRepository.countByNestedCommentId(nestedCommentEntity));
-
-                // nested_comment List에 add
-                nestedCommentElementList.add(nestedCommentElement);
-            }
-
-            // Comment Element의 요소인 nestedCommentList를 저장
-            commentElement.setNestedCommentList(nestedCommentElementList);
-
-            // commentElement List에 add
-            commentElementList.add(commentElement);
-
-            //commentCombine(자세한 구조는 PostDto.CommentCombine 참고)에 commentElementList 저장
-            commentCombine.setCommentElementList(commentElementList);
-        }
-
-        // comment DTO 정보 test
-//        for(PostDto.CommentElement commentElement : commentElementList){
-//            log.info("result ==================== " );
-//            log.info("id ========= " + commentElement.getId());
-//            log.info("conent ========= " + commentElement.getContent());
-//            log.info("isdeleted ========= " + commentElement.getIsDeleted());
-//            log.info("created at========= " + commentElement.getCreatedAt());
-//            log.info("custom member for comment ========= " + commentElement.getCustomMemberForComment());
-//            log.info("nestedcommentlist ========= " + commentElement.getNestedCommentList());
-//        }
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("postCombine", postCombine);
-        response.put("commentCombine", commentCombine);
-
-        return response;
-*/
     }
 
     //포럼 게시글 좋아요 - 정상 동작
