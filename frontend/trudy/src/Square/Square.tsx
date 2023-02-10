@@ -111,19 +111,8 @@ function Square() {
               setNameSearch(searchChange);
             }}
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </button>
         </div>
@@ -133,23 +122,19 @@ function Square() {
           <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
           {selectedAreaCode && (
             <div className="flex flex-row flex-wrap mx-2">
-              {sigunguList[selectedAreaCode].map(
-                (sigunguInfo: any, i: number) => (
-                  <div key={i} className="flex items-center h-1/5 my-1">
-                    <input
-                      className="ml-3 mr-1"
-                      name="sigungu-select"
-                      type="radio"
-                      id={`sigungu-${sigunguInfo.id}`}
-                      // checked={selectedSigungu.includes(sigunguInfo.id)}
-                      onChange={() => setSigunguCode(sigunguInfo.code)}
-                    />
-                    <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-                      {sigunguInfo.name}
-                    </label>
-                  </div>
-                )
-              )}
+              {sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
+                <div key={i} className="flex items-center h-1/5 my-1">
+                  <input
+                    className="ml-3 mr-1"
+                    name="sigungu-select"
+                    type="radio"
+                    id={`sigungu-${sigunguInfo.id}`}
+                    checked={sigunguInfo.id === sigunguCode}
+                    onClick={() => setSigunguCode(sigunguInfo.Id)}
+                  />
+                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -175,17 +160,9 @@ function Square() {
 
               <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
                 {guide.img ? (
-                  <img
-                    src={guide.img}
-                    alt="userThumbnail"
-                    className="h-64 w-full object-cover rounded relative"
-                  />
+                  <img src={guide.img} alt="userThumbnail" className="h-64 w-full object-cover rounded relative" />
                 ) : (
-                  <img
-                    src={imgURL}
-                    alt="userThumbnail"
-                    className="h-64 w-full object-cover rounded relative"
-                  />
+                  <img src={imgURL} alt="userThumbnail" className="h-64 w-full object-cover rounded relative" />
                 )}
               </div>
               <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">

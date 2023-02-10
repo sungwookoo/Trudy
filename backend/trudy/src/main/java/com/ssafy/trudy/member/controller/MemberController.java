@@ -3,11 +3,11 @@ package com.ssafy.trudy.member.controller;
 
 import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.auth.service.MemberAppService;
-import com.ssafy.trudy.member.model.Follow;
 import com.ssafy.trudy.member.model.dto.MemberIntroRequest;
 import com.ssafy.trudy.member.model.dto.MemberIntroResponse;
 import com.ssafy.trudy.member.model.dto.MemberModifyRequest;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ResponseHeader;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/member")
@@ -29,6 +33,9 @@ public class MemberController {
 
     @Autowired
     private final MemberAppService memberAppService;
+
+    @Autowired
+    private final AwsS3Uploader awsS3Uploader;
 
 
     @ApiOperation(value = "회원 리스트",
@@ -185,6 +192,10 @@ public class MemberController {
         return memberAppService.removeBan(id, principal);
     }
 
+    @PostMapping("/upload")
+    public Map<String, String> addMemberImage(@RequestParam(required = false, name = "file") MultipartFile multipartFile, @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
+        return memberAppService.createMemberFile(multipartFile, "member", principal);
+    }
 
 
 
