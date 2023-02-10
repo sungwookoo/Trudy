@@ -21,7 +21,6 @@ function SignUp() {
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
-  console.log(sigunguCode, "2222222222222222222222222");
 
   const authCtx = useContext(AuthContext);
   const handleAreaClick = (id: number) => {
@@ -30,7 +29,7 @@ function SignUp() {
   useEffect(() => {
     return authCtx.defaultVerified;
   }, []);
-
+  console.log(nickname);
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
