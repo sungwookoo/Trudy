@@ -16,9 +16,9 @@ const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
   return (
     <div>
       <div>
-        {areaCode.map((areaCode) => (
+        {areaCode.map((areaCode, i) => (
           <div>
-            <label key={areaCode.id} htmlFor={`classification-${areaCode.id}`}>
+            <label key={i} htmlFor={`classification-${areaCode.id}`}>
               <input
                 type="radio"
                 name="areaCode"
