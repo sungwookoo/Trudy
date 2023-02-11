@@ -59,11 +59,27 @@ function Place(props: any) {
     props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
 
+  // 북마크 정보 가져오기
+  const [bookmarkList, setbookmarkList] = useState<any>([]);
+
+  useEffect(() => {
+    const getBookmarkStatus = async () => {
+      try {
+        const response = await axios.get(`api/bookmark?memberId=${2}`);
+        setbookmarkList(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBookmarkStatus();
+  });
   useEffect(() => {
     const fetchData = async () => {
       try {
         const resData: any = await axios.get(
-          API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
+          API_URL +
+            `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
         );
         setPlaces(resData.data);
       } catch (error) {
@@ -77,11 +93,18 @@ function Place(props: any) {
   return (
     <>
       {/* 지역 버튼 */}
-      <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className={`p-2 m-2 rounded-lg  ${
+          !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
+        }`}
+      >
         Area Select
       </button>
 
-      {!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}
+      {!isCollapsed && (
+        <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
+      )}
       {!isCollapsed && selectedAreaCode && (
         <SigunguSelect
           key={selectedAreaCode}
@@ -94,11 +117,20 @@ function Place(props: any) {
       )}
 
       {/* 카테고리 */}
-      <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
+      <CategoryButtons
+        onClick={handleCategoryClick}
+        selectedCategories={contentTypeId}
+      />
 
       {places &&
         places.map((data, i) => {
-          return <PlaceForm key={i} data={data} onClick={() => handlePlaceClick(data)} />;
+          return (
+            <PlaceForm
+              key={i}
+              data={data}
+              onClick={() => handlePlaceClick(data)}
+            />
+          );
         })}
 
       <button onClick={() => setLimit(limit + 10)} color="black">
