@@ -27,18 +27,19 @@ public class PostDto {
     public static class PostCombine {
         private PostElement postElement;
         private MemberElement memberElement;
-        private List<PostImageElement> postImageElementList;
-        private List<PostAreaElement> postAreaElementList;
-        private List<PostCategoryElement> postCategoryElementList;
+//        private List<PostImageElement> postImageElementList;
+//        private List<PostAreaElement> postAreaElementList;
+//        private List<PostCategoryElement> postCategoryElementList;
         private int postLikeCount;
         private List<Long> sigunguCodeList;
-        private List<CategoryName> categoryNameList;
+        private List<String> categoryNameList;
     }
 
     //포럼 글 마다 댓글+좋아요 개수, 댓글의 대댓글+좋아요 구조로 가져옴
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class CommentCombine{
         private List<CommentElement> commentElementList;
     }
@@ -53,7 +54,8 @@ public class PostDto {
         private MultipartFile[] upload;
         private Long[] sigunguIdList;
         private Long memberId;
-        private CategoryName[] categoryList;
+        //private CategoryName[] categoryList;
+        private String[] categoryList;
     }
 
 
@@ -77,7 +79,7 @@ public class PostDto {
         private CustomMemberForComment customMemberForComment;
 
         //3. Comment like count
-        private int CommentLikeCount;
+        private int commentLikeCount;
 
         //4. 해당 comment에 대한 nested_comment list
         private List<NestedCommentElement> nestedCommentList;
@@ -130,23 +132,23 @@ public class PostDto {
         private LocalDateTime updatedAt;
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class PostAreaElement{
+//    @Data
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class PostAreaElement{
+//
+//        private AreaElement areaElement;
+//        private SigunguElement sigunguElement;
+//    }
 
-        private AreaElement areaElement;
-        private SigunguElement sigunguElement;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class PostCategoryElement{
-        private String name;
-    }
+//    @Data
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class PostCategoryElement{
+//        private String name;
+//    }
 
     @Data
     @AllArgsConstructor
