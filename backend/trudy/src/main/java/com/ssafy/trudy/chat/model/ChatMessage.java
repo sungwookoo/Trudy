@@ -34,7 +34,7 @@ public class ChatMessage {
     public enum MessageType {
         ENTER, TALK, QUIT
     }
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private MessageType type;   // 메시지 타입
