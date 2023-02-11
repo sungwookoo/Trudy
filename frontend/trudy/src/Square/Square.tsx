@@ -129,8 +129,8 @@ function Square() {
                     name="sigungu-select"
                     type="radio"
                     id={`sigungu-${sigunguInfo.id}`}
-                    checked={sigunguInfo.id === sigunguCode}
-                    onClick={() => setSigunguCode(sigunguInfo.Id)}
+                    checked={sigunguCode === sigunguInfo.id}
+                    onChange={() => setSigunguCode(sigunguInfo.id)}
                   />
                   <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
                 </div>

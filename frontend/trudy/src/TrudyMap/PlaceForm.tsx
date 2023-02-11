@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import axios from "axios";
 
 type PlaceFormProps = {
   data: {
@@ -18,13 +19,17 @@ type PlaceFormProps = {
   onClick: (mapx: string | number, mapy: string | number) => void;
 };
 
-function PlaceForm({ data, onClick }: any) {
+function PlaceForm({ data, onClick }: PlaceFormProps) {
   const handleClick = useCallback(() => {
     onClick(data.mapy, data.mapx);
   }, [onClick]);
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-5" onClick={handleClick} style={{ cursor: "pointer" }}>
+    <div
+      className="max-w-sm rounded overflow-hidden shadow-lg m-5"
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    >
       <img className="w-full" src={data.firstimage} alt="Place thumbnail" />
       <div className="px-6 py-4">
         <h3 className="font-bold text-xl mb-2">{data.title}</h3>
