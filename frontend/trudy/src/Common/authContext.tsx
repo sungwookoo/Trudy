@@ -154,14 +154,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   }, []);
 
   // 유저 정보를 가져오는 함수
-  const getUserHandler = async (headers: any) => {
+  const getUserHandler = async (params: any) => {
     setIsGetSuccess(false);
     // 토큰이 만료되지 않았으면 재발행
     // if (tokenData.duration > 0) {
     //   console.log('재발행 시도')
     // }
-
-    const data = await authAction.getUserActionHandler(headers);
+    const data = await authAction.getUserActionHandler(params);
     if (data !== null) {
       const userData: UserInfo = data.data;
       setUserObj(userData);
