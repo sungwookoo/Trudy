@@ -79,7 +79,7 @@ public class PostDto {
         private CustomMemberForComment customMemberForComment;
 
         //3. Comment like count
-        private int CommentLikeCount;
+        private int commentLikeCount;
 
         //4. 해당 comment에 대한 nested_comment list
         private List<NestedCommentElement> nestedCommentList;

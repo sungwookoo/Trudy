@@ -69,7 +69,7 @@ public class PostService {
             return new PageImpl<>(new ArrayList<>(), filteredPost.getPageable(), filteredPost.getTotalElements());
         }
 
-//        log.info("검사 합니다.");
+//test        log.info("검사 합니다.");
 //        log.info(postRepository.findAll(PostSpecification.getSearchByPageable(title, content, sigunguIdList, categoryList), pageable).toString());
 
 //         for(Object t : filteredPost){
@@ -260,10 +260,12 @@ public class PostService {
                 .memberElement(modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class))
                 .categoryNameList(postEntity.getPostCategoryList().stream().map(PostCategory::getCategoryName).collect(Collectors.toList()))
                 .sigunguCodeList(postEntity.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
+                .postLikeCount(postLikeRepository.countByPostId(postEntity))
                 .build();
 
-        log.info("test : ============= ");
-        log.info(postCombine.toString());
+//test
+//        log.info("test : ============= ");
+//        log.info(postCombine.toString());
 
         // post Entity를 이용해 댓글 정보를 채워 넣음
         PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
@@ -284,7 +286,9 @@ public class PostService {
             //4. comment DTO에 comment_like count 저장
             commentElement.setCommentLikeCount(commentLikeRepository.countByCommentId(commentEntity));
 
-            //log.info("commentElement res ============== " + commentElement.toString());
+//test            log.info("commentElement res ============== " + commentElement.toString());
+//            log.info("comment like count: " + commentLikeRepository.countByCommentId(commentEntity));
+//            log.info("end");
 
             //5. nested_comment List 채우기
             List<PostDto.NestedCommentElement> nestedCommentElementList= new ArrayList<>();
@@ -333,7 +337,6 @@ public class PostService {
         response.put("commentCombine", commentCombine);
 
         return response;
-
     }
 
     //포럼 게시글 좋아요 - 정상 동작
@@ -443,9 +446,3 @@ public class PostService {
     }
 
 }
-// 포스트 서비스에서
-// 포스트이미지 repository에 save하잖아.
-// s3 서비스에서 먼저 s3 저장하고 그 저장된 결과에 따라 response를 활용해서 포스트이미지 repository에 save
-
-// 프론트입장에서는 /api/post/upload 먼저함 -> post_image 테이블 insert
-// /api/post/ 해서 먼저 만든

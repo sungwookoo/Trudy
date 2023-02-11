@@ -52,25 +52,13 @@ public class PostController {
                                                           @RequestParam(required = false) String content,
                                                           @RequestParam(required = false) List<Long> sigunguIdList,
                                                           @RequestParam(required = false) List<String> categoryList,
-                                                          @PageableDefault(size = 5, sort = "id" ) Pageable pageable){
-        //try{
-            /*List<PostDto.PostCombine> findPostCombines =*/
+                                                          @PageableDefault(size = 20, sort = "id" ) Pageable pageable){
 
         return postService.findPostList(title,
                     content,
                     sigunguIdList,
                     categoryList,
                     pageable);
-
-//            if(findPostCombines != null || !findPostCombines.isEmpty()){
-//                return ResponseEntity.ok().body(findPostCombines);
-//            } else {
-//                return ResponseEntity.noContent().build();
-//            }
-//        } catch (Exception e){
-//            e.getStackTrace();
-//            return ResponseEntity.internalServerError().build();
-//        }
     }
 
     //포럼 게시글 작성 - 정상 동작
@@ -136,7 +124,7 @@ public class PostController {
         }
     }
 
-    //포럼 게시글 상세보기 - 정상 동작
+    //포럼 게시글 상세보기 - 정상 동작 2
     @GetMapping("/{post_id}")
     public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
 
@@ -154,7 +142,7 @@ public class PostController {
 
     }
 
-    //포럼 게시글 좋아요 - 정상 동작
+    //포럼 게시글 좋아요 - 정상 동작 2
     @PostMapping("/like/{member_id}/{post_id}")
     public ResponseEntity<?> postLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId){
         try{
@@ -166,7 +154,7 @@ public class PostController {
         }
     }
 
-    //포럼 게시글 댓글 작성 - 정상 동작
+    //포럼 게시글 댓글 작성 - 정상 동작 2
     @PostMapping("/comment/{member_id}/{post_id}")
     public ResponseEntity<?> postCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId, @RequestParam("content") String content){
         try{
@@ -178,7 +166,7 @@ public class PostController {
         }
     }
 
-    //포럼 댓글 좋아요 - 정상 동작
+    //포럼 댓글 좋아요 - 정상 동작 2
     @PostMapping("/comment/like/{member_id}/{comment_id}")
     public ResponseEntity<?> postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
         try{
@@ -190,7 +178,7 @@ public class PostController {
         }
     }
 
-    //댓글 삭제 - 정상 동작 - 수정해야 -> 대댓글 없으면 걍 날리는 걸로
+    //댓글 삭제 - 정상 동작 -> 대댓글 없으면 걍 날리는 걸로 2
     @DeleteMapping("/comment/{comment_id}")
     public ResponseEntity<?> postCommentRemove(@PathVariable("comment_id") Long commentId){
         try{
@@ -202,7 +190,7 @@ public class PostController {
         }
     }
 
-    //대댓글 작성 - 정상 동작
+    //대댓글 작성 - 정상 동작 2
     @PostMapping("/nested-comment/{member_id}/{comment_id}")
     public ResponseEntity<?> postNestedCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId, @RequestParam("content") String content){
         try{
@@ -214,7 +202,7 @@ public class PostController {
         }
     }
 
-    //대댓글 좋아요 - 정상 동작
+    //대댓글 좋아요 - 정상 동작 2
     @PostMapping("/nested-comment/like/{member_id}/{nested_comment_id}")
     public ResponseEntity<?> postNestedCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("nested_comment_id") Long nestedCommentId){
         try{
@@ -226,7 +214,7 @@ public class PostController {
         }
     }
 
-    //대댓글 삭제 - 정상 동작
+    //대댓글 삭제 - 정상 동작 2
     @DeleteMapping("/nested-comment/{nested_comment_id}")
     public ResponseEntity<?> postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
         try{
