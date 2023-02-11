@@ -11,11 +11,9 @@ type AreaCodeType = {
 };
 
 const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
-  const [selectedAreaCode, setSelectedAreaCode] = useState<number | null>(null);
-
   return (
     <div>
-      <div>
+      <div className="justify-center h-screenflex flex-wrap">
         {areaCode.map((areaCode, i) => (
           <div>
             <label key={i} htmlFor={`classification-${areaCode.id}`}>
@@ -24,7 +22,6 @@ const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
                 name="areaCode"
                 id={`classification-${areaCode.id}`}
                 onClick={() => {
-                  setSelectedAreaCode(areaCode.id);
                   onClick(areaCode.id, areaCode.name);
                 }}
               />
