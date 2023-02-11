@@ -1,13 +1,18 @@
-package com.ssafy.trudy.chat.model;
+package com.ssafy.trudy.chatting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ssafy.trudy.post.model.Comment;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 // 채팅방 구현
+
 @Getter
 @Setter
 @Entity
@@ -16,15 +21,15 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("chatList")
 public class ChatRoom implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    // chatMessage에서 찾아오기
-    @Column(name = "last_message_id")
-    private Long lastMessageId;     // 채팅방 마지막 메시지의 id값
+    @OneToMany(mappedBy = "roomId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<ChatMessage> chatList = new ArrayList<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;    // 채팅방 생성 시각

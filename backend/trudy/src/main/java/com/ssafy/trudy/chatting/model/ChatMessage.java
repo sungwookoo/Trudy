@@ -1,5 +1,6 @@
-package com.ssafy.trudy.chat.model;
+package com.ssafy.trudy.chatting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ssafy.trudy.member.model.Member;
 import lombok.*;
 
@@ -7,23 +8,20 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 // 채팅 메시지 DTO
+@Entity
 @Getter
 @Setter
 @Table(name = "chat_messages")
 @NoArgsConstructor
-public class ChatMessage {
-
-    @Builder
-    public ChatMessage(MessageType type, ChatRoom roomId, Member memberId, String message){
-        this.type = type;
-        this.roomId = roomId;
-        this.memberId = memberId;
-        this.message = message;
-    }
+public class ChatMessage{
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private ChatRoom roomId;
 
     @Column(name = "message")
     private String message;     // 메시지
@@ -40,10 +38,15 @@ public class ChatMessage {
     private MessageType type;   // 메시지 타입
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
-    private ChatRoom roomId;      // 방번호
-
-    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member memberId;      // 메시지 보낸 사람
+
+    @Builder
+    public ChatMessage(MessageType type, Member memberId, String message, ChatRoom roomId){
+        this.type = type;
+        this.roomId = roomId;
+        this.memberId = memberId;
+        this.message = message;
+    }
+
 }

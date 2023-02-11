@@ -1,12 +1,12 @@
-package com.ssafy.trudy.chat.controller;
+package com.ssafy.trudy.chatting.controller;
 
-import com.ssafy.trudy.chat.model.ChatRoom;
-import com.ssafy.trudy.chat.service.ChatService;
+import com.ssafy.trudy.chatting.model.response.ChatRoomDetailResponse;
+import com.ssafy.trudy.chatting.model.response.ChatRoomResponse;
+import com.ssafy.trudy.chatting.service.ChatService;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +14,10 @@ import java.util.List;
 // Websocket 통신 외에 채팅 화면 View 구성을 위해 필요한 Controller
 
 // View 구성을 위한 Controller
+@Slf4j
 @RequiredArgsConstructor
-@Controller
-@RequestMapping("/chat")
+@RestController
+@RequestMapping("/api/chat")
 public class ChatRoomController {
 
     private final ChatService chatService;
@@ -32,43 +33,24 @@ public class ChatRoomController {
         chatService.createChatRoom(roomMaker, guest);
     }
 
-    // 채팅방 입장 화면
-    @GetMapping("/room/enter/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId) {
-        model.addAttribute("roomId", roomId);
-        return "/chat/roomdetail";
+    //************************************[READ]*************************************//
+    // 1. 로그인한 유저의 채팅 리스트를 가져오기 -> clear
+    @GetMapping("/all")
+    public List<ChatRoomResponse> findChatRoomList(@RequestParam Long memberId) {
+        log.info(memberId.toString());
+        return chatService.findChatRoomList(memberId);
     }
 
-    //************************************[READ]*************************************//
 
-
-
-
-
-    //************************************[UPDATE]***********************************//
-
-
+    // 2. 채팅리스트에서 특정 채팅창을 눌렀을 때, 디테일 정보 가져오기
+    @GetMapping("/detail")
+    public ChatRoomDetailResponse getChatRoomDetail(@RequestParam Long chatRoomId,
+                                                    @RequestParam Long loginMemberId,
+                                                    @RequestParam Long guestId) {
+        return chatService.getChatRoomDetail(chatRoomId, loginMemberId, guestId);
+    }
 
 
     //************************************[DELETE]***********************************//
-    // 채팅 첫 화면
-    @GetMapping("/room")
-    public String rooms(Model model) {
-        return "/chat/room";
-    }
-    // 모든 채팅방 목록 반환
-//    @GetMapping("/rooms")
-//    @ResponseBody
-//    public List<ChatRoom> room() {
-//        List<ChatRoom> chatRooms = chatService.findAllRoom();
-//        chatRooms.stream().forEach(room -> room.setUserCount(chatService.getUserCount(room.getId())));
-//        return chatRooms;
-//    }
 
-    // 특정 채팅방 조회
-    @GetMapping("/room/{roomId}")
-    @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
-        return chatService.findChatRoomById(roomId);
-    }
 }
