@@ -114,10 +114,9 @@ export const signOutActionHandler = (token: string) => {
 };
 
 // 스퀘어 유저의 정보를 GET방식으로 호출
-export const getUserActionHandler = (headers: any) => {
-  const url = "/api/member/";
-  const response = GET(url, { headers });
-
+export const getUserActionHandler = (params: any) => {
+  const url = "/api/member";
+  const response = GET(url, { params } );
   return response;
 };
 

@@ -45,21 +45,20 @@ function Square() {
   };
 
   useEffect(() => {
-    const headers = {
+    const params = {
       areaCode: area,
       isLocal: isLocal,
       gender: gender,
       name: nameSearch,
     };
-
+    
     async function SquareGet() {
-      const res: any = await authCtx.getUser(headers);
+      const res: any = await authCtx.getUser(params);
       setSquareData(res.data.content);
     }
     SquareGet();
   }, [area, isLocal, gender, nameSearch]);
 
-  console.log(squareData, "스퀘어데이터");
   return (
     <div className="">
       {/* 검색창 */}
@@ -129,8 +128,8 @@ function Square() {
                     name="sigungu-select"
                     type="radio"
                     id={`sigungu-${sigunguInfo.id}`}
-                    checked={sigunguCode === sigunguInfo.id}
-                    onChange={() => setSigunguCode(sigunguInfo.id)}
+                    checked={sigunguInfo.id === sigunguCode}
+                    onClick={() => setSigunguCode(sigunguInfo.Id)}
                   />
                   <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
                 </div>
