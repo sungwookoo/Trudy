@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "chat_room_members")
 @NoArgsConstructor
-public class ChatRoomMembers {
+public class ChatRoomMember {
 
     @Id
     @GeneratedValue
@@ -22,12 +22,9 @@ public class ChatRoomMembers {
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoomId;
 
+    // 1대 1 채팅방이기 때문에 채팅방이 하나 생성될 때 유저가 2개씩 생긴다.
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member memberId;
 
-    @Column(name = "session_id")
-    private String sessionId;
-    // 클라이언트의 sessionId. header로부터 받는값 -> memberId와는 다름
-    // memberId는 header에 담기지 않기 때문에 session을 담을 변수이다.
 }

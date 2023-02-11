@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -47,29 +48,17 @@ public class PostController {
 
     //포럼 게시글 목록 가져오기 - 정상 동작
     @GetMapping
-    public Page<PostDto.PostCombine> /*Page<?>*/ postList(@RequestParam(required = false) String title,
-                            @RequestParam(required = false) String content,
-                            @RequestParam(required = false) List<Long> sigunguIdList,
-                            @RequestParam(required = false) List<CategoryName> categoryList,
-                            @PageableDefault(size = 5, sort = "id" ,direction = Sort.Direction.ASC) Pageable pageable){
-        //try{
-            /*List<PostDto.PostCombine> findPostCombines =*/
+    public  Page<PostDto.PostCombine> postList(@RequestParam(required = false) String title,
+                                                          @RequestParam(required = false) String content,
+                                                          @RequestParam(required = false) List<Long> sigunguIdList,
+                                                          @RequestParam(required = false) List<String> categoryList,
+                                                          @PageableDefault(size = 20, sort = "id" ) Pageable pageable){
 
         return postService.findPostList(title,
                     content,
                     sigunguIdList,
                     categoryList,
                     pageable);
-
-//            if(findPostCombines != null || !findPostCombines.isEmpty()){
-//                return ResponseEntity.ok().body(findPostCombines);
-//            } else {
-//                return ResponseEntity.noContent().build();
-//            }
-//        } catch (Exception e){
-//            e.getStackTrace();
-//            return ResponseEntity.internalServerError().build();
-//        }
     }
 
     //포럼 게시글 작성 - 정상 동작
@@ -80,20 +69,20 @@ public class PostController {
                         @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
                         @RequestParam CategoryName[] categoryList*/
-            @RequestBody PostDto.InsertPost insertPostDto
-            /*@RequestParam(value="upload", required = false) MultipartFile[] upload*/){
+            /*@RequestBody PostDto.InsertPost insertPostDto*/
+            @RequestParam(value="upload", required = false) MultipartFile[] upload){
 
 
 
         try{
  /*           //        postService.addPost(title, content, upload, sigunguId, memberId, category);
             //postService.addPost(title, content, sigunguIdList,memberId, categoryList);*/
-            postService.addPost(insertPostDto);
-           /* log.info("============== test complete ===========");
+           // postService.addPost(insertPostDto);
+            log.info("============== test complete ===========");
 
-            log.info("check : " + upload[0].getOriginalFilename());
+            for(int i=0; i<upload.length; i++)log.info( i + "check : " + upload[i].getOriginalFilename());
             //log.info(insertPostDto.getUpload().toString());
-            log.info("controller ========== try ok");*/
+            log.info("controller ========== try ok");
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
@@ -114,6 +103,7 @@ public class PostController {
                                 @RequestBody PostDto.InsertPost insertPostDto){
         try{
             //postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
+            log.info("controller - update ");
             postService.modifyPost(postId, insertPostDto);
             return ResponseEntity.ok().build();
         } catch (Exception e){
@@ -134,7 +124,7 @@ public class PostController {
         }
     }
 
-    //포럼 게시글 상세보기 - 정상 동작
+    //포럼 게시글 상세보기 - 정상 동작 2
     @GetMapping("/{post_id}")
     public ResponseEntity<?> postDetail(@PathVariable("post_id") Long postId){
 
@@ -152,7 +142,7 @@ public class PostController {
 
     }
 
-    //포럼 게시글 좋아요 - 정상 동작
+    //포럼 게시글 좋아요 - 정상 동작 2
     @PostMapping("/like/{member_id}/{post_id}")
     public ResponseEntity<?> postLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId){
         try{
@@ -164,7 +154,7 @@ public class PostController {
         }
     }
 
-    //포럼 게시글 댓글 작성 - 정상 동작
+    //포럼 게시글 댓글 작성 - 정상 동작 2
     @PostMapping("/comment/{member_id}/{post_id}")
     public ResponseEntity<?> postCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("post_id") Long postId, @RequestParam("content") String content){
         try{
@@ -176,7 +166,7 @@ public class PostController {
         }
     }
 
-    //포럼 댓글 좋아요 - 정상 동작
+    //포럼 댓글 좋아요 - 정상 동작 2
     @PostMapping("/comment/like/{member_id}/{comment_id}")
     public ResponseEntity<?> postCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId){
         try{
@@ -188,7 +178,7 @@ public class PostController {
         }
     }
 
-    //댓글 삭제 - 정상 동작 - 수정해야 -> 대댓글 없으면 걍 날리는 걸로
+    //댓글 삭제 - 정상 동작 -> 대댓글 없으면 걍 날리는 걸로 2
     @DeleteMapping("/comment/{comment_id}")
     public ResponseEntity<?> postCommentRemove(@PathVariable("comment_id") Long commentId){
         try{
@@ -200,7 +190,7 @@ public class PostController {
         }
     }
 
-    //대댓글 작성 - 정상 동작
+    //대댓글 작성 - 정상 동작 2
     @PostMapping("/nested-comment/{member_id}/{comment_id}")
     public ResponseEntity<?> postNestedCommentAdd(@PathVariable("member_id") Long memberId, @PathVariable("comment_id") Long commentId, @RequestParam("content") String content){
         try{
@@ -212,7 +202,7 @@ public class PostController {
         }
     }
 
-    //대댓글 좋아요 - 정상 동작
+    //대댓글 좋아요 - 정상 동작 2
     @PostMapping("/nested-comment/like/{member_id}/{nested_comment_id}")
     public ResponseEntity<?> postNestedCommentLikeAdd(@PathVariable("member_id") Long memberId, @PathVariable("nested_comment_id") Long nestedCommentId){
         try{
@@ -224,7 +214,7 @@ public class PostController {
         }
     }
 
-    //대댓글 삭제 - 정상 동작
+    //대댓글 삭제 - 정상 동작 2
     @DeleteMapping("/nested-comment/{nested_comment_id}")
     public ResponseEntity<?> postNestedCommentRemove(@PathVariable("nested_comment_id") Long nestedCommentId){
         try{
