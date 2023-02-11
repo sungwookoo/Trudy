@@ -26,7 +26,7 @@ function ForumItem({ post }: any) {
   return (
     <div className="forum-item-container" onClick={navigateToForumDetail}>
       {/* 포럼 아이템 개별 상자 */}
-      <div className="forum-item-box my-2 mx-2">
+      <div className="forum-item-box my-2 mx-2 hover:bg-green-500">
         {/* Post_image 테이블 더미 */}
 
         {forumImageData ? (
@@ -37,12 +37,14 @@ function ForumItem({ post }: any) {
 
         {/* 멤버 테이블 프로필 사진 */}
 
-        {/* <img className='forum-member-image' src={props.image}></img> */}
+        {/* <img className='forum-member-image' src={post.image}></img> */}
 
         {/* Post 테이블 더미 */}
-        <div>{forumTextData.title}</div>
+        <div className="forum-data-box bg-gray-100 p-1">
+        <div className="forum-txt-title font-bold mb-1 capitalize">{forumTextData.title}</div>
         <div className="forum-txt-content">{forumTextData.content}</div>
         <div>{forumTextData.created_at}</div>
+        </div>
       </div>
     </div>
   );
