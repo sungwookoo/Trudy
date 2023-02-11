@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { GoogleMap, useJsApiLoader, MarkerF, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  MarkerF,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 import "./TrudyMap.css";
 import Place from "./Place";
-
+// import Bookmark from "../Common/Bookmark";
+import axios from "axios";
+import AuthContext from "../Common/authContext";
+import Bookmark from "../Common/Bookmark";
+import LoadingScreen from "../Common/Loding";
 
 const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
@@ -24,20 +34,73 @@ function TrudyMap() {
   });
   const [map, setMap] = React.useState(null);
 
+  // 북마크, placeinfo 버튼
+  const [selectedInfo, setselectedInfo] = useState<"bookmark" | "placeinfo">(
+    "placeinfo"
+  );
+
+  // 북마크 정보 저장
+  const [bookmarkedIds, setbookmarkedIds] = useState<number[]>([]);
+  const [bookmarkList, setbookmarkList] = useState<any>([]);
+
+  // 로그인 여부
+  const islogged = useContext(AuthContext);
+  // 로그인 정보 들고오기
+  const [memberId, setMemberId] = useState<number>();
+  const myInfoUrl = "api/member/me";
+  const token = "bearer " + localStorage.getItem("token");
+
+  useEffect(() => {
+    (async () => {
+      if (islogged.isLoggedIn) {
+        try {
+          const myInfoResponse = await axios.get(myInfoUrl, {
+            headers: {
+              Authorization: token,
+            },
+          });
+          setMemberId(myInfoResponse.data.id);
+          console.log(myInfoResponse.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      if (memberId) {
+        try {
+          const bookmarkResponse = await axios.get(
+            `api/bookmark?memberId=${memberId}`
+          );
+          setbookmarkList(bookmarkResponse.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [memberId]);
+
+  useEffect(() => {
+    if (bookmarkList) {
+      setbookmarkedIds((prevIds) => [
+        ...prevIds,
+        ...bookmarkList.map((bookmark: any) => bookmark.id),
+      ]);
+    }
+  }, [bookmarkList]);
+
   // 길찾기
-  const [directions, setDirections] = useState(null);
-  const [origin, setOrigin] = useState({ lat: 37.4602, lng: 126.4407 });
-  const [destination, setDestination] = useState({ lat: 37.5665, lng: 126.978 });
-
-  
-
+  // const [directions, setDirections] = useState(null);
+  // const [origin, setOrigin] = useState({ lat: 37.4602, lng: 126.4407 });
+  // const [destination, setDestination] = useState({
+  //   lat: 37.5665,
+  //   lng: 126.978,
+  // });
   // 선택시 센터 위도 경도 업데이트
   const updateCenter = (lat: number, lng: number) => {
     setCenter({ lat, lng });
     setZoom(20);
     setMarker({ lat, lng });
   };
-
+  console.log(bookmarkedIds);
   // map 생성
   const onLoad = React.useCallback(
     function callback(map: any) {
@@ -52,39 +115,138 @@ function TrudyMap() {
     setMap(null);
   }, []);
 
-  return isLoaded ? (
+  return (
     <div className="flex h-screen">
-      {/* 지도 보이는 경우  */}
+      {/* 지도 보이는 경우 -------------------------------------------------------------------------- */}
       {mapVisible ? (
         <>
           <div className="w-1/4 h-full border border-gray-300 overflow-y-scroll">
-            
-            {/* 객체 순회 */}
-            <Place onPlaceClick={updateCenter} />
+            {memberId ? (
+              // ----------------------------------------------------------------------------------------------------------------------------------------------------
+              //                                                         로그인이 되어있는 경우
+              // ----------------------------------------------------------------------------------------------------------------------------------------------------
+              <>
+                <div className="flex flex-row justify-center">
+                  <button
+                    onClick={() => setselectedInfo("bookmark")}
+                    className={`p-4 m-2 rounded-lg ${
+                      selectedInfo === "bookmark"
+                        ? "bg-indigo-500 text-white"
+                        : "bg-gray-300"
+                    }`}
+                  >
+                    Bookmark Information
+                  </button>
+                  <button
+                    onClick={() => setselectedInfo("placeinfo")}
+                    className={`p-4 m-2 rounded-lg ${
+                      selectedInfo === "placeinfo"
+                        ? "bg-indigo-500 text-white"
+                        : "bg-gray-300"
+                    }`}
+                  >
+                    Place Information
+                  </button>
+                </div>
+                {selectedInfo === "bookmark" ? (
+                  // {/* 북마크 보기 ----------------------------------------------------------------------------------------------------------------------------------------------------*/}
+                  <Bookmark
+                    bookmarkedIds={bookmarkedIds}
+                    bookmarkList={bookmarkList}
+                  ></Bookmark>
+                ) : (
+                  // ----------------------------------------------------------------------------------------------------------------------------------------------------
+                  //     장소 보기
+                  <Place
+                    onPlaceClick={updateCenter}
+                    bookmarkedIds={bookmarkedIds}
+                    setbookmarkedIds={setbookmarkedIds}
+                  />
+                )}
+              </>
+            ) : (
+              // --------------------------------------------------------------------------
+              // 로그인 안되어있는 경우
+              <Place onPlaceClick={updateCenter} />
+            )}
           </div>
-          <div className="w-3/4 h-full">
-            <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom} onLoad={onLoad} onUnmount={onUnmount}>
-              <MarkerF position={marker} />
+          {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
+          {/*                                                                     구글 지도  */}
+          {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
+          {isLoaded && (
+            <div className="w-3/4 h-full">
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={zoom}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+              >
+                <MarkerF position={marker} />
 
-              {/* OPTIONS 주면 경로선 option 설정 가능 */}
-            </GoogleMap>
-          </div>
+                {/* OPTIONS 주면 경로선 option 설정 가능 */}
+              </GoogleMap>
+            </div>
+          )}
         </>
       ) : (
+        // ----------------------------------------------------------------------------------------------------------------------------------------------------
+        //                                                                지도 숨겼을 떄
+        // ----------------------------------------------------------------------------------------------------------------------------------------------------
         <>
-          <div className="flex flex-wrap">
-            <div className="flex flex-wrap">
-              <Place />
+          <div>
+            <div className="flex items-center justify-center">
+              {memberId ? (
+                <>
+                  <div className="flex flex-row justify-center">
+                    <button
+                      onClick={() => setselectedInfo("bookmark")}
+                      className={`p-4 m-2 rounded-lg ${
+                        selectedInfo === "bookmark"
+                          ? "bg-indigo-500 text-white"
+                          : "bg-gray-300"
+                      }`}
+                    >
+                      Bookmark Information
+                    </button>
+                    <button
+                      onClick={() => setselectedInfo("placeinfo")}
+                      className={`p-4 m-2 rounded-lg ${
+                        selectedInfo === "placeinfo"
+                          ? "bg-indigo-500 text-white"
+                          : "bg-gray-300"
+                      }`}
+                    >
+                      Place Information
+                    </button>
+                  </div>
+                  {selectedInfo === "bookmark" ? (
+                    <Bookmark
+                      bookmarkedIds={bookmarkedIds}
+                      bookmarkList={bookmarkList}
+                    ></Bookmark>
+                  ) : (
+                    <div className="flex flex-column">
+                      <Place setbookmarkedIds={setbookmarkedIds} />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="flex flex-column">
+                  <Place setbookmarkedIds={setbookmarkedIds} />
+                </div>
+              )}
             </div>
           </div>
         </>
       )}
-      <button onClick={() => setMapVisible(!mapVisible)} className="mt-2 absolute top-0 right-0">
+      <button
+        onClick={() => setMapVisible(!mapVisible)}
+        className="mt-2 absolute top-0 right-0"
+      >
         {mapVisible ? "Hide Map" : "Show Map"}
       </button>
     </div>
-  ) : (
-    <></>
   );
 }
 

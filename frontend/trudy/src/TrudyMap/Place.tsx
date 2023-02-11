@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PlaceForm from "./PlaceForm";
 import CategoryButtons from "../Filter/SelectCategory";
+import { useLocation, useParams } from "react-router-dom";
 import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
+import LoadingScreen from "../Common/Loding";
 
 export type mapPlaceType = {
   id: number;
@@ -22,22 +24,31 @@ export type mapPlaceType = {
   zipcode: string | undefined;
 };
 
-function Place(props: any) {
+function Place({
+  onPlaceClick = () => {},
+  bookmarkedIds,
+  setbookmarkedIds,
+}: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
+  // 관광 정보 query
   const [limit, setLimit] = useState<any>(10);
   const [offset, setOffset] = useState<any>(1);
   const [areaSigun, setareaSigun] = useState<any>([]);
   const [keyword, setkeyword] = useState<any>("");
-  const API_URL: string = "api/place";
-
+  // 카테고리
   const [contentTypeId, setcontentTypeId] = useState<number[]>([]);
+
+  const API_URL: string = "api/place";
 
   // 지역 filter
   const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
   const [isCollapsed, setIsCollapsed] = useState(true);
   // 시군구 filter
   const [selectedSigungu, setSelectedSigungu] = useState<number[]>([]);
+
+  // 로딩중 spinner
+  const [isLoading, setIsLoading] = useState(false);
 
   // 카테고리 버튼 on/off
   const handleCategoryClick = (categoryId: number) => {
@@ -47,6 +58,7 @@ function Place(props: any) {
       setcontentTypeId([...contentTypeId, categoryId]);
     }
   };
+  let userId = useParams();
 
   // 대분류 선택시 해당 대분류 id 가진 세부지역 checkbox 표시하기
   const handleAreaClick = (id: number) => {
@@ -56,24 +68,9 @@ function Place(props: any) {
   // 지역 위도 경도 따오기
   const handlePlaceClick = (place: mapPlaceType) => {
     setSelectedPlace(place);
-    props.onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
+    onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
 
-  // 북마크 정보 가져오기
-  const [bookmarkList, setbookmarkList] = useState<any>([]);
-
-  useEffect(() => {
-    const getBookmarkStatus = async () => {
-      try {
-        const response = await axios.get(`api/bookmark?memberId=${2}`);
-        setbookmarkList(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getBookmarkStatus();
-  });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -93,46 +90,59 @@ function Place(props: any) {
   return (
     <>
       {/* 지역 버튼 */}
-      <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className={`p-2 m-2 rounded-lg  ${
-          !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
-        }`}
-      >
-        Area Select
-      </button>
-
-      {!isCollapsed && (
-        <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
-      )}
-      {!isCollapsed && selectedAreaCode && (
-        <SigunguSelect
-          key={selectedAreaCode}
-          selectSigunguCode={sigunguList}
-          area={selectedAreaCode}
-          selectedSigungu={selectedSigungu}
-          setSelectedSigungu={setSelectedSigungu}
-          setConvertSigungu={setareaSigun}
+      <div>
+        <div>
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className={`p-2 m-2 rounded-lg  ${
+              !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
+            }`}
+          >
+            Area Select
+          </button>
+          <div>
+            {!isCollapsed && (
+              <AreaSelect
+                key={0}
+                areaCode={areaList}
+                onClick={handleAreaClick}
+              />
+            )}
+            {!isCollapsed && selectedAreaCode && (
+              <SigunguSelect
+                key={selectedAreaCode}
+                selectSigunguCode={sigunguList}
+                area={selectedAreaCode}
+                selectedSigungu={selectedSigungu}
+                setSelectedSigungu={setSelectedSigungu}
+                setConvertSigungu={setareaSigun}
+              />
+            )}
+          </div>
+        </div>
+        {/* 카테고리 */}
+        <CategoryButtons
+          onClick={handleCategoryClick}
+          selectedCategories={contentTypeId}
         />
-      )}
-
-      {/* 카테고리 */}
-      <CategoryButtons
-        onClick={handleCategoryClick}
-        selectedCategories={contentTypeId}
-      />
-
-      {places &&
-        places.map((data, i) => {
-          return (
-            <PlaceForm
-              key={i}
-              data={data}
-              onClick={() => handlePlaceClick(data)}
-            />
-          );
-        })}
-
+      </div>
+      <div className="flex flex-wrap">
+        {places ? (
+          places.map((data, i) => {
+            return (
+              <PlaceForm
+                key={i}
+                place={data}
+                onClick={() => handlePlaceClick(data)}
+                bookmarkedIds={bookmarkedIds}
+                setbookmarkedIds={setbookmarkedIds}
+              />
+            );
+          })
+        ) : (
+          <div> No info. look for another option </div>
+        )}
+      </div>
       <button onClick={() => setLimit(limit + 10)} color="black">
         more
       </button>
