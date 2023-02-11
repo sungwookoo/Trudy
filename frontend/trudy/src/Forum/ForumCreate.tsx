@@ -7,6 +7,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import ForumImageUpload from './ForumImageUpload';
 import Images from './Forumimage';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -26,6 +27,13 @@ function ForumCreate() {
 
   // const [forumupload, setUpload] = useState(null);
   // const [viewContent, setViewContent] = useState([]);
+
+
+  const navigates=useNavigate();
+  const cancelPosts = () => {
+  navigates('/Forum');
+  }
+
 
 const forumdata = {
   'title' : forumtitle,
@@ -71,17 +79,16 @@ const forumdata = {
           }
         }
 
-
         const submitPost = () => {
           console.log(forumdata)
           axios.post('api/post', forumdata)
           .then((res)=>{
-            alert('등록 완료!');
+            alert('Post Successful!');
             console.log(res)
           })
           .catch((err)=>{
             console.log(err)
-            alert('등록 실패!');
+            alert('Make Sure to add Titles and Content!');
           })
         };
       
@@ -118,45 +125,50 @@ const forumdata = {
 
 return(
   <>
-      <div className='forum-create-container'>
+      <div className='forum-create-container px-96'>
         <div className='forum-title-container'>
 
-        <input className='forum-title' type="text" placeholder='Enter Title Here' 
+        <input className='forum-title' type="text" placeholder='Enter Title Here!' 
         onChange={(event) => setforumTitle(event.target.value)}/>
         
-        
-      <div>
-        <CKEditor
-        editor={ClassicEditor}
-        config={{
-        extraPlugins: [uploadPlugin],
-        }}
-        data={forumcontent}
-        onReady={(editor:any) => {
-          // console.log('Editor is ready to use!', editor);
-        }}
-        onChange={(event:any, editor:any) => {
-          const data = editor.getData();
-          setforumContent(data);
-          // setImage(data);
-          //
-          console.log({ data })
-        }}
-        onBlur={(event:any, editor:any) => {
-          // console.log('Blur.', editor);
-        }}
-        onFocus={(event:any, editor:any) => {
-          // console.log('Focus.', editor);
-        }}
-        />
         </div>
-        <button onClick={submitPost}>
-          제출합니다
-        </button>
-
-        <ForumImageUpload />
+        <div className='forum-text-editor'>
+          <CKEditor
+          editor={ClassicEditor}
+          config={{
+          placeholder: 'Drag, drop or copy & paste to upload image! ',
+          extraPlugins: [uploadPlugin],
+          }}
+          data={forumcontent}
+          onReady={(editor:any) => {
+          // console.log('Editor is ready to use!', editor);
+          }}
+          onChange={(event:any, editor:any) => {
+            const data = editor.getData();
+            setforumContent(data);
+            // setImage(data);
+            //
+            console.log({ data })
+          }}
+          onBlur={(event:any, editor:any) => {
+          // console.log('Blur.', editor);
+          }}
+          onFocus={(event:any, editor:any) => {
+          // console.log('Focus.', editor);
+          }}
+          />
           </div>
-      <Images />
+            <div className='flex flex-row w-full justify-end px-44'>
+            <button className='border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full' onClick={cancelPosts}>
+            Back
+            </button>
+            <button className='border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full' onClick={submitPost}>
+            Submit
+            </button>
+            </div>
+        {/* <ForumImageUpload /> */}
+          
+      {/* <Images /> */}
     </div>
     </>
     );
