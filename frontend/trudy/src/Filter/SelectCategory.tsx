@@ -20,7 +20,7 @@ const CategoryButtons = ({selectedCategories, onClick} : PropsType) => {
   return (
     <>
       {Object.entries(categories).map(([key, value]) => (
-        <button key={key} onClick={() => onClick(value)} className={`p-2 m-2 rounded-lg ${selectedCategories.includes(value) ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>{key}</button>
+        <button key={key} onClick={() => onClick(value)} className={`p-2 m-2 rounded-lg ${selectedCategories.includes(value) ? "bg-green-600 text-white" : "bg-gray-300"}`}>{key}</button>
       ))}
     </>
   );

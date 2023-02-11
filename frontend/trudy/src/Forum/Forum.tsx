@@ -98,9 +98,10 @@ function ForumPage() {
   // }
   console.log(selectedSigungu);
   return (
-    <div className="forum-page">
+    <>
+    <div className="forum-page flex flex-row">
       <div className="filter-bar">
-        <div className="flex flex-column flex">
+        <div className="flex">
           <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
             Area Select
           </button>
@@ -128,23 +129,28 @@ function ForumPage() {
             ))}
         </div>
 
-        <div className="cat-selectors mt-4"></div>
+        <div className="cat-selectors">
         <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
-        <div className="bg-red-700 mx-5">
-          <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" onClick={navigateToCreateArticle}>
+        </div>
+        
+          <button className=
+          "border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-4 rounded-full"
+          onClick={navigateToCreateArticle}>
             Post Article
           </button>
-        </div>
+        
       </div>
-      <div className="forum-content mx-32">
+    </div>
+    
+    <div className="forum-content grid grid-cols-3 px-52 ">
         {forumResponse.map((post, i) => (
           <ForumItem key={i} post={post} onClick={() => handleClick(post.id)} />
         ))}
         {/* {selectedId && (
             <ForumDetail setForumItem={forumItem} />
           )} */}
-      </div>
     </div>
+    </>
   );
 }
 export default React.memo(ForumPage);
