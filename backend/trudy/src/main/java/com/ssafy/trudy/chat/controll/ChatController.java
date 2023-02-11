@@ -24,13 +24,8 @@ public class ChatController {
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
      */
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message, @AuthenticationPrincipal PrincipalDetails principal) {
-        // 로그인한 회원의 이름을 찾는다 from Principal
-        String nickname = principal.getUsername();
-        // 로그인 회원 정보로 대화명을 설정
-        message.setMessage(nickname);
-        // 채팅방 인원수 세팅
-        message.setUserCount(chatService.getUserCount(message.getRoomId().getId()));
+    public void message(ChatMessage message) {
+
         // Websocket에 발행된 메시지를 mySQL로 발행(publish)
         chatService.sendChatMessage(message);
     }
