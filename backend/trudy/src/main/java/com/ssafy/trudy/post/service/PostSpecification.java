@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface PostSpecification {
 
-    public static Specification<Post> getSearchByPageable(String title, String content, List<Long> sigunguList, List<CategoryName> categoryList){
+    public static Specification<Post> getSearchByPageable(String title, String content, List<Long> sigunguList, List<String> categoryList){
         return (root, query, criteriaBuilder) -> {
             Predicate predicate = criteriaBuilder.conjunction();
 
