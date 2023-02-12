@@ -50,6 +50,7 @@ function TrudyMap() {
   const myInfoUrl = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
 
+  // 로그인 정보받아서 -> 북마크 불러와서 -> id 리스트 만들어주기
   useEffect(() => {
     (async () => {
       if (islogged.isLoggedIn) {
@@ -67,7 +68,12 @@ function TrudyMap() {
       if (memberId) {
         try {
           const bookmarkResponse = await axios.get(
-            `api/bookmark?memberId=${memberId}`
+            `api/bookmark?memberId=${memberId}`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
           );
           setbookmarkList(bookmarkResponse.data);
         } catch (error) {
@@ -85,6 +91,7 @@ function TrudyMap() {
     setbookmarkedIds(tempbookMark);
   }, [bookmarkList]);
 
+  console.log(bookmarkList, "메인페이지임");
   // 길찾기
   // const [directions, setDirections] = useState(null);
   // const [origin, setOrigin] = useState({ lat: 37.4602, lng: 126.4407 });
@@ -98,14 +105,7 @@ function TrudyMap() {
     setZoom(20);
     setMarker({ lat, lng });
   };
-  console.log(
-    bookmarkedIds,
-    "메인에서 보내는아이딛ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ"
-  );
-  console.log(
-    bookmarkList,
-    "메인에서 보내는리스틑ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌ"
-  );
+
   // map 생성x
   const onLoad = React.useCallback(
     function callback(map: any) {
