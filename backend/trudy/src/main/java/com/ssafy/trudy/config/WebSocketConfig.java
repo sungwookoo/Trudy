@@ -20,8 +20,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // Subscriber들에게 메시지를 전달하도록 한다.
     @Override
     public void configureMessageBroker(final MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic/chat");
-        registry.setApplicationDestinationPrefixes("/app");
+//        registry.enableSimpleBroker("/topic/chat");
+//        registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/chat/send");
+        registry.setApplicationDestinationPrefixes("/api");
         // setApplicationDestinationPrefixs: 클라이언트가 서버로 메시지를 발송할 수 있는
         // 경로의 prefix를 지정한다.
     }
