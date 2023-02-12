@@ -21,13 +21,13 @@ return (
     {forumImageData.length != 0 ? (
     <img className='forum-thumbnail-image'
     src={forumImageData[0].url}
-    alt="forum thumbnail"
+    alt="forumthumbnail"
     />
     ) : (
     <img
     className='forum-thumbnail-image'
     src='http://img.seoul.co.kr//img/upload/2021/11/16/SSI_20211116180452.jpg'
-    alt="forum thumbnail"
+    alt="forumthumbnail"
     />
     )}
     </div>
