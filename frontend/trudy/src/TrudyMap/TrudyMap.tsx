@@ -60,7 +60,6 @@ function TrudyMap() {
             },
           });
           setMemberId(myInfoResponse.data.id);
-          console.log(myInfoResponse.data);
         } catch (error) {
           console.error(error);
         }
@@ -79,12 +78,11 @@ function TrudyMap() {
   }, [memberId]);
 
   useEffect(() => {
+    const tempbookMark: any = [];
     if (bookmarkList) {
-      setbookmarkedIds((prevIds) => [
-        ...prevIds,
-        ...bookmarkList.map((bookmark: any) => bookmark.id),
-      ]);
+      bookmarkList.map((bookmark: any) => tempbookMark.push(bookmark.id));
     }
+    setbookmarkedIds(tempbookMark);
   }, [bookmarkList]);
 
   // 길찾기
@@ -100,8 +98,15 @@ function TrudyMap() {
     setZoom(20);
     setMarker({ lat, lng });
   };
-  console.log(bookmarkedIds);
-  // map 생성
+  console.log(
+    bookmarkedIds,
+    "메인에서 보내는아이딛ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ"
+  );
+  console.log(
+    bookmarkList,
+    "메인에서 보내는리스틑ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌ"
+  );
+  // map 생성x
   const onLoad = React.useCallback(
     function callback(map: any) {
       const bounds = new window.google.maps.LatLngBounds(center);
@@ -153,6 +158,9 @@ function TrudyMap() {
                   <Bookmark
                     bookmarkedIds={bookmarkedIds}
                     bookmarkList={bookmarkList}
+                    setbookmarkedIds={setbookmarkedIds}
+                    memberId={memberId}
+                    setbookmarkList={setbookmarkList}
                   ></Bookmark>
                 ) : (
                   // ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -161,13 +169,18 @@ function TrudyMap() {
                     onPlaceClick={updateCenter}
                     bookmarkedIds={bookmarkedIds}
                     setbookmarkedIds={setbookmarkedIds}
+                    memberId={memberId}
+                    setbookmarkList={setbookmarkList}
                   />
                 )}
               </>
             ) : (
               // --------------------------------------------------------------------------
               // 로그인 안되어있는 경우
-              <Place onPlaceClick={updateCenter} />
+              <Place
+                bookmarkedIds={bookmarkedIds}
+                setbookmarkedIds={setbookmarkedIds}
+              />
             )}
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -224,16 +237,31 @@ function TrudyMap() {
                     <Bookmark
                       bookmarkedIds={bookmarkedIds}
                       bookmarkList={bookmarkList}
+                      setbookmarkedIds={setbookmarkedIds}
+                      memberId={memberId}
+                      setbookmarkList={setbookmarkList}
                     ></Bookmark>
                   ) : (
                     <div className="flex flex-column">
-                      <Place setbookmarkedIds={setbookmarkedIds} />
+                      <Place
+                        onPlaceClick={updateCenter}
+                        bookmarkedIds={bookmarkedIds}
+                        setbookmarkedIds={setbookmarkedIds}
+                        memberId={memberId}
+                        setbookmarkList={setbookmarkList}
+                      />
                     </div>
                   )}
                 </>
               ) : (
                 <div className="flex flex-column">
-                  <Place setbookmarkedIds={setbookmarkedIds} />
+                  <Place
+                    onPlaceClick={updateCenter}
+                    bookmarkedIds={bookmarkedIds}
+                    setbookmarkedIds={setbookmarkedIds}
+                    memberId={memberId}
+                    setbookmarkList={setbookmarkList}
+                  />
                 </div>
               )}
             </div>

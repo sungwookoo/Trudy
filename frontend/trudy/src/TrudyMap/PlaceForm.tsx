@@ -19,6 +19,8 @@ type PlaceFormProps = {
   bookmarkedIds?: number[];
   onClick?: (mapx: string | number, mapy: string | number) => void;
   setbookmarkedIds: React.Dispatch<React.SetStateAction<any>>;
+  setbookmarkList: React.Dispatch<React.SetStateAction<any>>;
+  memberId?: number;
 };
 
 function PlaceForm({
@@ -26,15 +28,22 @@ function PlaceForm({
   onClick = () => {},
   bookmarkedIds = [],
   setbookmarkedIds,
+  setbookmarkList,
+  memberId,
 }: PlaceFormProps) {
+  // state 정의 ----------------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
   const token = "bearer " + localStorage.getItem("token");
+
+  // 지도 센터 옮기기
   const handleClick = useCallback(() => {
     if (place.mapy !== undefined && place.mapx !== undefined && onClick) {
       onClick(place.mapy, place.mapx);
     }
   }, [onClick, place.mapy, place.mapx]);
 
+  // 북마크 클릭
+  // 북마크 되있으면 update시키고 delete 요청
   const handleBookmarkClick = async () => {
     setIsLoading(true);
     const isBookmarked = place.id ? bookmarkedIds?.includes(place.id) : false;
@@ -48,23 +57,40 @@ function PlaceForm({
           headers: {
             Authorization: token,
           },
-          params: { memberId: 2, placeId: place.id },
+          params: { memberId: memberId, placeId: place.id },
         });
       } catch (error) {
         console.error(error);
       }
+      try {
+        const nowBookMark = await axios.get(
+          `api/bookmark?memberId=${memberId}`
+        );
+        setbookmarkList(nowBookMark.data);
+      } catch (error) {
+        console.error(error);
+      }
+      // 안되어있으면 추가하고 post 요청
     } else {
       try {
+        const data = new FormData();
+        data.append("memberId", JSON.stringify(memberId));
+        data.append("placeId", JSON.stringify(place.id));
         setbookmarkedIds([...bookmarkedIds, place.id]);
-        await axios.post(`api/bookmark/post/`, {
+        await axios.post(`api/bookmark/post`, data, {
           headers: {
             Authorization: token,
-          },
-          data: {
-            memberId: 2,
-            placeId: place.id,
+            "Content-Type": "multipart/form-data",
           },
         });
+      } catch (error) {
+        console.error(error);
+      }
+      try {
+        const nowBookMark = await axios.get(
+          `api/bookmark?memberId=${memberId}`
+        );
+        setbookmarkList(nowBookMark.data);
       } catch (error) {
         console.error(error);
       }
@@ -83,19 +109,21 @@ function PlaceForm({
       <div className="px-6 py-4">
         <h3 className="font-bold text-xl mb-2">{place.title}</h3>
       </div>
-      <img
-        src={
-          isBookmarked
-            ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png"
-            : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"
-        }
-        alt="bookmark"
-        onClick={handleBookmarkClick}
-        style={{ cursor: "pointer" }}
-      />
+      {memberId && (
+        <img
+          src={
+            isBookmarked
+              ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png"
+              : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"
+          }
+          alt="bookmark"
+          onClick={handleBookmarkClick}
+          style={{ cursor: "pointer" }}
+        />
+      )}
       {isLoading && <div>Loading...</div>}
     </div>
   );
 }
 
-export default PlaceForm;
+export default React.memo(PlaceForm);

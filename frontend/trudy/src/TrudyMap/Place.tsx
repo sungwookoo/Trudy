@@ -28,12 +28,14 @@ function Place({
   onPlaceClick = () => {},
   bookmarkedIds,
   setbookmarkedIds,
+  memberId,
+  setbookmarkList,
 }: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   // 관광 정보 query
   const [limit, setLimit] = useState<any>(10);
-  const [offset, setOffset] = useState<any>(1);
+  const [offset, setOffset] = useState<any>(0);
   const [areaSigun, setareaSigun] = useState<any>([]);
   const [keyword, setkeyword] = useState<any>("");
   // 카테고리
@@ -87,6 +89,7 @@ function Place({
     // 필터 값 바뀌면 limit 값 변경해주기
   }, [limit, offset, areaSigun, contentTypeId, keyword]);
 
+  console.log(places);
   return (
     <>
       {/* 지역 버튼 */}
@@ -136,6 +139,8 @@ function Place({
                 onClick={() => handlePlaceClick(data)}
                 bookmarkedIds={bookmarkedIds}
                 setbookmarkedIds={setbookmarkedIds}
+                memberId={memberId}
+                setbookmarkList={setbookmarkList}
               />
             );
           })
