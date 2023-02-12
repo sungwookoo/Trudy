@@ -21,6 +21,7 @@ interface getUser {
   title?: string;
   introduction?: string;
   introduceId?: any | null;
+  isLocal?: number;
 }
 
 const getFollow = {
@@ -101,7 +102,7 @@ const getMyPosts = () => {
   //     });
   // }, []);
   // console.log(userInfo)
-  console.log(profile.id, 444);
+  console.log(profile, 444);
   return (
     // 프로필 컨테이너 파란 영역
     <div className="profile-container">
@@ -109,8 +110,11 @@ const getMyPosts = () => {
       <div className="picture-name-container">
         <div className="picture-name-row">
           <img className="profile-picture" src={profile.image}></img>
-          {/* <div className=''>{profile.id}</div> */}
+          
+          <div>
           <h1 className="myprofile-username">{profile.name}</h1>
+          {profile.isLocal !== 1 ? <div className='ml-1'>Local</div> : <div className='ml-1'>Foreigner</div>}
+          </div>
         </div>
         {/* 프로필 수정 내 프로필 공개 토글 */}
         <div className="edit-toggle-follow-container">
@@ -149,21 +153,21 @@ const getMyPosts = () => {
             </div>
           </div>
         </div>
-        <div className="myprofile-intro mb-5">{profile.introduceId ? profile.introduceId.self : ''}</div>
-      </div>
 
-      <div className="content-box grid grid-cols-2 place-content-center">
+        <div className="myprofile-intro mb-3">{profile.introduceId ? profile.introduceId.self : ''}</div>
+      </div>
+      <div className="content-box grid grid-cols-2 place-content-center mb-5">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
         <div
-          className="mx-16 flex place-content-center text-4xl"
+          className="mx-16 flex place-content-center font-bold text-4xl"
           onClick={() => setViewPost(!viewPost)}
         >
           About
         </div>
 
         <div
-          className="mx-16 flex place-content-center text-4xl"
+          className="mx-16 flex place-content-center font-bold text-4xl"
           onClick={() => setViewPost(!viewPost)}
         >
           Posts
@@ -171,23 +175,29 @@ const getMyPosts = () => {
       </div>
       {/* </div> */}
       <div className="about-me grid grid-cols-1">
+        <hr className="about-me-hr"/>
         {!viewPost ? (
-          <div className="grid grid-rows-4 grid-flow-row gap-24 mt-3 w-96 about-box">
-            <div className="">
-              <div className="text-xl mt-5">
-                I will show you : {profile.introduceId ? profile.introduceId.plan : ''}
-              </div>
+          <div className="flex flex-col about-box mt-5">
+            <div className="text-4xl font-semibold mt-10">
+              I will show you
             </div>
-            <div className="">
-              <div className="text-xl">
-                About me : {profile.introduceId ? profile.introduceId.title : ''}
-              </div>
+            <div className="capitalize text-xl mt-5">
+              {profile.introduceId ? profile.introduceId.plan : ''}
             </div>
-            <div className="">
-              <div className="text-xl">
-                Language : {profile.introduceId ? profile.introduceId.language : ''}
-              </div>
+            <div className="text-4xl font-semibold mt-10">
+              About me 
             </div>
+            <div className="capitalize text-2xl mt-5">
+              {profile.introduceId ? profile.introduceId.title : ''}
+            </div>
+            
+            <div className="text-4xl font-semibold mt-10">
+              Language 
+            </div>
+            <div className="capitalize text-2xl mt-5">
+              {profile.introduceId ? profile.introduceId.language : ''}
+            </div>
+            
           </div>
         ) : (
           <div>

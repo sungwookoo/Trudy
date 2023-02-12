@@ -36,7 +36,7 @@ function Planner() {
   // 멤버 Id로 planner 정보 받아오기
   useEffect(() => {
     async function GetPlanner(){
-      const data:any = await authCtx.planner(memberId)
+      const data:any = await authCtx.planner()
       setPlanner(data.data)
     }
     GetPlanner()

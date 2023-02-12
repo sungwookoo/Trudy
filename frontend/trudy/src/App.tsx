@@ -52,7 +52,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="/:id" element={<ForumDetail />} />
+        <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} />
         <Route path="/profile/:id" element={<UserProfile />} />
