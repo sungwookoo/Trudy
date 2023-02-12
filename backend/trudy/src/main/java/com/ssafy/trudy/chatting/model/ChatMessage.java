@@ -39,13 +39,21 @@ public class ChatMessage{
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member memberId;      // 메시지 보낸 사람
+    private Member senderId;      // 메시지 보낸 사람
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member receiverId;
+
+    public String getReceiverId(ChatMessage chatMessage) {
+        return chatMessage.getReceiverId().getId().toString();
+    }
     @Builder
-    public ChatMessage(MessageType type, Member memberId, String message, ChatRoom roomId){
+    public ChatMessage(MessageType type, Member senderId, Member receiverId, String message, ChatRoom roomId){
         this.type = type;
         this.roomId = roomId;
-        this.memberId = memberId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.message = message;
     }
 
