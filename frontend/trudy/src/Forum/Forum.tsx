@@ -68,8 +68,10 @@ function ForumPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const resData: any = await axios.get(API_URL + `?area=${selectedSigungu}&contentTypeId=${contentTypeId}&word=${word}`);
-        const resData: any = await axios.get(API_URL);
+        const resData: any = await axios.get(
+          API_URL +
+            `?area=${selectedSigungu}&contentTypeId=${contentTypeId}&word=${word}`
+        );
         setForumResponse(resData.data.content);
       } catch (error) {
         console.error(error);
@@ -77,6 +79,7 @@ function ForumPage() {
     };
     fetchData();
   }, [contentTypeId, word]);
+
   // 로딩 시 Spinner 띄움
   // {
   //   !forumloading && (
@@ -99,57 +102,82 @@ function ForumPage() {
   console.log(selectedSigungu);
   return (
     <>
-    <div className="forum-page flex flex-row">
-      <div className="filter-bar">
-        <div className="flex">
-          <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
-            Area Select
-          </button>
-          {!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}
-          {/* 세부지역선택 */}
-          {!isCollapsed &&
-            selectedAreaCode &&
-            sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
-              <div key={i} className="flex items-center mb-2">
-                <input
-                  className="mr-2"
-                  type="checkbox"
-                  id={`sigungu-${sigunguInfo.id}`}
-                  onChange={() => {
-                    if (selectedSigungu.includes(sigunguInfo.id)) {
-                      const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
-                      setSelectedSigungu(filteredSigungu);
-                    } else {
-                      setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);
-                    }
-                  }}
-                />
-                <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
-              </div>
-            ))}
-        </div>
+      <div className="forum-page flex flex-row">
+        <div className="filter-bar">
+          <div className="flex">
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className={`p-2 m-2 rounded-lg  ${
+                !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
+              }`}
+            >
+              Area Select
+            </button>
+            {!isCollapsed && (
+              <AreaSelect
+                key={0}
+                areaCode={areaList}
+                onClick={handleAreaClick}
+              />
+            )}
+            {/* 세부지역선택 */}
+            <div className="flex flex-wrap">
+              {!isCollapsed &&
+                selectedAreaCode &&
+                sigunguList[selectedAreaCode].map(
+                  (sigunguInfo: any, i: number) => (
+                    <div key={i} className="flex items-center mb-2">
+                      <input
+                        className="mr-2"
+                        type="checkbox"
+                        id={`sigungu-${sigunguInfo.id}`}
+                        onChange={() => {
+                          if (selectedSigungu.includes(sigunguInfo.id)) {
+                            const filteredSigungu = selectedSigungu.filter(
+                              (id: number) => id !== sigunguInfo.id
+                            );
+                            setSelectedSigungu(filteredSigungu);
+                          } else {
+                            setSelectedSigungu([
+                              ...selectedSigungu,
+                              sigunguInfo.id,
+                            ]);
+                          }
+                        }}
+                      />
+                      <label htmlFor={`sigungu-${sigunguInfo.id}`}>
+                        {sigunguInfo.name}
+                      </label>
+                    </div>
+                  )
+                )}
+            </div>
+          </div>
 
-        <div className="cat-selectors">
-        <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
-        </div>
-        
-          <button className=
-          "border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-4 rounded-full"
-          onClick={navigateToCreateArticle}>
+          <div className="cat-selectors">
+            <CategoryButtons
+              onClick={handleCategoryClick}
+              selectedCategories={contentTypeId}
+            />
+          </div>
+
+          <button
+            className="border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-4 rounded-full"
+            onClick={navigateToCreateArticle}
+          >
             Post Article
           </button>
-        
+        </div>
       </div>
-    </div>
-    
-    <div className="forum-content grid grid-cols-3 px-52 ">
+
+      <div className="forum-content grid grid-cols-3 px-52 ">
         {forumResponse.map((post, i) => (
           <ForumItem key={i} post={post} onClick={() => handleClick(post.id)} />
         ))}
         {/* {selectedId && (
             <ForumDetail setForumItem={forumItem} />
           )} */}
-    </div>
+      </div>
     </>
   );
 }

@@ -17,6 +17,8 @@ function Bookmark({
   memberId,
   setbookmarkList,
 }: Props) {
+  const token = "bearer " + localStorage.getItem("token");
+
   // 북마크 해제하기
   const [isLoading, setIsLoading] = useState(false);
   const handleBookmarkClick = async (placeid: any) => {
@@ -33,14 +35,18 @@ function Bookmark({
       console.error(error);
     }
     try {
-      const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`);
+      const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setbookmarkList(nowBookMark.data);
     } catch (error) {
       console.error(error);
     }
-    console.log(memberId);
-    console.log(bookmarkList, "여기는 북마크킄크크크크크크크크크ㅡ크크");
+    setIsLoading(false);
   };
+  console.log(bookmarkList, "내 북마크페이지임");
   return (
     <>
       {bookmarkList.map((bookmark: any, idx: number) => {
@@ -68,6 +74,7 @@ function Bookmark({
                     src={
                       "https://cdn-icons-png.flaticon.com/128/4101/4101575.png"
                     }
+                    className="w-32"
                     alt="bookmark"
                     onClick={() => {
                       handleBookmarkClick(bookmark.id);
@@ -88,4 +95,4 @@ function Bookmark({
   );
 }
 
-export default React.memo(Bookmark);
+export default Bookmark;

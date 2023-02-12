@@ -16,6 +16,7 @@ function Square() {
   const [nameSearch, setNameSearch] = useState<string>();
   const [searchChange, setSearchChange] = useState<string>();
   const [squareData, setSquareData] = useState<[]>([]);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const navigate = useNavigate();
   const navigateToUserProfile = (id: number) => {
@@ -24,15 +25,17 @@ function Square() {
   // 지역필터
   const [areaCode, setAreaCode] = useState<number>(0);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
-  
+
   // 지역 filter
-  const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
   const handleAreaClick = (id: number) => {
-    setSelectedAreaCode(id);
+    setAreaCode(id);
   };
-  
+
   const authCtx = useContext(AuthContext);
-  console.log('로그인 정보 참고하셈 이런 정보 들어있음 exp는 토큰 만료시간인데 안쓸거 같아서 안넣어놔서 못씀', authCtx.loggedInfo)
+  console.log(
+    "로그인 정보 참고하셈 이런 정보 들어있음 exp는 토큰 만료시간인데 안쓸거 같아서 안넣어놔서 못씀",
+    authCtx.loggedInfo
+  );
 
   const imgURL =
     "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
@@ -51,10 +54,11 @@ function Square() {
       gender: gender,
       name: nameSearch,
     };
-    
+
     async function SquareGet() {
       const res: any = await authCtx.getUser(params);
       setSquareData(res.data.content);
+      console.log(res.data.content, 222222222222222222222);
     }
     SquareGet();
   }, [area, isLocal, gender, nameSearch]);
@@ -63,6 +67,14 @@ function Square() {
     <div className="">
       {/* 검색창 */}
       <div className="border-2 flex flex-row justify-center justify-evenly px-12 py-1">
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className={`p-2 m-2 rounded-lg  ${
+            !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
+          }`}
+        >
+          Area Select
+        </button>
         {/* isLocal (UserType) 드랍박스 */}
         <div className="flex flex-row justify-center mx-24  w-1/4  ml-96">
           <select
@@ -110,35 +122,50 @@ function Square() {
               setNameSearch(searchChange);
             }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              ></path>
             </svg>
           </button>
         </div>
       </div>
-      <>
-        <div className="bg-yellow-500 flex flex-row">
-          <AreaSelect areaCode={areaList} onClick={handleAreaClick} />
-          {selectedAreaCode && (
-            <div className="flex flex-row flex-wrap mx-2">
-              {sigunguList[selectedAreaCode].map((sigunguInfo: any, i: number) => (
-                <div key={i} className="flex items-center h-1/5 my-1">
+      {!isCollapsed && (
+        <>
+          <div className="border border-gray-500">
+            <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
+          </div>
+          <br />
+          {areaCode && (
+            <div className="flex flex-wrap">
+              {sigunguList[areaCode].map((sigunguInfo: any, i: number) => (
+                <div key={i} className="flex items-center mb-2">
                   <input
-                    className="ml-3 mr-1"
+                    className="mr-2"
                     name="sigungu-select"
                     type="radio"
                     id={`sigungu-${sigunguInfo.id}`}
-                    checked={sigunguInfo.id === sigunguCode}
-                    onClick={() => setSigunguCode(sigunguInfo.Id)}
+                    checked={sigunguCode === sigunguInfo.id}
+                    onChange={() => setSigunguCode(sigunguInfo.id)}
                   />
-                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
+                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>
+                    {sigunguInfo.name}
+                  </label>
                 </div>
               ))}
             </div>
           )}
-        </div>
-      </>
-
+        </>
+      )}
       <br />
       <br />
       {/* ------------------------------------------------------------------------------------------- */}
