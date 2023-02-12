@@ -41,7 +41,7 @@ public class ChatRoomController {
 
 
     // 2. 채팅리스트에서 특정 채팅창을 눌렀을 때, 디테일 정보 가져오기
-    @GetMapping("/detail")
+    @GetMapping("/chat/room/detail")
     public ChatRoomDetailResponse getChatRoomDetail(@RequestParam Long chatRoomId,
                                                     @RequestParam Long loginMemberId,
                                                     @RequestParam Long guestId) {
