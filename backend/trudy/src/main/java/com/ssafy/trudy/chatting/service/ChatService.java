@@ -33,38 +33,34 @@ public class ChatService {
     private final MemberRepository memberRepository;
 
     //****************************[CREATE]*******************************//
-    /**
-     * 채팅방 생성 + 중개테이블에도 정보를 저장
-     */
+    // /chat/room + 포스트 요청을 통한 채팅방이 생성되었다
     public void createChatRoom(Member roomMaker, Member guest){
-        // 1. 채팅방 객체 생성
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setCreatedAt(LocalDateTime.now());
-        // 2. 채팅방을 디비에 넣기
-        chatRoomRepository.save(chatRoom);
-        // 3. 채팅방 - 멤버 중개테이블 생성(2개 만들어서 집어넣어야함)
-        ChatRoomMember chatRoomMember_1 = new ChatRoomMember();
-        chatRoomMember_1.setMemberId(roomMaker);
-        chatRoomMember_1.setChatRoomId(chatRoom);
-        ChatRoomMember chatRoomMember_2 = new ChatRoomMember();
-        chatRoomMember_2.setMemberId(guest);
-        chatRoomMember_2.setChatRoomId(chatRoom);
-        // 4. 채팅방 - 멤버 중개테이블 저장
-        chatRoomMemberRepository.save(chatRoomMember_1);
-        chatRoomMemberRepository.save(chatRoomMember_2);
+        // 채팅방이 없는 경우 채팅방을 만들기
+        try {
+            // 1. 채팅방 객체 생성
+            ChatRoom chatRoom = new ChatRoom();
+            chatRoom.setCreatedAt(LocalDateTime.now());
+            // 2. 채팅방을 디비에 넣기
+            chatRoomRepository.save(chatRoom);
+            // 3. 채팅방 - 멤버 중개테이블 생성(2개 만들어서 집어넣어야함)
+            ChatRoomMember chatRoomMember_1 = new ChatRoomMember();
+            chatRoomMember_1.setMemberId(roomMaker);
+            chatRoomMember_1.setChatRoomId(chatRoom);
+            ChatRoomMember chatRoomMember_2 = new ChatRoomMember();
+            chatRoomMember_2.setMemberId(guest);
+            chatRoomMember_2.setChatRoomId(chatRoom);
+            // 4. 채팅방 - 멤버 중개테이블 저장
+            chatRoomMemberRepository.save(chatRoomMember_1);
+            chatRoomMemberRepository.save(chatRoomMember_2);
+        // 채팅방이 있는 경우 -> 이미 있는 채팅방을 return.
+        } catch(IllegalStateException e) {
+            return;
+        }
     }
 
-    // app/chat/send를 통해서 메시지를 발송하면
+    // api/chat/send를 통해서 메시지를 발송하면
     // sendChatMessage로 메세지가 넘어와 저장하게 된다.
     public void sendChatMessage(ChatMessage chatMessage) {
-        // 채팅 쓴 사람의 이름을 찾기
-        Member member = chatMessage.getMemberId();
-        String memberName = member.getName();
-        if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)){
-            chatMessage.setMessage(memberName + "님이 방에 입장했습니다.");
-        } else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
-            chatMessage.setMessage(memberName + "님이 방에서 나갔습니다.");
-        }
         chatMessageRepository.save(chatMessage);
     }
 
@@ -74,7 +70,7 @@ public class ChatService {
     }
 
     //****************************[READ]*********************************//
-    // 로그인한 채팅방 목록
+    // 로그인한 유저의 채팅방 목록
     public List<ChatRoomResponse> findChatRoomList(Long memberId) {
         // 1. 멤버 id 값으로 부터 멤버 객체를 찾기
         Member loginMember = memberRepository.findById(memberId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
@@ -85,8 +81,7 @@ public class ChatService {
             chatRoomMemberListAnother.addAll(chatRoomMemberRepository.findChatRoomMembersByChatRoomId(chatRoomMember.getChatRoomId()));
         }
         // 3. 채팅방 정보를 넣기
-        // 로그인한 사람의 memberId와 같은 건 builder에 넣지 않는다. -> response 다시
-
+        // 메시지
         return chatRoomMemberListAnother.stream().filter(chatRoomMember -> !Objects.equals(chatRoomMember.getMemberId().getId(), memberId))
                 .sorted(Comparator.comparing(chatRoomMember -> getLastMessage(chatRoomMember.getChatRoomId()).getCreatedAt(), Comparator.reverseOrder()))
                 .map(chatRoomMember -> ChatRoomResponse.builder()

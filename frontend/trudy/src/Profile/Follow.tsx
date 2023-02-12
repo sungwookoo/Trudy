@@ -10,26 +10,8 @@ function FollowButton({ userID, loginuserId } :any ) {
   const [isFollowing, setisFollowing] = useState(false);
   const [loginuser, setLoginUser] = useState<any>([]);
   
-  
+  const token = "bearer " + localStorage.getItem("token");
 
-  // useEffect(() => {
-  //   const getLoggedInUser = async () => {
-  //     const myres = await axios.get("api/member/me", {
-  //       headers: {
-  //         Authorization: "bearer " + localStorage.getItem("token"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //       setLoginUser(res.data);
-
-  //       console.log(res.data);
-  //       fetchFollowedUsers();
-  //     })
-  //     .catch((err: any) => console.error(err));
-  //   };
-  //   getLoggedInUser();
-    
-  // }, []);
     
     const fetchFollowedUsers = async () => {
       const response = await axios.get(`api/follow/${loginuserId}`, {
@@ -44,21 +26,36 @@ function FollowButton({ userID, loginuserId } :any ) {
 
 
   
-  // const handleClick = () => {
-  //   setFollowing(!following);
-  // };
+  const handleClick = () => {
+    if (!isFollowing) {
+      axios.post(`/api/member/follow/${userID}`, {
+        headers: {
+          Authorization: token,
+      },
+    });
+      console.log("팔로우성공");
+    } else { 
+      axios.delete(`/api/member/follow/${userID}`, {
+        headers: {
+          Authorization: token,
+      },
+    });
+      console.log("언팔로우성공");
+    }
+    setisFollowing(!isFollowing);
+  };
 
   // return <button onClick={handleClick}>{following ? "Unfollow" : "Follow"}</button>;
 
 return(
   <div>
     {isFollowing? (
-      <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5">
+      <button className="border-2 border border-black hover:bg-green-500 text-black font-bold py-2 px-4 rounded-full mr-5" onClick={handleClick}>
       Unfollow
       </button>
       ) : (
       <button
-      className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5">
+      className="border-2 border border-black hover:bg-green-500 text-black font-bold py-2 px-4 rounded-full mr-5" onClick={handleClick}>
       Follow
       </button>
     )}

@@ -3,18 +3,18 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  margin-top: 30px;
-  /* background-color: rgb(165, 243, 165); */
+  padding-top: 30px;
+  background-color: rgb(237, 248, 239);
 }
 
 .profile-picture {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border-radius: 70%;
   overflow: hidden;
   margin-right: 50px;
   /* margin-top: 20px; */
-  border-color: lightgrey;
+  border-color: black;
   border-width: 3px;
   /* background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNp4mzcs1BH8IuUc_uUycTYcidZuYzx4O9ieIQGBArb795K5HUP90u6seUotwG8MwCxAg&usqp=CAU) ; */
   background-position: center;
@@ -24,6 +24,7 @@
   font-size: 50px;
   font-weight: bolder;
   margin-right: 70px;
+  text-transform: capitalize;
   /* margin-left: 100px; */
 }
 
@@ -77,8 +78,8 @@ input:checked ~ .dot {
 }
 
 .myprofile-intro {
-  border-width: 2px;
-  border-color: black;
+  /* border-width: 2px;
+  border-color: black; */
   width: 800px;
 }
 
@@ -88,8 +89,15 @@ input:checked ~ .dot {
 }
 
 .about-box {
-  width: 700px;
-  border-width: 2px;
+  width: 800px;
+  height: 450px;
+  align-items: center;
+  /* border-width: 2px;
   border-color: black;
-  border-radius: 10px;
+  border-radius: 10px; */
+}
+
+.about-me-hr{
+  background-color: black;
+  height: 2px;
 }
