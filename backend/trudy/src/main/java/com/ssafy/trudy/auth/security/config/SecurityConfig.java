@@ -1,9 +1,12 @@
 package com.ssafy.trudy.auth.security.config;
 
+import com.ssafy.trudy.auth.oauth2.CustomOAuth2UserService;
 import com.ssafy.trudy.auth.security.entrypoint.JwtAuthenticationEntryPoint;
 import com.ssafy.trudy.auth.security.fillter.JwtFilter;
 import com.ssafy.trudy.auth.security.handler.JwtAccessDeniedHandler;
 import com.ssafy.trudy.auth.security.provider.TokenProvider;
+import com.ssafy.trudy.member.model.MemberRole;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private TokenProvider tokenProvider;
@@ -26,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	@Autowired
 	private JwtAccessDeniedHandler jwtAccessDeniedHandler;
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -57,10 +62,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/signup", "/reissuance", "/h2/**", "/swagger-ui/**", "/swagger-resources/**","/","/**").permitAll()
+                .antMatchers("/login", "/signup", "/reissuance", "/swagger-ui/**", "/swagger-resources/**","/","/**").permitAll()
+//				.antMatchers("/api/**").hasRole(MemberRole.MEMBER.name())
                 .anyRequest().authenticated()
-
 				.and()
-				.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);;
+				.logout().logoutSuccessUrl("/");
+//				.and()
+//				.oauth2Login()
+//				.userInfoEndpoint()
+//				.userService(customOAuth2UserService)
+//				.and()
+//				.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+				.oauth2Login()
+				.userInfoEndpoint()
+				.userService(customOAuth2UserService);
 	}
 }

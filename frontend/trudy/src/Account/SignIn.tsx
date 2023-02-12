@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
+import GoogleLoginButton from './GoogleLoginButton';
 import './Signin.css';
 
 // 로그인 페이지
@@ -140,6 +141,12 @@ function SignIn() {
             </button>
           </div>
         </form>
+        
+          {/* 구글 로그인 버튼 */}
+          <div>
+          {/* your existing code here... */}
+            <GoogleLoginButton />
+          </div>
       </div>
     </div>
     <div className="ocean">

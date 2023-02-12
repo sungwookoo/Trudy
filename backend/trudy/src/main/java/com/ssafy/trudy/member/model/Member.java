@@ -104,4 +104,10 @@ public class Member {
     public void setRefreshTokens(List<RefreshToken> refreshTokens) {
         this.refreshTokens = refreshTokens;
     }
+
+    public Member update(String name, String picture) {
+        this.name = name;
+        this.image = picture;
+        return this;
+    }
 }
