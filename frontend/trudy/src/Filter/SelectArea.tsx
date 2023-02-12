@@ -12,26 +12,27 @@ type AreaCodeType = {
 
 const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
   return (
-    <div>
-      <div className="justify-center h-screenflex flex-wrap">
-        {areaCode.map((areaCode, i) => (
-          <div>
-            <label key={i} htmlFor={`classification-${areaCode.id}`}>
-              <input
-                type="radio"
-                name="areaCode"
-                id={`classification-${areaCode.id}`}
-                onClick={() => {
-                  onClick(areaCode.id, areaCode.name);
-                }}
-              />
-              {areaCode.name}
-            </label>
-          </div>
-        ))}
-      </div>
-      {/* {selectedAreaCode && } */}
-      {/* {selectedSigungu.length > 0 && <Place selectedSigungu={selectedSigungu} />} */}
+    <div className="flex flex-wrap">
+      {areaCode.map((areaCode, i) => (
+        <div className="p-2">
+          <label
+            key={i}
+            htmlFor={`classification-${areaCode.id}`}
+            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+          >
+            <input
+              type="radio"
+              name="areaCode"
+              id={`classification-${areaCode.id}`}
+              className="mr-2"
+              onClick={() => {
+                onClick(areaCode.id, areaCode.name);
+              }}
+            />
+            {areaCode.name}
+          </label>
+        </div>
+      ))}
     </div>
   );
 };

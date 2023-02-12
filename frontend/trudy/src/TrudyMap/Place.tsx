@@ -155,4 +155,4 @@ function Place({
   );
 }
 
-export default Place;
+export default React.memo(Place);

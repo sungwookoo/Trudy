@@ -64,7 +64,12 @@ function PlaceForm({
       }
       try {
         const nowBookMark = await axios.get(
-          `api/bookmark?memberId=${memberId}`
+          `api/bookmark?memberId=${memberId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         setbookmarkList(nowBookMark.data);
       } catch (error) {
@@ -76,7 +81,10 @@ function PlaceForm({
         const data = new FormData();
         data.append("memberId", JSON.stringify(memberId));
         data.append("placeId", JSON.stringify(place.id));
-        setbookmarkedIds([...bookmarkedIds, place.id]);
+        {
+          !bookmarkedIds.includes(place.id) &&
+            setbookmarkedIds([...bookmarkedIds, place.id]);
+        }
         await axios.post(`api/bookmark/post`, data, {
           headers: {
             Authorization: token,
@@ -88,7 +96,12 @@ function PlaceForm({
       }
       try {
         const nowBookMark = await axios.get(
-          `api/bookmark?memberId=${memberId}`
+          `api/bookmark?memberId=${memberId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         setbookmarkList(nowBookMark.data);
       } catch (error) {
@@ -119,6 +132,7 @@ function PlaceForm({
           alt="bookmark"
           onClick={handleBookmarkClick}
           style={{ cursor: "pointer" }}
+          className="w-32"
         />
       )}
       {isLoading && <div>Loading...</div>}
@@ -126,4 +140,4 @@ function PlaceForm({
   );
 }
 
-export default React.memo(PlaceForm);
+export default PlaceForm;
