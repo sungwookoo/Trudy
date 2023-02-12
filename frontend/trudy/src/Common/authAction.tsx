@@ -89,7 +89,6 @@ export const signUpActionHandler = (
     sigunguCode,
   };
   const response = POST(url, data, {});
-  console.log(response, 333333333333333333333);
   return response;
 };
 
@@ -154,7 +153,7 @@ export const getPlanner = (memberId: number) => {
   return response;
 };
 
-
+// 유저의 plan을 POST 방식으로 생성
 export const createPlan = (
   memberId: number,
   sequence: number
@@ -163,3 +162,25 @@ export const createPlan = (
   const data = {memberId: memberId, sequence: sequence}
   const response = POST(url, data, {} )
 }
+
+// 유저의 day를 POST 방식으로 생성
+export const createDay = (
+  plannerId: number,
+  day: string,
+  memo: string
+) => {
+  const url = "/api/planner/day/post";
+  const params = {plannerId: plannerId, day: day, memo: memo}
+  const response = POST(url, {} , { params } )
+}
+
+
+// 유저의 day를 DELETE 방식으로 삭제
+export const deleteDay = (
+  dayId: number|null
+) => {
+  const url = "/api/planner/day/delete"
+  const params = {dayId: dayId}
+  const response = DELETE(url, { params })
+}
+

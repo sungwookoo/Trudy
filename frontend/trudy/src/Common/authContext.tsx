@@ -43,6 +43,8 @@ const AuthContext = React.createContext({
   //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
   createPlan: (memberId: number, sequence: number) => {},
+  createDay: (plannerId: number, day: string, memo: string) => {},
+  deleteDay: (dayId: number|null) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -122,8 +124,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       .then((result) => {
         setIsSuccess(true);
         return result;
-      })
-      .catch((error) => alert(error.data.errorMessage));
+      })    
   };
 
   //   로그인을 하는 함수
@@ -221,7 +222,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return response;
   };
 
-
+  // planner의 plan을 생성하는 함수
   const createPlannerPlan = (
     memberId: number,
     sequence: number,
@@ -230,6 +231,28 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
     return response
   }
+
+  // planner의 day를 생성하는 함수
+  const createPlannerDay = (
+    plannerId: number,
+    day: string,
+    memo: string,
+    // sequence: number,
+  ) => {
+    const response = authAction.createDay(plannerId, day, memo);
+
+    return response
+  }
+
+  // planner의 day를 삭제하는 함수
+  const deletePlannerDay = (
+    dayId: number|null
+  ) => {
+    const response = authAction.deleteDay(dayId)
+
+    return response
+  }
+
 
 
   // useEffect(() => {
@@ -257,6 +280,8 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // changePassword: changePaswordHandler,
     planner: getPlannerHandler,
     createPlan: createPlannerPlan,
+    createDay: createPlannerDay,
+    deleteDay: deletePlannerDay,
   };
 
   return (
