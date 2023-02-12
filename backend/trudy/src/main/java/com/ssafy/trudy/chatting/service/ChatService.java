@@ -58,7 +58,7 @@ public class ChatService {
     // sendChatMessage로 메세지가 넘어와 저장하게 된다.
     public void sendChatMessage(ChatMessage chatMessage) {
         // 채팅 쓴 사람의 이름을 찾기
-        Member member = chatMessage.getSenderId();
+        Member member = chatMessage.getMemberId();
         String memberName = member.getName();
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)){
             chatMessage.setMessage(memberName + "님이 방에 입장했습니다.");
