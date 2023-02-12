@@ -162,7 +162,7 @@ function ForumPage() {
           </div>
 
           <button
-            className="border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-4 rounded-full"
+            className="border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-2 rounded-md"
             onClick={navigateToCreateArticle}
           >
             Post Article
