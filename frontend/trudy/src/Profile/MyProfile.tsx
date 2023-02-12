@@ -10,17 +10,17 @@ import ProfileMyPost from "./ProfileMyPost";
 // import { dummyMembers } from '../Forum/Forum';
 
 interface getUser {
-  id: number;
-  name: string;
-  email: string;
-  gender: string;
-  image: string;
-  language: string;
-  plan: string;
-  self: string;
-  title: string;
-  introduction: string;
-  introduceId: any;
+  id?: number;
+  name?: string;
+  email?: string;
+  gender?: string;
+  image?: string;
+  language?: string;
+  plan?: string;
+  self?: string;
+  title?: string;
+  introduction?: string;
+  introduceId?: any | null;
 }
 
 const getFollow = {
@@ -30,7 +30,6 @@ const getFollow = {
 
 function Profile() {
   // const [userInfo, setUserInfo] = useState<getUser[] | null | any>();
-
   // const authCtx = useContext(AuthContext);
   const [getmypost, setGetMyPost] = useState<any>([]);
   const [profile, setProfile] = useState<getUser | null>(null);
@@ -44,6 +43,21 @@ function Profile() {
 
   const url = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
+
+
+//  나의 게시글 가져오기
+const getMyPosts = () => {
+  axios
+    .get("api/post")
+    .then((res) => {
+      setGetMyPost(res.data);
+      console.log(res.data);
+    })
+    .catch((error: any) => console.error(error));
+};
+
+
+
   useEffect(() => {
     axios
       .get(url, {
@@ -53,27 +67,23 @@ function Profile() {
       })
       .then((res) => {
         setProfile(res.data);
-        console.log(res.data);
+        getMyPosts();
+        console.log(res.data.id, 11111);
       })
       .catch((err: any) => console.error(err));
   }, []);
   // console.log(profile)
 
+
+
+
+
+
+
   if (profile === null) {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  // 나의 게시글 가져오기
-  const getMyPosts = () => {
-    const url = "api/post";
-    axios
-      .get(url)
-      .then((res) => {
-        setGetMyPost(res.data);
-        console.log(res.data);
-      })
-      .catch((error: any) => console.error(error));
-  };
 
   // const memberdetails = {
   //   id: profile.id,
@@ -102,27 +112,6 @@ function Profile() {
           {/* <div className=''>{profile.id}</div> */}
           <h1 className="myprofile-username">{profile.name}</h1>
         </div>
-        {/* <p className='mt-10'>{profile.email}</p> */}
-        {/* {userInfo.map((member:any) => {
-                return (
-                  <div>
-                    <div>
-                      <img className='profile-picture'
-                      src={member.image}
-                      alt="profilepicture" 
-                      />
-                    </div>
-                  <div className='user-name' key={member.id}>
-                    { member.name }
-                    {/* { user.username === 'Kamren' ? user.username : '' } */}
-        {/* </div>
-                  </div>
-                )
-              })
-            }
-          }
-          //  */}
-
         {/* 프로필 수정 내 프로필 공개 토글 */}
         <div className="edit-toggle-follow-container">
           {/* <ProfileUpdate /> */}
@@ -160,7 +149,7 @@ function Profile() {
             </div>
           </div>
         </div>
-        <div className="myprofile-intro mb-5">{profile.introduceId.self}</div>
+        <div className="myprofile-intro mb-5">{profile.introduceId ? profile.introduceId.self : ''}</div>
       </div>
 
       <div className="content-box grid grid-cols-2 place-content-center">
@@ -186,17 +175,17 @@ function Profile() {
           <div className="grid grid-rows-4 grid-flow-row gap-24 mt-3 w-96 about-box">
             <div className="">
               <div className="text-xl mt-5">
-                I will show you : {profile.introduceId.plan}
+                I will show you : {profile.introduceId ? profile.introduceId.plan : ''}
               </div>
             </div>
             <div className="">
               <div className="text-xl">
-                About me : {profile.introduceId.title}
+                About me : {profile.introduceId ? profile.introduceId.title : ''}
               </div>
             </div>
             <div className="">
               <div className="text-xl">
-                Language : {profile.introduceId.language}
+                Language : {profile.introduceId ? profile.introduceId.language : ''}
               </div>
             </div>
           </div>

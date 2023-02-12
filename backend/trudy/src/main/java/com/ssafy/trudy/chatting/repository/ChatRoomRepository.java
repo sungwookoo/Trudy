@@ -1,6 +1,6 @@
-package com.ssafy.trudy.chat.repository;
+package com.ssafy.trudy.chatting.repository;
 
-import com.ssafy.trudy.chat.model.ChatRoom;
+import com.ssafy.trudy.chatting.model.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

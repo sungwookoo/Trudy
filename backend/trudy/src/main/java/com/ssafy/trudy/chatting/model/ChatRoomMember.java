@@ -1,4 +1,4 @@
-package com.ssafy.trudy.chat.model;
+package com.ssafy.trudy.chatting.model;
 
 import com.ssafy.trudy.member.model.Member;
 import lombok.Getter;
