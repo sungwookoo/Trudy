@@ -23,7 +23,7 @@ public class ChatRoomController {
 
     //************************************[CREATE]***********************************//
     // 1. 개인 DM을 위한 방 생성(roomMakerId - 채팅시작한 사람, guestId - 해당 프로필 계정의 Id)
-    @PostMapping("chat/room") // 개인 DM방 생성
+    @PostMapping("/chat/room") // 개인 DM방 생성
     public void createPersonalChatRoom(@RequestParam Long roomMakerId, @RequestParam Long guestId) {
         Member roomMaker = memberService.getById(roomMakerId);
         Member guest = memberService.getById(guestId);
