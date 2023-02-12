@@ -5,13 +5,12 @@ import com.ssafy.trudy.chatting.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@RequestMapping("/api")
 public class ChatMessageController {
 
     private final SimpMessagingTemplate messagingTemplate;
@@ -22,9 +21,9 @@ public class ChatMessageController {
     // 받은 메시지를 데이터베이스에 저장하기 위해서 messageService의 sendMessage메소드를 호출
     // messageingTemplate의 converANdSend 메소드를 통해
     // topic/chat/수신자ID를 구독한 유저에게 해당 메세지를 보낸다.
-    @MessageMapping("chat/send")
-    public void chat(ChatMessage chatMessage) {
+    @MessageMapping("/chat/send")
+    public void chat(@RequestBody ChatMessage chatMessage) {
         chatService.sendChatMessage(chatMessage);
-        messagingTemplate.convertAndSend("/topic/chat" + chatMessage.getReceiverId(), chatMessage);
+        messagingTemplate.convertAndSend("/topic/chat" + chatMessage.getMemberId(), chatMessage);
     }
 }
