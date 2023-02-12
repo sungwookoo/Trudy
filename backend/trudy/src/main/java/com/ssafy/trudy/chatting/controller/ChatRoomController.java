@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 // Websocket 통신 외에 채팅 화면 View 구성을 위해 필요한 Controller
-
 // View 구성을 위한 Controller
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/chat")
 public class ChatRoomController {
 
     private final ChatService chatService;
@@ -25,7 +23,7 @@ public class ChatRoomController {
 
     //************************************[CREATE]***********************************//
     // 1. 개인 DM을 위한 방 생성(roomMakerId - 채팅시작한 사람, guestId - 해당 프로필 계정의 Id)
-    @PostMapping("/personal") // 개인 DM방 생성
+    @PostMapping("chat/room") // 개인 DM방 생성
     public void createPersonalChatRoom(@RequestParam Long roomMakerId, @RequestParam Long guestId) {
         Member roomMaker = memberService.getById(roomMakerId);
         Member guest = memberService.getById(guestId);
@@ -35,7 +33,7 @@ public class ChatRoomController {
 
     //************************************[READ]*************************************//
     // 1. 로그인한 유저의 채팅 리스트를 가져오기 -> clear
-    @GetMapping("/all")
+    @GetMapping("/chat/room")
     public List<ChatRoomResponse> findChatRoomList(@RequestParam Long memberId) {
         log.info(memberId.toString());
         return chatService.findChatRoomList(memberId);
@@ -49,8 +47,5 @@ public class ChatRoomController {
                                                     @RequestParam Long guestId) {
         return chatService.getChatRoomDetail(chatRoomId, loginMemberId, guestId);
     }
-
-
     //************************************[DELETE]***********************************//
-
 }

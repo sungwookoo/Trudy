@@ -53,20 +53,20 @@ public class ChatService {
         chatRoomMemberRepository.save(chatRoomMember_1);
         chatRoomMemberRepository.save(chatRoomMember_2);
     }
-    /**
-     * 채팅방에 메시지 발송
-     */
+
+    // app/chat/send를 통해서 메시지를 발송하면
+    // sendChatMessage로 메세지가 넘어와 저장하게 된다.
     public void sendChatMessage(ChatMessage chatMessage) {
         // 채팅 쓴 사람의 이름을 찾기
-        Member member = chatMessage.getMemberId();
+        Member member = chatMessage.getSenderId();
         String memberName = member.getName();
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)){
             chatMessage.setMessage(memberName + "님이 방에 입장했습니다.");
         } else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
             chatMessage.setMessage(memberName + "님이 방에서 나갔습니다.");
         }
+        chatMessageRepository.save(chatMessage);
     }
-
 
     public ChatMessage getLastMessage(ChatRoom roomId) {
         List<ChatMessage> chatList = chatMessageRepository.findByRoomIdOrderByCreatedAtDesc(roomId);
