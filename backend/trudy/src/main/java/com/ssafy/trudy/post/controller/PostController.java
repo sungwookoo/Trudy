@@ -1,5 +1,6 @@
 package com.ssafy.trudy.post.controller;
 
+import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.etc.model.Sigungu;
 import com.ssafy.trudy.post.model.CategoryName;
 import com.ssafy.trudy.post.model.Post;
@@ -20,9 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,14 +66,14 @@ public class PostController {
 
     //포럼 게시글 작성 - 정상 동작
     @PostMapping
-    public ResponseEntity<?> postAdd(/*@RequestParam String title,
+    public void /*ResponseEntity<?>*/ postAdd(/*@RequestParam String title,
                         @RequestParam String content,
 //                        @RequestParam MultipartFile[] upload,
                         @RequestParam Long[] sigunguIdList,
                         @RequestParam Long memberId,
                         @RequestParam CategoryName[] categoryList*/
             /*@RequestBody PostDto.InsertPost insertPostDto*/
-            @RequestParam(value="upload", required = false) MultipartFile[] upload){
+            /*@RequestParam(value="upload", required = false) MultipartFile upload*/){
 
 
 
@@ -80,17 +83,38 @@ public class PostController {
            // postService.addPost(insertPostDto);
             log.info("============== test complete ===========");
 
-            for(int i=0; i<upload.length; i++)log.info( i + "check : " + upload[i].getOriginalFilename());
+            //for(int i=0; i<upload.length; i++)log.info( i + "check : " + upload[i].getOriginalFilename());
             //log.info(insertPostDto.getUpload().toString());
             log.info("controller ========== try ok");
-            return ResponseEntity.ok().build();
+            //log.info("filename :  " + upload.getOriginalFilename());
+            //return ResponseEntity.ok().build();
+            return;
         } catch (Exception e){
             e.getStackTrace();
             //log.info("controller ========== try bad");
             //return ResponseEntity.ok().build();
-            return ResponseEntity.internalServerError().build();
+            //return ResponseEntity.internalServerError().build();
+            return;
         }
     }
+
+    //포럼 게시글 이미지 업로드
+    @PostMapping("/upload")
+    public Map<String, String> addMemberImage(@RequestParam(required = false, name = "upload") MultipartFile multipartFile) throws IOException {
+        return postService.createPostFile(multipartFile, "post");
+    }
+
+    //포럼 게시글 이미지 삭제
+    @PostMapping("/image/delete")
+    public void ImageUpload(@RequestParam List<String> saveFileNameArr){
+        //log.info("전자");
+        //log.info(fileNameList.toString());
+        log.info("후자");
+        log.info(saveFileNameArr.toString());
+        //log.info(insertPostDto.getData().toString());
+        //postService.deleteAllImage(data);
+    }
+
 
     //포럼 게시글 수정 - 정상 동작
     @PutMapping("/{post_id}")

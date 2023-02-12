@@ -56,6 +56,7 @@ public class PostDto {
         private Long memberId;
         //private CategoryName[] categoryList;
         private String[] categoryList;
+        private String[] data;
     }
 
 

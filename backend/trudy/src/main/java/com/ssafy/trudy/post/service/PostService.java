@@ -9,6 +9,7 @@ import com.ssafy.trudy.member.repository.MemberRepository;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.*;
 import com.ssafy.trudy.post.repository.*;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,7 +53,7 @@ public class PostService {
     private final SigunguRepository sigunguRepository;
 
     // AWS S3
-    private final PostAwsS3Service postAwsS3Service;
+    private final AwsS3Uploader awsS3Uploader;
     ModelMapper modelMapper = new ModelMapper();
 
     //포럼 게시글 목록 가져오기1
@@ -186,9 +188,20 @@ public class PostService {
 
         //3. thumbnail 이미지 저장
         postEntityInsert.setThumbnailImage("test");
-
+        /*
+         * 프론트에서 최종적으로 제출할 이미지 정보를 담은 리스트를 줘야함
+         * 예) {{url : "example1.com", filename: "example1.jpg"}, {url : "example3.com", filename: "example3.jpg"}, {url : "example5.com", filename: "example5.jpg"}}
+         * 형식으로 프론트로부터 받고 dto에서 List<Map<String,String>> 형식으로 만들어서
+         * 여기서 get해서 db post image 에 for문으로 일괄삽입.
+         */
 
         log.info("썸네일 테스트 ======== " + postEntityInsert.toString());
+    }
+
+    public void deleteAllImage(List<String> fileNameList) {
+        for(String fileName : fileNameList) {
+            awsS3Uploader.delete(fileName);
+        }
     }
 
     //포럼 게시글 수정 - ck에디터와 연관
@@ -445,4 +458,8 @@ public class PostService {
         return postRepository.findAllByMemberIdIn(memberIds);
     }
 
+
+    public Map<String, String> createPostFile(MultipartFile multipartFile, String dirName) throws IOException {
+        return awsS3Uploader.createPostFile(multipartFile, dirName);
+    }
 }
