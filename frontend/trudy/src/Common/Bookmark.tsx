@@ -1,41 +1,18 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Place from "../TrudyMap/Place";
 
-interface BookmarkProps {
-  data: {
-    id: number;
-    addr1: string;
-    addr2: string | undefined;
-    contenttypeid: string | undefined;
-    firstimage: any;
-    firstimage2: string | undefined;
-    mapx: any;
-    mapy: any;
-    title: string;
-    singungucode: string;
-    tel: string | undefined;
-    zipcode: string | undefined;
-  };
-  onClick: (mapx: string | number, mapy: string | number) => void;
-}
+type Props = {
+  memberId: number;
+  bookmarkedIds: number[];
+  setbookmarkedIds: React.Dispatch<React.SetStateAction<number[]>>;
+};
 
-function Bookmark({ memberId }: any) {
-  const [bookmarkList, setbookmarkList] = useState<any>([]);
+function Bookmark({ bookmarkList, bookmarkedIds }: any) {
+  // 북마크 정보 들고오기
 
-  const getBookmarkStatus = async () => {
-    try {
-      const response = await axios.get(`api/bookmark?memberId=${memberId}`);
-      setbookmarkList(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  console.log(bookmarkList[2]);
   return (
     <>
-      <button onClick={getBookmarkStatus}>BookMark</button>
       {bookmarkList.map((bookmark: any, idx: number) => {
         return (
           <div
@@ -53,7 +30,10 @@ function Bookmark({ memberId }: any) {
               ""
             )}
             <div className="px-6 py-4">
-              <h3 className="font-bold text-xl mb-2">{bookmark.title}</h3>
+              <h3 className="font-bold text-xl mb-2">
+                {bookmark.title}
+                북마크
+              </h3>
             </div>
           </div>
         );
