@@ -5,41 +5,87 @@ import Place from "../TrudyMap/Place";
 type Props = {
   memberId: number;
   bookmarkedIds: number[];
-  setbookmarkedIds: React.Dispatch<React.SetStateAction<number[]>>;
+  setbookmarkedIds: React.Dispatch<React.SetStateAction<any>>;
+  setbookmarkList: React.Dispatch<React.SetStateAction<any>>;
+  bookmarkList: any;
 };
 
-function Bookmark({ bookmarkList, bookmarkedIds }: any) {
-  // 북마크 정보 들고오기
-
+function Bookmark({
+  bookmarkList,
+  bookmarkedIds,
+  setbookmarkedIds,
+  memberId,
+  setbookmarkList,
+}: Props) {
+  // 북마크 해제하기
+  const [isLoading, setIsLoading] = useState(false);
+  const handleBookmarkClick = async (placeid: any) => {
+    setIsLoading(true);
+    try {
+      const updatedBookmarkedIds = bookmarkedIds.filter(
+        (id: any) => id !== placeid
+      );
+      setbookmarkedIds(updatedBookmarkedIds);
+      await axios.delete(`api/bookmark/delete`, {
+        params: { memberId: memberId, placeId: placeid },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`);
+      setbookmarkList(nowBookMark.data);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(memberId);
+    console.log(bookmarkList, "여기는 북마크킄크크크크크크크크크ㅡ크크");
+  };
   return (
     <>
       {bookmarkList.map((bookmark: any, idx: number) => {
         return (
-          <div
-            key={idx}
-            className="max-w-sm rounded overflow-hidden shadow-lg m-5"
-            style={{ cursor: "pointer" }}
-          >
-            {bookmark.firstimage ? (
-              <img
-                className="w-full"
-                src={bookmark.firstimage}
-                alt="Place thumbnail"
-              />
+          <>
+            {bookmark.id in bookmarkedIds ? (
+              <div
+                key={idx}
+                className="max-w-sm rounded overflow-hidden shadow-lg m-5"
+                style={{ cursor: "pointer" }}
+              >
+                {bookmark.firstimage ? (
+                  <img
+                    className="w-full"
+                    src={bookmark.firstimage}
+                    alt="Place thumbnail"
+                  />
+                ) : (
+                  ""
+                )}
+                <div className="px-6 py-4">
+                  <h3 className="font-bold text-xl mb-2">{bookmark.title}</h3>
+
+                  <img
+                    src={
+                      "https://cdn-icons-png.flaticon.com/128/4101/4101575.png"
+                    }
+                    alt="bookmark"
+                    onClick={() => {
+                      handleBookmarkClick(bookmark.id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+
+                  {isLoading && <div>Loading...</div>}
+                </div>
+              </div>
             ) : (
               ""
             )}
-            <div className="px-6 py-4">
-              <h3 className="font-bold text-xl mb-2">
-                {bookmark.title}
-                북마크
-              </h3>
-            </div>
-          </div>
+          </>
         );
       })}
     </>
   );
 }
 
-export default Bookmark;
+export default React.memo(Bookmark);
