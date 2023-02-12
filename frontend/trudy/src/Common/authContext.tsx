@@ -1,6 +1,7 @@
 import { access } from "fs";
 import React, { useState, useEffect, useCallback } from "react";
 import * as authAction from "./authAction";
+import jwtDecode from "jwt-decode";
 
 let logoutTimer: NodeJS.Timeout;
 
@@ -21,7 +22,7 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
-  loggedEmail: "",
+  loggedInfo: {iss: "", auth: "", uid: ""},
   signup: (
     email: string,
     password: string,
@@ -61,9 +62,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
-  const [loggedEmail, setLoggedEmail] = useState<string>("");
+  // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
+  const loggedInfo = jwtDecode(token) as any
 
   // Account
 
@@ -134,20 +136,26 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
             loginData.refreshToken,
             loginData.accessTokenExpiresIn
           )
-        );
-        setLoggedEmail(email);
-        setIsSuccess(true);
-      } else {
-        alert("Wrong ID or Password!");
-      }
-    });
+          
+          );
+          // const localToken = localStorage.getItem("token")
+          // if (localToken) {
+          //   setLoggedInfo(jwtDecode(localToken))
+          //   console.log(jwtDecode(localToken))
+          // console.log('loggedInfo', loggedInfo)
+          // }
+          setIsSuccess(true);
+        } else {
+          alert("Wrong ID or Password!");
+        }
+      });
   };
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(() => {
     setToken("");
     authAction.signOutActionHandler(token);
-    setLoggedEmail("");
+    // setLoggedEmail("");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
@@ -220,7 +228,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     isSuccess,
     isGetSuccess,
     isVerified,
-    loggedEmail,
+    loggedInfo,
     sendCode: sendCode,
     emailVerified: emailVerified,
     defaultVerified: defaultVerified,
