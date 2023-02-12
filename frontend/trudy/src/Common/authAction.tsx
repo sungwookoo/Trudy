@@ -147,9 +147,19 @@ export const getUserActionHandler = (params: any) => {
 // 유저의 Planner 정보를 GET방식으로 호출
 export const getPlanner = (memberId: number) => {
   const url = "/api/planner";
-  // const params = { memberId: memberId }
+  // const params = { memberId: memberId };
   const params = { memberId: 1 };
   const response = GET(url, { params });
 
   return response;
 };
+
+
+export const createPlan = (
+  memberId: number,
+  sequence: number
+) => {
+  const url = "/api/planner/post";
+  const data = {memberId: memberId, sequence: sequence}
+  const response = POST(url, data, {} )
+}

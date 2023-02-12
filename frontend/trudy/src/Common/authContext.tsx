@@ -41,7 +41,8 @@ const AuthContext = React.createContext({
   getUser: (params: any) => {},
   //   changeNickname: (nickname: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
-  planner: (memberId: number) => {},
+  planner: () => {},
+  createPlan: (memberId: number, sequence: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -65,7 +66,11 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
-  const loggedInfo = jwtDecode(token) as any
+  
+  let loggedInfo = {iss: "", auth: "", uid: ""}
+  if (token){
+  loggedInfo = jwtDecode(token) as any
+  }
 
   // Account
 
@@ -209,11 +214,23 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // Planner
 
   // Planner 정보를 가져오는 함수
-  const getPlannerHandler = (memberId: number) => {
+  const getPlannerHandler = () => {
+    const memberId = parseInt(loggedInfo.uid)
     const response = authAction.getPlanner(memberId);
 
     return response;
   };
+
+
+  const createPlannerPlan = (
+    memberId: number,
+    sequence: number,
+  ) => {
+    const response = authAction.createPlan(memberId, sequence);
+
+    return response
+  }
+
 
   // useEffect(() => {
   //   if (tokenData) {
@@ -239,6 +256,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,
     planner: getPlannerHandler,
+    createPlan: createPlannerPlan,
   };
 
   return (
