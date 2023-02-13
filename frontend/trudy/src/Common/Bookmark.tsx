@@ -170,6 +170,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       {/* ------------------------------------------------북마크 리스트------------------------------------------------- */}
       {/* ------------------------------------------------북마크 리스트------------------------------------------------- */}
       <div className="flex flex-wrap">
+
         {filteredBookmarks.map((bookmark: any, idx: number) => {
           return (
             <>
