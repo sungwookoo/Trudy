@@ -22,7 +22,7 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
-  loggedInfo: { iss: "", auth: "", uid: "" },
+  loggedInfo: { iss: "", auth: "", uid: 0 },
   signup: (
     email: string,
     password: string,
@@ -43,7 +43,8 @@ const AuthContext = React.createContext({
   //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
   createPlan: (memberId: number, sequence: number) => {},
-  createDay: (plannerId: number, day: string, memo: string) => {},
+  deletePlan: (plannerId: number | null) => {},
+  createDay: (plannerId: number, day: string, memo: string, sequence: number) => {},
   deleteDay: (dayId: number | null) => {},
 });
 
@@ -69,7 +70,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const userIsLoggedIn = !!token;
 
-  let loggedInfo = { iss: "", auth: "", uid: "" };
+  let loggedInfo = { iss: "", auth: "", uid: 0 };
   if (token) {
     loggedInfo = jwtDecode(token) as any;
   }
@@ -159,7 +160,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const signOutHandler = useCallback(() => {
     setToken("");
     authAction.signOutActionHandler(loggedInfo.uid);
-    // setLoggedEmail("");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
@@ -214,8 +214,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   // Planner 정보를 가져오는 함수
   const getPlannerHandler = () => {
-    const memberId = parseInt(loggedInfo.uid);
-    const response = authAction.getPlanner(memberId);
+    const response = authAction.getPlanner(loggedInfo.uid);
 
     return response;
   };
@@ -223,18 +222,28 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // planner의 plan을 생성하는 함수
   const createPlannerPlan = (memberId: number, sequence: number) => {
     const response = authAction.createPlan(memberId, sequence);
+    console.log(memberId, sequence)
+    return response;
+  };
+
+
+  // planner의 plan를 삭제하는 함수
+  const deletePlannerPlan = (plannerId: number | null) => {
+    const response = authAction.deletePlan(plannerId);
 
     return response;
   };
+
+
 
   // planner의 day를 생성하는 함수
   const createPlannerDay = (
     plannerId: number,
     day: string,
-    memo: string
-    // sequence: number,
+    memo: string,
+    sequence: number,
   ) => {
-    const response = authAction.createDay(plannerId, day, memo);
+    const response = authAction.createDay(plannerId, day, memo, sequence);
 
     return response;
   };
@@ -271,6 +280,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // changePassword: changePaswordHandler,
     planner: getPlannerHandler,
     createPlan: createPlannerPlan,
+    deletePlan: deletePlannerPlan,
     createDay: createPlannerDay,
     deleteDay: deletePlannerDay,
   };
