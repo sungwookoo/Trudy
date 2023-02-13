@@ -19,6 +19,7 @@ import * as authAction from "./Common/authAction";
 import * as axiosInterceptor from "./Common/axiosInterceptor";
 import EmailConfirm from "./Account/EmailConfirm";
 import UserProfile from "./Profile/UserProfile";
+import ProfileEdit from "./Profile/ProfileEdit";
 
 function App() {
   // Code to handle form submission
@@ -52,7 +53,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="/:id" element={<ForumDetail />} />
+        <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
         <Route path="/square" element={<Square />} />
         <Route path="/profile/:id" element={<UserProfile />} />
@@ -64,6 +65,7 @@ function App() {
           // element={<Planner />}
         />
         <Route path="/profileupdate" element={<ProfileUpdate />} />
+        <Route path="/profileedit" element={<ProfileEdit />} />
         <Route
           path="/signin"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import '../Profile/ProfileUpdate.css'
-import { useNavigate } from 'react-router';
-
+import React, { useState } from "react";
+import "../Profile/ProfileUpdate.css";
+import { useNavigate } from "react-router";
 
 interface UserData {
   username: string;
@@ -12,23 +11,25 @@ interface UserData {
 const initialUserData: UserData = {
   username: "John Doe",
   introduction: "Hello, I am a software engineer.",
-  profilePicture: "https://picsum.photos/200"
+  profilePicture: "https://picsum.photos/200",
 };
 
 function ProfileUpdate(props: any) {
   const [userData, setUserData] = useState<UserData>(initialUserData);
 
   const navigate = useNavigate();
-    const navigateToProfile = () => {
-      navigate('/profile');
-    };
+  const navigateToProfile = () => {
+    navigate("/profile");
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePictureChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       if (e.target) {
@@ -39,10 +40,11 @@ function ProfileUpdate(props: any) {
   };
 
   return (
-    <div className='profile-update-container'>
+    <div className="profile-update-container">
       <img src={userData.profilePicture} alt={userData.username} />
       <br />
-      <input className='hide'
+      <input
+        className="hide"
         type="file"
         accept="image/*"
         onChange={handleProfilePictureChange}
@@ -59,16 +61,22 @@ function ProfileUpdate(props: any) {
       />
       <br />
       <label htmlFor="introduction">Introduction:</label>
-      <input className='intro-text'
+      <input
+        className="intro-text"
         id="introduction"
         name="introduction"
         value={userData.introduction}
         onChange={handleInputChange}
       />
       <br />
-      <button className='bg-green-500 px-2 py-1 rounded-full' onClick={navigateToProfile}>Save Changes</button>
+      <button
+        className="bg-green-500 px-2 py-1 rounded-full"
+        onClick={navigateToProfile}
+      >
+        Save Changes
+      </button>
     </div>
   );
-};
+}
 
 export default ProfileUpdate;

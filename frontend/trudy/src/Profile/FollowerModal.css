@@ -25,13 +25,13 @@
 
 .follow-modal-close{
     /* X 위치 */
-    position: absolute;
-    top: 10px;
+    /* position: absolute; */
+    top: 50px;
     left: 10px;
 
     /* X 디자인 */
-    /* font-size: 20px;
+    font-size: 20px;
     font-weight: bold;
     color: black;
-    cursor: pointer; */
+    cursor: pointer;
 }

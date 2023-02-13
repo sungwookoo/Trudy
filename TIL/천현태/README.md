@@ -549,6 +549,139 @@ LoadScript googleMapsApiKey="API KEY" region="US" language="en">
 
 
 ---
+## 02.05
 
 
-## 02.06
+#### 주 내용
+
+- 지도 on/off 버튼 만들고 off 시 Forum 형태로 만들어주기
+- on/off 버튼이 구글 맵 위에 있는 경우 map off 시 버튼도 사라져서 우선 nav바에 올려둠
+	- 내일 css 이용해서 고쳐볼 것
+- api 요청 params로 변경해줘서 기존 살짝 수정
+- 카테고리 지역 id 번호와 name 연결시켜주기.
+- 길찾기 api 적용해보려하는 중
+
+
+
+
+#### 깨달은 점
+
+- 이젠 react 공식문서보다 googlemap 공식문서가 더 어려운것 같다.
+- 그대로 해서 안되면 구글링 해보면 조금 다르더라.. typescript 는 any로 해주지 않는 이상 해결하기 어려웠다.
+- layout 잡는거 너무 어렵다..
+- api 요청 + 지도 layout 한 것도 없는데 하루 종일 만진 듯..
+
+
+---
+
+## 02.11
+
+#### 주 내용
+
+- 팔로우 팔로워 만들기
+- 북마크 받아와서 띄워주기
+- place info 돌면서 북마크에 추가되어있는지 여부 확인
+	- 무한 렌더링 오류 발생
+	- 하위 컴포넌트에 값을 넣어주는데 if문에 넣어놧음;; 
+	- useEffect 이용해서 전달
+- delete형식 보내면서 data로 보내서 시간 조금 잡아먹음
+	- params 변경 후 성공
+- 본인 회원 번호 알기 위해 token을 불러와서 해당 유저의 id 받아오기
+
+---
+
+## 02.12
+
+#### 주 내용
+
+
+##### 1. POST 요청 에러
+
+- bookmark post 요청을 아래와 같은 형식으로 하니 400 error
+
+```typescript
+axios.post(`api/bookmark/post`, { 
+	memberId: JSON.stringify(2), 
+	placeId: JSON.stringify(place.id), }, 
+	{ headers: { Authorization: token, }, });
+```
+
+- 형식을 계속 바꿔봐도 400 error 해결 못하다가 FormData로 바꿔서 보내니 성공!
+	- 원래 FormData만 되는가? 아닌거 같다. 
+	- Back에서 FormData만 받는다고 설정 해둔 듯
+
+```typescript
+
+const data = new FormData();
+
+        data.append("memberId", JSON.stringify(2));
+
+        data.append("placeId", JSON.stringify(place.id));
+
+        setbookmarkedIds([...bookmarkedIds, place.id]);
+
+        await axios.post(`api/bookmark/post`, data, {
+
+          headers: {
+
+            Authorization: token,
+
+            "Content-Type": "multipart/form-data",
+
+          },
+
+        });
+```
+
+
+- 두 코드의 차이점은 요청 본문의 형식이다
+- 위의 코드의 경우 JSON 객체로 들어가는 반면,
+- 아래 코드의 경우 FormData 객체가 되어 전송이 된다.
+- Form 데이터를 사용한다면 표준화된 방법을 사용한다는 것과 양식 데이터에 적합한 헤더를 자동 설정하므로 헤더를 수동설정 할 필요가 없다.
+
+
+##### 2. BOOKMARK STATE 변경 에러
+
+- 자식 컴포넌트에서 변경 시 실시간 렌더링이 안되었음
+- 부모컴포넌트 값이 변경되지만 자식 컴포넌트에 반영이 안됨
+- 재렌더링 조건 넣어주니 무한루프
+- 자식 컴포넌트에서 업데이트 될시 => axios.get 요청 보내 state값 업데이트 시켜줌
+
+
+```typescript
+try {
+
+      const updatedBookmarkedIds = bookmarkedIds.filter(
+
+        (id: any) => id !== placeid
+
+      );
+
+      setbookmarkedIds(updatedBookmarkedIds);
+
+      await axios.delete(`api/bookmark/delete`, {
+
+        params: { memberId: memberId, placeId: placeid },
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+    try {
+
+      const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`);
+
+      setbookmarkList(nowBookMark.data);
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+    console.log(memberId);
+```
