@@ -109,7 +109,7 @@ export const signInActionHandler = (email: string, password: string) => {
 
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
-export const signOutActionHandler = (id: string) => {
+export const signOutActionHandler = (id: number) => {
   const url = "/api/logout";
   const params = { id: id };
   const response = DELETE(url, { params });
@@ -154,8 +154,8 @@ export const getUserActionHandler = (params: any) => {
 // 유저의 Planner 정보를 GET방식으로 호출
 export const getPlanner = (memberId: number) => {
   const url = "/api/planner";
-  // const params = { memberId: memberId };
-  const params = { memberId: 1 };
+  const params = { memberId: memberId };
+  // const params = { memberId: 1 };
   const response = GET(url, { params });
 
   return response;
@@ -164,14 +164,32 @@ export const getPlanner = (memberId: number) => {
 // 유저의 plan을 POST 방식으로 생성
 export const createPlan = (memberId: number, sequence: number) => {
   const url = "/api/planner/post";
-  const data = { memberId: memberId, sequence: sequence };
-  const response = POST(url, data, {});
+  const params = { memberId: memberId, sequence: sequence };
+  const response = POST(url, {}, { params });
+};
+
+// 유저의 plan을 DELETE 방식으로 삭제
+export const deletePlan = (plannerId: number | null) => {
+  const url = "/api/planner/planner/delete";
+  const params = { plannerId: plannerId };
+  console.log(plannerId)
+  const response = DELETE(url, { params });
 };
 
 // 유저의 day를 POST 방식으로 생성
-export const createDay = (plannerId: number, day: string, memo: string) => {
+export const createDay = (
+  plannerId: number,
+  day: string,
+  memo: string,
+  sequence: number
+) => {
   const url = "/api/planner/day/post";
-  const params = { plannerId: plannerId, day: day, memo: memo };
+  const params = {
+    plannerId: plannerId,
+    day: day,
+    memo: memo,
+    sequence: sequence,
+  };
   const response = POST(url, {}, { params });
 };
 
