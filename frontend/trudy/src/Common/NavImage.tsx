@@ -9,7 +9,7 @@ function UserProfileImage() {
   useEffect(() => {
     const fetchProfileImage = async () => {
       try {
-        const response = await axios.get("api/member/me", {
+        const response = await axios.get("/api/member/me", {
           headers: {
             Authorization: token,
           },
