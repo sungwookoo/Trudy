@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SearchBar from "../Common/SearchBar";
@@ -12,14 +12,15 @@ type Props = {
   setbookmarkedIds: React.Dispatch<React.SetStateAction<any>>;
   setbookmarkList: React.Dispatch<React.SetStateAction<any>>;
   bookmarkList: any;
+  onPlaceClick?: (mapx: number, mapy: number) => void;
 };
 
-function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList }: Props) {
+function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList, onPlaceClick = () => {} }: Props) {
   const token = "bearer " + localStorage.getItem("token");
   // 북마크 필터링
   const [filteredBookmarks, setfilteredBookmarks] = useState<any>([]);
 
-  // 북마크 해제하기
+  // =================================================================북마크 업데이트 =====================================================================================
   const [isLoading, setIsLoading] = useState(false);
   const handleBookmarkClick = async (placeid: any) => {
     setIsLoading(true);
@@ -78,7 +79,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       setbookMarkCategory([...bookMarkCategory, categoryId]);
     }
   };
-
+  // =========================================================필터 적용 ==========================================================
   useEffect(() => {
     setfilteredBookmarks(
       bookmarkList.filter((bookmark: any) => {
@@ -97,6 +98,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
         }
         if (selectedSigungu.length > 0) {
           sigunguMatch = selectedSigungu.includes(parseInt(bookmark.sigungucode));
+          console.log(parseInt(bookmark.sigungucode));
           console.log(selectedSigungu);
         } else {
           sigunguMatch = true;
@@ -120,6 +122,14 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
     );
   }, [bookmarkList, nameSearch, bookMarkCategory, areaCode, selectedSigungu]);
 
+  // ==========================================================클릭시 지도 옮겨주기====================================================================
+
+  // 지도 센터 옮기기
+  const handleClick = (mapx: number, mapy: number) => {
+    console.log(mapx, mapy, 342341412412);
+    onPlaceClick(mapx, mapy);
+  };
+
   return (
     <>
       <div>
@@ -140,13 +150,13 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   className="mr-2"
                   type="checkbox"
                   id={`sigungu-${sigunguInfo.id}`}
-                  checked={selectedSigungu.includes(parseInt(sigunguInfo.sigungucode))}
+                  checked={selectedSigungu.includes(sigunguInfo.id)}
                   onChange={() => {
                     if (selectedSigungu.includes(sigunguInfo.sigungucode)) {
-                      const filteredSigungu = selectedSigungu.filter((id: number) => id !== parseInt(sigunguInfo.sigungucode));
+                      const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
                       setSelectedSigungu(filteredSigungu);
                     } else {
-                      setSelectedSigungu([...selectedSigungu, parseInt(sigunguInfo.sigungucode)]);
+                      setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);
                     }
                   }}
                 />
@@ -163,7 +173,12 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
         {filteredBookmarks.map((bookmark: any, idx: number) => {
           return (
             <>
-              <div key={idx} className="max-w-sm rounded overflow-hidden shadow-lg m-5" style={{ cursor: "pointer" }}>
+              <div
+                key={idx}
+                className="max-w-sm rounded overflow-hidden shadow-lg m-5"
+                onClick={() => handleClick(parseFloat(bookmark.mapx), parseFloat(bookmark.mapy))}
+                style={{ cursor: "pointer" }}
+              >
                 {<img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />}
                 <div className="px-6 py-4">
                   <h3 className="font-bold text-xl mb-2">{bookmark.title}</h3>
