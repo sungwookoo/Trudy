@@ -1,4 +1,4 @@
-import "../Profile/MyProfile.css";
+import "./ProfileUpdate.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -39,22 +39,11 @@ function Profile() {
 
   const navigate = useNavigate();
   const navigateToProfileUpdate = () => {
-    navigate("/profileedit");
+    navigate("/profileupdate");
   };
 
   const url = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
-
-  //  나의 게시글 가져오기
-  const getMyPosts = () => {
-    axios
-      .get("api/post")
-      .then((res) => {
-        setGetMyPost(res.data);
-        console.log(res.data);
-      })
-      .catch((error: any) => console.error(error));
-  };
 
   useEffect(() => {
     axios
@@ -65,41 +54,73 @@ function Profile() {
       })
       .then((res) => {
         setProfile(res.data);
-        getMyPosts();
         console.log(res.data.id, 11111);
       })
       .catch((err: any) => console.error(err));
   }, []);
-  // console.log(profile)
+
+  const handleProfilePictureUpload = (event: any) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    axios
+      .post("api/member/upload", formData, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setProfile({ ...profile, image: res.data.image });
+        console.log(res, "업로드 성공");
+      })
+      .catch((err) => {
+        console.log(err, "업로드 실패");
+      });
+  };
+
+  const updateProfile = () => {
+    axios
+      .put("api/member/intro", {
+        header: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   if (profile === null) {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  // const memberdetails = {
-  //   id: profile.id,
-  //   // name: profile.name,
-  // }
-
-  // console.log(mymemberdetails)
-  // useEffect(() => {
-  //   const url = 'api/member/me/post'
-
-  //     // const imageUrl = ''
-
-  //     axios.get(url).then((res) => {
-  //         setUserInfo(res.data);
-  //     });
-  // }, []);
-  // console.log(userInfo)
   console.log(profile, 444);
   return (
     // 프로필 컨테이너 파란 영역
-    <div className="profile-container">
+    <div className="profile-update-container">
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
-          <img className="profile-picture" src={profile.image}></img>
+          {profile && (
+            <img
+              className="profile-picture"
+              src={profile.image}
+              onClick={() => {
+                document.getElementById("profile-picture-upload")?.click();
+              }}
+            />
+          )}
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            onChange={handleProfilePictureUpload}
+            id="profile-picture-upload"
+            style={{ display: "none" }}
+          />
 
           <div>
             <h1 className="myprofile-username">{profile.name}</h1>
@@ -116,9 +137,9 @@ function Profile() {
           <div className="flex items-center justify-center w-full mt-6">
             <button
               className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5"
-              onClick={navigateToProfileUpdate}
+              onClick={updateProfile}
             >
-              Edit Profile
+              Save Edit
             </button>
             {/* 토글 바 */}
             <label
@@ -134,67 +155,53 @@ function Profile() {
           </div>
           {/* 토글 바 끝 */}
           <div className="flex flex-col py-10">
-            <div className="flex flex-row">
-              <div className="w-12 mx-9 font-bold">{getFollow.follower}</div>
-              <div className="w-12 mx-3 font-bold">{getFollow.following}</div>
-            </div>
-            <div className="flex flex-row">
-              <div className="mx-3 font-bold">Follower</div>
-              <div className="mx-3 font-bold">Following</div>
-              <div className="myprofile-gender mx-3 font-bold">
-                {profile.gender}
-              </div>
+            <div className="myprofile-gender mx-3 font-bold">
+              {profile.gender}
             </div>
           </div>
         </div>
 
-        <div className="myprofile-intro mb-3">
-          {profile.introduceId ? profile.introduceId.self : ""}
+        <div className="edit-profile-intro mb-1">
+          <textarea
+            className="profile-intro-edit"
+            value={profile.introduceId ? profile.introduceId.self : ""}
+          ></textarea>
         </div>
       </div>
-      <div className="content-box grid grid-cols-2 place-content-center mb-5">
+      <div className="content-box flex place-content-center mb-5">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
-        <div
-          className="mx-16 flex place-content-center font-bold text-4xl"
-          onClick={() => setViewPost(!viewPost)}
-        >
+        <div className="flex place-content-center font-bold text-4xl">
           About
-        </div>
-
-        <div
-          className="mx-16 flex place-content-center font-bold text-4xl"
-          onClick={() => setViewPost(!viewPost)}
-        >
-          Posts
         </div>
       </div>
       {/* </div> */}
       <div className="about-me grid grid-cols-1">
         <hr className="about-me-hr" />
-        {!viewPost ? (
-          <div className="flex flex-col about-box mt-5">
-            <div className="text-4xl font-semibold mt-10">I will show you</div>
-            <div className="capitalize text-xl mt-5">
-              {profile.introduceId ? profile.introduceId.plan : ""}
-            </div>
-            <div className="text-4xl font-semibold mt-10">About me</div>
-            <div className="capitalize text-2xl mt-5">
-              {profile.introduceId ? profile.introduceId.title : ""}
-            </div>
+        <div className="flex flex-col about-box mt-2">
+          <div className="text-4xl font-semibold mt-6">I will show you</div>
+          <div className="capitalize text-xl mt-3">
+            <textarea
+              className="profile-textarea-edit"
+              value={profile.introduceId ? profile.introduceId.plan : ""}
+            ></textarea>
+          </div>
+          <div className="text-4xl font-semibold mt-6">About me</div>
+          <div className="capitalize text-2xl mt-3">
+            <textarea
+              className="profile-textarea-edit"
+              value={profile.introduceId ? profile.introduceId.title : ""}
+            ></textarea>
+          </div>
 
-            <div className="text-4xl font-semibold mt-10">Language</div>
-            <div className="capitalize text-2xl mt-5">
-              {profile.introduceId ? profile.introduceId.language : ""}
-            </div>
+          <div className="text-4xl font-semibold mt-6">Language</div>
+          <div className="capitalize text-2xl mt-3">
+            <textarea
+              className="profile-textarea-edit"
+              value={profile.introduceId ? profile.introduceId.language : ""}
+            ></textarea>
           </div>
-        ) : (
-          <div>
-            {getmypost.map((post: any, i: any) => (
-              <ProfileMyPost key={i} post={post} memberdetails={profile.id} />
-            ))}
-          </div>
-        )}
+        </div>
       </div>
       {/* <ProfileMyPost id={profile.id}/> */}
       {/* <ProfileMyPost /> */}

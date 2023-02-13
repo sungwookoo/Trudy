@@ -72,12 +72,12 @@ const Nav = () => {
         {/* 로그인 */}
         {!authCtx.isLoggedIn ? (
           <>
-            <div className="nav-item mx-6">
+            <div className="nav-item pr-8">
               <NavLink className="nav-link" to="/signin">
                 Sign In
               </NavLink>
             </div>
-            <div className="nav-item mx-6">
+            <div className="nav-item mr-22">
               <NavLink className="nav-link" to="/signupselect">
                 Sign Up
               </NavLink>
@@ -96,7 +96,7 @@ const Nav = () => {
               </NavLink>
             </div>
             <div className="nav-item">
-              <button className="nav-link ml-4 mr-12" onClick={signOut}>
+              <button className="nav-link ml-1 mr-12" onClick={signOut}>
                 SignOut
               </button>
             </div>
