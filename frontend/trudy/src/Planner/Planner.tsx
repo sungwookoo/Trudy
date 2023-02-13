@@ -30,6 +30,7 @@ function Planner() {
     }
   }
   IsSignIn();
+  IsSignIn();
 
   // 멤버 Id로 planner 정보 받아오기
   useEffect(() => {

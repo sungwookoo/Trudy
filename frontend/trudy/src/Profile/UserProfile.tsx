@@ -22,6 +22,7 @@ interface getUser {
   title?: string;
   introduction?: string;
   introduceId?: any | null;
+  isLocal?: number;
 }
 const UseruserInfo = () => {
   const [userInfo, setUserInfo] = useState<getUser>({});
@@ -76,8 +77,6 @@ const UseruserInfo = () => {
 
 
 
-
-
 // 나의 게시글 가져오기
 const getUserPosts = () => {
   const url = "api/post";
@@ -92,7 +91,6 @@ const getUserPosts = () => {
 
 
 
-
   return (
     // 프로필 컨테이너 파란 영역
     <div className="userInfo-container">
@@ -100,19 +98,22 @@ const getUserPosts = () => {
       <div className="picture-name-container">
         <div className="picture-name-row">
           <img className="userInfo-picture" src={userInfo.image}></img>
-          {/* <div className=''>{userInfo.id}</div> */}
+          <div>
           <h1 className="userInfo-username capitalize">{userInfo.name}</h1>
+          {userInfo.isLocal !== 1 ? <div className='ml-1'>Local</div> : <div className='ml-1'>Foreigner</div>}
+          {/* <div className=''>{userInfo.isLocal}</div> */}
+          </div>
         </div>
         <div className="edit-toggle-follow-container">
           
 
-        <div className="flex">
+        <div className="flex mt-5">
         <Follow
         loginuserId={loginuser.id}
         userID={userInfo.id}
         />
-        <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5" onClick={showModal}>Follower</button>
-        {modalOpen && <FollowerModal senduserID={userId} setModalOpen={setModalOpen} />}
+        <button className="border-2 border border-black hover:bg-green-500 text-black font-bold py-2 px-4 rounded-full mr-5" >Message</button>
+        
         </div>
         
 
@@ -122,7 +123,10 @@ const getUserPosts = () => {
               <div className="w-12 mx-3 font-bold">{getFollow.following}</div>
             </div>
             <div className="flex flex-row">
-              <div className="mx-3 font-bold">Follower</div>
+              <button className="mx-3 font-bold" onClick={showModal}>Follower</button>
+              {modalOpen && <FollowerModal senduserID={userId} setModalOpen={setModalOpen} />}
+              
+              
               <div className="mx-3 font-bold">Following</div>
               <div className="userprofile-gender mx-3 font-bold">
                 {userInfo.gender}
@@ -130,43 +134,49 @@ const getUserPosts = () => {
             </div>
           </div>
         </div>
-        <div className="myprofile-intro mb-5">{userInfo.introduceId ? userInfo.introduceId.self : ''}</div>
+        <div className="userprofile-intro mb-3">{userInfo.introduceId ? userInfo.introduceId.self : ''}</div>
       </div>
-
-      <div className="content-box grid grid-cols-2 place-content-center">
+      <div className="content-box grid grid-cols-2 place-content-center mb-5">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
-        {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
         <div
-          className="mx-16 flex place-content-center text-4xl"
+          className="mx-16 flex place-content-center font-bold text-4xl"
           onClick={() => setViewPost(!viewPost)}
         >
           About
         </div>
 
         <div
-          className="mx-16 flex place-content-center text-4xl"
+          className="mx-16 flex place-content-center font-bold text-4xl"
           onClick={() => setViewPost(!viewPost)}
         >
           Posts
         </div>
-      </div>
-      <div className="about-me grid grid-cols-1">
+        
+    </div>
+
+      <div className="user-about-me">
+        <hr className="user-about-me-hr"/>
         {!viewPost ? (
-          <div className="grid grid-rows-4 grid-flow-row gap-24 mt-3 w-96 about-box">
-            <div className="">
-              <div className="text-xl mt-5">
-                I will show you : {userInfo.introduceId ? userInfo.introduceId.plan: ''}
-              </div>
+          <div className="flex flex-col userprofile-about-box mt-5">
+            <div className="text-4xl font-semibold">
+              I will show you
             </div>
-            <div className="">
-              <div className="text-xl">
-                About me : {userInfo.introduceId ? userInfo.introduceId.title: ''}
-              </div>
+            <div className="capitalize text-2xl mt-5">
+              {userInfo.introduceId ? userInfo.introduceId.plan: ''}
             </div>
-            <div className="">
-              <div className="text-xl">
-                Language : {userInfo.introduceId ? userInfo.introduceId.language: ''}
-              </div>
+            
+            <div className="text-4xl font-semibold mt-10">
+              About me
+            </div>
+            <div className="capitalize text-2xl mt-5">
+              {userInfo.introduceId ? userInfo.introduceId.title: ''}
+            </div>
+      
+            <div className="text-4xl font-semibold mt-10">
+              Language
+            </div>  
+            <div className="capitalize text-2xl mt-5">
+              {userInfo.introduceId ? userInfo.introduceId.language: ''}
             </div>
           </div>
         ) : (

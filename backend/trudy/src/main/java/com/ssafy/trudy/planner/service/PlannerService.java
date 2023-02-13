@@ -1,5 +1,7 @@
 package com.ssafy.trudy.planner.service;
 
+import com.ssafy.trudy.exception.ApiException;
+import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.planner.model.*;
 import com.ssafy.trudy.planner.repository.DayItemRepository;
@@ -247,5 +249,26 @@ public class PlannerService {
 
     public DayItem getDayItemById(Long dayItemId) {
         return dayItemRepository.findById(dayItemId).orElseThrow(() -> new RuntimeException("존재하지 않는 DayItem"));
+    }
+
+    public String daySequenceUpdate(Long dayId, String sequence) {
+        Day day = dayRepository.findById(dayId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+        day.setSequence(sequence);
+        dayRepository.save(day);
+        return sequence;
+    }
+
+    public String plannerSequenceUpdate(Long plannerId, String sequence) {
+        Planner planner = plannerRepository.findById(plannerId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+        planner.setSequence(sequence);
+        plannerRepository.save(planner);
+        return sequence;
+    }
+
+    public String dayItemSequenceUpdate(Long dayItemId, String sequence) {
+        DayItem dayItem = dayItemRepository.findById(dayItemId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+        dayItem.setSequence(sequence);
+        dayItemRepository.save(dayItem);
+        return sequence;
     }
 }

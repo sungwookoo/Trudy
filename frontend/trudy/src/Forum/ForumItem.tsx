@@ -10,6 +10,7 @@ interface propsTypes {
   image: string;
   forum_image: string;
   url: string | undefined;
+  id: number;
 }
 
 // 타입 수정해주기
@@ -20,7 +21,7 @@ function ForumItem({ post }: any) {
 
   const navigate = useNavigate();
   const navigateToForumDetail = () => {
-    navigate("/ForumDetail");
+    navigate(`/post/${forumTextData.id}`)
   };
 
   return (

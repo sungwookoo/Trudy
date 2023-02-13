@@ -50,6 +50,7 @@ function TrudyMap() {
   const myInfoUrl = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
 
+  // 로그인 정보받아서 -> 북마크 불러와서 -> id 리스트 만들어주기
   useEffect(() => {
     (async () => {
       if (islogged.isLoggedIn) {
@@ -60,7 +61,6 @@ function TrudyMap() {
             },
           });
           setMemberId(myInfoResponse.data.id);
-          console.log(myInfoResponse.data);
         } catch (error) {
           console.error(error);
         }
@@ -68,7 +68,12 @@ function TrudyMap() {
       if (memberId) {
         try {
           const bookmarkResponse = await axios.get(
-            `api/bookmark?memberId=${memberId}`
+            `api/bookmark?memberId=${memberId}`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
           );
           setbookmarkList(bookmarkResponse.data);
         } catch (error) {
@@ -79,14 +84,14 @@ function TrudyMap() {
   }, [memberId]);
 
   useEffect(() => {
+    const tempbookMark: any = [];
     if (bookmarkList) {
-      setbookmarkedIds((prevIds) => [
-        ...prevIds,
-        ...bookmarkList.map((bookmark: any) => bookmark.id),
-      ]);
+      bookmarkList.map((bookmark: any) => tempbookMark.push(bookmark.id));
     }
+    setbookmarkedIds(tempbookMark);
   }, [bookmarkList]);
 
+  console.log(bookmarkList, "메인페이지임");
   // 길찾기
   // const [directions, setDirections] = useState(null);
   // const [origin, setOrigin] = useState({ lat: 37.4602, lng: 126.4407 });
@@ -100,8 +105,8 @@ function TrudyMap() {
     setZoom(20);
     setMarker({ lat, lng });
   };
-  console.log(bookmarkedIds);
-  // map 생성
+
+  // map 생성x
   const onLoad = React.useCallback(
     function callback(map: any) {
       const bounds = new window.google.maps.LatLngBounds(center);
@@ -153,6 +158,9 @@ function TrudyMap() {
                   <Bookmark
                     bookmarkedIds={bookmarkedIds}
                     bookmarkList={bookmarkList}
+                    setbookmarkedIds={setbookmarkedIds}
+                    memberId={memberId}
+                    setbookmarkList={setbookmarkList}
                   ></Bookmark>
                 ) : (
                   // ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -161,13 +169,18 @@ function TrudyMap() {
                     onPlaceClick={updateCenter}
                     bookmarkedIds={bookmarkedIds}
                     setbookmarkedIds={setbookmarkedIds}
+                    memberId={memberId}
+                    setbookmarkList={setbookmarkList}
                   />
                 )}
               </>
             ) : (
               // --------------------------------------------------------------------------
               // 로그인 안되어있는 경우
-              <Place onPlaceClick={updateCenter} />
+              <Place
+                bookmarkedIds={bookmarkedIds}
+                setbookmarkedIds={setbookmarkedIds}
+              />
             )}
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -224,16 +237,31 @@ function TrudyMap() {
                     <Bookmark
                       bookmarkedIds={bookmarkedIds}
                       bookmarkList={bookmarkList}
+                      setbookmarkedIds={setbookmarkedIds}
+                      memberId={memberId}
+                      setbookmarkList={setbookmarkList}
                     ></Bookmark>
                   ) : (
                     <div className="flex flex-column">
-                      <Place setbookmarkedIds={setbookmarkedIds} />
+                      <Place
+                        onPlaceClick={updateCenter}
+                        bookmarkedIds={bookmarkedIds}
+                        setbookmarkedIds={setbookmarkedIds}
+                        memberId={memberId}
+                        setbookmarkList={setbookmarkList}
+                      />
                     </div>
                   )}
                 </>
               ) : (
                 <div className="flex flex-column">
-                  <Place setbookmarkedIds={setbookmarkedIds} />
+                  <Place
+                    onPlaceClick={updateCenter}
+                    bookmarkedIds={bookmarkedIds}
+                    setbookmarkedIds={setbookmarkedIds}
+                    memberId={memberId}
+                    setbookmarkList={setbookmarkList}
+                  />
                 </div>
               )}
             </div>
