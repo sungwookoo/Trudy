@@ -59,6 +59,7 @@ function Profile() {
       .catch((err: any) => console.error(err));
   }, []);
 
+  // 프로필 이미지 업로드
   const handleProfilePictureUpload = (event: any) => {
     const file = event.target.files[0];
     const formData = new FormData();
@@ -71,7 +72,7 @@ function Profile() {
         },
       })
       .then((res) => {
-        setProfile({ ...profile, image: res.data.image });
+        setProfile({ ...profile, image: res.data.imageUrl });
         console.log(res, "업로드 성공");
       })
       .catch((err) => {

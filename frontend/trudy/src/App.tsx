@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
@@ -25,6 +25,25 @@ function App() {
   // Code to handle form submission
   const writeArticle = (event: React.FormEvent<HTMLFormElement>) => {};
   const authCtx = useContext(AuthContext);
+  // const [profileImage, setProfileImage] = useState(null);
+  // const token = "bearer " + localStorage.getItem("token");
+
+  // useEffect(() => {
+  //   const fetchProfileImage = async () => {
+  //     try {
+  //       const response = await axios.get("api/member/me", {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       });
+  //       setProfileImage(response.data.image);
+  //       console.log(profileImage, "정보");
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchProfileImage();
+  // }, [token]);
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token")

@@ -14,7 +14,7 @@ const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
   return (
     <div className="flex flex-wrap">
       {areaCode.map((areaCode, i) => (
-        <div className="p-2">
+        <div className="p-1">
           <label
             key={i}
             htmlFor={`classification-${areaCode.id}`}
@@ -24,7 +24,7 @@ const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
               type="radio"
               name="areaCode"
               id={`classification-${areaCode.id}`}
-              className="mr-1 color-green-500"
+              className="mr-0.5 color-green-500"
               onClick={() => {
                 onClick(areaCode.id, areaCode.name);
               }}

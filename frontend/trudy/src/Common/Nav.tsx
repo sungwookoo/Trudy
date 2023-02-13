@@ -1,24 +1,44 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import NewLogo from "../assets/NewLogo.png";
 import AuthContext from "./authContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import NavImage from "./NavImage";
 
-const Nav = () => {
+function Nav(navProfileImg: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const [profile, setProfile] = useState<any>(null);
   const openDropDown = () => {
     setIsOpen(!isOpen);
   };
+  const token = "bearer " + localStorage.getItem("token");
 
   // const navigateToProfile = useNavigate()
   // navigateToProfile('/profile')
-
+  const navproImg = navProfileImg;
   const authCtx = useContext(AuthContext);
   const signOut = () => {
     authCtx.signOut();
   };
+
+  // useEffect(() => {
+  //   const getprofile = async () => {
+  //     try {
+  //       const response = await axios.get("api/member/me", {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       });
+  //       setProfile(response.data);
+  //       console.log(profile, "정보");
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getprofile();
+  // }, []);
 
   // 이하 HTML
 
@@ -86,11 +106,12 @@ const Nav = () => {
         ) : (
           <>
             <div className="nav-item flex flex-row items-center">
-              <img
+              <NavImage />
+              {/* <img
                 className="nav-profile-img mr-12"
-                src="https://blog.kakaocdn.net/dn/FSvHG/btrzdoAbEI0/WA1kfeo9BFC8n8GOe39U31/img.webp"
+                src={navproImg}
                 alt="navProfileImage"
-              />
+              /> */}
               <NavLink className="nav-link" to="/profile">
                 Profile
               </NavLink>
@@ -105,6 +126,6 @@ const Nav = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Nav;

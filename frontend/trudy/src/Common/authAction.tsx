@@ -19,7 +19,11 @@ const calculateRemainingTime = (expirationTime: number) => {
 };
 
 // 토큰값과 만료시간을 localStorage에 저장하는 함수
-export const signInTokenHandler = (token: string, refreshToken: string, expirationTime: number) => {
+export const signInTokenHandler = (
+  token: string,
+  refreshToken: string,
+  expirationTime: number
+) => {
   localStorage.setItem("token", token);
   localStorage.setItem("refreshToken", refreshToken);
   localStorage.setItem("expirationTime", String(expirationTime));
@@ -51,7 +55,10 @@ export const retrieveStoredToken = () => {
 };
 
 // 토큰을 재발행하는 함수
-export const refreshTokenHandler = (accessToken: string, refreshToken: string) => {
+export const refreshTokenHandler = (
+  accessToken: string,
+  refreshToken: string
+) => {
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
   const response = POST(url, token, {});
@@ -98,6 +105,10 @@ export const signInActionHandler = (email: string, password: string) => {
   const url = "/api/login";
   const data = { email, password };
   const response = POST(url, data, {});
+  // console.log(response.then(), "여기체크");
+  response.then((res) => {
+    console.log(res, 545645135153);
+  });
   return response;
 };
 
@@ -116,7 +127,7 @@ export const signOutActionHandler = (token: string) => {
 // 스퀘어 유저의 정보를 GET방식으로 호출
 export const getUserActionHandler = (params: any) => {
   const url = "/api/member";
-  const response = GET(url, { params } );
+  const response = GET(url, { params });
   return response;
 };
 
@@ -154,12 +165,8 @@ export const getPlanner = (memberId: number) => {
   return response;
 };
 
-
-export const createPlan = (
-  memberId: number,
-  sequence: number
-) => {
+export const createPlan = (memberId: number, sequence: number) => {
   const url = "/api/planner/post";
-  const data = {memberId: memberId, sequence: sequence}
-  const response = POST(url, data, {} )
-}
+  const data = { memberId: memberId, sequence: sequence };
+  const response = POST(url, data, {});
+};
