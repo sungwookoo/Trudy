@@ -149,14 +149,9 @@ public class PostService {
 
     }
 
-    //포럼 게시글 작성
-    public void addPost(/*String title,
-                        String content,
-                        *//*MultipartFile[] upload,*//*
-                        Long[] sigunguIdList,
-                        Long memberId,
-                        CategoryName[] categoryList*/
-                         PostDto.InsertPost insertPostDto){
+    //포럼 게시글 작성 - 정상 동작
+    @Transactional
+    public void addPost(PostDto.InsertPost insertPostDto) throws Exception {
         //entity화를 한다 -> 저장한다(posts먼저 새기고 id 가져와서 나머지 애들 새긴다.)
 
         //1. post entity 만들어서 저장 후 id 가져오기 -> thumbnail 은 나중에 따로 추가
@@ -166,7 +161,7 @@ public class PostService {
         postRepository.save(postEntityInsert);
         log.info("postId test ======= " + postEntityInsert);
 
-        //2. image, category, area 저장
+        //2. area, category 저장
         List<PostArea> postAreaList = new ArrayList<>();
         for(Long sigunguid : insertPostDto.getSigunguIdList()){
             PostArea postArea = PostArea.builder()
@@ -187,7 +182,7 @@ public class PostService {
         postCategoryRepository.saveAll(postCategoryList);
 
         //3. thumbnail 이미지 저장
-        postEntityInsert.setThumbnailImage("test");
+        postEntityInsert.setThumbnailImage(insertPostDto.getThumbnailImage());
         /*
          * 프론트에서 최종적으로 제출할 이미지 정보를 담은 리스트를 줘야함
          * 예) {{url : "example1.com", filename: "example1.jpg"}, {url : "example3.com", filename: "example3.jpg"}, {url : "example5.com", filename: "example5.jpg"}}
@@ -206,9 +201,7 @@ public class PostService {
 
     //포럼 게시글 수정 - ck에디터와 연관
     @Transactional
-    public void modifyPost(Long postId, /*String title, String content, *//*MultipartFile[] upload,*//*
-                           Long[] sigunguIdList, CategoryName[] categoryList*/
-                            PostDto.InsertPost insertPostDto){
+    public void modifyPost(Long postId, PostDto.InsertPost insertPostDto){
         log.info("service - update start");
         // post는 수정, postImage, postArea, postCategory는 삭제 후 다시 저장
             //사진 보류

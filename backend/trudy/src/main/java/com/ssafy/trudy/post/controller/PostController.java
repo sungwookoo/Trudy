@@ -64,66 +64,52 @@ public class PostController {
                     pageable);
     }
 
-    //포럼 게시글 작성 - 정상 동작
+    //포럼 게시글 작성 - 정상 동작 ()
     @PostMapping
-    public void /*ResponseEntity<?>*/ postAdd(/*@RequestParam String title,
-                        @RequestParam String content,
-//                        @RequestParam MultipartFile[] upload,
-                        @RequestParam Long[] sigunguIdList,
-                        @RequestParam Long memberId,
-                        @RequestParam CategoryName[] categoryList*/
-            /*@RequestBody PostDto.InsertPost insertPostDto*/
-            /*@RequestParam(value="upload", required = false) MultipartFile upload*/){
-
-
+    public  ResponseEntity<?> postAdd(@RequestBody PostDto.InsertPost insertPostDto){
 
         try{
  /*           //        postService.addPost(title, content, upload, sigunguId, memberId, category);
             //postService.addPost(title, content, sigunguIdList,memberId, categoryList);*/
-           // postService.addPost(insertPostDto);
+            log.info(insertPostDto.toString());
+            postService.addPost(insertPostDto);
             log.info("============== test complete ===========");
 
             //for(int i=0; i<upload.length; i++)log.info( i + "check : " + upload[i].getOriginalFilename());
             //log.info(insertPostDto.getUpload().toString());
-            log.info("controller ========== try ok");
+            log.info("try ok");
             //log.info("filename :  " + upload.getOriginalFilename());
-            //return ResponseEntity.ok().build();
-            return;
+            return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
             //log.info("controller ========== try bad");
             //return ResponseEntity.ok().build();
-            //return ResponseEntity.internalServerError().build();
-            return;
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     //포럼 게시글 이미지 업로드
     @PostMapping("/upload")
-    public Map<String, String> addMemberImage(@RequestParam(required = false, name = "upload") MultipartFile multipartFile) throws IOException {
+    public Map<String, String> imageUpload(@RequestParam(required = false, name = "upload") MultipartFile multipartFile) throws IOException {
         return postService.createPostFile(multipartFile, "post");
     }
 
     //포럼 게시글 이미지 삭제
-    @PostMapping("/image/delete")
-    public void ImageUpload(@RequestParam List<String> saveFileNameArr){
+    @DeleteMapping("/upload")
+    public void imageRemove(@RequestParam List<String> deleteFileNameArr){
         //log.info("전자");
         //log.info(fileNameList.toString());
-        log.info("후자");
-        log.info(saveFileNameArr.toString());
+        log.info("==========controller - imageRemove - get param===========");
+        for(String s : deleteFileNameArr)log.info(s);
         //log.info(insertPostDto.getData().toString());
-        //postService.deleteAllImage(data);
+        postService.deleteAllImage(deleteFileNameArr);
+        log.info("==========controller - imageRemove - end===========");
     }
 
 
     //포럼 게시글 수정 - 정상 동작
     @PutMapping("/{post_id}")
     public ResponseEntity<?> postModify(@PathVariable("post_id") Long postId,
-                           /*@RequestParam String title,
-                           @RequestParam String content,
-//                        @RequestParam MultipartFile[] upload,
-                           @RequestParam Long[] sigunguIdList,
-                           @RequestParam CategoryName[] categoryList*/
                                 @RequestBody PostDto.InsertPost insertPostDto){
         try{
             //postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
