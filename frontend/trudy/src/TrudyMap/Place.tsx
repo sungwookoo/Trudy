@@ -7,7 +7,6 @@ import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
-import LoadingScreen from "../Common/Loding";
 
 export type mapPlaceType = {
   id: number;
@@ -24,13 +23,7 @@ export type mapPlaceType = {
   zipcode: string | undefined;
 };
 
-function Place({
-  onPlaceClick = () => {},
-  bookmarkedIds,
-  setbookmarkedIds,
-  memberId,
-  setbookmarkList,
-}: any) {
+function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList }: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   // 관광 정보 query
@@ -77,8 +70,7 @@ function Place({
     const fetchData = async () => {
       try {
         const resData: any = await axios.get(
-          API_URL +
-            `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
+          API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
         );
         setPlaces(resData.data);
       } catch (error) {
@@ -95,22 +87,11 @@ function Place({
       {/* 지역 버튼 */}
       <div>
         <div>
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`p-2 m-2 rounded-lg  ${
-              !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
-            }`}
-          >
+          <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
             Area Select
           </button>
           <div>
-            {!isCollapsed && (
-              <AreaSelect
-                key={0}
-                areaCode={areaList}
-                onClick={handleAreaClick}
-              />
-            )}
+            {!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}
             {!isCollapsed && selectedAreaCode && (
               <SigunguSelect
                 key={selectedAreaCode}
@@ -124,10 +105,7 @@ function Place({
           </div>
         </div>
         {/* 카테고리 */}
-        <CategoryButtons
-          onClick={handleCategoryClick}
-          selectedCategories={contentTypeId}
-        />
+        <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
       </div>
       <div className="flex flex-wrap">
         {places ? (
@@ -155,4 +133,4 @@ function Place({
   );
 }
 
-export default React.memo(Place);
+export default Place;
