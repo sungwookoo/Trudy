@@ -86,15 +86,10 @@ function TrudyMap() {
   }, [bookmarkList]);
 
   console.log(bookmarkList, "메인페이지임");
-  // 길찾기
-  // const [directions, setDirections] = useState(null);
-  // const [origin, setOrigin] = useState({ lat: 37.4602, lng: 126.4407 });
-  // const [destination, setDestination] = useState({
-  //   lat: 37.5665,
-  //   lng: 126.978,
-  // });
+
   // 선택시 센터 위도 경도 업데이트
   const updateCenter = (lat: number, lng: number) => {
+    console.log("동작중ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ1123");
     setCenter({ lat, lng });
     setZoom(20);
     setMarker({ lat, lng });
@@ -107,12 +102,15 @@ function TrudyMap() {
       setMap(map);
       setZoom(14);
     },
-    [zoom, center]
+    [zoom, setCenter]
   );
 
-  const onUnmount = React.useCallback(function callback() {
-    setMap(null);
-  }, []);
+  const onUnmount = React.useCallback(
+    function callback() {
+      setMap(map);
+    },
+    [center]
+  );
   return (
     <div className="flex h-screen">
       {/* 지도 보이는 경우 -------------------------------------------------------------------------- */}
@@ -146,6 +144,7 @@ function TrudyMap() {
                     setbookmarkedIds={setbookmarkedIds}
                     memberId={memberId}
                     setbookmarkList={setbookmarkList}
+                    onPlaceClick={updateCenter}
                   ></Bookmark>
                 ) : (
                   // ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -253,4 +252,4 @@ function TrudyMap() {
   );
 }
 
-export default TrudyMap;
+export default React.memo(TrudyMap);
