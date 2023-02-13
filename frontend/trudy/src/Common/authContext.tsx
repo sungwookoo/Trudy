@@ -222,7 +222,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // planner의 plan을 생성하는 함수
   const createPlannerPlan = (memberId: number, sequence: number) => {
     const response = authAction.createPlan(memberId, sequence);
-    console.log(memberId, sequence)
+
     return response;
   };
 
