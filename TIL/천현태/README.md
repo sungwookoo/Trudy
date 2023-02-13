@@ -574,6 +574,98 @@ LoadScript googleMapsApiKey="API KEY" region="US" language="en">
 
 ---
 
+## 02.06 & 02.07
+
+#### 주 내용
+
+- 지역 필터 완성
+	- 대분류 -> 지역 코드 넘겨줘서 -> 중분류 collapse check box 구현
+	- [대분류, 지역코드] 로 api 요청해주고 싶었는데 특수 문자라서 따로 특수 처리 필요
+- api 요청 문제 해결하기 위해 여러 가지 방법 탐색
+	- 문자열로 변경하는 것은 Back 에서 처리할 일이 더 많은 것 같아서 패스
+	- stringfy를 통해 문자열로 만들어 준후
+	- encodeURI 이용
+		- -> 2중 인코딩이 되어서 %5B 앞에 25가 더 붙는 문제 발생
+- 밤새 해결 못하다가.. 백엔드에게 로직 변경 부탁
+
+
+
+---
+
+## 02.08
+
+#### 주 내용
+
+- 기존 -> 2중 리스트 및 리스트의 대괄호를 encoding 되게 받은 후 decoding하여 response data 작성
+- 현재 -> 리스트 괄호 빼고 전송 -> 숫자 순회하며 response data 전송
+- 길찾기 시도 중 무한 루프 돌아서 1분만에 1500회 요청;; 
+- 길찾기 미뤄두고 현재 Front 진행 상황 정리와 우선 순위 결정
+
+#### 깨달은 점
+
+- api에 요청은 쉬운줄 알았건만.. back과 많은 얘기가 필요한 부분이였다
+- 길찾기 api.. 우리가 보는 화면처럼 ui도 주는 줄 알았는데 아니였다..
+- 끝날 때 까지 ㅎㅇㅌ.. 
+
+
+---
+
+
+## 02.09
+
+- 지역 필터 로직 완성
+	- 고유 값인 ID로 멀티 체크박스에 들어있는 지 확인
+	- api 요청은 [대분류코드, 소분류코드] 로 전송되어야 해서 변환해줌
+	- onChange 함수 내에 상태 변경 코드와 state 조회를 같이 사용하여 비동기처리로 인해 한 박자 늦게 조회되는 이슈 발생
+
+```typescript
+	onChange={() => {
+
+              if (selectedSigungu.includes(sigunguInfo.id)) {
+
+                const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
+
+                setSelectedSigungu(filteredSigungu);
+
+              } else {
+
+                setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);
+
+              }
+
+            }}
+```
+
+- 아래와 같이 useEffect로 빼주며 해결
+
+```typescript
+
+useEffect(() => {
+
+    const tempSigunCodeArray: any = [];
+
+    selectedSigungu.map((codeId: any, i: any) => {
+
+      tempSigunCodeArray.push(...AreaPlusSigungu[codeId]);
+
+    });
+
+    setConvertSigungu(tempSigunCodeArray);
+
+  }, [selectedSigungu]);
+```
+
+
+
+- 카테고리 필터 로직 완성
+- navigate 사용시 api_url 앞에 / 안 붙여주면 현재 페이지 주소에 붙어서 들어감
+
+```typescript
+ const userInfo = axios.get(`/${API_URL}/${userId.id}`);
+```
+
+---
+
 ## 02.11
 
 #### 주 내용
@@ -685,3 +777,28 @@ try {
 
     console.log(memberId);
 ```
+
+
+---
+
+## 02.13
+
+#### 주 내용
+
+- 북마크 리스트 실시간 반영 안되는 것 해결
+	- 북마크 리스트 페이지에 조건문이 하나 붙어 있어서 렌더링이 새로 되지 않았음!
+- 북마크 리스트 지도에 띄워주기
+	- 북마크 리스트를 받으며 id로 변환해주는 함수 밑에 해당 정보의 mapx와 mapy를 받아와 새로운 리스트 생성
+	- <MarkerF> 해당 리스트 map 돌리며 실행
+- 공식 문서 참고하며 커스텀 해주기
+
+
+
+
+#### 깨달은 점
+
+- 역시 공식문서도 잘 찾아봐야 되는 것 같다.
+- 코드에서 궁금했던 점을 구글링과 공식 문서를 통해 사용 방법, 원리를 파악할 수 있었고 이를 적용시켰다.
+- 물론, stackoverflow도 신..
+	- 영어 공부하자..
+- 자소서도 열심히 쓰자..
