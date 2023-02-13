@@ -80,7 +80,9 @@ input:checked ~ .dot {
 .myprofile-intro {
   /* border-width: 2px;
   border-color: black; */
-  width: 800px;
+  margin-top: 10px;
+  width: 600px;
+  text-transform: capitalize;
 }
 
 .about-me {
@@ -97,7 +99,7 @@ input:checked ~ .dot {
   border-radius: 10px; */
 }
 
-.about-me-hr{
+.about-me-hr {
   background-color: black;
   height: 2px;
 }

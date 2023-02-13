@@ -22,7 +22,7 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
-  loggedInfo: {iss: "", auth: "", uid: ""},
+  loggedInfo: { iss: "", auth: "", uid: "" },
   signup: (
     email: string,
     password: string,
@@ -43,6 +43,8 @@ const AuthContext = React.createContext({
   //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
   createPlan: (memberId: number, sequence: number) => {},
+  createDay: (plannerId: number, day: string, memo: string) => {},
+  deleteDay: (dayId: number | null) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -66,10 +68,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
-  
-  let loggedInfo = {iss: "", auth: "", uid: ""}
-  if (token){
-  loggedInfo = jwtDecode(token) as any
+
+  let loggedInfo = { iss: "", auth: "", uid: "" };
+  if (token) {
+    loggedInfo = jwtDecode(token) as any;
   }
 
   // Account
@@ -118,12 +120,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       areaCode,
       sigunguCode
     );
-    response
-      .then((result) => {
-        setIsSuccess(true);
-        return result;
-      })
-      .catch((error) => alert(error.data.errorMessage));
+    response.then((result) => {
+      setIsSuccess(true);
+      return result;
+    });
   };
 
   //   로그인을 하는 함수
@@ -141,25 +141,24 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
             loginData.refreshToken,
             loginData.accessTokenExpiresIn
           )
-          
-          );
-          // const localToken = localStorage.getItem("token")
-          // if (localToken) {
-          //   setLoggedInfo(jwtDecode(localToken))
-          //   console.log(jwtDecode(localToken))
-          // console.log('loggedInfo', loggedInfo)
-          // }
-          setIsSuccess(true);
-        } else {
-          alert("Wrong ID or Password!");
-        }
-      });
+        );
+        // const localToken = localStorage.getItem("token")
+        // if (localToken) {
+        //   setLoggedInfo(jwtDecode(localToken))
+        //   console.log(jwtDecode(localToken))
+        // console.log('loggedInfo', loggedInfo)
+        // }
+        setIsSuccess(true);
+      } else {
+        alert("Wrong ID or Password!");
+      }
+    });
   };
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(() => {
     setToken("");
-    authAction.signOutActionHandler(token);
+    authAction.signOutActionHandler(loggedInfo.uid);
     // setLoggedEmail("");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
@@ -215,22 +214,37 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   // Planner 정보를 가져오는 함수
   const getPlannerHandler = () => {
-    const memberId = parseInt(loggedInfo.uid)
+    const memberId = parseInt(loggedInfo.uid);
     const response = authAction.getPlanner(memberId);
 
     return response;
   };
 
-
-  const createPlannerPlan = (
-    memberId: number,
-    sequence: number,
-  ) => {
+  // planner의 plan을 생성하는 함수
+  const createPlannerPlan = (memberId: number, sequence: number) => {
     const response = authAction.createPlan(memberId, sequence);
 
-    return response
-  }
+    return response;
+  };
 
+  // planner의 day를 생성하는 함수
+  const createPlannerDay = (
+    plannerId: number,
+    day: string,
+    memo: string
+    // sequence: number,
+  ) => {
+    const response = authAction.createDay(plannerId, day, memo);
+
+    return response;
+  };
+
+  // planner의 day를 삭제하는 함수
+  const deletePlannerDay = (dayId: number | null) => {
+    const response = authAction.deleteDay(dayId);
+
+    return response;
+  };
 
   // useEffect(() => {
   //   if (tokenData) {
@@ -257,6 +271,8 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // changePassword: changePaswordHandler,
     planner: getPlannerHandler,
     createPlan: createPlannerPlan,
+    createDay: createPlannerDay,
+    deleteDay: deletePlannerDay,
   };
 
   return (
