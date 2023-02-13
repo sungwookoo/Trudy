@@ -1,6 +1,7 @@
 import { access } from "fs";
 import React, { useState, useEffect, useCallback } from "react";
 import * as authAction from "./authAction";
+import jwtDecode from "jwt-decode";
 
 let logoutTimer: NodeJS.Timeout;
 
@@ -20,13 +21,28 @@ const AuthContext = React.createContext({
   isLoggedIn: false,
   isSuccess: false,
   isGetSuccess: false,
-  signup: (email: string, password: string, nickname: string) => {},
+  isVerified: false,
+  loggedInfo: {iss: "", auth: "", uid: ""},
+  signup: (
+    email: string,
+    password: string,
+    nickname: string,
+    gender: string,
+    birthday: string,
+    isLocal: string,
+    areaCode: number,
+    sigunguCode: number
+  ) => {},
+  sendCode: (email: string) => {},
+  emailVerified: (email: string) => {},
+  defaultVerified: () => {},
   login: (email: string, password: string) => {},
   signOut: () => {},
   getUser: (params: any) => {},
   //   changeNickname: (nickname: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
-  // planner: (userId: number) => {},
+  planner: () => {},
+  createPlan: (memberId: number, sequence: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -46,18 +62,68 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+  // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
+  
+  let loggedInfo = {iss: "", auth: "", uid: ""}
+  if (token){
+  loggedInfo = jwtDecode(token) as any
+  }
+
+  // Account
+
+  // 이메일 중복을 확인하고 인증 코드를 보내는 함수
+  const sendCode = async (email: string) => {
+    const response: any = await authAction.verifyEmail(email);
+    if (response === null) {
+      alert("this email is already in use!!");
+    } else {
+      alert("Verification code has been sent");
+      return response;
+    }
+  };
+
+  // 이메일 인증을 완료했음을 기록하는 함수
+  const emailVerified = (email: string) => {
+    setIsVerified(true);
+  };
+
+  // 이메일 인증상태를 초기화 시킨다
+  // signup 페이지로의 비정상 접근을 막는다
+  const defaultVerified = () => {
+    setIsVerified(false);
+  };
 
   //  회원가입을 하는 함수
-  const signupHandler = (email: string, password: string, nickname: string) => {
+  const signupHandler = (
+    email: string,
+    password: string,
+    nickname: string,
+    gender: string,
+    birthday: string,
+    isLocal: string,
+    areaCode: number,
+    sigunguCode: number
+  ) => {
     setIsSuccess(false);
-    const response = authAction.signUpActionHandler(email, password, nickname);
-    response.then((result) => {
-      if (result !== null) {
+    const response = authAction.signUpActionHandler(
+      email,
+      password,
+      nickname,
+      gender,
+      birthday,
+      isLocal,
+      areaCode,
+      sigunguCode
+    );
+    response
+      .then((result) => {
         setIsSuccess(true);
-      }
-    });
+        return result;
+      })
+      .catch((error) => alert(error.data.errorMessage));
   };
 
   //   로그인을 하는 함수
@@ -75,18 +141,26 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
             loginData.refreshToken,
             loginData.accessTokenExpiresIn
           )
-        );
-        setIsSuccess(true);
-      } else {
-        alert("Wrong ID or Password!")
-      }
-    })
+          
+          );
+          // const localToken = localStorage.getItem("token")
+          // if (localToken) {
+          //   setLoggedInfo(jwtDecode(localToken))
+          //   console.log(jwtDecode(localToken))
+          // console.log('loggedInfo', loggedInfo)
+          // }
+          setIsSuccess(true);
+        } else {
+          alert("Wrong ID or Password!");
+        }
+      });
   };
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(() => {
     setToken("");
-    authAction.signOutActionHandler();
+    authAction.signOutActionHandler(token);
+    // setLoggedEmail("");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
@@ -99,17 +173,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // if (tokenData.duration > 0) {
     //   console.log('재발행 시도')
     // }
-
     const data = await authAction.getUserActionHandler(params);
-    // data.then((result) => {
     if (data !== null) {
       const userData: UserInfo = data.data;
       setUserObj(userData);
       setIsGetSuccess(true);
       // }
     }
-    // console.log("data    1", data.data);
-    // console.log("data    2", data.data.content[0]);
     return data;
   };
 
@@ -141,16 +211,32 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   //     });
   //   };
 
+  // Planner
+
   // Planner 정보를 가져오는 함수
-  const getUserPlannerHandler = (userId: number) => {
-    authAction.getUserPlanner(userId);
+  const getPlannerHandler = () => {
+    const memberId = parseInt(loggedInfo.uid)
+    const response = authAction.getPlanner(memberId);
+
+    return response;
   };
 
-  useEffect(() => {
-    if (tokenData) {
-      logoutTimer = setTimeout(signOutHandler, tokenData.duration);
-    }
-  }, [tokenData, signOutHandler]);
+
+  const createPlannerPlan = (
+    memberId: number,
+    sequence: number,
+  ) => {
+    const response = authAction.createPlan(memberId, sequence);
+
+    return response
+  }
+
+
+  // useEffect(() => {
+  //   if (tokenData) {
+  //     logoutTimer = setTimeout(signOutHandler, tokenData.duration);
+  //   }
+  // }, [tokenData, signOutHandler]);
 
   const contextValue = {
     token,
@@ -158,13 +244,19 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     isLoggedIn: userIsLoggedIn,
     isSuccess,
     isGetSuccess,
+    isVerified,
+    loggedInfo,
+    sendCode: sendCode,
+    emailVerified: emailVerified,
+    defaultVerified: defaultVerified,
     signup: signupHandler,
     login: loginHandler,
     signOut: signOutHandler,
     getUser: getUserHandler,
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,
-    // planner: getUserPlannerHandler,
+    planner: getPlannerHandler,
+    createPlan: createPlannerPlan,
   };
 
   return (

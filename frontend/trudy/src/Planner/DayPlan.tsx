@@ -1,43 +1,53 @@
 import React, { useState } from "react";
 
-function DayPlan() {
-  const [selectedTab, setSelectedTab] = useState("tab1");
+function DayPlan(dayPlan: any) {
+  const [selectedTab, setSelectedTab] = useState<number | null>(1);
+  console.log("dayPlan       ", dayPlan);
   return (
-    <div className="flex flex-col">
-      <nav className="flex-col-8 absolute right-0">
-        <ul className="list-none">
-          <li>
-            <a
-              href="#tab1"
-              className={`font-medium block px-4 py-2 text-left text-gray-700 rounded-t hover:text-gray-900 ${
-                selectedTab === "tab1" ? "bg-gray-200" : ""
-              }`}
-              onClick={() => setSelectedTab("tab1")}
-            >
-              Tab 1
-            </a>
-          </li>
-          <li>
-            <a
-              href="#tab2"
-              className={`font-medium block px-4 py-2 text-left text-gray-700 rounded-t hover:text-gray-900 ${
-                selectedTab === "tab2" ? "bg-gray-200" : ""
-              }`}
-              onClick={() => setSelectedTab("tab2")}
-            >
-              Tab 2
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div className="flex-grow">
-        <div className={`p-4 ${selectedTab === "tab1" ? "block" : "hidden"}`}>
-          Content of Tab 1
-        </div>
-        <div className={`p-4 ${selectedTab === "tab2" ? "block" : "hidden"}`}>
-          Content of Tab 2
-        </div>
-      </div>
+    <div className="flex-col-10 absolute right-0">
+      {dayPlan.dayPlan.map(
+        (
+          plan: {
+            id: number;
+            day: string;
+            memo: string;
+            dayItemList: any;
+          },
+          i: number
+        ) => {
+          return (
+            <div className="" key={i}>
+              <nav className="">
+                <ul className="list-none">
+                  <li>
+                    <input
+                      type="button"
+                      className={`font-bold block px-4 py-2 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900 ${
+                        selectedTab !== null && selectedTab === plan.id
+                          ? "bg-trudy"
+                          : ""
+                      }`}
+                      onClick={() => setSelectedTab(plan.id)}
+                      value={plan.day}
+                    ></input>
+                  </li>
+                </ul>
+              </nav>
+              <div className="flex-grow">
+                <div
+                  className={`p-4 ${
+                    selectedTab !== null && selectedTab === plan.id
+                      ? "block"
+                      : "hidden"
+                  }`}
+                >
+                  {plan ? plan.id : ""}
+                </div>
+              </div>
+            </div>
+          );
+        }
+      )}
     </div>
   );
 }

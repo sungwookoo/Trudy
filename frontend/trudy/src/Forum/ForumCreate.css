@@ -1,28 +1,37 @@
 .forum-create-container{
   width: auto;
-  height: 700px;
+  height: 95vh;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: brown;
+  flex-direction: column;
+  padding-top: 100px;
+  /* justify-content: center; */
+  align-items: center;
+  background-color: rgb(237, 248, 239);
 }
 
 .forum-title-container{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  
+  flex-direction: row;
+  /* align-items: center; */
+  margin-top: 30px;
+  /* background-color: aqua; */
   /* justify-content: ; */
 }
 
 .forum-title{
-  width: 500px;
+  width: 800px;
   height: 50px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  border-radius: 2px;
+  border-width: 0.5px;
 }
 
+.forum-text-editor{
+  width: 800px;
+  /* height: 300px; */
+  margin-bottom: 30px;
 
+}
 
 
 .forum-create-box{
