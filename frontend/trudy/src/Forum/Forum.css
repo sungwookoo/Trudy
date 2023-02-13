@@ -21,6 +21,7 @@
 .cat-selectors {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   /* width: 200px; */
   /* width: 150px; */
