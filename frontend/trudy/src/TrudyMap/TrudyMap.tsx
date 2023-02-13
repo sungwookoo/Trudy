@@ -6,7 +6,6 @@ import Place from "./Place";
 import axios from "axios";
 import AuthContext from "../Common/authContext";
 import Bookmark from "../Common/Bookmark";
-import MapMarker from "./MapMarker";
 
 const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
@@ -178,8 +177,10 @@ function TrudyMap() {
                   <MarkerF
                     key={index}
                     position={{ lat: parseFloat(bookmark.mapy), lng: parseFloat(bookmark.mapx) }}
-                    icon={"https://cdn-icons-png.flaticon.com/128/8637/8637632.png"}
-                    animation={google.maps.Animation.DROP}
+                    icon={{
+                      url: "https://cdn-icons-png.flaticon.com/128/8637/8637632.png",
+                      scaledSize: new google.maps.Size(30, 30),
+                    }}
                   />
                 ))}
               </GoogleMap>

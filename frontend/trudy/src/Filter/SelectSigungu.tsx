@@ -21,13 +21,7 @@ type Props = {
   setSelectedSigungu: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
-const SigunguSelect = ({
-  area,
-  selectSigunguCode,
-  selectedSigungu,
-  setSelectedSigungu,
-  setConvertSigungu,
-}: Props) => {
+const SigunguSelect = ({ area, selectSigunguCode, selectedSigungu, setSelectedSigungu, setConvertSigungu }: Props) => {
   useEffect(() => {
     const tempSigunCodeArray: any = [];
     selectedSigungu.map((codeId: any, i: any) => {
@@ -47,18 +41,14 @@ const SigunguSelect = ({
             checked={selectedSigungu.includes(sigunguInfo.id)}
             onChange={() => {
               if (selectedSigungu.includes(sigunguInfo.id)) {
-                const filteredSigungu = selectedSigungu.filter(
-                  (id: number) => id !== sigunguInfo.id
-                );
+                const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
                 setSelectedSigungu(filteredSigungu);
               } else {
                 setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);
               }
             }}
           />
-          <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-            {sigunguInfo.name}
-          </label>
+          <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
         </div>
       ))}
     </div>
