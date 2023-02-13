@@ -23,14 +23,7 @@ type PlaceFormProps = {
   memberId?: number;
 };
 
-function PlaceForm({
-  place,
-  onClick = () => {},
-  bookmarkedIds = [],
-  setbookmarkedIds,
-  setbookmarkList,
-  memberId,
-}: PlaceFormProps) {
+function PlaceForm({ place, onClick = () => {}, bookmarkedIds = [], setbookmarkedIds, setbookmarkList, memberId }: PlaceFormProps) {
   // state 정의 ----------------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
   const token = "bearer " + localStorage.getItem("token");
@@ -49,9 +42,7 @@ function PlaceForm({
     const isBookmarked = place.id ? bookmarkedIds?.includes(place.id) : false;
     if (isBookmarked) {
       try {
-        const updatedBookmarkedIds = bookmarkedIds.filter(
-          (id) => id !== place.id
-        );
+        const updatedBookmarkedIds = bookmarkedIds.filter((id) => id !== place.id);
         setbookmarkedIds(updatedBookmarkedIds);
         await axios.delete(`api/bookmark/delete`, {
           headers: {
@@ -63,14 +54,11 @@ function PlaceForm({
         console.error(error);
       }
       try {
-        const nowBookMark = await axios.get(
-          `api/bookmark?memberId=${memberId}`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`, {
+          headers: {
+            Authorization: token,
+          },
+        });
         setbookmarkList(nowBookMark.data);
       } catch (error) {
         console.error(error);
@@ -82,8 +70,7 @@ function PlaceForm({
         data.append("memberId", JSON.stringify(memberId));
         data.append("placeId", JSON.stringify(place.id));
         {
-          !bookmarkedIds.includes(place.id) &&
-            setbookmarkedIds([...bookmarkedIds, place.id]);
+          !bookmarkedIds.includes(place.id) && setbookmarkedIds([...bookmarkedIds, place.id]);
         }
         await axios.post(`api/bookmark/post`, data, {
           headers: {
@@ -95,14 +82,11 @@ function PlaceForm({
         console.error(error);
       }
       try {
-        const nowBookMark = await axios.get(
-          `api/bookmark?memberId=${memberId}`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`, {
+          headers: {
+            Authorization: token,
+          },
+        });
         setbookmarkList(nowBookMark.data);
       } catch (error) {
         console.error(error);
@@ -113,26 +97,18 @@ function PlaceForm({
 
   const isBookmarked = place.id ? bookmarkedIds?.includes(place.id) : false;
   return (
-    <div
-      className="max-w-sm rounded overflow-hidden shadow-lg m-5"
-      onClick={handleClick}
-      style={{ cursor: "pointer" }}
-    >
+    <div className="max-w-sm rounded overflow-hidden shadow-lg m-5" onClick={handleClick} style={{ cursor: "pointer" }}>
       <img className="w-full" src={place.firstimage} alt="Place thumbnail" />
       <div className="px-6 py-4">
         <h3 className="font-bold text-xl mb-2">{place.title}</h3>
       </div>
       {memberId && (
         <img
-          src={
-            isBookmarked
-              ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png"
-              : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"
-          }
+          src={isBookmarked ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png" : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"}
           alt="bookmark"
           onClick={handleBookmarkClick}
           style={{ cursor: "pointer" }}
-          className="w-32"
+          className="w-16"
         />
       )}
       {isLoading && <div>Loading...</div>}
@@ -140,4 +116,4 @@ function PlaceForm({
   );
 }
 
-export default PlaceForm;
+export default React.memo(PlaceForm);
