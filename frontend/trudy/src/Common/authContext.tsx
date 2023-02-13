@@ -70,10 +70,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const userIsLoggedIn = !!token;
 
   let loggedInfo = { iss: "", auth: "", uid: "" };
-  if (token) {
-    loggedInfo = jwtDecode(token) as any;
-  }
-
+  useEffect(() => {
+    if (token) {
+      loggedInfo = jwtDecode(token) as any;
+    }
+    
+  }, [token])
+  // console.log('로그인 정보', loggedInfo)
   // Account
 
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
@@ -159,6 +162,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const signOutHandler = useCallback(() => {
     setToken("");
     authAction.signOutActionHandler(loggedInfo.uid);
+    console.log('authctx', loggedInfo.uid)
     // setLoggedEmail("");
     if (logoutTimer) {
       clearTimeout(logoutTimer);

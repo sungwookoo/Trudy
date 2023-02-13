@@ -72,9 +72,9 @@ public class AuthAppController {
                     @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
             })
 
-    @DeleteMapping("/logout")
-    public void logout(@AuthenticationPrincipal PrincipalDetails principal) {
-        memberAppService.logout(principal);
+    @PostMapping("/logout")
+    public void logout(@RequestParam Long id) {
+        memberAppService.logout(id);
     }
 
 

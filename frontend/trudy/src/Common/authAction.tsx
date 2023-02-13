@@ -110,13 +110,15 @@ export const signInActionHandler = (email: string, password: string) => {
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
 export const signOutActionHandler = (id: string) => {
-  const url = "/api/logout";
-  const params = { id: id };
-  const response = DELETE(url, { params });
+  const data = new FormData();
+  data.append("id", JSON.stringify(id));
+  const response = axios.post(`api/logout`, data)
+  console.log(id, "테스트 중입니당ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ")
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
   alert("sign out");
 
+ 
   return response;
 };
 
