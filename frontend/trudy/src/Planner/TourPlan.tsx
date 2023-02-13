@@ -154,7 +154,7 @@ function TourPlanList(planner: any) {
         type="button"
         className="float-left bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
         onClick={() =>
-          authCtx.createPlan(parseInt(authCtx.loggedInfo.uid), planNum + 1)
+          authCtx.createPlan(authCtx.loggedInfo.uid, planNum + 1)
         }
         value="+"
       ></input>

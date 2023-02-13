@@ -32,6 +32,7 @@ function SignIn() {
     authCtx.login(email, password);
     if (authCtx.isSuccess) {
       navigate("/", { replace: true });
+      window.location.reload();
     }
   };
 

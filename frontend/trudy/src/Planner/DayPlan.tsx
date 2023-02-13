@@ -118,7 +118,7 @@ function DayPlan(tourPlan: any) {
         type="button"
         className="font-bold block px-4 py-2 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900"
         onClick={() => {
-          authCtx.createDay(tourPlan.tourPlan[0], `day ${dayNum + 1}`, "");
+          // authCtx.createDay(tourPlan.tourPlan[0], `day ${dayNum + 1}`, "");
         }}
         value="+"
       ></input>
