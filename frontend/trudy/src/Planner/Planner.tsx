@@ -10,13 +10,22 @@ function Planner() {
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [plannerData, setPlannerData] = useState<[]>([]);
-  const [dayData, setDayData] = useState<[]>([]);
+  const [plannerData, setPlannerData] = useState<[] | null>(null);
+  const [dayData, setDayData] = useState<[] | null>(null);
+  const [dayItemData, setDayItemData] = useState<[] | null>(null);
 
-  const [selectedPlan, setSelectedPlan] = useState<number>(plannerData.length);
+  const [selectedPlan, setSelectedPlan] = useState<number>(0);
   const [selectedDay, setSelectedDay] = useState<number>(0);
+
+  const [planNum, setPlanNum] = useState<number>(0);
+  const [dayNum, setDayNum] = useState<number>(0);
+
   const [sortedPlan, setSortedPlan] = useState<any>([]);
   const [sortedDay, setSortedDay] = useState<any>([]);
+  const [sortedDayItem, setSortedDayItem] = useState<any>([]);
+
+  const [change, setChange] = useState<number>(0);
+
   const [hoverPlan, setHoverPlan] = useState<number | null>(null);
   const [hoverDay, setHoverDay] = useState<number | null>(null);
   // const [dayData, setDayData] = useState<[]>([])
@@ -30,7 +39,6 @@ function Planner() {
     }
   }
   IsSignIn();
-  IsSignIn();
 
   // 멤버 Id로 planner 정보 받아오기
   useEffect(() => {
@@ -39,45 +47,78 @@ function Planner() {
       setPlannerData(data.data);
     }
     GetPlanner();
-  }, []);
+    console.log("실행");
+  }, [change]);
 
   // PlanList sequence 순 정렬
   useEffect(() => {
-    const getSortedPlanList = () => {
-      const compareSequence = (a: any, b: any) => {
-        if (
-          parseInt(a.plannerCombine.plannerElement["sequence"]) >
-          parseInt(b.plannerCombine.plannerElement["sequence"])
-        ) {
-          return 1;
-        } else {
-          return -1;
+    if (plannerData !== null) {
+      const getSortedPlanList = () => {
+        const compareSequence = (a: any, b: any) => {
+          if (
+            parseInt(a.plannerCombine.plannerElement["sequence"]) >
+            parseInt(b.plannerCombine.plannerElement["sequence"])
+          ) {
+            return -1;
+          } else {
+            return 1;
+          }
+        };
+        const copyList = [...plannerData];
+        const sortedList: any = copyList.sort(compareSequence);
+        setSortedPlan(sortedList);
+        if (sortedList[0]) {
+          setSelectedPlan(sortedList[0].plannerCombine.plannerElement.id);
+          setDayData(sortedList[0].dayCombine.dayElementList);
         }
       };
-      const copyList = [...plannerData];
-      const sortedList = copyList.sort(compareSequence);
-      setSortedPlan(sortedList);
-    };
-    getSortedPlanList();
-  }, [plannerData]);
+      getSortedPlanList();
+      setPlanNum(plannerData.length);
+    }
+  }, [plannerData, change]);
 
   // DayList sequence 순 정렬
   useEffect(() => {
-    const getSortedDayList = () => {
-      const compareSequence = (a: any, b: any) => {
-        if (parseInt(a["sequence"]) > parseInt(b["sequence"])) {
-          return 1;
-        } else {
-          return -1;
+    if (dayData !== null) {
+      const getSortedDayList = () => {
+        const compareSequence = (a: any, b: any) => {
+          if (parseInt(a["sequence"]) > parseInt(b["sequence"])) {
+            return -1;
+          } else {
+            return 1;
+          }
+        };
+        const copyList = [...dayData];
+        const sortedList: any = copyList.sort(compareSequence);
+        setSortedDay(sortedList);
+        if (sortedList[0]) {
+          setSelectedDay(sortedList[0].id);
+          setDayItemData(sortedList[0].dayItemList);
         }
       };
-      const copyList = [...dayData];
-      const sortedList = copyList.sort(compareSequence);
-      setSortedDay(sortedList);
-    };
-    getSortedDayList();
-    setSelectedDay(0)
-  }, [selectedPlan]);
+      getSortedDayList();
+      setDayNum(dayData.length);
+    }
+  }, [selectedPlan, plannerData, change]);
+
+  // DayItem sequence 순 정렬
+  useEffect(() => {
+    if (dayItemData !== null) {
+      const getSortedDayItemList = () => {
+        const compareSequence = (a: any, b: any) => {
+          if (parseInt(a["sequence"]) > parseInt(b["sequence"])) {
+            return -1;
+          } else {
+            return 1;
+          }
+        };
+        const copyList = [...dayItemData];
+        const sortedList: any = copyList.sort(compareSequence);
+        setSortedDayItem(sortedList);
+      };
+      getSortedDayItemList();
+    }
+  }, [selectedDay, plannerData, change]);
 
   return (
     <div className="flex">
@@ -90,7 +131,7 @@ function Planner() {
       <div id="Content" className="w-full bg-slate-200">
         {/* Plan 목록 */}
         <div id="planner" className="flex bg-slate-300">
-          {plannerData !== undefined
+          {plannerData !== null
             ? sortedPlan.map(
                 (
                   plan: {
@@ -127,7 +168,6 @@ function Planner() {
                           setSelectedPlan(
                             plan.plannerCombine.plannerElement.id
                           );
-                          // setDayData(plan.dayCombine.dayElementList)
                           setDayData(plan.dayCombine.dayElementList);
                         }}
                         value={plan.plannerCombine.plannerElement.title}
@@ -140,19 +180,34 @@ function Planner() {
                             : "hidden"
                         }`}
                         value="x"
+                        onClick={() => {
+                          authCtx.deletePlan(
+                            hoverPlan
+                          );
+                          setChange(change + 1);
+                        }}
                       ></input>
                     </div>
                   );
                 }
               )
             : null}
+          <input
+            type="button"
+            className="float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
+            onClick={() => {
+              authCtx.createPlan(authCtx.loggedInfo.uid, planNum + 1);
+              setChange(change + 1);
+            }}
+            value="+"
+          ></input>
         </div>
 
         {/* 선택된 Plan의 내용 */}
-        <div id="planContent" className="h-full w-full">
+        <div id="planContent" className="h-full w-full relative">
           {/* 선택된 Plan의 DayList */}
           <div id="dayList" className="w-1/12 absolute right-0 bg-slate-400">
-            {dayData !== undefined
+            {dayData !== null
               ? sortedDay.map(
                   (
                     day: {
@@ -195,11 +250,46 @@ function Planner() {
                   }
                 )
               : null}
+            <input
+              type="button"
+              className="float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
+              onClick={() => {
+                authCtx.createDay(
+                  selectedPlan,
+                  `day ${dayNum + 1}`,
+                  "",
+                  dayNum + 1
+                );
+                setChange(change + 1);
+              }}
+              value="+"
+            ></input>
           </div>
 
           {/* 선택된 Day의 DayItemList */}
           <div id="dayItemList" className="w-11/12 bg-slate-500">
-            dayitem
+            {dayItemData !== null
+              ? sortedDayItem.map(
+                  (
+                    day: {
+                      id: number;
+                      customTitle: string;
+                      customImage: string;
+                      memo: string;
+                      sequence: string;
+                    },
+                    i: number
+                  ) => {
+                    return (
+                      <div key={i} className="bg-slate-600 p-2 border w-full">
+                        <div className="flex p-4">
+                          <input type="text" value={day.memo} />
+                        </div>
+                      </div>
+                    );
+                  }
+                )
+              : null}
           </div>
         </div>
       </div>
