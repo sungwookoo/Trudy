@@ -7,6 +7,7 @@ import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
+import SearchBar from "../Common/SearchBar";
 
 export type mapPlaceType = {
   id: number;
@@ -31,6 +32,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
   const [offset, setOffset] = useState<any>(0);
   const [areaSigun, setareaSigun] = useState<any>([]);
   const [keyword, setkeyword] = useState<any>("");
+
   // 카테고리
   const [contentTypeId, setcontentTypeId] = useState<number[]>([]);
 
@@ -44,6 +46,17 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   // 로딩중 spinner
   const [isLoading, setIsLoading] = useState(false);
+  // 서치 바
+  const [searchChange, setSearchChange] = useState<string>();
+  // 초기화
+  // 초기화 필터
+  const clearFilter = () => {
+    setkeyword("");
+    setSelectedAreaCode([]);
+    setSelectedSigungu([]);
+    setcontentTypeId([]);
+    setIsCollapsed(true);
+  };
 
   // 카테고리 버튼 on/off
   const handleCategoryClick = (categoryId: number) => {
@@ -66,6 +79,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
     onPlaceClick(parseFloat(place.mapy), parseFloat(place.mapx));
   };
 
+  // 관광 정보 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -87,6 +101,8 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       {/* 지역 버튼 */}
       <div>
         <div>
+          <SearchBar searchChange={searchChange} setNameSearch={setkeyword} setSearchChange={setSearchChange} />
+          <button onClick={clearFilter}>Clear</button>
           <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
             Area Select
           </button>
