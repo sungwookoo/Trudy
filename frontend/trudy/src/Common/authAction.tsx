@@ -96,7 +96,6 @@ export const signUpActionHandler = (
     sigunguCode,
   };
   const response = POST(url, data, {});
-  console.log(response, 333333333333333333333);
   return response;
 };
 
@@ -114,9 +113,10 @@ export const signInActionHandler = (email: string, password: string) => {
 
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
-export const signOutActionHandler = (token: string) => {
+export const signOutActionHandler = (id: string) => {
   const url = "/api/logout";
-  const response = DELETE(url, createTokenHeader(token));
+  const params = { id: id };
+  const response = DELETE(url, { params });
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
   alert("sign out");
@@ -165,8 +165,12 @@ export const getPlanner = (memberId: number) => {
   return response;
 };
 
-export const createPlan = (memberId: number, sequence: number) => {
+
+export const createPlan = (
+  memberId: number,
+  sequence: number
+) => {
   const url = "/api/planner/post";
-  const data = { memberId: memberId, sequence: sequence };
-  const response = POST(url, data, {});
-};
+  const data = {memberId: memberId, sequence: sequence}
+  const response = POST(url, data, {} )
+}
