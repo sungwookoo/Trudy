@@ -77,10 +77,11 @@ public class PlannerController {
     @PostMapping("/day/post")
     public ResponseEntity<?> dayAdd(@RequestParam Long plannerId,
                                     @RequestParam String day,
-                                    @RequestParam String memo){
+                                    @RequestParam String memo,
+                                    @RequestParam String sequence){
         try {
             Planner planner = plannerService.findPlannerById(plannerId);
-            Day newDay = new Day(planner, day, memo);
+            Day newDay = new Day(planner, day, memo, sequence);
             Map response = plannerService.addDay(newDay, planner);
 
             if(!response.isEmpty() && response != null){
@@ -154,6 +155,25 @@ public class PlannerController {
                                           @RequestParam String title){
         return plannerService.updatePlannerString(plannerId, title);
     }
+
+    @PutMapping("/planner")
+    public String plannerSequenceUpdate(@RequestParam Long plannerId,
+                                        @RequestParam String sequence) {
+        return plannerService.plannerSequenceUpdate(plannerId, sequence);
+    }
+
+    @PutMapping("/day")
+    public String daySequenceUpdate(@RequestParam Long dayId,
+                                    @RequestParam String sequence) {
+        return plannerService.daySequenceUpdate(dayId, sequence);
+    }
+
+    @PutMapping("/dayitem")
+    public String dayItemSequenceUpdate(@RequestParam Long dayItemId,
+                                    @RequestParam String sequence) {
+        return plannerService.dayItemSequenceUpdate(dayItemId, sequence);
+    }
+
 
     /*
     순서를 받는 방법은 아래와 같다.

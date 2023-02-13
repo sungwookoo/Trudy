@@ -23,11 +23,16 @@ public class Day {
     @Column(length = 45)
     private String day;
 
+    @Column
     private String memo;
 
-    public Day(Planner plannerId, String day, String memo){
+    @Column
+    private String sequence;
+
+    public Day(Planner plannerId, String day, String memo, String sequence){
         this.plannerId = plannerId;
         this.day = day;
         this.memo = memo;
+        this.sequence = sequence;
     }
 }
