@@ -10,13 +10,7 @@ type Props = {
   bookmarkList: any;
 };
 
-function Bookmark({
-  bookmarkList,
-  bookmarkedIds,
-  setbookmarkedIds,
-  memberId,
-  setbookmarkList,
-}: Props) {
+function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList }: Props) {
   const token = "bearer " + localStorage.getItem("token");
 
   // 북마크 해제하기
@@ -24,9 +18,7 @@ function Bookmark({
   const handleBookmarkClick = async (placeid: any) => {
     setIsLoading(true);
     try {
-      const updatedBookmarkedIds = bookmarkedIds.filter(
-        (id: any) => id !== placeid
-      );
+      const updatedBookmarkedIds = bookmarkedIds.filter((id: any) => id !== placeid);
       setbookmarkedIds(updatedBookmarkedIds);
       await axios.delete(`api/bookmark/delete`, {
         params: { memberId: memberId, placeId: placeid },
@@ -47,34 +39,21 @@ function Bookmark({
     setIsLoading(false);
   };
   console.log(bookmarkList, "내 북마크페이지임");
+  console.log(bookmarkedIds, "내 북마크페이지 아이디임ㅁㅁㅁ");
   return (
     <>
-      {bookmarkList.map((bookmark: any, idx: number) => {
-        return (
-          <>
-            {bookmark.id in bookmarkedIds ? (
-              <div
-                key={idx}
-                className="max-w-sm rounded overflow-hidden shadow-lg m-5"
-                style={{ cursor: "pointer" }}
-              >
-                {bookmark.firstimage ? (
-                  <img
-                    className="w-full"
-                    src={bookmark.firstimage}
-                    alt="Place thumbnail"
-                  />
-                ) : (
-                  ""
-                )}
+      <div className="flex flex-wrap">
+        {bookmarkList.map((bookmark: any, idx: number) => {
+          return (
+            <>
+              <div key={idx} className="max-w-sm rounded overflow-hidden shadow-lg m-5" style={{ cursor: "pointer" }}>
+                {bookmark.firstimage ? <img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" /> : ""}
                 <div className="px-6 py-4">
                   <h3 className="font-bold text-xl mb-2">{bookmark.title}</h3>
 
                   <img
-                    src={
-                      "https://cdn-icons-png.flaticon.com/128/4101/4101575.png"
-                    }
-                    className="w-32"
+                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
+                    className="w-8"
                     alt="bookmark"
                     onClick={() => {
                       handleBookmarkClick(bookmark.id);
@@ -85,14 +64,12 @@ function Bookmark({
                   {isLoading && <div>Loading...</div>}
                 </div>
               </div>
-            ) : (
-              ""
-            )}
-          </>
-        );
-      })}
+            </>
+          );
+        })}
+      </div>
     </>
   );
 }
 
-export default Bookmark;
+export default React.memo(Bookmark);
