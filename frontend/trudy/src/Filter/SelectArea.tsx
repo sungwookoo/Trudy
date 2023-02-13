@@ -24,7 +24,7 @@ const AreaSelect = ({ areaCode, onClick }: AreaCodeType) => {
               type="radio"
               name="areaCode"
               id={`classification-${areaCode.id}`}
-              className="mr-2"
+              className="mr-1 color-green-500"
               onClick={() => {
                 onClick(areaCode.id, areaCode.name);
               }}

@@ -107,8 +107,8 @@ function ForumPage() {
           <div className="flex">
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className={`p-2 m-2 rounded-lg  ${
-                !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
+              className={`p-2 m-2 rounded-md border border-1 border-black  ${
+                !isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"
               }`}
             >
               Area Select
@@ -128,7 +128,7 @@ function ForumPage() {
                   (sigunguInfo: any, i: number) => (
                     <div key={i} className="flex items-center mb-2">
                       <input
-                        className="mr-2"
+                        className="mx-2"
                         type="checkbox"
                         id={`sigungu-${sigunguInfo.id}`}
                         onChange={() => {
