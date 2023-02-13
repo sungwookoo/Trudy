@@ -16,14 +16,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private final StompHandler stompHandler;
 
     // configureMessageBroker
-    // enableSimpleBroker를 통해 메시지 브로커가 /topic/chat으로 시작하는 주소를 구독한
+    // enableSimpleBroker를 통해 메시지 브로커가 /topic으로 시작하는 주소를 구독한
     // Subscriber들에게 메시지를 전달하도록 한다.
     @Override
     public void configureMessageBroker(final MessageBrokerRegistry registry) {
-//        registry.enableSimpleBroker("/topic/chat");
-//        registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/chat/send");
-        registry.setApplicationDestinationPrefixes("/api");
+        registry.enableSimpleBroker("/topic");
+        registry.setApplicationDestinationPrefixes("/app");
         // setApplicationDestinationPrefixs: 클라이언트가 서버로 메시지를 발송할 수 있는
         // 경로의 prefix를 지정한다.
     }
