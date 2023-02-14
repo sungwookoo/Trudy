@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
 import SideBarPlanner from "./SideBarPlanner";
@@ -8,12 +9,16 @@ function Planner() {
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [plannerData, setPlannerData] = useState<[] | null>(null);
+  const [plannerData, setPlannerData] = useState<any>(null);
   const [dayData, setDayData] = useState<[] | null>(null);
   const [dayItemData, setDayItemData] = useState<[] | null>(null);
 
-  const [selectedPlan, setSelectedPlan] = useState<number>(0);
-  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedPlanSequence, setSelectedPlanSequence] =
+    useState<string>("10");
+  const [selectedDaySequence, setSelectedDaySequence] = useState<string>("10");
+
+  const [selectedPlanId, setSelectedPlanId] = useState<number>(0);
+  const [selectedDayId, setSelectedDayId] = useState<number>(0);
 
   const [planNum, setPlanNum] = useState<number>(0);
   const [dayNum, setDayNum] = useState<number>(0);
@@ -28,9 +33,80 @@ function Planner() {
 
   const [hoverPlan, setHoverPlan] = useState<number | null>(null);
   const [hoverDay, setHoverDay] = useState<number | null>(null);
-  // const [dayData, setDayData] = useState<[]>([])
-  // const [dayItemData, setDayItemData] = useState<[]>([])
 
+  // const [isDragging, setIsDragging] = useState<boolean>(false);
+  // const [dragPlanData, setDragPlanData] = useState<any>();
+  // const [dragDayData, setDragDayData] = useState<any>();
+  // const [dragDayItemData, setDragDayItemData] = useState<any>();
+
+  // const _onDragOverPlan = (e) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   return true
+  // }
+  // const _onDragStartPlan = (e) => {
+  //   setIsDragging(true);
+  //   setDragPlanData({
+  //     ...dragPlanData,
+  //     target: e.target,
+  //     index: Number(e.target.dataset.index),
+  //     updatePlanner: [...plannerData]
+  //   });
+
+  //   e.dataTransfer.setData('text/html', '');
+  //   e.dataTransfer.effectAllowed = "move";
+  // }
+  // const _onDragEnterPlan = (e) => {
+  //   const _dragged = Number(dragPlanData.target.dataset.index);
+  //   const _index = Number(dragPlanData.index);
+  //   const _target = Number(e.target.dataset.index);
+  //   let move_down = [...dragPlanData.move_down];
+  //   let move_up = [...dragPlanData.move_up];
+
+  //   let data = [...dragPlanData.updateLists];
+  //   data[_index] = data.splice(_target, 1, data[_index])[0];
+
+  //   if (_dragged > _target) {
+  //     move_down.includes(_target) ? move_down.pop() : move_down.push(_target);
+  //   } else if (_dragged < _target) {
+  //     move_up.includes(_target) ? move_up.pop() : move_up.push(_target);
+  //   } else {
+  //     move_down = [];
+  //     move_up = [];
+  //   }
+
+  //   setDragPlanData({
+  //     ...dragPlanData,
+  //     updateLists: data,
+  //     index: _target,
+  //     move_up,
+  //     move_down
+  //   })
+  // }
+  // const _onDragLeavePlan = (e) => {
+  //   if (e.target === dragPlanData.target) {
+  //     e.target.style.visibility = "hidden";
+  //   }
+  // }
+  // const _onDragEndPlan = (e) => {
+  //   setIsDragging(false);
+  //   setPlannerData([
+  //     ...dragPlanData.updateLists
+  //   ]);
+
+  //   setDragPlanData({
+  //     ...dragPlanData,
+  //     move_down: [],
+  //     move_up: [],
+  //     updateLists: [],
+  //   });
+
+  //   e.target.style.visibility = "visible";
+  //   e.dataTransfer.dropEffect = 'move';
+  // }
+
+
+  
   function IsSignIn() {
     if (authCtx.isLoggedIn) {
     } else {
@@ -63,21 +139,28 @@ function Planner() {
             return -1;
           }
         };
+
+        // 정렬
         const copyList = [...plannerData];
         const sortedList: any = copyList.sort(compareSequence);
         setSortedPlan(sortedList);
+
         if (sortedList[0]) {
-          setSelectedPlan(sortedList[0].plannerCombine.plannerElement.id);
           setDayData(sortedList[0].dayCombine.dayElementList);
-          const sortedSequence = sortedList.map((sequence:string) => (sequence))
-          console.log('plannersorted', sortedList)
+          // sequence 재부여
+          sortedList.map((plan: any, idx: number) =>
+            authCtx.updatePlan(
+              plan.plannerCombine.plannerElement.id,
+              (idx + 1) * 10
+            )
+          );
         }
       };
       getSortedPlanList();
       setPlanNum(plannerData.length);
+      setSelectedPlanSequence((planNum * 10).toString());
     }
   }, [plannerData, change]);
-
   // DayList sequence 순 정렬
   useEffect(() => {
     if (dayData !== null) {
@@ -89,18 +172,22 @@ function Planner() {
             return -1;
           }
         };
+        // 정렬
         const copyList = [...dayData];
         const sortedList: any = copyList.sort(compareSequence);
         setSortedDay(sortedList);
         if (sortedList[0]) {
-          setSelectedDay(sortedList[0].id);
           setDayItemData(sortedList[0].dayItemList);
+          // sequence 재부여
+          sortedList.map((day: any, idx: number) =>
+            authCtx.updateDay(day.id, (idx + 1) * 10)
+          );
         }
       };
       getSortedDayList();
       setDayNum(dayData.length);
     }
-  }, [selectedPlan, plannerData, change]);
+  }, [selectedPlanSequence, plannerData]);
 
   // DayItem sequence 순 정렬
   useEffect(() => {
@@ -116,18 +203,25 @@ function Planner() {
         const copyList = [...dayItemData];
         const sortedList: any = copyList.sort(compareSequence);
         setSortedDayItem(sortedList);
+
+        // sequence 재부여
+        if (sortedList[0]) {
+          sortedList.map((dayItem: any, idx: number) =>
+            authCtx.updateDayItem(dayItem.id, (idx + 1) * 10)
+          );
+        }
       };
       getSortedDayItemList();
     }
-  }, [selectedDay, plannerData, change]);
-
+  }, [selectedDaySequence, plannerData]);
+  console.log('이거',plannerData);
   // 모달창
   function Modal() {
     function yesButton() {
       if (modalClick == "plan") {
-        authCtx.deletePlan(selectedPlan);
+        authCtx.deletePlan(selectedPlanId);
       } else if (modalClick == "day") {
-        authCtx.deleteDay(selectedDay);
+        authCtx.deleteDay(selectedDayId);
       }
     }
 
@@ -241,6 +335,16 @@ function Planner() {
                   },
                   i: number
                 ) => {
+                  // let default_class = "";
+
+                  // dragPlanData.move_down.includes(i) && (
+                  //   default_class = "move_down"
+                  // );
+      
+                  // dragPlanData.move_up.includes(i) && (
+                  //   default_class = "move_up"
+                  // );
+
                   return (
                     <div
                       className="float-left relative"
@@ -249,16 +353,28 @@ function Planner() {
                       }
                       onMouseLeave={() => setHoverPlan(null)}
                       key={i}
+                      draggable
+                      // onDragStart={_onDragStartPlan}
+                      // onDragEnter={_onDragEnterPlan}
+                      // onDragLeave={_onDragLeavePlan}
+                      // onDragEnd={_onDragEndPlan}
+      
+                      // className={`default_class`}
+                      // isDragging={isDragging}
                     >
                       <input
                         type="button"
                         className={`float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold ${
-                          selectedPlan === plan.plannerCombine.plannerElement.id
+                          selectedPlanSequence ===
+                          plan.plannerCombine.plannerElement.sequence
                             ? "bg-trudy"
                             : ""
                         }`}
                         onClick={() => {
-                          setSelectedPlan(
+                          setSelectedPlanSequence(
+                            plan.plannerCombine.plannerElement.sequence
+                          );
+                          setSelectedPlanId(
                             plan.plannerCombine.plannerElement.id
                           );
                           setDayData(plan.dayCombine.dayElementList);
@@ -288,7 +404,7 @@ function Planner() {
             type="button"
             className="float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
             onClick={() => {
-              authCtx.createPlan(authCtx.loggedInfo.uid, planNum + 1);
+              authCtx.createPlan(authCtx.loggedInfo.uid, (planNum + 1) * 10);
               setChange(change + 1);
             }}
             value="+"
@@ -321,10 +437,17 @@ function Planner() {
                           <input
                             type="button"
                             className={`font-bold block px-4 py-2 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900 ${
-                              selectedDay === day.id ? "bg-trudy" : ""
+                              selectedDaySequence === day.sequence
+                                ? "bg-trudy"
+                                : ""
                             }
                         `}
-                            onClick={() => setSelectedDay(day.id)}
+                            onClick={() => {
+                              setSelectedDaySequence(day.sequence);
+                              setSelectedDayId(day.id);
+                              setDayItemData(day.dayItemList);
+                              setChange(change + 1);
+                            }}
                             value={day.day}
                           ></input>
                           <div className="flex">
@@ -352,10 +475,10 @@ function Planner() {
               className="float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
               onClick={() => {
                 authCtx.createDay(
-                  selectedPlan,
+                  selectedPlanId,
                   `day ${dayNum + 1}`,
                   "",
-                  dayNum + 1
+                  (dayNum + 1) * 10
                 );
                 setChange(change + 1);
               }}
@@ -378,7 +501,10 @@ function Planner() {
                     i: number
                   ) => {
                     return (
-                      <div key={i} className="bg-slate-600 p-2 border w-full">
+                      <div
+                        key={i}
+                        className="relative bg-slate-600 p-2 border w-full"
+                      >
                         <div className="flex p-4">
                           <input type="text" value={day.memo} />
                         </div>

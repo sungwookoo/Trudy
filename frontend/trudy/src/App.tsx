@@ -20,6 +20,7 @@ import EmailConfirm from "./Account/EmailConfirm";
 import UserProfile from "./Profile/UserProfile";
 import ProfileEdit from "./Profile/ProfileEdit";
 import ForumPostEdit from "./Forum/ForumPostEdit";
+import ChatRoom from "./Chat/ChatRoom";
 
 function App() {
   // Code to handle form submission
@@ -105,6 +106,10 @@ function App() {
         <Route
           path="/signupselect"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpSelect />}
+        />
+        <Route
+          path="/chatroom"
+          element={authCtx.isLoggedIn ? <ChatRoom /> : <SignUp />}
         />
       </Routes>
     </div>

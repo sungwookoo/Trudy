@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET, POST, DELETE } from "./authAxios";
+import { GET, POST, DELETE, PUT } from "./authAxios";
 
 // 토큰을 만드는 함수
 const createTokenHeader = (token: string) => {
@@ -116,13 +116,12 @@ export const signInActionHandler = (email: string, password: string) => {
 export const signOutActionHandler = (id: number) => {
   const data = new FormData();
   data.append("id", JSON.stringify(id));
-  const response = axios.post(`api/logout`, data)
-  console.log(id, "테스트 중입니당ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ")
+  const response = axios.post(`api/logout`, data);
+  console.log(id, "테스트 중입니당ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
   alert("sign out");
 
- 
   return response;
 };
 
@@ -158,19 +157,32 @@ export const getUserActionHandler = (params: any) => {
 // };
 
 // 유저의 Planner 정보를 GET방식으로 호출
-export const getPlanner = (memberId: number) => {
+export const getPlanner = (token: string) => {
   const url = "/api/planner";
-  const params = { memberId: memberId };
+  // const params = { memberId: memberId };
   // const params = { memberId: 1 };
-  const response = GET(url, { params });
+  const headers = createTokenHeader(token)
+  const response = GET(url, headers );
 
   return response;
 };
 
-export const createPlan = (memberId: number, sequence: number) => {
+// 유저의 plan을 POST 방식으로 생성
+export const createPlan = (token: string, sequence: number) => {
   const url = "/api/planner/post";
-  const params = { memberId: memberId, sequence: sequence };
-  const response = POST(url, {}, { params });
+  // const headers = createTokenHeader(token)
+  const headers = {
+    Authorization: "bearer " + token,
+  }
+  const params = { sequence: sequence };
+  const response = POST(url, headers, { params });
+};
+
+// 유저의 plan을 PUT 방식으로 수정
+export const updatePlan = (plannerId: number, sequence: number) => {
+  const url = "/api/planner/planner";
+  const params = { plannerId: plannerId, sequence: sequence };
+  const response = PUT(url, {}, { params });
 };
 
 // 유저의 plan을 DELETE 방식으로 삭제
@@ -198,9 +210,24 @@ export const createDay = (
   const response = POST(url, {}, { params });
 };
 
+// 유저의 day을 PUT 방식으로 수정
+export const updateDay = (dayId: number, sequence: number) => {
+  const url = "/api/planner/day";
+  const params = { dayId: dayId, sequence: sequence };
+  const response = PUT(url, {}, { params });
+};
+
+
 // 유저의 day를 DELETE 방식으로 삭제
 export const deleteDay = (dayId: number | null) => {
   const url = "/api/planner/day/delete";
   const params = { dayId: dayId };
   const response = DELETE(url, { params });
+};
+
+// 유저의 dayItem을 PUT 방식으로 수정
+export const updateDayItem = (dayItemId: number, sequence: number) => {
+  const url = "/api/planner/dayitem";
+  const params = { dayItemId: dayItemId, sequence: sequence };
+  const response = PUT(url, {}, { params });
 };

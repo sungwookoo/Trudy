@@ -6,6 +6,7 @@ import AuthContext from "./authContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavImage from "./NavImage";
+import ChatRoom from "../Chat/ChatRoom";
 
 function Nav(navProfileImg: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -105,6 +106,12 @@ function Nav(navProfileImg: any) {
           </>
         ) : (
           <>
+            {/* 채팅 */}
+            <div className="nav-item">
+              <NavLink className="nav-link" to="/chatroom">
+                Chat
+              </NavLink>
+            </div>
             <div className="nav-item flex flex-row items-center">
               <NavImage />
               {/* <img

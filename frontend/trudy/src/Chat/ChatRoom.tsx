@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 import './ChatRoom.css';
+import AuthContext from '../Common/authContext';
+import axios from 'axios';
 
 interface UserData {
   username: string;
@@ -16,7 +18,6 @@ interface ChatMessage {
   message?: string;
   status: string;
 }
-
 let stompClient:any = null;
 
 function ChatRoom() {
@@ -29,10 +30,30 @@ function ChatRoom() {
     connected:false,
     message: ''
   });
+  const authCtx = useContext(AuthContext)
+  const userInfo = authCtx.loggedInfo
+  const myInfoUrl = "api/member/me";
+  const token = "bearer " + localStorage.getItem("token");
 
   useEffect(() => {
     console.log(userData);
   }, [userData]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const myInfoResponse = await axios.get(myInfoUrl, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setUserData({...userData, username: myInfoResponse.data.name})
+      } catch(error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+  
 
   const connect = () => {
     const Sock = new SockJS('http://localhost:8080/ws');
@@ -137,37 +158,21 @@ function ChatRoom() {
   }
 
   return (
-    <div className="chat-container">
+    <div className="container">
       {userData.connected?
       <div className="chat-box">
-        <div className="chat-member-list">
-          <ul>
-            <li onClick={()=>{setTab("CHATROOM")}} className={`chat-member ${tab==="CHATROOM" && "active"}`}>Chatroom</li>
+        <div className="member-list">
+          <ul className="ul">
+            <li onClick={()=>{setTab("CHATROOM")}} className={`member ${tab==="CHATROOM" && "active"}`}>Chatroom</li>
             {[...privateChats.keys()].map((name,index)=>(
-              <li onClick={()=>{setTab(name)}} className={`chat-member ${tab===name && "active"}`} key={index}>{name}</li>
+              <li onClick={()=>{setTab(name)}} className={`member ${tab===name && "active"}`} key={index}>{name}</li>
             ))}
           </ul>
         </div>
         {tab==="CHATROOM" && <div className="chat-content">
           <ul className="chat-messages">
             {publicChats.map((chat,index)=>(
-              <li className={`chat-message ${chat.senderName === userData.username && "self"}`} key={index}>
-                {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                <div className="chat-message-data">{chat.message}</div>
-                {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
-              </li>
-            ))}
-          </ul>
-
-          <div className="chat-send-message">
-            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-            <button type="button" className="chat-send-button" onClick={sendValue}>send</button>
-          </div>
-        </div>}
-        {tab!=="CHATROOM" && <div className="chat-content">
-          <ul className="chat-message">
-            {[...privateChats.get(tab)!].map((chat,index)=>(
-              <li className={`chat-message ${chat.senderName === userData.username && "self"}`} key={index}>
+              <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
                 {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
                 <div className="message-data">{chat.message}</div>
                 {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
@@ -175,24 +180,48 @@ function ChatRoom() {
             ))}
           </ul>
 
-          <div className="chat-send-message">
-            <input type="text" className="chat-input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-            <button type="button" className="chat-send-button" onClick={sendPrivateValue}>send</button>
+          <div className="send-message">
+            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
+            <button type="button" className="custom-button send-button" onClick={sendValue}>send</button>
+          </div>
+        </div>}
+        {tab!=="CHATROOM" && <div className="chat-content">
+          <ul className="chat-messages">
+            {[...privateChats.get(tab)!].map((chat,index)=>(
+              <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
+                {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
+                <div className="message-data">{chat.message}</div>
+                {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
+              </li>
+            ))}
+          </ul>
+
+          <div className="send-message">
+            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
+            <button type="button" className="custom-button chat-button" onClick={sendPrivateValue}>send</button>
           </div>
         </div>}
       </div>
       :
       // 접속아닌 경우 익명의 이름을 등록
-      <div className="chat-register">
-        <input
+      <div className="register">
+        <div id="chat-title">Trudy Talk & Talk</div>
+        <div id="introduce-chat">
+          <ul>
+            <li id="">Here, you can talk with all Trudy!</li>
+            <li id="">I want you to find real good friends!</li>
+            <li id="">Have great time with TRUDY!</li>
+          </ul>
+        </div>
+        {/* <input
           id="user-name"
           placeholder="Enter your name"
           name="userName"
           value={userData.username}
           onChange={handleUsername}
-        />
-        <button type="button" onClick={registerUser}>
-          connect
+        /> */}
+        <button id="go-button" type="button" onClick={registerUser}>
+          Let's Go!
         </button> 
       </div>}
     </div>
