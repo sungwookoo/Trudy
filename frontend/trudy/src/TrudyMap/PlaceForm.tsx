@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
+import nopictures from "../assets/nopictures.png";
 
 type PlaceFormProps = {
   place: {
@@ -17,13 +18,14 @@ type PlaceFormProps = {
     zipcode?: string;
   };
   bookmarkedIds?: number[];
+  mapVisible?: boolean;
   onClick?: (mapx: string | number, mapy: string | number) => void;
   setbookmarkedIds: React.Dispatch<React.SetStateAction<any>>;
   setbookmarkList: React.Dispatch<React.SetStateAction<any>>;
   memberId?: number;
 };
 
-function PlaceForm({ place, onClick = () => {}, bookmarkedIds = [], setbookmarkedIds, setbookmarkList, memberId }: PlaceFormProps) {
+function PlaceForm({ place, onClick = () => {}, bookmarkedIds = [], setbookmarkedIds, setbookmarkList, memberId, mapVisible }: PlaceFormProps) {
   // state 정의 ----------------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
   const token = "bearer " + localStorage.getItem("token");
@@ -97,22 +99,54 @@ function PlaceForm({ place, onClick = () => {}, bookmarkedIds = [], setbookmarke
 
   const isBookmarked = place.id ? bookmarkedIds?.includes(place.id) : false;
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-5" onClick={handleClick} style={{ cursor: "pointer" }}>
-      <img className="w-full" src={place.firstimage} alt="Place thumbnail" />
-      <div className="px-6 py-4">
-        <h3 className="font-bold text-xl mb-2">{place.title}</h3>
-      </div>
-      {memberId && (
-        <img
-          src={isBookmarked ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png" : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"}
-          alt="bookmark"
-          onClick={handleBookmarkClick}
-          style={{ cursor: "pointer" }}
-          className="w-16"
-        />
+    <>
+      {mapVisible ? (
+        <div className="max-w-sm rounded overflow-hidden shadow-lg m-5" onClick={handleClick} style={{ cursor: "pointer" }}>
+          {place.firstimage ? (
+            <img className="w-full" src={place.firstimage} alt="Place thumbnail" />
+          ) : (
+            <img className="w-full" src={nopictures} alt="Place thumbnail" />
+          )}
+          <div className="px-6 py-4">
+            <h3 className="font-bold text-xl mb-2">{place.title}</h3>
+          </div>
+          {memberId && (
+            <img
+              src={isBookmarked ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png" : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"}
+              alt="bookmark"
+              onClick={handleBookmarkClick}
+              style={{ cursor: "pointer" }}
+              className="w-16"
+            />
+          )}
+          {isLoading && <div>Loading...</div>}
+        </div>
+      ) : (
+        <div className="max-w-sm rounded overflow-hidden shadow-lg m-5" onClick={handleClick} style={{ cursor: "pointer" }}>
+          {place.firstimage ? (
+            <img className="w-full" src={place.firstimage} alt="Place thumbnail" />
+          ) : (
+            <img className="w-full" src={nopictures} alt="Place thumbnail" />
+          )}
+          <div className="px-6 py-4">
+            <h2 className="font-bold text-3xl mb-2">{place.title}</h2>
+            <br />
+            {place.addr1 ? <h3 className="font-bold text-xl mb-2">{place.addr1}</h3> : <h3>sorry, no address info</h3>}
+            {place.tel ? <h3 className="font-bold text-xl mb-2">{place.tel}</h3> : <h3>sorry, no tel info</h3>}
+          </div>
+          {memberId && (
+            <img
+              src={isBookmarked ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png" : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"}
+              alt="bookmark"
+              onClick={handleBookmarkClick}
+              style={{ cursor: "pointer" }}
+              className="w-16"
+            />
+          )}
+          {isLoading && <div>Loading...</div>}
+        </div>
       )}
-      {isLoading && <div>Loading...</div>}
-    </div>
+    </>
   );
 }
 
