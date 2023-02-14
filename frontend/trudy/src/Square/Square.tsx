@@ -32,10 +32,7 @@ function Square() {
   };
 
   const authCtx = useContext(AuthContext);
-  console.log(
-    "로그인 정보 참고하셈 이런 정보 들어있음 exp는 토큰 만료시간인데 안쓸거 같아서 안넣어놔서 못씀",
-    authCtx.loggedInfo
-  );
+  console.log("로그인 정보 참고하셈 이런 정보 들어있음 exp는 토큰 만료시간인데 안쓸거 같아서 안넣어놔서 못씀", authCtx.loggedInfo);
 
   const imgURL =
     "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
@@ -67,12 +64,7 @@ function Square() {
     <div className="">
       {/* 검색창 */}
       <div className="border-2 flex flex-row justify-center justify-evenly px-12 py-1">
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`p-2 m-2 rounded-lg  ${
-            !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
-          }`}
-        >
+        <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
           Area Select
         </button>
         {/* isLocal (UserType) 드랍박스 */}
@@ -122,23 +114,14 @@ function Square() {
               setNameSearch(searchChange);
             }}
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </button>
         </div>
       </div>
+
+      {/* ==================================================지역 필터====================================================== */}
       {!isCollapsed && (
         <>
           <div className="border border-gray-500">
@@ -157,9 +140,7 @@ function Square() {
                     checked={sigunguCode === sigunguInfo.id}
                     onChange={() => setSigunguCode(sigunguInfo.id)}
                   />
-                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-                    {sigunguInfo.name}
-                  </label>
+                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
                 </div>
               ))}
             </div>
@@ -188,17 +169,9 @@ function Square() {
 
                   <div className="md:w-1/3 inline-block float-left bg-trudy border-2 shadow-lg ">
                     {guide.img ? (
-                      <img
-                        src={guide.img}
-                        alt="userThumbnail"
-                        className="h-64 w-full object-cover rounded relative"
-                      />
+                      <img src={guide.img} alt="userThumbnail" className="h-64 w-full object-cover rounded relative" />
                     ) : (
-                      <img
-                        src={imgURL}
-                        alt="userThumbnail"
-                        className="h-64 w-full object-cover rounded relative"
-                      />
+                      <img src={imgURL} alt="userThumbnail" className="h-64 w-full object-cover rounded relative" />
                     )}
                   </div>
                   <div className="md:w-2/3 md:h-full p-4 inline-block bg-trudy border-2 shadow-lg ">
