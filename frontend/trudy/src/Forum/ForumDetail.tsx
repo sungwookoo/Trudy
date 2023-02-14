@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import "./ForumDetail.css";
 import AuthContext from "../Common/authContext";
 import ForumDeleteModal from "./ForumDeleteModal";
+import Parser from 'html-react-parser'
 
 interface IForumDetailProps {
   post_id: number;
@@ -79,7 +80,7 @@ function ForumDetail() {
     // 밑에 포럼 컨테이너 밖에 back만들어야함
     <div className="forum-detail-container">
       {/* <div className=""> */}
-      <div className="flex flex-row w-4/5 ml-34 mt-16">
+      <div className="flex flex-row w-4/5 ml-34 mt-8">
         {/* <button
           className="rounded-md bg-gray-300 mx-52 w-16 h-8 border border-black border-2 px-2 py-1 mb-4 hover:bg-red-400"
           onClick={forumnavigate}
@@ -89,7 +90,7 @@ function ForumDetail() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <div className="forum-detail-title capitalize px-6 py-1 border border-2">
+        <div className="forum-detail-title capitalize px-4 border border-1">
           {forumItem && forumItem.title}
         </div>
         <div className="forum-detail-region-category flex flex-row justify-between my-3 w-1/4">
@@ -98,7 +99,8 @@ function ForumDetail() {
         </div>
         {/* 이미지 */}
         <div className="forum-detail-content px-5 pt-4 pb-8">
-          {forumItem && forumItem.content}
+          {forumItem && Parser(forumItem?.content)}
+          {/* {forumItem && forumItem.content} */}
         </div>
 
         {/* {isloggedin && ( */}

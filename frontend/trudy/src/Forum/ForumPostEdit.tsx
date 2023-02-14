@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -17,6 +17,9 @@ function PostEditPage() {
   const [content, setContent] = useState("");
 
   const navigate = useNavigate();
+  const backToPost = () => {
+    navigate(-1);
+  };
 
   const token = "bearer " + localStorage.getItem("token");
   // console.log(id, "포스트아이디");
@@ -42,6 +45,7 @@ function PostEditPage() {
           setPostMemberData(res.data.postCombine.memberElement);
           setPostRegionData(res.data.postCombine.sigunguCodeList);
           setPostCategoryData(res.data.postCombine.categoryNameList);
+          setTitle(res.data.postCombine.postElement.title)
           setEditPost(res.data.postCombine.postElement.content);
         });
       } catch (error) {
@@ -51,7 +55,7 @@ function PostEditPage() {
     fetchData();
     // 필터 값 바뀌면 limit 값 변경해주기
   }, []);
-  console.log(editPost, 3333333333333333333333333333333);
+  console.log(editPost, 333333333);
   const handleEditPost = async (e: any) => {
     e.preventDefault();
     try {
@@ -69,6 +73,7 @@ function PostEditPage() {
       );
       console.log(response);
       setEditPost(response.data);
+      backToPost();
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +87,7 @@ function PostEditPage() {
           loader.file.then((file: any) => {
             imagedata.append("name", file.name);
             imagedata.append("upload", file);
-            // console.log(file.name)
+            console.log(file.name)
             console.log(imagedata.get("upload"));
 
             axios.post("/api/post", imagedata).then((res: any) => {
@@ -104,11 +109,16 @@ function PostEditPage() {
     };
   }
 
+
+  const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setTitle(event.target.value);
+  };
+
   return (
     // 밑에 포럼 컨테이너 밖에 back만들어야함
     <div className="forum-detail-container">
       {/* <div className=""> */}
-      <div className="flex flex-row w-4/5 ml-34 mt-16">
+      <div className="flex flex-row w-4/5 ml-34 mt-8">
         {/* <button
           className="rounded-md bg-gray-300 mx-52 w-16 h-8 border border-black border-2 px-2 py-1 mb-4 hover:bg-red-400"
           onClick={forumnavigate}
@@ -118,8 +128,10 @@ function PostEditPage() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <textarea className="forum-detail-edit-title capitalize px-6 border border-2">
-          {postData?.title}
+        <textarea className="forum-detail-edit-title capitalize px-6 border border-2"
+        value={title}
+        onChange={handleTitleChange}
+        >
         </textarea>
         <div className="forum-detail-region-category flex flex-row justify-between my-3 w-1/4">
           <div>Region: {postRegionData}</div>

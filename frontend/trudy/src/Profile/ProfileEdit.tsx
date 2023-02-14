@@ -34,12 +34,15 @@ function Profile() {
   // const authCtx = useContext(AuthContext);
   const [getmypost, setGetMyPost] = useState<any>([]);
   const [profile, setProfile] = useState<getUser | null>(null);
-  const [viewPost, setViewPost] = useState<Boolean>(false);
   // const [getmypost, setGetMyPost] = useState<string | null>(null);
+  const [updatedSelf, setUpdatedSelf] = useState<string>("");
+  const [updatedPlan, setUpdatedPlan] = useState<string>("");
+  const [updatedTitle, setUpdatedTitle] = useState<string>("");
+  const [updatedLanguage, setUpdatedLanguage] = useState<string>("");
 
   const navigate = useNavigate();
-  const navigateToProfileUpdate = () => {
-    navigate("/profileupdate");
+  const navigateToProfile = () => {
+    navigate("/profile");
   };
 
   const url = "api/member/me";
@@ -54,7 +57,12 @@ function Profile() {
       })
       .then((res) => {
         setProfile(res.data);
-        console.log(res.data.id, 11111);
+        setUpdatedSelf(res.data.introduceId.self);
+        setUpdatedPlan(res.data.introduceId.plan);
+        setUpdatedTitle(res.data.introduceId.title);
+        setUpdatedLanguage(res.data.introduceId.language);
+        console.log(res.data.introduceId.title, 222)
+        console.log(res.data, 11111);
       })
       .catch((err: any) => console.error(err));
   }, []);
@@ -80,20 +88,31 @@ function Profile() {
       });
   };
 
-  const updateProfile = () => {
-    axios
-      .put("api/member/intro", {
-        header: {
-          Authorization: token,
+  const updateProfile = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        "api/member/intro",
+        {
+          plan: updatedPlan,
+          self: updatedSelf,
+          title: updatedTitle,
+          language: updatedLanguage,
         },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log(response, "프로필 수정 성공");
+      navigateToProfile();
+    } catch (error) {
+      console.log(error, "프로필 수정 실패");
+    }
   };
+      
+    
 
   if (profile === null) {
     return <div className="flex justify-center">유저 찾는중.....</div>;
@@ -165,8 +184,11 @@ function Profile() {
         <div className="edit-profile-intro mb-1">
           <textarea
             className="profile-intro-edit"
-            value={profile.introduceId ? profile.introduceId.self : ""}
-          ></textarea>
+            value={updatedSelf}
+            onChange={(event) => setUpdatedSelf(event.target.value)}
+          >
+            {profile.introduceId ? profile.introduceId.self : ""}
+          </textarea>
         </div>
       </div>
       <div className="content-box flex place-content-center mb-5">
@@ -184,23 +206,32 @@ function Profile() {
           <div className="capitalize text-xl mt-3">
             <textarea
               className="profile-textarea-edit"
-              value={profile.introduceId ? profile.introduceId.plan : ""}
-            ></textarea>
+              value={updatedPlan}
+              onChange={(event) => setUpdatedPlan(event.target.value)}
+            >
+              {profile.introduceId ? profile.introduceId.plan : ""}
+            </textarea>
           </div>
           <div className="text-4xl font-semibold mt-6">About me</div>
           <div className="capitalize text-2xl mt-3">
             <textarea
               className="profile-textarea-edit"
-              value={profile.introduceId ? profile.introduceId.title : ""}
-            ></textarea>
+              value={updatedTitle}
+              onChange={(event) => setUpdatedTitle(event.target.value)}
+            >
+            {profile.introduceId ? profile.introduceId.title : ""}
+            </textarea>
           </div>
 
           <div className="text-4xl font-semibold mt-6">Language</div>
           <div className="capitalize text-2xl mt-3">
             <textarea
               className="profile-textarea-edit"
-              value={profile.introduceId ? profile.introduceId.language : ""}
-            ></textarea>
+              value={updatedLanguage}
+              onChange={(event) => setUpdatedLanguage(event.target.value)}
+            >
+              {profile.introduceId ? profile.introduceId.language : ""}
+            </textarea>
           </div>
         </div>
       </div>

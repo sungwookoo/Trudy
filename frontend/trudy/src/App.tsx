@@ -5,7 +5,6 @@ import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
 import MyProfile from "./Profile/MyProfile";
-import ProfileUpdate from "./Profile/ProfileUpdate";
 import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";
 import SignUpSelect from "./Account/SignUpSelect";
@@ -85,7 +84,6 @@ function App() {
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
           // element={<Planner />}
         />
-        <Route path="/profileupdate" element={<ProfileUpdate />} />
         <Route path="/profileedit" element={<ProfileEdit />} />
         <Route
           path="/signin"

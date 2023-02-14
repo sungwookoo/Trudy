@@ -70,7 +70,7 @@ function ForumPage() {
       try {
         const resData: any = await axios.get(
           API_URL +
-            `?area=${selectedSigungu}&contentTypeId=${contentTypeId}&word=${word}`
+            `?area=${selectedSigungu}&contentTypeId=${contentTypeId}&word=${word}&size=200`
         );
         setForumResponse(resData.data.content);
       } catch (error) {
@@ -162,7 +162,7 @@ function ForumPage() {
           </div>
 
           <button
-            className="border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-2 mx-1 rounded-md shadow-md"
+            className="border-2 border-black hover:bg-green-500 text-black font-bold py-2 px-2 mx-1 rounded-md shadow-md"
             onClick={navigateToCreateArticle}
           >
             Post Article

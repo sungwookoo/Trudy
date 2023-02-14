@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type ForumDeleteProps = {
   postId: number;
@@ -10,11 +11,17 @@ type ForumDeleteProps = {
 function ForumDelete(props: ForumDeleteProps) {
   const { postId, onDelete, onClose } = props;
 
+  const navigate = useNavigate();
+  const returnToForum = () => {
+    navigate('/Forum');
+  }
+
   const handleDelete = () => {
     axios
       .delete(`/api/post/${postId}`)
       .then(() => {
         onDelete(postId);
+        returnToForum();
       })
       .catch((error) => {
         console.error(error);

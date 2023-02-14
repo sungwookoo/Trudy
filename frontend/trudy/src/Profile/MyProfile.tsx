@@ -150,7 +150,7 @@ function Profile() {
           </div>
         </div>
 
-        <div className="myprofile-intro mb-3">
+        <div className="myprofile-intro mb-3 ml-16">
           {profile.introduceId ? profile.introduceId.self : ""}
         </div>
       </div>
