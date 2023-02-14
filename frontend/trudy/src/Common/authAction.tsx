@@ -109,7 +109,7 @@ export const signInActionHandler = (email: string, password: string) => {
 
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
-export const signOutActionHandler = (id: string) => {
+export const signOutActionHandler = (id: number) => {
   const data = new FormData();
   data.append("id", JSON.stringify(id));
   const response = axios.post(`api/logout`, data)

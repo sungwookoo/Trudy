@@ -70,7 +70,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const userIsLoggedIn = !!token;
 
-  let loggedInfo = { iss: "", auth: "", uid: "" };
+  let loggedInfo = { iss: "", auth: "", uid: 0 };
   useEffect(() => {
     if (token) {
       loggedInfo = jwtDecode(token) as any;
