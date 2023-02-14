@@ -40,7 +40,7 @@ public class PlannerService {
         // 1. 들어온 planner을 db에 저장
         plannerRepository.save(plannerInput);
         // 2. Dto 만들기
-        PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
+        PlannerDto.PlannerCombine plannerCombine;
         PlannerDto.PlannerElement plannerElement = modelMapper.map(plannerInput, PlannerDto.PlannerElement.class);
         PlannerDto.MemberElement memberElement = modelMapper.map(memberInput, PlannerDto.MemberElement.class);
         plannerCombine = new PlannerDto.PlannerCombine(plannerElement, memberElement);
