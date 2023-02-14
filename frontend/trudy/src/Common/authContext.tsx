@@ -43,7 +43,9 @@ const AuthContext = React.createContext({
   //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
   createPlan: (memberId: number, sequence: number) => {},
+  updatePlan: (plannerId: number, sequence: number) => {},
   deletePlan: (plannerId: number | null) => {},
+  updateDay: (dayId: number, sequence: number) => {},
   createDay: (
     plannerId: number,
     day: string,
@@ -51,6 +53,7 @@ const AuthContext = React.createContext({
     sequence: number
   ) => {},
   deleteDay: (dayId: number | null) => {},
+  updateDayItem: (dayItemId: number, sequence: number) => {}
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -220,14 +223,21 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   // Planner 정보를 가져오는 함수
   const getPlannerHandler = () => {
-    const response = authAction.getPlanner(loggedInfo.uid);
+    const response = authAction.getPlanner(token);
 
     return response;
   };
 
   // planner의 plan을 생성하는 함수
-  const createPlannerPlan = (memberId: number, sequence: number) => {
-    const response = authAction.createPlan(memberId, sequence);
+  const createPlannerPlan = (sequence: number) => {
+    const response = authAction.createPlan(token, sequence);
+
+    return response;
+  };
+
+  // planner의 plan을 수정하는 함수
+  const updatePlannerPlan = (plannerId: number, sequence: number) => {
+    const response = authAction.updatePlan(plannerId, sequence);
 
     return response;
   };
@@ -251,9 +261,24 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return response;
   };
 
+  // planner의 day을 수정하는 함수
+  const updatePlannerDay = (dayId: number, sequence: number) => {
+    const response = authAction.updateDay(dayId, sequence);
+
+    return response;
+  };
+
+
   // planner의 day를 삭제하는 함수
   const deletePlannerDay = (dayId: number | null) => {
     const response = authAction.deleteDay(dayId);
+
+    return response;
+  };
+
+  // planner의 dayItem을 수정하는 함수
+  const updatePlannerDayItem = (dayItemId: number, sequence: number) => {
+    const response = authAction.updateDayItem(dayItemId, sequence);
 
     return response;
   };
@@ -283,9 +308,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // changePassword: changePaswordHandler,
     planner: getPlannerHandler,
     createPlan: createPlannerPlan,
+    updatePlan: updatePlannerPlan,
     deletePlan: deletePlannerPlan,
     createDay: createPlannerDay,
+    updateDay: updatePlannerDay,
     deleteDay: deletePlannerDay,
+    updateDayItem: updatePlannerDayItem,
   };
 
   return (
