@@ -20,6 +20,7 @@ import * as axiosInterceptor from "./Common/axiosInterceptor";
 import EmailConfirm from "./Account/EmailConfirm";
 import UserProfile from "./Profile/UserProfile";
 import ProfileEdit from "./Profile/ProfileEdit";
+import ForumPostEdit from "./Forum/ForumPostEdit";
 
 function App() {
   // Code to handle form submission
@@ -74,6 +75,7 @@ function App() {
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
+        <Route path="/post/update/:id" element={<ForumPostEdit />} />
         <Route path="/square" element={<Square />} />
         <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/profile" element={<MyProfile />} />

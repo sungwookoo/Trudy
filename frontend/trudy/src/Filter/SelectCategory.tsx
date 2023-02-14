@@ -22,10 +22,10 @@ const CategoryButtons = ({ selectedCategories, onClick }: PropsType) => {
         <button
           key={key}
           onClick={() => onClick(value)}
-          className={`p-2 m-2 rounded-md border border-1 border-black ${
+          className={`p-2 m-2 rounded-md border border-2 border-black shadow-md ${
             selectedCategories.includes(value)
               ? "bg-green-600 text-white"
-              : "bg-gray-300"
+              : "bg-green-100"
           }`}
         >
           {key}

@@ -1,8 +1,7 @@
-
-.forum-page{
+.forum-page {
   /* display: grid; */
   height: 10%;
-  background-color: rgb(229, 246, 233);
+  /* background-color: rgb(229, 246, 233); */
 }
 
 .filter-bar {
@@ -12,10 +11,8 @@
   height: 10%;
   /* background-color: blue; */
   align-items: center;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   /* position: fixed; */
-  
-  ;
 }
 
 .cat-selectors {
@@ -35,9 +32,6 @@
 }
 
 .forum-content {
-  background-color: rgb(237, 248, 239);
+  /* background-color: rgb(237, 248, 239); */
   padding-top: 30px;
 }
-
-
-

@@ -107,8 +107,8 @@ function ForumPage() {
           <div className="flex">
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className={`p-2 m-2 rounded-md border border-1 border-black  ${
-                !isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"
+              className={`p-2 m-2 rounded-md border border-2 border-black font-semibold shadow-md ${
+                !isCollapsed ? "bg-green-600 text-white" : "bg-white-300"
               }`}
             >
               Area Select
@@ -154,7 +154,7 @@ function ForumPage() {
             </div>
           </div>
 
-          <div className="cat-selectors">
+          <div className="cat-selectors font-semibold">
             <CategoryButtons
               onClick={handleCategoryClick}
               selectedCategories={contentTypeId}
@@ -162,7 +162,7 @@ function ForumPage() {
           </div>
 
           <button
-            className="border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-2 rounded-md"
+            className="border-2 border-black hover:bg-green-500 text-black font-bold py-1.5 px-2 mx-1 rounded-md shadow-md"
             onClick={navigateToCreateArticle}
           >
             Post Article
@@ -170,7 +170,7 @@ function ForumPage() {
         </div>
       </div>
 
-      <div className="forum-content grid grid-cols-3 px-52 ">
+      <div className="forum-content grid grid-cols-4 gap-4 mx-32">
         {forumResponse.map((post, i) => (
           <ForumItem key={i} post={post} onClick={() => handleClick(post.id)} />
         ))}
