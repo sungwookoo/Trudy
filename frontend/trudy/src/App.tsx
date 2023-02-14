@@ -12,11 +12,14 @@ import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
 import ForumCreate from "./Forum/ForumCreate";
-import ForumDetail from "./Forum/ForumDetail"
+import ForumDetail from "./Forum/ForumDetail";
 import AuthContext from "./Common/authContext";
 import axios from "axios";
 import * as authAction from "./Common/authAction";
 import * as axiosInterceptor from "./Common/axiosInterceptor";
+import EmailConfirm from "./Account/EmailConfirm";
+import UserProfile from "./Profile/UserProfile";
+import ProfileEdit from "./Profile/ProfileEdit";
 
 function App() {
   // Code to handle form submission
@@ -50,9 +53,10 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="/forum/:id" element={<ForumDetail />} />
+        <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
-        <Route path="/square" element={<Square />} /> 
+        <Route path="/square" element={<Square />} />
+        <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/square" element={<Square />} />
         <Route
@@ -60,14 +64,21 @@ function App() {
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
           // element={<Planner />}
         />
-        <Route
-        path="/profileupdate"
-        element={<ProfileUpdate />}
-        />
+        <Route path="/profileupdate" element={<ProfileUpdate />} />
+        <Route path="/profileedit" element={<ProfileEdit />} />
         <Route
           path="/signin"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}
         />
+        <Route
+          path="/emailconfirm"
+          element={authCtx.isLoggedIn ? <Navigate to="/" /> : <EmailConfirm />}
+        />
+
+        {/* 로그인한 상태면 랜딩페이지로 */}
+        {/* 로그인 안했는데 이메일 인증 안했으면 이메일 인증 페이지로 */}
+        {/* 로그인 안했는데 이메일 인증은 했으면 회원가입 페이지로 */}
+        {/* <Route path="/signup" element={(authCtx.isLoggedIn) ? <Navigate to="/" /> : (authCtx.isVerified) ? <SignUp /> : <SignUpSelect />} /> */}
         <Route
           path="/signup"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUp />}

@@ -5,27 +5,43 @@ import { useSelector } from "react-redux";
 
 
 
+interface IForumDetailProps {
+  post_id: number;
+  // setForumItem: (post: IgetForumResponse) => void;
+}
+
+
 function ForumDetail() {
-const post_id = 1;
-const [ForumItem, setForumItem] = useState({});
-const [isForumLoaded, setIsForumLoaded] = useState(false);
+
+let postId = useParams();
+// console.log(postId, '포스트아이디')
+// const {post_id, setForumItem } = props;
+const [ForumItem, setForumItem] = useState<any>(null);
+// const [isForumLoaded, setIsForumLoaded] = useState(false);
 // const token = useSelector((state: any) => state.Auth.token);
-const navigate = useNavigate
+// const navigate = useNavigate
 
 
 useEffect(() => {
     const getForumItem = async () => {
-    const {data} = await axios.get(`api/post/${post_id}`);
-    console.log(data,"data")
-    return data;
+    const getdetaildata = await axios.get(`/api/post/${postId.id}`);
+    const detailData = getdetaildata.data.postCombine.postElement;
+    setForumItem(detailData);
+    console.log(detailData, '디테일데이터')
+    console.log(ForumItem, 111)
     }
-    getForumItem().then(result => setForumItem(result)).then(() => setIsForumLoaded(true));
+    getForumItem()
+    .then(result => setForumItem(result))
+      
+    .catch(err => console.log(err))
 }, [])
 
     return(
     <div>
-      123
-        {isForumLoaded && (
+      <div>
+      </div>
+        {/* {postElem} */}
+        {/* {isForumLoaded && ( */}
             <div>
                 {
                   /*
@@ -36,6 +52,9 @@ useEffect(() => {
                   */
                   // jwtUtils.isAuth(token) && jwtUtils.getId(token) === post.user.id &&
                 }
+                <div className="forum-detail-title">
+                  {/* {ForumItem.title} */}
+                  {ForumItem ? ForumItem.title : ''}
                 <div>
                   <button type="reset">
                     삭제
@@ -49,7 +68,8 @@ useEffect(() => {
                   
                 </div>
             </div>
-        )}
+        {/* )} */}
+        </div>
     </div>
     )
 }

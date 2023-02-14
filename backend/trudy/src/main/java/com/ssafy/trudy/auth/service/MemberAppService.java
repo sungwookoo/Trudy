@@ -137,6 +137,7 @@ public class MemberAppService {
                 .gender(modifiedMember.getGender())
                 .birth(modifiedMember.getBirth())
                 .isLocal(modifiedMember.getIsLocal())
+                .image(modifiedMember.getImage())
                 .areaCode(modifiedMember.getAreaCode())
                 .sigunguCode(modifiedMember.getSigunguCode())
                 .lastAccess(modifiedMember.getLastAccess())
@@ -183,8 +184,8 @@ public class MemberAppService {
 
 
     @Transactional
-    public void logout(PrincipalDetails principal) {
-        memberService.deleteByMemberId(principal.getMember().getId());
+    public void logout(Long id) {
+        memberService.deleteByMemberId(id);
     }
 
 
@@ -201,6 +202,7 @@ public class MemberAppService {
                 .name(member.getName())
                 .gender(member.getGender())
                 .birth(member.getBirth())
+                .image(member.getImage())
                 .isLocal(member.getIsLocal())
                 .areaCode(member.getAreaCode())
                 .sigunguCode(member.getSigunguCode())
@@ -314,6 +316,7 @@ public class MemberAppService {
                 .gender(member.getFollowFrom().getGender())
                 .birth(member.getFollowFrom().getBirth())
                 .isLocal(member.getFollowFrom().getIsLocal())
+                .image(member.getFollowFrom().getImage())
                 .areaCode(member.getFollowFrom().getAreaCode())
                 .sigunguCode(member.getFollowFrom().getSigunguCode())
                 .lastAccess(member.getFollowFrom().getLastAccess())
@@ -337,6 +340,7 @@ public class MemberAppService {
                 .gender(member.getFollowTo().getGender())
                 .birth(member.getFollowTo().getBirth())
                 .isLocal(member.getFollowTo().getIsLocal())
+                .image(member.getFollowTo().getImage())
                 .areaCode(member.getFollowTo().getAreaCode())
                 .sigunguCode(member.getFollowTo().getSigunguCode())
                 .lastAccess(member.getFollowTo().getLastAccess())

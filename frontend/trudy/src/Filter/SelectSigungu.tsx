@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { AreaPlusSigungu } from "../Filter/AreaPlusSigunguCode";
 
 type SigunguCodeType = {
   [key: number]: Array<{
@@ -14,15 +15,24 @@ type SigunguCodeType = {
 
 type Props = {
   area: number;
-  sigunguCode: SigunguCodeType;
+  selectSigunguCode: SigunguCodeType;
   selectedSigungu: number[];
+  setConvertSigungu: React.Dispatch<React.SetStateAction<any>>;
   setSelectedSigungu: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
-const SigunguSelect = ({ area, sigunguCode, selectedSigungu, setSelectedSigungu }: Props) => {
+const SigunguSelect = ({ area, selectSigunguCode, selectedSigungu, setSelectedSigungu, setConvertSigungu }: Props) => {
+  useEffect(() => {
+    const tempSigunCodeArray: any = [];
+    selectedSigungu.map((codeId: any, i: any) => {
+      tempSigunCodeArray.push(...AreaPlusSigungu[codeId]);
+    });
+    setConvertSigungu(tempSigunCodeArray);
+  }, [selectedSigungu]);
+
   return (
-    <div className="flex flex-col">
-      {sigunguCode[area].map((sigunguInfo: any, i: number) => (
+    <div className="flex flex-row flex-wrap nowrap">
+      {selectSigunguCode[area].map((sigunguInfo: any, i: number) => (
         <div key={i} className="flex items-center mb-2">
           <input
             className="mr-2"

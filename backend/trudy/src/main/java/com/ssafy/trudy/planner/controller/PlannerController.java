@@ -1,5 +1,6 @@
 package com.ssafy.trudy.planner.controller;
 
+import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.place.model.Place;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,6 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class PlannerController {
-    private final DayItemRepository dayItemRepository;
     @Autowired
     private final PlannerService plannerService;
     @Autowired
@@ -35,12 +36,12 @@ public class PlannerController {
     //**************************************[READ]***************************************//
     // 해당 유저 플래너 정보 전체보기
     @GetMapping
-    public ResponseEntity<?> plannerInfoByMember(@RequestParam Long memberId) throws Exception{
+    public ResponseEntity<?> plannerInfoByMember(@AuthenticationPrincipal PrincipalDetails principal) throws Exception{
         try {
-            Member member = memberService.getById(memberId);
-            List<Map> response = plannerService.getPlannersByMemberId(member);
+            Member member = principal.getMember();
+            List<Map<String, Object>> response = plannerService.getPlannersByMemberId(member);
 
-            if(!response.isEmpty() && response != null){
+            if(response != null && !response.isEmpty()){
                 return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.noContent().build();
@@ -54,15 +55,15 @@ public class PlannerController {
     //**************************************[CREATE]***************************************//
     // 플래너 생성
     @PostMapping("/post")
-    public ResponseEntity<?> plannerAdd(@RequestParam Long memberId,
+    public ResponseEntity<?> plannerAdd(@AuthenticationPrincipal PrincipalDetails principal,
                                  @RequestParam(defaultValue = "new planner") String title,
                                  @RequestParam String sequence){
         try {
-            Member member = memberService.getById(memberId);
+            Member member = principal.getMember();
             Planner planner = new Planner(member, title, sequence);
-            Map response = plannerService.addPlanner(planner, member);
+            Map<String, Object> response = plannerService.addPlanner(planner, member);
 
-            if(!response.isEmpty() && response != null){
+            if(response != null && !response.isEmpty()){
                 return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.noContent().build();
@@ -77,13 +78,14 @@ public class PlannerController {
     @PostMapping("/day/post")
     public ResponseEntity<?> dayAdd(@RequestParam Long plannerId,
                                     @RequestParam String day,
-                                    @RequestParam String memo){
+                                    @RequestParam String memo,
+                                    @RequestParam String sequence){
         try {
             Planner planner = plannerService.findPlannerById(plannerId);
-            Day newDay = new Day(planner, day, memo);
-            Map response = plannerService.addDay(newDay, planner);
+            Day newDay = new Day(planner, day, memo, sequence);
+            Map<String, Object> response = plannerService.addDay(newDay, planner);
 
-            if(!response.isEmpty() && response != null){
+            if(response != null && !response.isEmpty()){
                 return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.noContent().build();
@@ -154,6 +156,25 @@ public class PlannerController {
                                           @RequestParam String title){
         return plannerService.updatePlannerString(plannerId, title);
     }
+
+    @PutMapping("/planner")
+    public String plannerSequenceUpdate(@RequestParam Long plannerId,
+                                        @RequestParam String sequence) {
+        return plannerService.plannerSequenceUpdate(plannerId, sequence);
+    }
+
+    @PutMapping("/day")
+    public String daySequenceUpdate(@RequestParam Long dayId,
+                                    @RequestParam String sequence) {
+        return plannerService.daySequenceUpdate(dayId, sequence);
+    }
+
+    @PutMapping("/dayitem")
+    public String dayItemSequenceUpdate(@RequestParam Long dayItemId,
+                                    @RequestParam String sequence) {
+        return plannerService.dayItemSequenceUpdate(dayItemId, sequence);
+    }
+
 
     /*
     순서를 받는 방법은 아래와 같다.
