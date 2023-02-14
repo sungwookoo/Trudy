@@ -146,10 +146,10 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
   // ==========================================================클릭시 지도 옮겨주기====================================================================
 
   // 지도 센터 옮기기
-  // const handleClick = (mapx: number, mapy: number) => {
-  //   console.log(mapx, mapy, 342341412412);
-  //   onPlaceClick(mapx, mapy);
-  // };
+  const handleClick = (mapx: number, mapy: number) => {
+    console.log(mapx, mapy, 342341412412);
+    onPlaceClick(mapx, mapy);
+  };
 
   return (
     <>
@@ -234,7 +234,12 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
           {filteredBookmarks.map((bookmark: any, idx: number) => {
             return (
               <>
-                <div key={idx} className="max-w-sm rounded overflow-hidden shadow-lg m-5" style={{ cursor: "pointer" }}>
+                <div
+                  key={idx}
+                  className="max-w-sm rounded overflow-hidden shadow-lg m-5"
+                  onClick={() => handleClick(parseFloat(bookmark.mapy), parseFloat(bookmark.mapx))}
+                  style={{ cursor: "pointer" }}
+                >
                   {bookmark.firstimage ? (
                     <img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />
                   ) : (
@@ -255,7 +260,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   />
                   {isLoading && <div>Loading...</div>}
                 </div>
-                {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />}
+                {/* {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />} */}
               </>
             );
           })}
