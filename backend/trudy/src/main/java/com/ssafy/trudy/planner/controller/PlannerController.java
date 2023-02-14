@@ -36,9 +36,9 @@ public class PlannerController {
     //**************************************[READ]***************************************//
     // 해당 유저 플래너 정보 전체보기
     @GetMapping
-    public ResponseEntity<?> plannerInfoByMember(@RequestParam Long memberId) {
+    public ResponseEntity<?> plannerInfoByMember(@AuthenticationPrincipal PrincipalDetails principal) {
         try {
-            Member member = memberService.getById(memberId);
+            Member member = principal.getMember();
             List<Map<String, Object>> response = plannerService.getPlannersByMemberId(member);
 
             if(response != null && !response.isEmpty()){
@@ -55,11 +55,11 @@ public class PlannerController {
     //**************************************[CREATE]***************************************//
     // 플래너 생성
     @PostMapping("/post")
-    public ResponseEntity<?> plannerAdd(@RequestParam Long memberId,
+    public ResponseEntity<?> plannerAdd(@AuthenticationPrincipal PrincipalDetails principal,
                                  @RequestParam(defaultValue = "new planner") String title,
                                  @RequestParam String sequence){
         try {
-            Member member = memberService.getById(memberId);
+            Member member = principal.getMember();
             Planner planner = new Planner(member, title, sequence);
             Map<String, Object> response = plannerService.addPlanner(planner, member);
 
