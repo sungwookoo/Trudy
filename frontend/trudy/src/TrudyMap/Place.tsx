@@ -24,7 +24,7 @@ export type mapPlaceType = {
   zipcode: string | undefined;
 };
 
-function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList }: any) {
+function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList, mapVisible }: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   // 관광 정보 query
@@ -97,7 +97,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   console.log(places);
   return (
-    <>
+    <div>
       {/* 지역 버튼 */}
       <div>
         <div>
@@ -130,6 +130,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
               <PlaceForm
                 key={i}
                 place={data}
+                mapVisible={mapVisible}
                 onClick={() => handlePlaceClick(data)}
                 bookmarkedIds={bookmarkedIds}
                 setbookmarkedIds={setbookmarkedIds}
@@ -145,7 +146,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       <button onClick={() => setLimit(limit + 10)} color="black">
         more
       </button>
-    </>
+    </div>
   );
 }
 

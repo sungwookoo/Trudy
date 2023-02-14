@@ -1,4 +1,5 @@
 import React from "react";
+// import restaurant from "../assets/res";
 
 interface PropsType {
   onClick: (categoryId: number) => void;
@@ -22,11 +23,7 @@ const CategoryButtons = ({ selectedCategories, onClick }: PropsType) => {
         <button
           key={key}
           onClick={() => onClick(value)}
-          className={`p-2 m-2 rounded-md border border-1 border-black ${
-            selectedCategories.includes(value)
-              ? "bg-green-600 text-white"
-              : "bg-gray-300"
-          }`}
+          className={`p-2 m-2 rounded-md border border-1 border-black ${selectedCategories.includes(value) ? "bg-green-600 text-white" : "bg-gray-300"}`}
         >
           {key}
         </button>

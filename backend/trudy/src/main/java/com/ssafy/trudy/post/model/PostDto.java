@@ -27,9 +27,6 @@ public class PostDto {
     public static class PostCombine {
         private PostElement postElement;
         private MemberElement memberElement;
-//        private List<PostImageElement> postImageElementList;
-//        private List<PostAreaElement> postAreaElementList;
-//        private List<PostCategoryElement> postCategoryElementList;
         private int postLikeCount;
         private List<Long> sigunguCodeList;
         private List<String> categoryNameList;
@@ -51,11 +48,10 @@ public class PostDto {
     public static class InsertPost{
         private String title;
         private String content;
-        private MultipartFile[] upload;
         private Long[] sigunguIdList;
         private Long memberId;
-        //private CategoryName[] categoryList;
         private String[] categoryList;
+        private String thumbnailImage;
     }
 
 
@@ -69,8 +65,6 @@ public class PostDto {
     public static class CommentElement{
         //1. comment 내용
         private Long id;
-        //private Post postId;
-        //private Member memberId;
         private String content;
         private byte isDeleted;
         private LocalDateTime createdAt;
@@ -93,9 +87,6 @@ public class PostDto {
         //1. nested_comment 정보
         private Long id;
 
-        //private Comment commentId;
-
-        //private Member memberId;
         private String content;
         private LocalDateTime createdAt;
 
@@ -131,24 +122,6 @@ public class PostDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
-
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    public static class PostAreaElement{
-//
-//        private AreaElement areaElement;
-//        private SigunguElement sigunguElement;
-//    }
-
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    public static class PostCategoryElement{
-//        private String name;
-//    }
 
     @Data
     @AllArgsConstructor

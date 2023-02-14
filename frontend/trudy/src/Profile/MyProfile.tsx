@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import AuthContext from "../Common/authContext";
 import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
+import Avatar from "react-avatar";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -99,6 +100,7 @@ function Profile() {
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
+          {/* <Avatar className="" src={profile.image} /> */}
           <img className="profile-picture" src={profile.image}></img>
 
           <div>
@@ -148,7 +150,7 @@ function Profile() {
           </div>
         </div>
 
-        <div className="myprofile-intro mb-3">
+        <div className="myprofile-intro mb-3 ml-16">
           {profile.introduceId ? profile.introduceId.self : ""}
         </div>
       </div>

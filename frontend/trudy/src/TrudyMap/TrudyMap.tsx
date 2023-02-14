@@ -24,6 +24,7 @@ function TrudyMap() {
     id: "google-map-script",
     googleMapsApiKey: API_KEY,
     language: "en",
+    region: "US",
   });
   const [map, setMap] = React.useState(null);
 
@@ -71,7 +72,6 @@ function TrudyMap() {
       }
     })();
   }, [memberId]);
-
   useEffect(() => {
     const tempbookMark: any = [];
     const markMarker: any = [];
@@ -89,7 +89,7 @@ function TrudyMap() {
 
   // 선택시 센터 위도 경도 업데이트
   const updateCenter = (lat: number, lng: number) => {
-    console.log("동작중ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ1123");
+    console.log(lat, lng, "동작중ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ1123");
     setCenter({ lat, lng });
     setZoom(20);
     setMarker({ lat, lng });
@@ -102,15 +102,13 @@ function TrudyMap() {
       setMap(map);
       setZoom(14);
     },
-    [zoom, setCenter]
-  );
-
-  const onUnmount = React.useCallback(
-    function callback() {
-      setMap(map);
-    },
     [center]
   );
+
+  const onUnmount = React.useCallback(function callback() {
+    console.log("onUnmounttttttttttttttttttttttttttttttttttt");
+    setMap(null);
+  }, []);
   return (
     <div className="flex h-screen">
       {/* 지도 보이는 경우 -------------------------------------------------------------------------- */}
@@ -144,12 +142,14 @@ function TrudyMap() {
                     setbookmarkedIds={setbookmarkedIds}
                     memberId={memberId}
                     setbookmarkList={setbookmarkList}
-                    onPlaceClick={updateCenter}
+                    mapVisible={mapVisible}
+                    // onPlaceClick={updateCenter}
                   ></Bookmark>
                 ) : (
                   // ----------------------------------------------------------------------------------------------------------------------------------------------------
                   //     장소 보기
                   <Place
+                    mapVisible={mapVisible}
                     onPlaceClick={updateCenter}
                     bookmarkedIds={bookmarkedIds}
                     setbookmarkedIds={setbookmarkedIds}
@@ -167,7 +167,7 @@ function TrudyMap() {
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
           {/*                                                                     구글 지도  */}
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
-          {isLoaded && (
+          {isLoaded ? (
             <div className="w-3/4 h-full">
               <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom} onLoad={onLoad} onUnmount={onUnmount}>
                 <MarkerF position={marker} animation={google.maps.Animation.BOUNCE} />
@@ -177,13 +177,16 @@ function TrudyMap() {
                     key={index}
                     position={{ lat: parseFloat(bookmark.mapy), lng: parseFloat(bookmark.mapx) }}
                     icon={{
-                      url: "https://cdn-icons-png.flaticon.com/128/8637/8637632.png",
-                      scaledSize: new google.maps.Size(30, 30),
+                      url: "https://cdn-icons-png.flaticon.com/128/4101/4101575.png",
+                      scaledSize: new google.maps.Size(40, 40),
                     }}
+                    animation={google.maps.Animation.BOUNCE}
                   />
                 ))}
               </GoogleMap>
             </div>
+          ) : (
+            <div>재로딩해주세요</div>
           )}
         </>
       ) : (
@@ -195,49 +198,54 @@ function TrudyMap() {
             <div className="flex flex-row items-center justify-center">
               {memberId ? (
                 <>
-                  <div className="flex flex-row justify-center">
-                    <button
-                      onClick={() => setselectedInfo("bookmark")}
-                      className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
-                    >
-                      Bookmark Information
-                    </button>
-                    <button
-                      onClick={() => setselectedInfo("placeinfo")}
-                      className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
-                    >
-                      Place Information
-                    </button>
-                  </div>
-                  {selectedInfo === "bookmark" ? (
-                    <Bookmark
-                      key={Date.now()}
-                      bookmarkedIds={bookmarkedIds}
-                      bookmarkList={bookmarkList}
-                      setbookmarkedIds={setbookmarkedIds}
-                      memberId={memberId}
-                      setbookmarkList={setbookmarkList}
-                    ></Bookmark>
-                  ) : (
-                    <div className="flex flex-column">
-                      <Place
-                        onPlaceClick={updateCenter}
-                        bookmarkedIds={bookmarkedIds}
-                        setbookmarkedIds={setbookmarkedIds}
-                        memberId={memberId}
-                        setbookmarkList={setbookmarkList}
-                      />
+                  <div>
+                    <div className="flex flex-row justify-center">
+                      <button
+                        onClick={() => setselectedInfo("bookmark")}
+                        className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                      >
+                        Bookmark Information
+                      </button>
+                      <button
+                        onClick={() => setselectedInfo("placeinfo")}
+                        className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                      >
+                        Place Information
+                      </button>
                     </div>
-                  )}
+                    <div>
+                      {selectedInfo === "bookmark" ? (
+                        <Bookmark
+                          key={Date.now()}
+                          bookmarkedIds={bookmarkedIds}
+                          bookmarkList={bookmarkList}
+                          setbookmarkedIds={setbookmarkedIds}
+                          memberId={memberId}
+                          setbookmarkList={setbookmarkList}
+                          mapVisible={mapVisible}
+                        ></Bookmark>
+                      ) : (
+                        <div className="flex flex-row">
+                          <Place
+                            bookmarkedIds={bookmarkedIds}
+                            setbookmarkedIds={setbookmarkedIds}
+                            memberId={memberId}
+                            setbookmarkList={setbookmarkList}
+                            mapVisible={mapVisible}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </>
               ) : (
-                <div className="flex flex-column">
+                <div className="flex flex-row">
                   <Place
-                    onPlaceClick={updateCenter}
                     bookmarkedIds={bookmarkedIds}
                     setbookmarkedIds={setbookmarkedIds}
                     memberId={memberId}
                     setbookmarkList={setbookmarkList}
+                    mapVisible={mapVisible}
                   />
                 </div>
               )}
@@ -252,4 +260,4 @@ function TrudyMap() {
   );
 }
 
-export default React.memo(TrudyMap);
+export default TrudyMap;
