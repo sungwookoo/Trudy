@@ -33,7 +33,6 @@ public class PlannerController {
     // 해당 유저 플래너 정보 전체보기
     @GetMapping
     public ResponseEntity<?> plannerInfoByMember(@AuthenticationPrincipal PrincipalDetails principal) {
-        try {
             Member member = principal.getMember();
             List<Map<String, Object>> response = plannerService.getPlannersByMemberId(member);
 
@@ -42,10 +41,7 @@ public class PlannerController {
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } catch (Exception e) {
-            e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+
     }
 
     //**************************************[CREATE]***************************************//
@@ -54,7 +50,6 @@ public class PlannerController {
     public ResponseEntity<?> plannerAdd(@AuthenticationPrincipal PrincipalDetails principal,
                                  @RequestParam(defaultValue = "new planner") String title,
                                  @RequestParam String sequence){
-        try {
             Member member = principal.getMember();
             Planner planner = new Planner(member, title, sequence);
             Map<String, Object> response = plannerService.addPlanner(planner, member);
@@ -64,10 +59,6 @@ public class PlannerController {
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } catch (Exception e) {
-            e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
     }
 
     // 데이 생성
