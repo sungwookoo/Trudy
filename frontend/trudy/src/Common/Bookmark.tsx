@@ -5,6 +5,9 @@ import { sigunguList } from "../Filter/SigunguCode";
 import SearchBar from "../Common/SearchBar";
 import AreaSelect from "../Filter/SelectArea";
 import CategoryButtons from "../Filter/SelectCategory";
+import MapModal from "./MapModal";
+import nopictures from "../assets/nopictures.png";
+import { ModifierFlags } from "typescript";
 
 type Props = {
   memberId: number;
@@ -12,11 +15,26 @@ type Props = {
   setbookmarkedIds: React.Dispatch<React.SetStateAction<any>>;
   setbookmarkList: React.Dispatch<React.SetStateAction<any>>;
   bookmarkList: any;
+  mapVisible?: boolean;
   onPlaceClick?: (mapx: number, mapy: number) => void;
 };
 
-function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList, onPlaceClick = () => {} }: Props) {
+function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList, mapVisible, onPlaceClick = () => {} }: Props) {
   const token = "bearer " + localStorage.getItem("token");
+
+  // 모달창
+  const [showModal, setShowModal] = useState(false);
+  const [selectedBookMark, setselectedBookMark] = useState(null);
+
+  const handleBookMarkInfoClick = (bookmark: any) => {
+    setselectedBookMark(bookmark);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   // 북마크 필터링
   const [filteredBookmarks, setfilteredBookmarks] = useState<any>([]);
 
@@ -30,6 +48,9 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       setbookmarkedIds(updatedBookmarkedIds);
       await axios.delete(`api/bookmark/delete`, {
         params: { memberId: memberId, placeId: placeid },
+        headers: {
+          Authorization: token,
+        },
       });
     } catch (error) {
       console.error(error);
@@ -125,10 +146,10 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
   // ==========================================================클릭시 지도 옮겨주기====================================================================
 
   // 지도 센터 옮기기
-  const handleClick = (mapx: number, mapy: number) => {
-    console.log(mapx, mapy, 342341412412);
-    onPlaceClick(mapx, mapy);
-  };
+  // const handleClick = (mapx: number, mapy: number) => {
+  //   console.log(mapx, mapy, 342341412412);
+  //   onPlaceClick(mapx, mapy);
+  // };
 
   return (
     <>
@@ -169,37 +190,77 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       </div>
       {/* ------------------------------------------------북마크 리스트------------------------------------------------- */}
       {/* ------------------------------------------------북마크 리스트------------------------------------------------- */}
-      <div className="flex flex-wrap">
-
-        {filteredBookmarks.map((bookmark: any, idx: number) => {
-          return (
-            <>
-              <div
-                key={idx}
-                className="max-w-sm rounded overflow-hidden shadow-lg m-5"
-                onClick={() => handleClick(parseFloat(bookmark.mapx), parseFloat(bookmark.mapy))}
-                style={{ cursor: "pointer" }}
-              >
-                {<img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />}
-                <div className="px-6 py-4">
-                  <h3 className="font-bold text-xl mb-2">{bookmark.title}</h3>
-                </div>
-                <img
-                  src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
-                  className="w-16 "
-                  alt="bookmark"
-                  onClick={() => {
-                    handleBookmarkClick(bookmark.id);
-                  }}
+      {/* 맵 여부에 따라서 보이는 화면 다르게 구성ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ */}
+      {!mapVisible ? (
+        <div className="flex flex-wrap">
+          {filteredBookmarks.map((bookmark: any, idx: number) => {
+            return (
+              <>
+                <div
+                  key={idx}
+                  className="max-w-sm rounded overflow-hidden shadow-lg m-5"
+                  onClick={() => handleBookMarkInfoClick(bookmark)}
                   style={{ cursor: "pointer" }}
-                />
-
-                {isLoading && <div>Loading...</div>}
-              </div>
-            </>
-          );
-        })}
-      </div>
+                >
+                  {bookmark.firstimage ? (
+                    <img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />
+                  ) : (
+                    <img className="w-full" src={nopictures} alt="Place thumbnail" />
+                  )}
+                  <div className="px-6 py-4">
+                    <h1 className="font-bold  text-3xl mb-2">{bookmark.title}</h1>
+                    <br />
+                    {bookmark.addr1 && <p className="font-bold  text-xl mb-2">address : {bookmark.addr1}</p>}
+                    {bookmark.tel && <p className="font-bold text-xl mb-2">{bookmark.tel}</p>}
+                  </div>
+                  <img
+                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
+                    className="w-16 "
+                    alt="bookmark"
+                    onClick={() => {
+                      handleBookmarkClick(bookmark.id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                  {isLoading && <div>Loading...</div>}
+                </div>
+                {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />}
+              </>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-wrap">
+          {filteredBookmarks.map((bookmark: any, idx: number) => {
+            return (
+              <>
+                <div key={idx} className="max-w-sm rounded overflow-hidden shadow-lg m-5" style={{ cursor: "pointer" }}>
+                  {bookmark.firstimage ? (
+                    <img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />
+                  ) : (
+                    <img className="w-full" src={nopictures} alt="Place thumbnail" />
+                  )}
+                  <div className="px-6 py-4">
+                    <h1 className="font-bold  text-xl mb-2">{bookmark.title}</h1>
+                    <br />
+                  </div>
+                  <img
+                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
+                    className="w-16 "
+                    alt="bookmark"
+                    onClick={() => {
+                      handleBookmarkClick(bookmark.id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                  {isLoading && <div>Loading...</div>}
+                </div>
+                {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />}
+              </>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }

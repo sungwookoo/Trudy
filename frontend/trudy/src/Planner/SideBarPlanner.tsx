@@ -25,14 +25,11 @@ function SideBarPlanner() {
       }
       if (memberId) {
         try {
-          const bookmarkResponse = await axios.get(
-            `api/bookmark?memberId=${memberId}`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
+          const bookmarkResponse = await axios.get(`api/bookmark?memberId=${memberId}`, {
+            headers: {
+              Authorization: token,
+            },
+          });
           setbookmarkList(bookmarkResponse.data);
         } catch (error) {
           console.log(error);
