@@ -35,7 +35,8 @@ function TrudyMap() {
   const [bookmarkedIds, setbookmarkedIds] = useState<number[]>([]);
   const [bookmarkList, setbookmarkList] = useState<any>([]);
   const [bookmarkMarker, setbookmarkMarker] = useState<any>([]);
-
+  // 북마크
+  const [bookmarkMarkerLocation, setbookmarkMarkerLocation] = useState<any>([]);
   // 로그인 여부
   const islogged = useContext(AuthContext);
   // 로그인 정보 들고오기
@@ -143,7 +144,7 @@ function TrudyMap() {
                     memberId={memberId}
                     setbookmarkList={setbookmarkList}
                     mapVisible={mapVisible}
-                    // onPlaceClick={updateCenter}
+                    onPlaceClick={updateCenter}
                   ></Bookmark>
                 ) : (
                   // ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -161,7 +162,7 @@ function TrudyMap() {
             ) : (
               // --------------------------------------------------------------------------
               // 로그인 안되어있는 경우
-              <Place bookmarkedIds={bookmarkedIds} setbookmarkedIds={setbookmarkedIds} />
+              <Place bookmarkedIds={bookmarkedIds} setbookmarkedIds={setbookmarkedIds} mapVisible={mapVisible} />
             )}
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -169,8 +170,14 @@ function TrudyMap() {
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
           {isLoaded ? (
             <div className="w-3/4 h-full">
-              <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom} onLoad={onLoad} onUnmount={onUnmount}>
-                <MarkerF position={marker} animation={google.maps.Animation.BOUNCE} />
+              <GoogleMap
+                key={`${center.lat}-${center.lng}`}
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={zoom}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+              >
                 {/* 북마크 출력하기 */}
                 {bookmarkList.map((bookmark: any, index: number) => (
                   <MarkerF
@@ -183,10 +190,18 @@ function TrudyMap() {
                     animation={google.maps.Animation.BOUNCE}
                   />
                 ))}
+                <MarkerF
+                  position={marker}
+                  icon={{
+                    url: "https://cdn-icons-png.flaticon.com/128/4101/4101579.png",
+                    scaledSize: new google.maps.Size(60, 60),
+                  }}
+                  animation={google.maps.Animation.BOUNCE}
+                />
               </GoogleMap>
             </div>
           ) : (
-            <div>재로딩해주세요</div>
+            <div>Please Reloading...</div>
           )}
         </>
       ) : (
