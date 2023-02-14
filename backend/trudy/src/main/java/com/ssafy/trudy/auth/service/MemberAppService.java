@@ -183,8 +183,8 @@ public class MemberAppService {
 
 
     @Transactional
-    public void logout(PrincipalDetails principal) {
-        memberService.deleteByMemberId(principal.getMember().getId());
+    public void logout(Long id) {
+        memberService.deleteByMemberId(id);
     }
 
 

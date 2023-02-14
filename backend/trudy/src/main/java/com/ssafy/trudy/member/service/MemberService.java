@@ -94,7 +94,7 @@ public class MemberService {
 
         member.setRefreshTokens(new ArrayList<>());
 
-        this.save(member);
+        memberRepository.save(member);
         refreshTokenRepository.deleteAll(refreshTokens);
     }
 
