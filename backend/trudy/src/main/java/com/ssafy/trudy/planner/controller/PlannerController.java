@@ -58,7 +58,7 @@ public class PlannerController {
     public ResponseEntity<?> plannerAdd(@AuthenticationPrincipal PrincipalDetails principal,
                                  @RequestParam(defaultValue = "new planner") String title,
                                  @RequestParam String sequence){
-        try {
+
             Member member = principal.getMember();
             Planner planner = new Planner(member, title, sequence);
             Map<String, Object> response = plannerService.addPlanner(planner, member);
@@ -68,10 +68,6 @@ public class PlannerController {
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } catch (Exception e) {
-            e.getStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
     }
 
     // 데이 생성
