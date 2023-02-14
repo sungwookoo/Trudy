@@ -48,13 +48,10 @@ public class PostDto {
     public static class InsertPost{
         private String title;
         private String content;
-        //private MultipartFile[] upload;
         private Long[] sigunguIdList;
         private Long memberId;
-        //private CategoryName[] categoryList;
         private String[] categoryList;
         private String thumbnailImage;
-        //private String[] data;
     }
 
 

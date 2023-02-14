@@ -73,24 +73,6 @@ public class PostService {
             return new PageImpl<>(new ArrayList<>(), filteredPost.getPageable(), filteredPost.getTotalElements());
         }
 
-//test        log.info("검사 합니다.");
-//        log.info(postRepository.findAll(PostSpecification.getSearchByPageable(title, content, sigunguIdList, categoryList), pageable).toString());
-
-//         for(Object t : filteredPost){
-//            log.info("start");
-//            log.info(t.);
-//        }
-
-        // 전송용 DTO
-//        List<PostDto.PostCombine> postCombineList = new ArrayList<>();
-
-        /*List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(post -> PostDto.PostCombine.builder()
-                .postElement(post.get)
-                .memberElement()
-                .postAreaElementList()
-                .postCategoryElementList()
-                .build()).collect(Collectors.toList());*/
-
         log.info("카테고리 에러1");
         //변형 -> DTO 수정해야
         List<PostDto.PostCombine> postCombineList = filteredPost.stream().map(p-> PostDto.PostCombine.builder()
@@ -99,55 +81,8 @@ public class PostService {
                 .categoryNameList(p.getPostCategoryList().stream().map(c->c.getCategoryName()).collect(Collectors.toList()))
                 .sigunguCodeList(p.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
                 .build()).collect(Collectors.toList());
-//test
-//        for(int i=0; i<postCombineList.size(); i++){
-//            log.info(i + " ============ " + postCombineList.get(i));
-//        }
 
-        log.info("============findPostList 종료=================");
         return new PageImpl<>(postCombineList, filteredPost.getPageable(), filteredPost.getTotalElements());
-
-//before ver
-        /*for(Post postEntity : filteredPost){
-            PostDto.PostElement postElement = modelMapper.map(postEntity, PostDto.PostElement.class);
-
-            PostDto.MemberElement memberElement = modelMapper.map(postEntity.getMemberId(), PostDto.MemberElement.class);
-
-            //image 정보 리스트 가져와서 DTO에 저장
-            List<PostDto.PostImageElement> postImageElementList = postEntity.getPostImageList()
-                    .stream()
-                    .map(p -> modelMapper.map(p, PostDto.PostImageElement.class)).collect(Collectors.toList());
-
-            //area 정보 리스트 가져와서 DTO에 저장
-            List<PostDto.PostAreaElement> postAreaElementList = postEntity.getPostAreaList()
-                    .stream()
-                    .map(p -> new PostDto.PostAreaElement(
-                            modelMapper.map(p.getSigunguCode().getAreaCode(), PostDto.AreaElement.class),
-                            modelMapper.map(p.getSigunguCode(), PostDto.SigunguElement.class)
-                    )).collect(Collectors.toList());
-
-            //category 정보 리스트 가져와서 DTO에 저장
-            List<PostDto.PostCategoryElement> postCategoryElementLIst = postCategoryRepository
-                    .findByPostId(postEntity)
-                    .stream()
-                    .map(p -> modelMapper.map(p, PostDto.PostCategoryElement.class)).collect(Collectors.toList());
-
-            //postLikeCount 정보 가져옴
-            int postLikeCount = postLikeRepository.countByPostId(postEntity);
-
-            //한개 포럼글에 대한 정보를 묶음
-            postCombineList.add(new PostDto.PostCombine(postElement, memberElement, postImageElementList, postAreaElementList, postCategoryElementLIst, postLikeCount));
-
-        }
-        for(int i=0; i<postCombineList.size(); i++) {
-            log.info(i + " post+++++++ : " + postCombineList.get(i).getPostElement().toString());
-            log.info(i + " member+++++++ : " + postCombineList.get(i).getMemberElement().toString());
-            log.info(i + " image+++++++ : " + postCombineList.get(i).getPostImageElementList().toString());
-            log.info(i + " area+++++++ : " + postCombineList.get(i).getPostAreaElementList().toString());
-            log.info(i + " category+++++++ : " + postCombineList.get(i).getPostCategoryElementList().toString());
-            log.info(i + " count+++++++ : " + postCombineList.get(i).getPostLikeCount());
-        }*/
-
 
     }
 
@@ -161,7 +96,6 @@ public class PostService {
                 insertPostDto.getTitle(),
                 insertPostDto.getContent());
         postRepository.save(postEntityInsert);
-        log.info("postId test ======= " + postEntityInsert);
 
         //2. area, category 저장
         List<PostArea> postAreaList = new ArrayList<>();
@@ -186,7 +120,6 @@ public class PostService {
         //3. thumbnail 이미지 저장
         postEntityInsert.setThumbnailImage(insertPostDto.getThumbnailImage());
 
-        log.info("썸네일 테스트 ======== " + postEntityInsert.toString());
     }
 
     public void deleteAllImage(List<String> fileNameList) {
@@ -239,8 +172,7 @@ public class PostService {
         //post entity 수정(comment 때문에 post 삭제 안함)
         postEntityFind.setTitle(insertPostDto.getTitle());
         postEntityFind.setContent(insertPostDto.getContent());
-
-        log.info("put 완료");
+        postEntityFind.setThumbnailImage(insertPostDto.getThumbnailImage());
     }
 
     //포럼 게시글 삭제 - 정상 동작1
@@ -252,7 +184,6 @@ public class PostService {
     public Map findPostDetail(Long postId) throws Exception{
 
         //1. post entity를 가져옴
-        log.info("1");
         Post postEntity = postRepository.findById(postId).get();
 
         PostDto.PostCombine postCombine = PostDto.PostCombine.builder()
@@ -262,10 +193,6 @@ public class PostService {
                 .sigunguCodeList(postEntity.getPostAreaList().stream().map(a->a.getSigunguCode().getId()).collect(Collectors.toList()))
                 .postLikeCount(postLikeRepository.countByPostId(postEntity))
                 .build();
-
-//test
-//        log.info("test : ============= ");
-//        log.info(postCombine.toString());
 
         // post Entity를 이용해 댓글 정보를 채워 넣음
         PostDto.CommentCombine commentCombine = new PostDto.CommentCombine();
@@ -285,10 +212,6 @@ public class PostService {
 
             //4. comment DTO에 comment_like count 저장
             commentElement.setCommentLikeCount(commentLikeRepository.countByCommentId(commentEntity));
-
-//test            log.info("commentElement res ============== " + commentElement.toString());
-//            log.info("comment like count: " + commentLikeRepository.countByCommentId(commentEntity));
-//            log.info("end");
 
             //5. nested_comment List 채우기
             List<PostDto.NestedCommentElement> nestedCommentElementList= new ArrayList<>();
@@ -319,17 +242,6 @@ public class PostService {
 
             //commentCombine(자세한 구조는 PostDto.CommentCombine 참고)에 commentElementList 저장
             commentCombine.setCommentElementList(commentElementList);
-        }
-
-        // comment DTO 정보 test
-        for(PostDto.CommentElement commentElement : commentElementList){
-            log.info("result ==================== " );
-            log.info("id ========= " + commentElement.getId());
-            log.info("conent ========= " + commentElement.getContent());
-            log.info("isdeleted ========= " + commentElement.getIsDeleted());
-            log.info("created at========= " + commentElement.getCreatedAt());
-            log.info("custom member for comment ========= " + commentElement.getCustomMemberForComment());
-            log.info("nestedcommentlist ========= " + commentElement.getNestedCommentList());
         }
 
         Map<String, Object> response = new HashMap<>();

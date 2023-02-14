@@ -56,13 +56,7 @@ public class PostController {
     public  ResponseEntity<?> postAdd(@RequestBody PostDto.InsertPost insertPostDto){
 
         try{
- /*           //        postService.addPost(title, content, upload, sigunguId, memberId, category);
-            //postService.addPost(title, content, sigunguIdList,memberId, categoryList);*/
-            log.info(insertPostDto.toString());
             postService.addPost(insertPostDto);
-            log.info("============== test complete ===========");
-            //log.info(insertPostDto.getUpload().toString());
-            log.info("try ok");
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
@@ -79,10 +73,7 @@ public class PostController {
     //포럼 게시글 이미지 삭제
     @DeleteMapping("/upload")
     public void imageRemove(@RequestParam List<String> deleteFileNameArr){
-        log.info("==========controller - imageRemove - get param===========");
-        for(String s : deleteFileNameArr)log.info(s);
         postService.deleteAllImage(deleteFileNameArr);
-        log.info("==========controller - imageRemove - end===========");
     }
 
 
@@ -91,7 +82,6 @@ public class PostController {
     public ResponseEntity<?> postModify(@PathVariable("post_id") Long postId,
                                 @RequestBody PostDto.InsertPost insertPostDto){
         try{
-            log.info("controller - update ");
             postService.modifyPost(postId, insertPostDto);
             return ResponseEntity.ok().build();
         } catch (Exception e){
