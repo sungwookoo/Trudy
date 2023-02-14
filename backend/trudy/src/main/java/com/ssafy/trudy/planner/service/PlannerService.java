@@ -36,7 +36,7 @@ public class PlannerService {
 
     //*******************************[CREATE]****************************************//
     // 플래너 생성
-    public Map addPlanner(Planner plannerInput, Member memberInput){
+    public Map<String, Object> addPlanner(Planner plannerInput, Member memberInput){
         // 1. 들어온 planner을 db에 저장
         plannerRepository.save(plannerInput);
         // 2. Dto 만들기
@@ -51,7 +51,7 @@ public class PlannerService {
     }
 
     // 데이 생성
-    public Map addDay(Day dayInput, Planner planner) {
+    public Map<String,Object> addDay(Day dayInput, Planner planner) {
         // 1. 들어온 day를 db에 저장
         dayRepository.save(dayInput);
         dayInput.setPlannerId(planner);
@@ -87,9 +87,9 @@ public class PlannerService {
     }
 
     // 해당 유저의 플래너 관련 정보 전부 가져오기
-    public List<Map> getPlannersByMemberId(Member member) {
+    public List<Map<String, Object>> getPlannersByMemberId(Member member) {
         // 반환값을 담을 변수
-        List<Map> response = new ArrayList<>();
+        List<Map<String, Object>> response = new ArrayList<>();
 
         // 1. planner list를 가져옴
         List<Planner> plannerEntityList = plannerRepository.findPlannersByMemberIdOrderBySequenceAsc(member);
