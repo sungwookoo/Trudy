@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET, POST, DELETE, PUT } from "./authAxios";
 
+
 // 토큰을 만드는 함수
 const createTokenHeader = (token: string) => {
   return {
@@ -55,14 +56,16 @@ export const retrieveStoredToken = () => {
 };
 
 // 토큰을 재발행하는 함수
-export const refreshTokenHandler = (
+export const refreshTokenHandler = async (
   accessToken: string,
   refreshToken: string
 ) => {
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
-  const response = POST(url, token, {});
+  const response = await POST(url, token, {});
   console.log("토큰 재발행", response);
+
+  return response
 };
 
 // 이메일 인증 함수
