@@ -36,7 +36,7 @@ public class PlannerController {
     //**************************************[READ]***************************************//
     // 해당 유저 플래너 정보 전체보기
     @GetMapping
-    public ResponseEntity<?> plannerInfoByMember(@AuthenticationPrincipal PrincipalDetails principal) throws Exception{
+    public ResponseEntity<?> plannerInfoByMember(@AuthenticationPrincipal PrincipalDetails principal) {
         try {
             Member member = principal.getMember();
             List<Map<String, Object>> response = plannerService.getPlannersByMemberId(member);
