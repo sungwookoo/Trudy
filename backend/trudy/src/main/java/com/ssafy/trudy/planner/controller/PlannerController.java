@@ -27,11 +27,7 @@ public class PlannerController {
     @Autowired
     private final PlannerService plannerService;
     @Autowired
-    private final MemberService memberService;
-    @Autowired
     private final PlaceService placeService;
-
-    ModelMapper modelMapper = new ModelMapper();
 
     //**************************************[READ]***************************************//
     // 해당 유저 플래너 정보 전체보기
