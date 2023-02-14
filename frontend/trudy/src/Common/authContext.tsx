@@ -44,7 +44,12 @@ const AuthContext = React.createContext({
   planner: () => {},
   createPlan: (memberId: number, sequence: number) => {},
   deletePlan: (plannerId: number | null) => {},
-  createDay: (plannerId: number, day: string, memo: string, sequence: number) => {},
+  createDay: (
+    plannerId: number,
+    day: string,
+    memo: string,
+    sequence: number
+  ) => {},
   deleteDay: (dayId: number | null) => {},
 });
 
@@ -71,12 +76,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const userIsLoggedIn = !!token;
 
   let loggedInfo = { iss: "", auth: "", uid: 0 };
-  useEffect(() => {
-    if (token) {
-      loggedInfo = jwtDecode(token) as any;
-    }
-    
-  }, [token])
+  if (token) {
+    loggedInfo = jwtDecode(token) as any;
+  }
+
   // console.log('로그인 정보', loggedInfo)
   // Account
 
@@ -229,7 +232,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return response;
   };
 
-
   // planner의 plan를 삭제하는 함수
   const deletePlannerPlan = (plannerId: number | null) => {
     const response = authAction.deletePlan(plannerId);
@@ -237,14 +239,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return response;
   };
 
-
-
   // planner의 day를 생성하는 함수
   const createPlannerDay = (
     plannerId: number,
     day: string,
     memo: string,
-    sequence: number,
+    sequence: number
   ) => {
     const response = authAction.createDay(plannerId, day, memo, sequence);
 
