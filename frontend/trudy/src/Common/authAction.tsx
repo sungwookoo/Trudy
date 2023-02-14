@@ -74,7 +74,7 @@ export const verifyEmail = (email: string) => {
 };
 
 // 회원가입 url을 POST방식으로 호출하는 함수
-export const signUpActionHandler = async (
+export const signUpActionHandler = (
   email: string,
   password: string,
   name: string,
@@ -95,8 +95,7 @@ export const signUpActionHandler = async (
     areaCode,
     sigunguCode,
   };
-  const response =  POST(url, data, {});
-  console.log('authAcion 1', response)
+  const response = POST(url, data, {});
   return response;
 };
 
@@ -105,10 +104,7 @@ export const signInActionHandler = (email: string, password: string) => {
   const url = "/api/login";
   const data = { email, password };
   const response = POST(url, data, {});
-  // console.log(response.then(), "여기체크");
-  response.then((res) => {
-    console.log(res, 545645135153);
-  });
+  response.then((res) => {});
   return response;
 };
 

@@ -39,7 +39,7 @@ const AuthContext = React.createContext({
   login: (email: string, password: string) => {},
   signOut: () => {},
   getUser: (params: any) => {},
-  //   changeNickname: (nickname: string) => {},
+  //   changeNickname: (name: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
   createPlan: (sequence: string) => {},
@@ -109,10 +109,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   //  회원가입을 하는 함수
-  const signupHandler = (
+  const signupHandler = async (
     email: string,
     password: string,
-    nickname: string,
+    name: string,
     gender: string,
     birthday: string,
     isLocal: string,
@@ -120,23 +120,21 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     sigunguCode: number
   ) => {
     setIsSuccess(false);
-    const response = authAction.signUpActionHandler(
+    const response = await authAction.signUpActionHandler(
       email,
       password,
-      nickname,
+      name,
       gender,
       birthday,
       isLocal,
       areaCode,
       sigunguCode
     );
-    response.then((result) => {
+
+    if (response !== null) {
       setIsSuccess(true);
-      console.log(result, 33333);
-      if (result) {
-        return 1;
-      }
-    });
+      return response;
+    }
   };
 
   //   로그인을 하는 함수
@@ -194,10 +192,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return data;
   };
 
-  //   const changeNicknameHandler = (nickname: string) => {
+  //   const changeNicknameHandler = (name: string) => {
   //     setIsSuccess(false);
 
-  //     const data = authAction.changeNicknameActionHandler(nickname, token);
+  //     const data = authAction.changeNicknameActionHandler(name, token);
   //     data.then((result) => {
   //       if (result !== null) {
   //         const userData: UserInfo = result.data;
