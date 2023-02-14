@@ -250,8 +250,8 @@ function SignUp() {
             <button
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={(e) => {
-                const response = authCtx.signup(
+              onClick={async (e) => {
+                const response: any = await authCtx.signup(
                   email,
                   password,
                   name,
@@ -261,7 +261,8 @@ function SignUp() {
                   areaCode,
                   sigunguCode
                 );
-                if (response !== null) {
+
+                if (response !== undefined) {
                   authCtx.login(email, password);
                   navigateToLending();
                 }
