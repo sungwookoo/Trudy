@@ -169,7 +169,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       </div>
       {/* ------------------------------------------------북마크 리스트------------------------------------------------- */}
       {/* ------------------------------------------------북마크 리스트------------------------------------------------- */}
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap" >
 
         {filteredBookmarks.map((bookmark: any, idx: number) => {
           return (
@@ -179,6 +179,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                 className="max-w-sm rounded overflow-hidden shadow-lg m-5"
                 onClick={() => handleClick(parseFloat(bookmark.mapx), parseFloat(bookmark.mapy))}
                 style={{ cursor: "pointer" }}
+                draggable
               >
                 {<img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />}
                 <div className="px-6 py-4">
