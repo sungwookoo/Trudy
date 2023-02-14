@@ -2,6 +2,8 @@ package com.ssafy.trudy.post.service;
 
 import com.ssafy.trudy.etc.model.Sigungu;
 import com.ssafy.trudy.etc.repository.SigunguRepository;
+import com.ssafy.trudy.exception.ApiException;
+import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
 import com.ssafy.trudy.member.repository.IntroduceRepository;
@@ -183,12 +185,6 @@ public class PostService {
 
         //3. thumbnail 이미지 저장
         postEntityInsert.setThumbnailImage(insertPostDto.getThumbnailImage());
-        /*
-         * 프론트에서 최종적으로 제출할 이미지 정보를 담은 리스트를 줘야함
-         * 예) {{url : "example1.com", filename: "example1.jpg"}, {url : "example3.com", filename: "example3.jpg"}, {url : "example5.com", filename: "example5.jpg"}}
-         * 형식으로 프론트로부터 받고 dto에서 List<Map<String,String>> 형식으로 만들어서
-         * 여기서 get해서 db post image 에 for문으로 일괄삽입.
-         */
 
         log.info("썸네일 테스트 ======== " + postEntityInsert.toString());
     }
@@ -206,10 +202,8 @@ public class PostService {
         // post는 수정, postImage, postArea, postCategory는 삭제 후 다시 저장
             //사진 보류
             //사진 post entity로 검색 -> 리스트 가져오고 디비에 삭제 -> aws 사진 삭제
-            Post postEntityFind = postRepository.findById(postId).get();
-            // 사진 리스트 가져오기
-            List<PostImage> imageListForDelete = postImageRepository.findByPostId(postEntityFind);
-            //List<String> imageEntityFileName = imageListForDelete.stream().map(p -> p.)
+            Post postEntityFind = postRepository.findById(postId).orElseThrow(()-> new ApiException(ServiceErrorType.NOT_FOUND));
+
 
         // PostArea, PostCategory 삭제
         postAreaRepository.deleteByPostId(postEntityFind);
@@ -222,7 +216,7 @@ public class PostService {
             for(Long sigunguid : insertPostDto.getSigunguIdList()){
                 PostArea postArea = PostArea.builder()
                         .postId(postEntityFind)
-                        .sigunguCode(sigunguRepository.findById(sigunguid).get())
+                        .sigunguCode(sigunguRepository.findById(sigunguid).orElseThrow(()-> new ApiException(ServiceErrorType.NOT_FOUND)))
                         .build();
                 postAreaList.add(postArea);
             }

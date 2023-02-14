@@ -1,11 +1,7 @@
 package com.ssafy.trudy.post.controller;
 
-import com.ssafy.trudy.auth.security.dto.PrincipalDetails;
-import com.ssafy.trudy.etc.model.Sigungu;
-import com.ssafy.trudy.post.model.CategoryName;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.model.PostDto;
-import com.ssafy.trudy.post.repository.PostCategoryRepository;
 import com.ssafy.trudy.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,20 +11,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Tag(name = "post", description = "게시물 API")
 @RestController
@@ -37,7 +29,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class PostController {
-
     private final PostService postService;
 
     @Operation(summary = "get posts", description = "포럼 게시글 목록 가져오기")
@@ -52,16 +43,12 @@ public class PostController {
     //포럼 게시글 목록 가져오기 - 정상 동작
     @GetMapping
     public  Page<PostDto.PostCombine> postList(@RequestParam(required = false) String title,
-                                                          @RequestParam(required = false) String content,
-                                                          @RequestParam(required = false) List<Long> sigunguIdList,
-                                                          @RequestParam(required = false) List<String> categoryList,
-                                                          @PageableDefault(size = 20, sort = "id" ) Pageable pageable){
+                                      @RequestParam(required = false) String content,
+                                      @RequestParam(required = false) List<Long> sigunguIdList,
+                                      @RequestParam(required = false) List<String> categoryList,
+                                      @PageableDefault(size = 20, sort = "id" ) Pageable pageable){
 
-        return postService.findPostList(title,
-                    content,
-                    sigunguIdList,
-                    categoryList,
-                    pageable);
+        return postService.findPostList(title,content,sigunguIdList,categoryList,pageable);
     }
 
     //포럼 게시글 작성 - 정상 동작 ()
@@ -74,16 +61,11 @@ public class PostController {
             log.info(insertPostDto.toString());
             postService.addPost(insertPostDto);
             log.info("============== test complete ===========");
-
-            //for(int i=0; i<upload.length; i++)log.info( i + "check : " + upload[i].getOriginalFilename());
             //log.info(insertPostDto.getUpload().toString());
             log.info("try ok");
-            //log.info("filename :  " + upload.getOriginalFilename());
             return ResponseEntity.ok().build();
         } catch (Exception e){
             e.getStackTrace();
-            //log.info("controller ========== try bad");
-            //return ResponseEntity.ok().build();
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -97,11 +79,8 @@ public class PostController {
     //포럼 게시글 이미지 삭제
     @DeleteMapping("/upload")
     public void imageRemove(@RequestParam List<String> deleteFileNameArr){
-        //log.info("전자");
-        //log.info(fileNameList.toString());
         log.info("==========controller - imageRemove - get param===========");
         for(String s : deleteFileNameArr)log.info(s);
-        //log.info(insertPostDto.getData().toString());
         postService.deleteAllImage(deleteFileNameArr);
         log.info("==========controller - imageRemove - end===========");
     }
@@ -112,7 +91,6 @@ public class PostController {
     public ResponseEntity<?> postModify(@PathVariable("post_id") Long postId,
                                 @RequestBody PostDto.InsertPost insertPostDto){
         try{
-            //postService.modifyPost(postId, title, content, sigunguIdList, categoryList);
             log.info("controller - update ");
             postService.modifyPost(postId, insertPostDto);
             return ResponseEntity.ok().build();
