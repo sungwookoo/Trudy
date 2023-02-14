@@ -1,9 +1,16 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../Common/authContext";
 import SideBarPlanner from "./SideBarPlanner";
+
+const initialDragDataPlan = {
+  target: null,
+  index: -1,
+  move_down: [],
+  move_up: [],
+  updateLists: [],
+};
 
 function Planner() {
   const authCtx = useContext(AuthContext);
@@ -35,28 +42,30 @@ function Planner() {
   const [hoverDay, setHoverDay] = useState<number | null>(null);
 
   // const [isDragging, setIsDragging] = useState<boolean>(false);
-  // const [dragPlanData, setDragPlanData] = useState<any>();
+  // const [lists, setLists] = useState(sortedPlan);
+  // const [dragPlanData, setDragPlanData] = useState<any>(initialDragDataPlan);
   // const [dragDayData, setDragDayData] = useState<any>();
   // const [dragDayItemData, setDragDayItemData] = useState<any>();
 
-  // const _onDragOverPlan = (e) => {
+  // // Drag & Drop
+  // const _onDragOverPlan = (e: any) => {
   //   e.stopPropagation();
   //   e.preventDefault();
-  //   return true
-  // }
-  // const _onDragStartPlan = (e) => {
+  //   return true;
+  // };
+  // const _onDragStartPlan = (e: any) => {
   //   setIsDragging(true);
   //   setDragPlanData({
   //     ...dragPlanData,
   //     target: e.target,
   //     index: Number(e.target.dataset.index),
-  //     updatePlanner: [...plannerData]
+  //     updatePlanner: [...lists],
   //   });
 
-  //   e.dataTransfer.setData('text/html', '');
+  //   e.dataTransfer.setData("text/html", "");
   //   e.dataTransfer.effectAllowed = "move";
-  // }
-  // const _onDragEnterPlan = (e) => {
+  // };
+  // const _onDragEnterPlan = (e: any) => {
   //   const _dragged = Number(dragPlanData.target.dataset.index);
   //   const _index = Number(dragPlanData.index);
   //   const _target = Number(e.target.dataset.index);
@@ -80,19 +89,17 @@ function Planner() {
   //     updateLists: data,
   //     index: _target,
   //     move_up,
-  //     move_down
-  //   })
-  // }
-  // const _onDragLeavePlan = (e) => {
+  //     move_down,
+  //   });
+  // };
+  // const _onDragLeavePlan = (e: any) => {
   //   if (e.target === dragPlanData.target) {
   //     e.target.style.visibility = "hidden";
   //   }
-  // }
-  // const _onDragEndPlan = (e) => {
+  // };
+  // const _onDragEndPlan = (e: any) => {
   //   setIsDragging(false);
-  //   setPlannerData([
-  //     ...dragPlanData.updateLists
-  //   ]);
+  //   setPlannerData([...dragPlanData.updateLists]);
 
   //   setDragPlanData({
   //     ...dragPlanData,
@@ -102,11 +109,10 @@ function Planner() {
   //   });
 
   //   e.target.style.visibility = "visible";
-  //   e.dataTransfer.dropEffect = 'move';
-  // }
+  //   e.dataTransfer.dropEffect = "move";
+  // };
+  // const _onDropPlan = (e: any) => {};
 
-
-  
   function IsSignIn() {
     if (authCtx.isLoggedIn) {
     } else {
@@ -145,8 +151,10 @@ function Planner() {
         const sortedList: any = copyList.sort(compareSequence);
         setSortedPlan(sortedList);
 
-        if (sortedList[0]) {
-          setDayData(sortedList[0].dayCombine.dayElementList);
+        if (sortedList[parseInt(selectedPlanSequence)]) {
+          setDayData(
+            sortedList[parseInt(selectedPlanSequence)].dayCombine.dayElementList
+          );
           // sequence 재부여
           sortedList.map((plan: any, idx: number) =>
             authCtx.updatePlan(
@@ -158,9 +166,10 @@ function Planner() {
       };
       getSortedPlanList();
       setPlanNum(plannerData.length);
-      setSelectedPlanSequence((planNum * 10).toString());
+      // setSelectedPlanSequence((planNum * 10).toString());
     }
-  }, [plannerData, change]);
+  }, [plannerData]);
+
   // DayList sequence 순 정렬
   useEffect(() => {
     if (dayData !== null) {
@@ -176,18 +185,20 @@ function Planner() {
         const copyList = [...dayData];
         const sortedList: any = copyList.sort(compareSequence);
         setSortedDay(sortedList);
-        if (sortedList[0]) {
-          setDayItemData(sortedList[0].dayItemList);
-          // sequence 재부여
-          sortedList.map((day: any, idx: number) =>
-            authCtx.updateDay(day.id, (idx + 1) * 10)
-          );
-        }
+        // sequence 재부여
+        sortedList.map((day: any, idx: number) => {
+          authCtx.updateDay(day.id, (idx + 1) * 10);
+          if (parseInt(selectedDaySequence) === (idx + 1) * 10) {
+            setDayItemData(sortedList[idx].dayItemList);
+          }
+        });
       };
       getSortedDayList();
       setDayNum(dayData.length);
+    } else {
+      setDayItemData(null);
     }
-  }, [selectedPlanSequence, plannerData]);
+  }, [selectedPlanSequence, dayData]);
 
   // DayItem sequence 순 정렬
   useEffect(() => {
@@ -203,7 +214,6 @@ function Planner() {
         const copyList = [...dayItemData];
         const sortedList: any = copyList.sort(compareSequence);
         setSortedDayItem(sortedList);
-
         // sequence 재부여
         if (sortedList[0]) {
           sortedList.map((dayItem: any, idx: number) =>
@@ -213,14 +223,14 @@ function Planner() {
       };
       getSortedDayItemList();
     }
-  }, [selectedDaySequence, plannerData]);
-  console.log('이거',plannerData);
+  }, [selectedDaySequence, dayItemData, change]);
+
   // 모달창
   function Modal() {
     function yesButton() {
-      if (modalClick == "plan") {
+      if (modalClick === "plan") {
         authCtx.deletePlan(selectedPlanId);
-      } else if (modalClick == "day") {
+      } else if (modalClick === "day") {
         authCtx.deleteDay(selectedDayId);
       }
     }
@@ -282,6 +292,7 @@ function Planner() {
                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
                 onClick={() => {
                   yesButton();
+                  setChange(change+1)
                 }}
               >
                 Yes, I'm sure
@@ -317,7 +328,12 @@ function Planner() {
       {/* Plan 내용 */}
       <div id="Content" className="w-full bg-slate-200">
         {/* Plan 목록 */}
-        <div id="planner" className="flex bg-slate-300">
+        <div
+          id="planner"
+          className="flex bg-slate-300"
+          // onDragOver={_onDragOverPlan}
+          // onDrop={_onDropPlan}
+        >
           {plannerData !== null
             ? sortedPlan.map(
                 (
@@ -337,17 +353,41 @@ function Planner() {
                 ) => {
                   // let default_class = "";
 
-                  // dragPlanData.move_down.includes(i) && (
-                  //   default_class = "move_down"
-                  // );
-      
-                  // dragPlanData.move_up.includes(i) && (
-                  //   default_class = "move_up"
-                  // );
+                  // dragPlanData.move_down.includes(i) &&
+                  //   (default_class = "move_down");
+
+                  // dragPlanData.move_up.includes(i) &&
+                  //   (default_class = "move_up");
 
                   return (
                     <div
                       className="float-left relative"
+                      // ${isDragging && "transition: transform 200ms ease 0s"};
+                      // user-select: none;
+                      // touch-action: none;
+                      // cursor: grab;
+
+                      // i {
+                      //   flex: 1;
+                      // }
+
+                      // p {
+                      //   flex: 6;
+                      // }
+
+                      // &.move_up {
+                      //   transform: translate(0, -65px);
+                      //   z-index: 1;
+                      // }
+
+                      // &.move_down {
+                      //   transform: translate(0, 65px);
+                      //   z-index: 1;
+                      // }
+
+                      // & > * {
+                      //   pointer-events: none;
+                      // }`}
                       onMouseEnter={() =>
                         setHoverPlan(plan.plannerCombine.plannerElement.id)
                       }
@@ -358,9 +398,7 @@ function Planner() {
                       // onDragEnter={_onDragEnterPlan}
                       // onDragLeave={_onDragLeavePlan}
                       // onDragEnd={_onDragEndPlan}
-      
-                      // className={`default_class`}
-                      // isDragging={isDragging}
+                      // id={default_class}
                     >
                       <input
                         type="button"
@@ -384,12 +422,18 @@ function Planner() {
                       <input
                         type="button"
                         className={`font-bold absolute right-1 bottom-5 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900 ${
-                          hoverPlan == plan.plannerCombine.plannerElement.id
+                          hoverPlan === plan.plannerCombine.plannerElement.id
                             ? "block"
                             : "hidden"
                         }`}
                         value="x"
                         onClick={() => {
+                          setSelectedPlanSequence(
+                            plan.plannerCombine.plannerElement.sequence
+                          );
+                          setSelectedPlanId(
+                            plan.plannerCombine.plannerElement.id
+                          );
                           setModal(true);
                           setModalClick("plan");
                           setChange(change + 1);
@@ -404,7 +448,7 @@ function Planner() {
             type="button"
             className="float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
             onClick={() => {
-              authCtx.createPlan(authCtx.loggedInfo.uid, (planNum + 1) * 10);
+              authCtx.createPlan(((planNum + 1) * 10).toString());
               setChange(change + 1);
             }}
             value="+"
@@ -446,7 +490,6 @@ function Planner() {
                               setSelectedDaySequence(day.sequence);
                               setSelectedDayId(day.id);
                               setDayItemData(day.dayItemList);
-                              setChange(change + 1);
                             }}
                             value={day.day}
                           ></input>
@@ -454,13 +497,14 @@ function Planner() {
                             <input
                               type="button"
                               className={`absolute font-bold block right-1 bottom-5 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900 ${
-                                hoverDay == day.id ? "block" : "hidden"
+                                hoverDay === day.id ? "block" : "hidden"
                               }`}
                               value="x"
                               onClick={() => {
+                                setSelectedDaySequence(day.sequence);
+                                setSelectedDayId(day.id);
                                 setModal(true);
                                 setModalClick("day");
-                                setChange(change + 1);
                               }}
                             ></input>
                           </div>
@@ -506,7 +550,7 @@ function Planner() {
                         className="relative bg-slate-600 p-2 border w-full"
                       >
                         <div className="flex p-4">
-                          <input type="text" value={day.memo} />
+                          <input type="text" value={day.memo} placeholder="memo" />
                         </div>
                       </div>
                     );
