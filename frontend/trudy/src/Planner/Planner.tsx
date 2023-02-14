@@ -69,6 +69,8 @@ function Planner() {
         if (sortedList[0]) {
           setSelectedPlan(sortedList[0].plannerCombine.plannerElement.id);
           setDayData(sortedList[0].dayCombine.dayElementList);
+          const sortedSequence = sortedList.map((sequence:string) => (sequence))
+          console.log('plannersorted', sortedList)
         }
       };
       getSortedPlanList();
