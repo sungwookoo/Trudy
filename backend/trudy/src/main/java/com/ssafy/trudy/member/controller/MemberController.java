@@ -34,10 +34,6 @@ public class MemberController {
     @Autowired
     private final MemberAppService memberAppService;
 
-    @Autowired
-    private final AwsS3Uploader awsS3Uploader;
-
-
     @ApiOperation(value = "회원 리스트",
             produces = MediaType.APPLICATION_JSON_VALUE,
             responseHeaders = {
