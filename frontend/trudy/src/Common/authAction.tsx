@@ -74,7 +74,7 @@ export const verifyEmail = (email: string) => {
 };
 
 // 회원가입 url을 POST방식으로 호출하는 함수
-export const signUpActionHandler = (
+export const signUpActionHandler = async (
   email: string,
   password: string,
   name: string,
@@ -95,7 +95,8 @@ export const signUpActionHandler = (
     areaCode,
     sigunguCode,
   };
-  const response = POST(url, data, {});
+  const response =  POST(url, data, {});
+  console.log('authAcion 1', response)
   return response;
 };
 
@@ -113,11 +114,11 @@ export const signInActionHandler = (email: string, password: string) => {
 
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
-export const signOutActionHandler = (id: number) => {
+export const signOutActionHandler = async (id: number) => {
+  const url = "api/logout";
   const data = new FormData();
   data.append("id", JSON.stringify(id));
-  const response = axios.post(`api/logout`, data);
-  console.log(id, "테스트 중입니당ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+  const response = await POST(url, data, {});
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
   alert("sign out");
@@ -161,21 +162,20 @@ export const getPlanner = (token: string) => {
   const url = "/api/planner";
   // const params = { memberId: memberId };
   // const params = { memberId: 1 };
-  const headers = createTokenHeader(token)
-  const response = GET(url, headers );
+  const headers = createTokenHeader(token);
+  const response = GET(url, headers);
 
   return response;
 };
 
 // 유저의 plan을 POST 방식으로 생성
-export const createPlan = (token: string, sequence: number) => {
+export const createPlan = (token: string, sequence: string) => {
   const url = "/api/planner/post";
-  // const headers = createTokenHeader(token)
-  const headers = {
-    Authorization: "bearer " + token,
-  }
-  const params = { sequence: sequence };
-  const response = POST(url, headers, { params });
+  const headers = createTokenHeader(token);
+  const data = new FormData();
+  data.append("sequence", JSON.stringify(sequence));
+
+  const response = POST(url, data, headers);
 };
 
 // 유저의 plan을 PUT 방식으로 수정
@@ -189,7 +189,6 @@ export const updatePlan = (plannerId: number, sequence: number) => {
 export const deletePlan = (plannerId: number | null) => {
   const url = "/api/planner/planner/delete";
   const params = { plannerId: plannerId };
-  console.log(plannerId);
   const response = DELETE(url, { params });
 };
 
@@ -201,6 +200,7 @@ export const createDay = (
   sequence: number
 ) => {
   const url = "/api/planner/day/post";
+  // const headers = createTokenHeader(token)
   const params = {
     plannerId: plannerId,
     day: day,
@@ -216,7 +216,6 @@ export const updateDay = (dayId: number, sequence: number) => {
   const params = { dayId: dayId, sequence: sequence };
   const response = PUT(url, {}, { params });
 };
-
 
 // 유저의 day를 DELETE 방식으로 삭제
 export const deleteDay = (dayId: number | null) => {

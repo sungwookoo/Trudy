@@ -6,7 +6,7 @@ import jwtDecode from "jwt-decode";
 let logoutTimer: NodeJS.Timeout;
 
 type Props = { children?: React.ReactNode };
-type UserInfo = { email: string; nickname: string };
+type UserInfo = { email: string; name: string };
 type LoginToken = {
   grantType: string;
   accessToken: string;
@@ -17,7 +17,7 @@ type LoginToken = {
 // Context의 Provider 역할, 즉 Context의 변화를 알리는 Provider 컴포넌트를 반환하는 함수
 const AuthContext = React.createContext({
   token: "",
-  userObj: { email: "", nickname: "" },
+  userObj: { email: "", name: "" },
   isLoggedIn: false,
   isSuccess: false,
   isGetSuccess: false,
@@ -26,7 +26,7 @@ const AuthContext = React.createContext({
   signup: (
     email: string,
     password: string,
-    nickname: string,
+    name: string,
     gender: string,
     birthday: string,
     isLocal: string,
@@ -42,7 +42,7 @@ const AuthContext = React.createContext({
   //   changeNickname: (nickname: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
-  createPlan: (memberId: number, sequence: number) => {},
+  createPlan: (sequence: string) => {},
   updatePlan: (plannerId: number, sequence: number) => {},
   deletePlan: (plannerId: number | null) => {},
   updateDay: (dayId: number, sequence: number) => {},
@@ -53,7 +53,7 @@ const AuthContext = React.createContext({
     sequence: number
   ) => {},
   deleteDay: (dayId: number | null) => {},
-  updateDayItem: (dayItemId: number, sequence: number) => {}
+  updateDayItem: (dayItemId: number, sequence: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -67,7 +67,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [token, setToken] = useState(initialToken);
   const [userObj, setUserObj] = useState({
     email: "",
-    nickname: "",
+    name: "",
     // id: 0,
   });
 
@@ -132,7 +132,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     );
     response.then((result) => {
       setIsSuccess(true);
-      return result;
+      console.log(result, 33333);
+      if (result) {
+        return 1;
+      }
     });
   };
 
@@ -229,7 +232,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   // planner의 plan을 생성하는 함수
-  const createPlannerPlan = (sequence: number) => {
+  const createPlannerPlan = (sequence: string) => {
     const response = authAction.createPlan(token, sequence);
 
     return response;
@@ -267,7 +270,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
     return response;
   };
-
 
   // planner의 day를 삭제하는 함수
   const deletePlannerDay = (dayId: number | null) => {
