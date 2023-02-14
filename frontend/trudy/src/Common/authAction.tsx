@@ -104,6 +104,10 @@ export const signInActionHandler = (email: string, password: string) => {
   const url = "/api/login";
   const data = { email, password };
   const response = POST(url, data, {});
+  // console.log(response.then(), "여기체크");
+  response.then((res) => {
+    console.log(res, 545645135153);
+  });
   return response;
 };
 

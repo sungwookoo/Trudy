@@ -1,21 +1,22 @@
-
-.forum-item-container{
+.forum-item-container {
   display: flex;
+  flex-direction: row;
   justify-content: center;
 }
 
-
 .forum-item-box {
   /* width: 30%; */
-  border-width: 2px;
-  border-color: gray;
-  border-radius: 2%;
-  padding: 3px;
+  /* border-width: 2px; */
+  /* border-color: gray; */
+  /* border-radius: 2%; */
+  /* padding: 3px; */
+  height: 460px;
+  width: 420px;
   /* margin-left: 10px; */
 }
 
 .forum-thumbnail-image {
-  width: 400px;
+  width: 320px;
   /* height: 250px; */
   border-radius: 2%;
   border-width: 2px;
@@ -28,23 +29,47 @@
   margin-left: 30px;
 }
 
-
-.forum-data-box{
+.forum-data-box {
   border-radius: 2px;
 }
 
-.forum-txt-title{
-  height: 1.5em;
+.forum-txt-title {
+  width: 300px;
+  height: 1.6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  padding-left: 5px;
 }
 
 .forum-txt-content {
   overflow: hidden;
-  width: 380px;
+  width: 300px;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3; /* 라인수 */
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   line-height: 1.2em;
-  height: 3.8em;
+  height: 4.6em;
+}
+
+.forum-item-profile-box {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  /* margin-top: 10px; */
+}
+
+.forum-item-profile-image {
+  width: 72px;
+  height: 72px;
+}
+
+.forum-item-profile-name {
+}
+
+.forum-item-article {
+  /* padding-bottom: 30px; */
 }

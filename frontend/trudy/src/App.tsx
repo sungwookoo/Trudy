@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
 import MyProfile from "./Profile/MyProfile";
-import ProfileUpdate from "./Profile/ProfileUpdate";
 import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";
 import SignUpSelect from "./Account/SignUpSelect";
@@ -20,12 +19,32 @@ import * as axiosInterceptor from "./Common/axiosInterceptor";
 import EmailConfirm from "./Account/EmailConfirm";
 import UserProfile from "./Profile/UserProfile";
 import ProfileEdit from "./Profile/ProfileEdit";
+import ForumPostEdit from "./Forum/ForumPostEdit";
 import ChatRoom from "./Chat/ChatRoom";
 
 function App() {
   // Code to handle form submission
   const writeArticle = (event: React.FormEvent<HTMLFormElement>) => {};
   const authCtx = useContext(AuthContext);
+  // const [profileImage, setProfileImage] = useState(null);
+  // const token = "bearer " + localStorage.getItem("token");
+
+  // useEffect(() => {
+  //   const fetchProfileImage = async () => {
+  //     try {
+  //       const response = await axios.get("api/member/me", {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       });
+  //       setProfileImage(response.data.image);
+  //       console.log(profileImage, "정보");
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchProfileImage();
+  // }, [token]);
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token")
@@ -56,6 +75,7 @@ function App() {
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
+        <Route path="/post/update/:id" element={<ForumPostEdit />} />
         <Route path="/square" element={<Square />} />
         <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/profile" element={<MyProfile />} />
@@ -65,7 +85,6 @@ function App() {
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
           // element={<Planner />}
         />
-        <Route path="/profileupdate" element={<ProfileUpdate />} />
         <Route path="/profileedit" element={<ProfileEdit />} />
         <Route
           path="/signin"
