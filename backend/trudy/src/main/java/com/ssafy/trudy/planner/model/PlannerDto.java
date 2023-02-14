@@ -32,6 +32,7 @@ public class PlannerDto {
         private Long id;
         private String day;
         private String memo;
+        private String sequence;
 
         // 2. 해당 day에 대한 dayItem list
         private List<DayItemElement> dayItemList;

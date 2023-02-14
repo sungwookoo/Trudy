@@ -12,11 +12,11 @@
     monospace;
 } */
 
-input {
+.chat-input {
   padding: 10px;
   font-size: 1.2em;
 }
-button{
+.chat-button{
   border: none;
   padding: 10px;
   background: green;
