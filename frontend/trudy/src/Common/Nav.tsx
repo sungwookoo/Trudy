@@ -4,6 +4,7 @@ import "./Nav.css";
 import NewLogo from "../assets/NewLogo.png";
 import AuthContext from "./authContext";
 import { useNavigate } from "react-router-dom";
+import ChatRoom from "../Chat/ChatRoom";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -85,6 +86,12 @@ const Nav = () => {
           </>
         ) : (
           <>
+            {/* 채팅 */}
+            <div className="nav-item">
+              <NavLink className="nav-link" to="/chatroom">
+                Chat
+              </NavLink>
+            </div>
             <div className="nav-item flex flex-row items-center">
               <img
                 className="nav-profile-img mr-12"

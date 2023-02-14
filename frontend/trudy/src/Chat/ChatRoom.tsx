@@ -185,13 +185,14 @@ function ChatRoom() {
       // 접속아닌 경우 익명의 이름을 등록
       <div className="chat-register">
         <input
+          className= 'chat-input'
           id="user-name"
           placeholder="Enter your name"
           name="userName"
           value={userData.username}
           onChange={handleUsername}
         />
-        <button type="button" onClick={registerUser}>
+        <button className="chat-button" type="button" onClick={registerUser}>
           connect
         </button> 
       </div>}
