@@ -1,4 +1,6 @@
 import axios, { AxiosError,AxiosResponse }  from 'axios';
+import axiosInstance from './axiosInterceptor';
+
 
 type ServerError = { errorMessage: string };
 type LoginFailType = { status: number, error: string,};
@@ -18,10 +20,10 @@ const fetchAuth = async (fetchData: FetchData) => {
   
   try {
     const response:AxiosResponse<any, any> | false =
-    (method === 'get' && (await axios.get(url, header))) ||
-    (method === 'post' && (await axios.post(url, data, header))) ||
-    (method === 'put' && (await axios.put(url, data, header))) ||
-    (method === 'delete' && (await axios.delete(url, header))
+    (method === 'get' && (await axiosInstance.get(url, header))) ||
+    (method === 'post' && (await axiosInstance.post(url, data, header))) ||
+    (method === 'put' && (await axiosInstance.put(url, data, header))) ||
+    (method === 'delete' && (await axiosInstance.delete(url, header))
     );
     
     if(response && response.data.error) {

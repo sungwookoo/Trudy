@@ -150,7 +150,6 @@ function Planner() {
         const copyList = [...plannerData];
         const sortedList: any = copyList.sort(compareSequence);
         setSortedPlan(sortedList);
-
         if (sortedList[parseInt(selectedPlanSequence)]) {
           setDayData(
             sortedList[parseInt(selectedPlanSequence)].dayCombine.dayElementList
@@ -199,7 +198,7 @@ function Planner() {
       setDayItemData(null);
     }
   }, [selectedPlanSequence, dayData]);
-
+  console.log('초기', selectedPlanSequence, selectedDaySequence)
   // DayItem sequence 순 정렬
   useEffect(() => {
     if (dayItemData !== null) {
