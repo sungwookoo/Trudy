@@ -33,8 +33,7 @@ function Square() {
 
   const authCtx = useContext(AuthContext);
   console.log(
-    "로그인 정보 참고하셈 이런 정보 들어있음 exp는 토큰 만료시간인데 안쓸거 같아서 안넣어놔서 못씀",
-    authCtx.loggedInfo
+    squareData
   );
   const imgURL =
     "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";

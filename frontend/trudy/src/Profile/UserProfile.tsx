@@ -5,7 +5,7 @@ import './UserProfile.css'
 import ProfileMyPost from "./ProfileMyPost";
 import Follow from "./Follow";
 import FollowerModal from "./FollowerModal";
-
+import axiosInstance from "../Common/axiosInterceptor";
 interface useruserInfoId {
   name: string;
   email: string;
@@ -44,7 +44,7 @@ const UseruserInfo = () => {
 
 // 해당 프로필 유저 정보 가져오기
   useEffect(() => {
-    axios
+    axiosInstance
       .get(`/${API_URL}/${userId.id}`, {
         headers: {
           Authorization: token,
@@ -62,7 +62,7 @@ const UseruserInfo = () => {
   
   // 로그인한 유저 정보 가져오기
   useEffect(() => {
-    axios.get("/api/member/me", {
+    axiosInstance.get("/api/member/me", {
       headers: {
         Authorization: token,
       },
@@ -80,7 +80,7 @@ const UseruserInfo = () => {
 // 나의 게시글 가져오기
 const getUserPosts = () => {
   const url = "api/post";
-  axios
+  axiosInstance
     .get(url)
     .then((res) => {
       setGetUserPost(res.data);
@@ -112,7 +112,7 @@ const getUserPosts = () => {
         loginuserId={loginuser.id}
         userID={userInfo.id}
         />
-        <button className="border-2 border border-black hover:bg-green-500 text-black font-bold py-2 px-4 rounded-full mr-5" >Message</button>
+        <button className="border-2 border-black hover:bg-green-500 text-black font-bold py-2 px-4 rounded-full mr-5" >Message</button>
         
         </div>
         
