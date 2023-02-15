@@ -64,6 +64,17 @@ public class AuthAppController {
         return memberAppService.signup(signupRequest);
     }
 
+    @ApiOperation(value = "회원가입 닉네임 중복 검사",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+            })
+    @PostMapping("/signup/name")
+    public void isSignupDupName(@RequestParam String name) {
+        memberAppService.isSignupDupName(name);
+    }
+
+
     // 로그아웃
     @ApiOperation(value = "로그아웃",
             produces = MediaType.APPLICATION_JSON_VALUE,
