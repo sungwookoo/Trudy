@@ -8,7 +8,7 @@ import CategoryButtons from "../Filter/SelectCategory";
 import MapModal from "./MapModal";
 import nopictures from "../assets/nopictures.png";
 import { ModifierFlags } from "typescript";
-
+import axiosInstance from "./axiosInterceptor";
 type Props = {
   memberId: number;
   bookmarkedIds: number[];
@@ -56,7 +56,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       console.error(error);
     }
     try {
-      const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`, {
+      const nowBookMark = await axiosInstance.get(`api/bookmark?memberId=${memberId}`, {
         headers: {
           Authorization: token,
         },

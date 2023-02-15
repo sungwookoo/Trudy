@@ -65,6 +65,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   }
 
   const [token, setToken] = useState(initialToken);
+  const [refreshToken, setRefreshToken] = useState(initialToken);
   const [userObj, setUserObj] = useState({
     email: "",
     name: "",
@@ -77,13 +78,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
-
+  
   let loggedInfo = { iss: "", auth: "", uid: 0 };
   if (token) {
     loggedInfo = jwtDecode(token) as any;
   }
 
-  // console.log('로그인 정보', loggedInfo)
   // Account
 
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
@@ -145,6 +145,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       if (result !== null) {
         const loginData: LoginToken = result.data;
         setToken(loginData.accessToken);
+        setRefreshToken(loginData.refreshToken)
         logoutTimer = setTimeout(
           signOutHandler,
           authAction.signInTokenHandler(
@@ -225,6 +226,12 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // Planner 정보를 가져오는 함수
   const getPlannerHandler = () => {
     const response = authAction.getPlanner(token);
+    // const refresh = authAction.refreshTokenHandler(token, refreshToken)
+    // refresh.then((res) => {
+    //   console.log('재발행 data', res)
+    //   setToken(res?.data.accessToken)
+    //   setRefreshToken(res?.data.refreshToken)
+    // })
 
     return response;
   };

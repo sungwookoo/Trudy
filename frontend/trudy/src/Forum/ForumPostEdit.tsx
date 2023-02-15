@@ -5,7 +5,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./CkEditor.css";
 import "./ForumPostEdit.css";
-
+import axiosInstance from "../Common/axiosInterceptor";
 function PostEditPage() {
   const { id } = useParams<{ id: string }>();
   const [postData, setPostData] = useState<any>(null);
@@ -40,7 +40,7 @@ function PostEditPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData: any = await axios.get(`/api/post/${id}`).then((res) => {
+        const resData: any = await axiosInstance.get(`/api/post/${id}`).then((res) => {
           setPostData(res.data.postCombine.postElement);
           setPostMemberData(res.data.postCombine.memberElement);
           setPostRegionData(res.data.postCombine.sigunguCodeList);
@@ -59,7 +59,7 @@ function PostEditPage() {
   const handleEditPost = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      const response = await axiosInstance.put(
         `/api/post/${id}`,
         {
           title: title,
@@ -90,7 +90,7 @@ function PostEditPage() {
             console.log(file.name)
             console.log(imagedata.get("upload"));
 
-            axios.post("/api/post", imagedata).then((res: any) => {
+            axiosInstance.post("/api/post", imagedata).then((res: any) => {
               alert("이미지 업로드 완료!");
               // setImage(res.data.filename);
               console.log(res.data.file.name);
@@ -128,7 +128,7 @@ function PostEditPage() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <textarea className="forum-detail-edit-title capitalize px-6 border border-2"
+        <textarea className="forum-detail-edit-title capitalize px-6 border-2"
         value={title}
         onChange={handleTitleChange}
         >
@@ -172,13 +172,13 @@ function PostEditPage() {
         {/* {isloggedin && ( */}
         <div className=" w-full flex flex-row justify-end mt-5">
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-red-400"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400"
             // onClick={handleOpenModal}
           >
             Cancel
           </button>
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 mx-2 hover:bg-green-400"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-green-400"
             onClick={handleEditPost}
           >
             Submit Change
