@@ -210,6 +210,7 @@ function ForumCreate() {
               const data = editor.getData();
               setforumContent(data);
               console.log({ data });
+              console.log({ data });
             }}
             onBlur={(event: any, editor: any) => {
               // console.log('Blur.', editor);
