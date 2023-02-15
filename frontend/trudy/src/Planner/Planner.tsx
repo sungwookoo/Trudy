@@ -119,7 +119,7 @@ function Planner() {
       setDayItemData(null);
     }
   }, [selectedPlanSequence, dayData]);
-  console.log('초기', selectedPlanSequence, selectedDaySequence)
+  console.log("초기", selectedPlanSequence, selectedDaySequence);
   // DayItem sequence 순 정렬
   useEffect(() => {
     if (dayItemData !== null) {
