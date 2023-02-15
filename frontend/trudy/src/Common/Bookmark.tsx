@@ -181,6 +181,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   onChange={() => {
                     if (selectedSigungu.includes(sigunguInfo.id)) {
                       const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
+                      console.log(filteredSigungu, 33333333333333333);
                       setSelectedSigungu(filteredSigungu);
                     } else {
                       setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);

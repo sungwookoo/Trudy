@@ -19,11 +19,7 @@ const calculateRemainingTime = (expirationTime: number) => {
 };
 
 // 토큰값과 만료시간을 localStorage에 저장하는 함수
-export const signInTokenHandler = (
-  token: string,
-  refreshToken: string,
-  expirationTime: number
-) => {
+export const signInTokenHandler = (token: string, refreshToken: string, expirationTime: number) => {
   localStorage.setItem("token", token);
   localStorage.setItem("refreshToken", refreshToken);
   localStorage.setItem("expirationTime", String(expirationTime));
@@ -55,10 +51,7 @@ export const retrieveStoredToken = () => {
 };
 
 // 토큰을 재발행하는 함수
-export const refreshTokenHandler = async (
-  accessToken: string,
-  refreshToken: string
-) => {
+export const refreshTokenHandler = async (accessToken: string, refreshToken: string) => {
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
   const response = await axios.post(url, token, {});
@@ -191,12 +184,7 @@ export const deletePlan = (plannerId: number | null) => {
 };
 
 // 유저의 day를 POST 방식으로 생성
-export const createDay = (
-  plannerId: number,
-  day: string,
-  memo: string,
-  sequence: number
-) => {
+export const createDay = (plannerId: number, day: string, memo: string, sequence: number) => {
   const url = "/api/planner/day/post";
   // const headers = createTokenHeader(token)
   const params = {
@@ -223,8 +211,13 @@ export const deleteDay = (dayId: number | null) => {
 };
 
 // 유저의 dayItem을 PUT 방식으로 수정
-export const updateDayItem = (dayItemId: number, sequence: number) => {
+export const updateDayItem = (dayId: number, dayItemId: number, sequence: number, token: string) => {
   const url = "/api/planner/dayitem";
-  const params = { dayItemId: dayItemId, sequence: sequence };
-  const response = PUT(url, {}, { params });
+  const headers = createTokenHeader(token);
+  // const data = new FormData()
+  //  data.append('dayId' , JSON.stringify(dayId))
+  //  data.append('dayItemId' , JSON.stringify(dayItemId))
+  //  data.append('sequence' , JSON.stringify(sequence))
+  const params = { dayId: dayId, placeId: dayItemId, sequence: sequence };
+  const response = PUT(url, { headers }, { params });
 };
