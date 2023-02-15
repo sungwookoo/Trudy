@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-
+import axiosInstance from "../Common/axiosInterceptor";
 
 interface Props {
     userId: number;
@@ -12,7 +12,7 @@ function Following (userId: Props) {
     const [followings, setFollowings] = useState<any>([]);
 
     const fetchFollowings = async () => {
-      const response = await axios.get(`/api/member/following/${userId.userId}`, {
+      const response = await axiosInstance.get(`/api/member/following/${userId.userId}`, {
         headers: {
           Authorization: "bearer " + localStorage.getItem("token"),
         }

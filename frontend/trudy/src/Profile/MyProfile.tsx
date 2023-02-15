@@ -7,6 +7,7 @@ import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
 import Avatar from "react-avatar";
 import defaultImage from "../assets/defaultImage.png";
+import axiosInstance from "../Common/axiosInterceptor";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -53,7 +54,7 @@ function Profile() {
 
   //  나의 게시글 가져오기
   const getMyPosts = () => {
-    axios
+    axiosInstance
       .get("api/post", {
         headers: {
           Authorization: token,
@@ -67,7 +68,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(url, {
         headers: {
           Authorization: token,

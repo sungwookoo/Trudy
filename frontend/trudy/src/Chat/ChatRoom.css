@@ -49,11 +49,6 @@ input {
   border-radius: 5px;
 }
 
-
-.container{
-  position: relative;
-  text-align: center;
-}
 .chat-container{
   width: 80%;
 }

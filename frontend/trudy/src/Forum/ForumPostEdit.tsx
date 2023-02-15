@@ -5,6 +5,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./CkEditor.css";
 import "./ForumPostEdit.css";
+import axiosInstance from "../Common/axiosInterceptor";
 
 function PostEditPage() {
   const { id } = useParams<{ id: string }>();
@@ -43,14 +44,16 @@ function PostEditPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData: any = await axios.get(`/api/post/${id}`).then((res) => {
-          setPostData(res.data.postCombine.postElement);
-          setPostMemberData(res.data.postCombine.memberElement);
-          setPostRegionData(res.data.postCombine.sigunguCodeList);
-          setPostCategoryData(res.data.postCombine.categoryNameList);
-          setTitle(res.data.postCombine.postElement.title);
-          setEditPost(res.data.postCombine.postElement.content);
-        });
+        const resData: any = await axiosInstance
+          .get(`/api/post/${id}`)
+          .then((res) => {
+            setPostData(res.data.postCombine.postElement);
+            setPostMemberData(res.data.postCombine.memberElement);
+            setPostRegionData(res.data.postCombine.sigunguCodeList);
+            setPostCategoryData(res.data.postCombine.categoryNameList);
+            setTitle(res.data.postCombine.postElement.title);
+            setEditPost(res.data.postCombine.postElement.content);
+          });
       } catch (error) {
         console.error(error);
       }
@@ -62,7 +65,7 @@ function PostEditPage() {
   const handleEditPost = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      const response = await axiosInstance.put(
         `/api/post/${id}`,
         {
           title: title,
@@ -93,7 +96,7 @@ function PostEditPage() {
               reject("Only images smaller than 10MB can be uploaded");
             } else {
               upload.append("upload", file);
-              axios
+              axiosInstance
                 .post("/api/post/upload", upload)
                 .then((res: any) => {
                   console.log("사진 업로드 성공");
@@ -233,7 +236,7 @@ function PostEditPage() {
             Cancel
           </button>
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 mx-2 hover:bg-green-400"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-green-400"
             onClick={handleEditPost}
           >
             Submit Change

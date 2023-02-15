@@ -8,7 +8,7 @@ import CategoryButtons from "../Filter/SelectCategory";
 import MapModal from "./MapModal";
 import nopictures from "../assets/nopictures.png";
 import { ModifierFlags } from "typescript";
-
+import axiosInstance from "./axiosInterceptor";
 type Props = {
   memberId: number;
   bookmarkedIds: number[];
@@ -56,7 +56,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       console.error(error);
     }
     try {
-      const nowBookMark = await axios.get(`api/bookmark?memberId=${memberId}`, {
+      const nowBookMark = await axiosInstance.get(`api/bookmark?memberId=${memberId}`, {
         headers: {
           Authorization: token,
         },
@@ -151,6 +151,11 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
     onPlaceClick(mapx, mapy);
   };
 
+  // =====================================================드래그앤 드롭=====================================================================
+  const handleDragStart = (e: React.DragEvent, bookmarkId: number) => {
+    e.dataTransfer.setData("text/plain", bookmarkId.toString());
+  };
+
   return (
     <>
       <div>
@@ -198,6 +203,8 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
               <>
                 <div
                   key={idx}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, bookmark.id)}
                   className="max-w-sm rounded overflow-hidden shadow-lg m-5"
                   onClick={() => handleBookMarkInfoClick(bookmark)}
                   style={{ cursor: "pointer" }}

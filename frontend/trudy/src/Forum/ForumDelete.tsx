@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import axiosInstance from "../Common/axiosInterceptor";
 type ForumDeleteProps = {
   postId: number;
   onDelete: (postId: number) => void;
@@ -17,7 +17,7 @@ function ForumDelete(props: ForumDeleteProps) {
   }
 
   const handleDelete = () => {
-    axios
+    axiosInstance
       .delete(`/api/post/${postId}`)
       .then(() => {
         onDelete(postId);
@@ -40,13 +40,13 @@ function ForumDelete(props: ForumDeleteProps) {
             Are you sure you want to delete this post?
           </div>
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 my-4 hover:bg-red-500"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 my-4 hover:bg-red-500"
             onClick={handleDelete}
           >
             Delete
           </button>
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-green-500"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-green-500"
             onClick={handleClose}
           >
             Cancel

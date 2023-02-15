@@ -10,7 +10,7 @@ import ForumImageUpload from "./ForumImageUpload";
 import Images from "./Forumimage";
 import { useNavigate } from "react-router-dom";
 import "./CkEditor.css";
-
+import axiosInstance from "../Common/axiosInterceptor";
 function ForumCreate() {
   const authCtx = useContext(AuthContext);
   const loggedinId = authCtx.loggedInfo.uid;
@@ -68,7 +68,7 @@ function ForumCreate() {
       // 맨 앞에 공백을 제거해줌
       saveFileNameArr.shift();
 
-      axios
+      axiosInstance
         .delete(`/api/post/upload?saveFileNameArr=${saveFileNameArr}`)
         .then((res) => {
           console.log(saveFileNameArr, 111111);
@@ -101,7 +101,7 @@ function ForumCreate() {
               reject("Only images smaller than 10MB can be uploaded");
             } else {
               upload.append("upload", file);
-              axios
+              axiosInstance
                 .post("api/post/upload", upload)
                 .then((res: any) => {
                   console.log("사진 업로드 성공");
@@ -138,7 +138,7 @@ function ForumCreate() {
   };
 
   const submitPost = () => {
-    axios
+    axiosInstance
       .post("/api/post", forumdata)
       .then((res) => {
         alert("Post Successful!");
@@ -177,7 +177,7 @@ function ForumCreate() {
         deleteFileNameArr
       );
 
-      axios
+      axiosInstance
         .delete(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`)
         .then((res) => {
           console.log("eventListner axios 사진 삭제 성공");

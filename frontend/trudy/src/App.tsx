@@ -21,6 +21,7 @@ import UserProfile from "./Profile/UserProfile";
 import ProfileEdit from "./Profile/ProfileEdit";
 import ForumPostEdit from "./Forum/ForumPostEdit";
 import ChatRoom from "./Chat/ChatRoom";
+import "./App.css";
 
 function App() {
   // Code to handle form submission
@@ -28,6 +29,13 @@ function App() {
   const authCtx = useContext(AuthContext);
   // const [profileImage, setProfileImage] = useState(null);
   // const token = "bearer " + localStorage.getItem("token");
+  // const [map, setMap] = useState(true);
+  // useEffect(() => {
+  //   console.log("토큰", localStorage.getItem("token"));
+  //   if (localStorage.getItem("token") === null) {
+  //     setMap(false);
+  //   }
+  // }, [localStorage.getItem("token")]);
 
   // useEffect(() => {
   //   const fetchProfileImage = async () => {
@@ -71,14 +79,26 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/trudymap" element={<TrudyMap />} />
+        <Route id="nav-item" path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/post/:id" element={<ForumDetail />} />
-        <Route path="/forumcreate" element={<ForumCreate />} />
-        <Route path="/post/update/:id" element={<ForumPostEdit />} />
+        <Route
+          path="/forumcreate"
+          element={authCtx.isLoggedIn ? <ForumCreate /> : <SignIn />}
+        />
+        <Route
+          path="/post/update/:id"
+          element={authCtx.isLoggedIn ? <ForumPostEdit /> : <SignIn />}
+        />
         <Route path="/square" element={<Square />} />
-        <Route path="/profile/:id" element={<UserProfile />} />
-        <Route path="/profile" element={<MyProfile />} />
+        <Route
+          path="/profile/:id"
+          element={authCtx.isLoggedIn ? <UserProfile /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/profile"
+          element={authCtx.isLoggedIn ? <MyProfile /> : <Navigate to="/" />}
+        />
         <Route path="/square" element={<Square />} />
         <Route
           path="/planner"
@@ -109,7 +129,7 @@ function App() {
         />
         <Route
           path="/chatroom"
-          element={authCtx.isLoggedIn ? <ChatRoom /> : <SignUp />}
+          element={authCtx.isLoggedIn ? <ChatRoom /> : <SignIn />}
         />
       </Routes>
     </div>

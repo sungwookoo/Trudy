@@ -60,7 +60,7 @@ function Nav(navProfileImg: any) {
 
         {/* 지도 */}
         <div className="nav-item">
-          <NavLink className="nav-link" to="/trudymap">
+          <NavLink className="ml-4 nav-link" to="/trudymap">
             Map
           </NavLink>
         </div>
@@ -93,7 +93,7 @@ function Nav(navProfileImg: any) {
         {/* 로그인 */}
         {!authCtx.isLoggedIn ? (
           <>
-            <div className="nav-item pr-8">
+            <div className="nav-item">
               <NavLink className="nav-link" to="/signin">
                 Sign In
               </NavLink>
@@ -106,10 +106,10 @@ function Nav(navProfileImg: any) {
           </>
         ) : (
           <>
-            {/* 채팅 */}
-            <div className="nav-item">
-              <NavLink className="nav-link" to="/chatroom">
-                Chat
+            {/* 채팅화면으로 전환 */}
+            <div>
+              <NavLink id="chat-nav-link" to="/chatroom">
+                <div className="chat-nav-item fixed z-50 bottom-0 right-0"></div>
               </NavLink>
             </div>
             <div className="nav-item flex flex-row items-center">
@@ -124,7 +124,7 @@ function Nav(navProfileImg: any) {
               </NavLink>
             </div>
             <div className="nav-item">
-              <button className="nav-link ml-1 mr-12" onClick={signOut}>
+              <button className="nav-link mr-3" onClick={signOut}>
                 SignOut
               </button>
             </div>

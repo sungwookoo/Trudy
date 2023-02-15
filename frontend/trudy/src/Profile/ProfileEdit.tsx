@@ -6,6 +6,7 @@ import AuthContext from "../Common/authContext";
 import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
 import defaultImage from "../assets/defaultImage.png";
+import axiosInstance from "../Common/axiosInterceptor";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -51,7 +52,7 @@ function Profile() {
   const token = "bearer " + localStorage.getItem("token");
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(url, {
         headers: {
           Authorization: token,
@@ -74,7 +75,7 @@ function Profile() {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
-    axios
+    axiosInstance
       .post("api/member/upload", formData, {
         headers: {
           Authorization: token,
@@ -93,7 +94,7 @@ function Profile() {
   const updateProfile = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      const response = await axiosInstance.put(
         "api/member/intro",
         {
           plan: updatedPlan,

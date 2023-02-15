@@ -106,7 +106,7 @@ function ForumDetail() {
         {/* {isloggedin && ( */}
         <div className=" w-full flex flex-row justify-end mt-5">
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-red-400"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400"
             onClick={handleOpenModal}
           >
             Delete
@@ -119,7 +119,7 @@ function ForumDetail() {
             />
           )}
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 mx-2"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2"
             onClick={postEditnavigate}
           >
             Edit
