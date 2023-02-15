@@ -3,6 +3,8 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../Common/authContext";
 import "./ProfileMyPost.css";
+import { useNavigate } from "react-router";
+
 
 interface memberdetails {
   id: number;
@@ -22,6 +24,10 @@ export default function ProfileMyPost({
   const forumMemberData = memberdetails;
   // const forumMemberData = post.memeberElement?.id;
 
+  const navigate = useNavigate();
+  const navigateToUseritem = () => {
+    navigate(`/post/${forumPostData.id}`);
+  };
   // console.log(forumMemberData.id)
   console.log(loggedinId, "로그인ID");
   console.log(forumMemberData, "포럼멤버ID");
@@ -29,12 +35,12 @@ export default function ProfileMyPost({
 
   return (
     <div className="my-post-container flex flex-row m-4">
-      <div className="">
+      <div className="my-post-item" onClick={navigateToUseritem}>
         {forumImageData ? (
           <img
             className="mypost-thumbnail-image"
             src={forumImageData}
-            alt="forumthumbnail"
+            alt="forumthumbnail"           
           />
         ) : (
           <img
@@ -43,6 +49,7 @@ export default function ProfileMyPost({
             alt="forumthumbnail"
           />
         )}
+        <div className="my-post-item-title">{forumPostData.title}</div>
       </div>
     </div>
   );
