@@ -92,7 +92,7 @@ function ForumCreate() {
     sigunguIdList: [],
     memberId: loggedinId,
     categoryList: forumcategory,
-    // thumbnailImage: flagImage,
+    thumbnailImage: flagImage,
   };
   // 카테고리 버튼 on/off
   const handleCategoryClick = (categoryId: number) => {
