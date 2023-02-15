@@ -19,6 +19,8 @@ function SignUp() {
   const [sigunguCode, setSigunguCode] = useState<number>(0);
 
   const [isPassword, setIsPassword] = useState<boolean>(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
+  const [isName, setIsName] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
 
@@ -30,6 +32,28 @@ function SignUp() {
   const navigate = useNavigate();
   function navigateToLending() {
     navigate("/");
+  }
+
+  function CheckPassword(password: string) {
+    if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}/.test(password)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  function CheckPasswordConfirm(passwordConfirm: string) {
+    if (password === passwordConfirm) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  function CheckNickName(name: string) {
+    if (/^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,16}$/.test(name)) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   useEffect(() => {
@@ -72,18 +96,17 @@ function SignUp() {
                 placeholder="Password"
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  if (
-                    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)
-                  ) {
-                    setIsPassword(false);
-                  } else {
+                  if (CheckPassword(e.target.value) === 1) {
                     setIsPassword(true);
+                  } else {
+                    setIsPassword(false);
                   }
                 }}
               />
-              {password === "" || isPassword ? null : (
+              {password === "" || CheckPassword(password) ? null : (
                 <div className="text-red-500">
-                  Minimum 8 characters, at least one letter and one number
+                  8 to 16 characters with a combination of letters, numbers, and
+                  special characters
                 </div>
               )}
             </div>
@@ -102,11 +125,17 @@ function SignUp() {
                 placeholder="Password Confirm"
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
+                  if (CheckPasswordConfirm(e.target.value) === 1) {
+                    setIsPasswordConfirm(true);
+                  } else {
+                    setIsPasswordConfirm(false);
+                  }
                 }}
               />
-              {passwordConfirm && password !== passwordConfirm ? (
+              {passwordConfirm === "" ||
+              CheckPasswordConfirm(passwordConfirm) ? null : (
                 <div className="text-red-500">password don't match</div>
-              ) : null}
+              )}
             </div>
           </div>
 
@@ -126,10 +155,17 @@ function SignUp() {
                 placeholder="Nickname"
                 onChange={(e) => {
                   setName(e.target.value);
+                  if (CheckNickName(name) === 1) {
+                    setIsName(true);
+                  } else {
+                    setIsName(false);
+                  }
                 }}
               />
               {name === "" ||
-              /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/.test(name) ? null : (
+              /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,16}$/.test(
+                name
+              ) ? null : (
                 <div className="text-red-500">
                   3 characters or more and 16 characters or less, consisting of
                   English or numbers
@@ -262,20 +298,27 @@ function SignUp() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={async (e) => {
-                const response: any = await authCtx.signup(
-                  email,
-                  password,
-                  name,
-                  gender,
-                  birthday,
-                  isLocal,
-                  areaCode,
-                  sigunguCode
-                );
-                console.log("에러", response);
-                if (response !== undefined) {
-                  authCtx.login(email, password);
-                  navigateToLending();
+                if (
+                  isPassword === true &&
+                  isPasswordConfirm === true &&
+                  isName === true
+                ) {
+                  const response: any = await authCtx.signup(
+                    email,
+                    password,
+                    name,
+                    gender,
+                    birthday,
+                    isLocal,
+                    areaCode,
+                    sigunguCode
+                  );
+                  if (response !== undefined) {
+                    authCtx.login(email, password);
+                    navigateToLending();
+                  }
+                } else {
+                  alert("please fill out the form");
                 }
               }}
             >
