@@ -45,7 +45,6 @@ axiosInstance.interceptors.response.use(
     if (status === 401) {
       const accessToken = localStorage.getItem("token");
       const refreshToken = localStorage.getItem("refreshToken");
-      console.log("토큰 재발행");
       try {
         const { data } = await axios({
           method: "post",
