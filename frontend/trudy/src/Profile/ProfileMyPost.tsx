@@ -1,40 +1,49 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../Common/authContext";
+import "./ProfileMyPost.css";
 
 interface memberdetails {
   id: number;
 }
 
-export default function ProfileMyPost({post, memberdetails}:any): JSX.Element | null {
+export default function ProfileMyPost({
+  post,
+  memberdetails,
+}: any): JSX.Element | null {
+  console.log(post, "포럼포스트");
+  const authCtx = useContext(AuthContext);
+  const loggedinId = authCtx.loggedInfo.uid;
+  const forumPostData = post;
+  // const forumImageData = post.postImageElementList
+  // console.log(post.postElement.thumbnailImage, "포럼이미지2");
+  const forumImageData = post.thumbnailImage;
+  const forumMemberData = memberdetails;
+  // const forumMemberData = post.memeberElement?.id;
 
-  const forumTextData = post.postElement
-  const forumImageData = post.postImageElementList
-  const forumMemberData = post.memberElement
   // console.log(forumMemberData.id)
-  console.log(memberdetails)
-if (memberdetails === forumMemberData.id) {
-  console.log('yes')
-return (
-  <div>
-    <div className='flex justify-center'>
-    {forumImageData.length != 0 ? (
-    <img className='forum-thumbnail-image'
-    src={forumImageData[0].url}
-    alt="forumthumbnail"
-    />
-    ) : (
-    <img
-    className='forum-thumbnail-image'
-    src='http://img.seoul.co.kr//img/upload/2021/11/16/SSI_20211116180452.jpg'
-    alt="forumthumbnail"
-    />
-    )}
+  console.log(loggedinId, "로그인ID");
+  console.log(forumMemberData, "포럼멤버ID");
+  // console.log(forumImageData, "포럼이미지");
+
+  return (
+    <div className="my-post-container flex flex-row m-4">
+      <div className="">
+        {forumImageData ? (
+          <img
+            className="mypost-thumbnail-image"
+            src={forumImageData}
+            alt="forumthumbnail"
+          />
+        ) : (
+          <img
+            className="mypost-thumbnail-image"
+            src="http://img.seoul.co.kr//img/upload/2021/11/16/SSI_20211116180452.jpg"
+            alt="forumthumbnail"
+          />
+        )}
+      </div>
     </div>
-  </div>
-);
-} else {
-  // console.log('no')
-  return null;
-}
+  );
 }

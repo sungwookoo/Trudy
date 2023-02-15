@@ -73,3 +73,8 @@
 .forum-item-article {
   /* padding-bottom: 30px; */
 }
+
+.forum-item-thumbnail-image {
+  width: 400px;
+  height: 257px;
+}

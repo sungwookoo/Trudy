@@ -19,6 +19,8 @@ function SignUp() {
   const [sigunguCode, setSigunguCode] = useState<number>(0);
 
   const [isPassword, setIsPassword] = useState<boolean>(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
+  const [isName, setIsName] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
 
@@ -30,6 +32,28 @@ function SignUp() {
   const navigate = useNavigate();
   function navigateToLending() {
     navigate("/");
+  }
+
+  function CheckPassword(password: string) {
+    if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}/.test(password)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  function CheckPasswordConfirm(passwordConfirm: string) {
+    if (password === passwordConfirm) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  function CheckNickName(name: string) {
+    if (/^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,16}$/.test(name)) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   useEffect(() => {
@@ -60,7 +84,7 @@ function SignUp() {
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
           {/* 비밀번호 */}
-          <div className="-space-y-px rounded-md shadow-md">
+          <div className="-space-y-px rounded-md">
             <div>
               Password
               <input
@@ -68,26 +92,28 @@ function SignUp() {
                 name="password"
                 type="password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="relative block shadow-md w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
                 onChange={(e) => {
-                  if (
-                    !/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(
-                      e.target.value
-                    )
-                  ) {
-                    setIsPassword(false);
-                  } else {
+                  setPassword(e.target.value);
+                  if (CheckPassword(e.target.value) === 1) {
                     setIsPassword(true);
-                    setPassword(e.target.value);
+                  } else {
+                    setIsPassword(false);
                   }
                 }}
               />
+              {password === "" || CheckPassword(password) ? null : (
+                <div className="text-red-500">
+                  8 to 16 characters with a combination of letters, numbers, and
+                  special characters
+                </div>
+              )}
             </div>
           </div>
 
           {/* 비밀번호 확인 */}
-          <div className="-space-y-px rounded-md shadow-md">
+          <div className="-space-y-px rounded-md">
             <div>
               Password Confirm
               <input
@@ -95,19 +121,26 @@ function SignUp() {
                 name="passwordConfirm"
                 type="password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="relative block w-full shadow-md appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password Confirm"
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
-                  if (password !== passwordConfirm) {
+                  if (CheckPasswordConfirm(e.target.value) === 1) {
+                    setIsPasswordConfirm(true);
+                  } else {
+                    setIsPasswordConfirm(false);
                   }
                 }}
               />
+              {passwordConfirm === "" ||
+              CheckPasswordConfirm(passwordConfirm) ? null : (
+                <div className="text-red-500">password don't match</div>
+              )}
             </div>
           </div>
 
           {/* 닉네임 */}
-          <div className="-space-y-px rounded-md shadow-md">
+          <div className="-space-y-px rounded-md">
             <div>
               Nickname
               <input
@@ -118,12 +151,26 @@ function SignUp() {
                 required
                 minLength={4}
                 maxLength={16}
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="relative block shadow-md w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
                 onChange={(e) => {
                   setName(e.target.value);
+                  if (CheckNickName(name) === 1) {
+                    setIsName(true);
+                  } else {
+                    setIsName(false);
+                  }
                 }}
               />
+              {name === "" ||
+              /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,16}$/.test(
+                name
+              ) ? null : (
+                <div className="text-red-500">
+                  3 characters or more and 16 characters or less, consisting of
+                  English or numbers
+                </div>
+              )}
             </div>
           </div>
 
@@ -251,20 +298,27 @@ function SignUp() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={async (e) => {
-                const response: any = await authCtx.signup(
-                  email,
-                  password,
-                  name,
-                  gender,
-                  birthday,
-                  isLocal,
-                  areaCode,
-                  sigunguCode
-                );
-
-                if (response !== undefined) {
-                  authCtx.login(email, password);
-                  navigateToLending();
+                if (
+                  isPassword === true &&
+                  isPasswordConfirm === true &&
+                  isName === true
+                ) {
+                  const response: any = await authCtx.signup(
+                    email,
+                    password,
+                    name,
+                    gender,
+                    birthday,
+                    isLocal,
+                    areaCode,
+                    sigunguCode
+                  );
+                  if (response !== undefined) {
+                    authCtx.login(email, password);
+                    navigateToLending();
+                  }
+                } else {
+                  alert("please fill out the form");
                 }
               }}
             >
