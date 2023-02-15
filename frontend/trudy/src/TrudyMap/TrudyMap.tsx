@@ -268,7 +268,7 @@ function TrudyMap() {
           </div>
         </>
       )}
-      <button onClick={() => setMapVisible(!mapVisible)} className="mt-2 absolute top-0 right-0">
+      <button type="button" onClick={() => setMapVisible(!mapVisible)} id="map-toggle" className="mt-12 mr-12 absolute top-0 right-0">
         {mapVisible ? "Hide Map" : "Show Map"}
       </button>
     </div>

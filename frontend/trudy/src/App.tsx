@@ -21,6 +21,7 @@ import UserProfile from "./Profile/UserProfile";
 import ProfileEdit from "./Profile/ProfileEdit";
 import ForumPostEdit from "./Forum/ForumPostEdit";
 import ChatRoom from "./Chat/ChatRoom";
+import './App.css';
 
 function App() {
   // Code to handle form submission
@@ -71,7 +72,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/trudymap" element={<TrudyMap />} />
+        <Route id ="nav-item" path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
