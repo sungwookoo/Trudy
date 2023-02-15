@@ -93,11 +93,11 @@ function App() {
         <Route path="/square" element={<Square />} />
         <Route
           path="/profile/:id"
-          element={authCtx.isLoggedIn ? <UserProfile /> : <Navigate to="/" />}
+          element={authCtx.isLoggedIn ? <UserProfile /> : <SignIn />}
         />
         <Route
           path="/profile"
-          element={authCtx.isLoggedIn ? <MyProfile /> : <Navigate to="/" />}
+          element={authCtx.isLoggedIn ? <MyProfile /> : <SignIn />}
         />
         <Route path="/square" element={<Square />} />
         <Route
@@ -105,7 +105,10 @@ function App() {
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
           // element={<Planner />}
         />
-        <Route path="/profileedit" element={<ProfileEdit />} />
+        <Route
+          path="/profileedit"
+          element={authCtx.isLoggedIn ? <ProfileEdit /> : <SignIn />}
+        />
         <Route
           path="/signin"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}
