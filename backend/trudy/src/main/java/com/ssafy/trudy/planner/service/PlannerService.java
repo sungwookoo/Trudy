@@ -1,5 +1,7 @@
 package com.ssafy.trudy.planner.service;
 
+import com.ssafy.trudy.exception.ApiException;
+import com.ssafy.trudy.exception.ServiceErrorType;
 import com.ssafy.trudy.member.model.Member;
 import com.ssafy.trudy.planner.model.*;
 import com.ssafy.trudy.planner.repository.DayItemRepository;
@@ -34,11 +36,11 @@ public class PlannerService {
 
     //*******************************[CREATE]****************************************//
     // 플래너 생성
-    public Map addPlanner(Planner plannerInput, Member memberInput){
+    public Map<String, Object> addPlanner(Planner plannerInput, Member memberInput){
         // 1. 들어온 planner을 db에 저장
         plannerRepository.save(plannerInput);
         // 2. Dto 만들기
-        PlannerDto.PlannerCombine plannerCombine = new PlannerDto.PlannerCombine();
+        PlannerDto.PlannerCombine plannerCombine;
         PlannerDto.PlannerElement plannerElement = modelMapper.map(plannerInput, PlannerDto.PlannerElement.class);
         PlannerDto.MemberElement memberElement = modelMapper.map(memberInput, PlannerDto.MemberElement.class);
         plannerCombine = new PlannerDto.PlannerCombine(plannerElement, memberElement);
@@ -49,7 +51,7 @@ public class PlannerService {
     }
 
     // 데이 생성
-    public Map addDay(Day dayInput, Planner planner) {
+    public Map<String,Object> addDay(Day dayInput, Planner planner) {
         // 1. 들어온 day를 db에 저장
         dayRepository.save(dayInput);
         dayInput.setPlannerId(planner);
@@ -85,9 +87,9 @@ public class PlannerService {
     }
 
     // 해당 유저의 플래너 관련 정보 전부 가져오기
-    public List<Map> getPlannersByMemberId(Member member) {
+    public List<Map<String, Object>> getPlannersByMemberId(Member member) {
         // 반환값을 담을 변수
-        List<Map> response = new ArrayList<>();
+        List<Map<String, Object>> response = new ArrayList<>();
 
         // 1. planner list를 가져옴
         List<Planner> plannerEntityList = plannerRepository.findPlannersByMemberIdOrderBySequenceAsc(member);
@@ -247,5 +249,26 @@ public class PlannerService {
 
     public DayItem getDayItemById(Long dayItemId) {
         return dayItemRepository.findById(dayItemId).orElseThrow(() -> new RuntimeException("존재하지 않는 DayItem"));
+    }
+
+    public String daySequenceUpdate(Long dayId, String sequence) {
+        Day day = dayRepository.findById(dayId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+        day.setSequence(sequence);
+        dayRepository.save(day);
+        return sequence;
+    }
+
+    public String plannerSequenceUpdate(Long plannerId, String sequence) {
+        Planner planner = plannerRepository.findById(plannerId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+        planner.setSequence(sequence);
+        plannerRepository.save(planner);
+        return sequence;
+    }
+
+    public String dayItemSequenceUpdate(Long dayItemId, String sequence) {
+        DayItem dayItem = dayItemRepository.findById(dayItemId).orElseThrow(() -> new ApiException(ServiceErrorType.NOT_FOUND));
+        dayItem.setSequence(sequence);
+        dayItemRepository.save(dayItem);
+        return sequence;
     }
 }

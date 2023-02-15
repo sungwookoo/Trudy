@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
-export const sigunguCode = {
+type sigunguList = {
+  [key : number] : any
+  }
+export const sigunguList :sigunguList = {
   1: [
     {
       id: 1,

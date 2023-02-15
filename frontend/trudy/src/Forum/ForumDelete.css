@@ -1,0 +1,23 @@
+.forum-modal {
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  /* z-index: 999; */
+  /* height: 260px; */
+}
+
+.forum-modal-content {
+  /* background-color: #fff;
+  padding: 20px;
+  border-radius: 5px; */
+}
+
+.forum-delete-ask {
+  /* font-size: 30px; */
+}

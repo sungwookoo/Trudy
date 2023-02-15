@@ -23,12 +23,13 @@ public class PostCategory {
     private Post postId;
 
     @Column(name = "name", length = 45)
-    @Enumerated(EnumType.STRING)
-    private CategoryName categoryName;
+    /*@Enumerated(EnumType.STRING)
+    private CategoryName categoryName;*/
+    private String categoryName;
 
-    public PostCategory(CategoryName categoryName) {
-        this.categoryName = categoryName;
-    }
+//    public PostCategory(CategoryName categoryName) {
+//        this.categoryName = categoryName;
+//    }
 
     //    private String name;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
-
+import axiosInstance from "../Common/axiosInterceptor";
 function ForumImageUpload() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [formData, setFormData] = useState<FormData | null>(null);
@@ -27,7 +27,7 @@ function ForumImageUpload() {
     if (!formData) {
       return;
     }
-    axios({
+    axiosInstance({
       baseURL: 'api/post',
       method: 'POST',
       data: formData,

@@ -1,27 +1,51 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./Landing/Landing";
 import TrudyMap from "./TrudyMap/TrudyMap";
 import Square from "./Square/Square";
 import Planner from "./Planner/Planner";
 import MyProfile from "./Profile/MyProfile";
-import ProfileUpdate from "./Profile/ProfileUpdate";
 import SignIn from "./Account/SignIn";
 import SignUp from "./Account/SignUp";
 import SignUpSelect from "./Account/SignUpSelect";
 import ForumPage from "./Forum/Forum";
 import Nav from "./Common/Nav";
 import ForumCreate from "./Forum/ForumCreate";
-import ForumDetail from "./Forum/ForumDetail"
+import ForumDetail from "./Forum/ForumDetail";
 import AuthContext from "./Common/authContext";
 import axios from "axios";
 import * as authAction from "./Common/authAction";
 import * as axiosInterceptor from "./Common/axiosInterceptor";
+import EmailConfirm from "./Account/EmailConfirm";
+import UserProfile from "./Profile/UserProfile";
+import ProfileEdit from "./Profile/ProfileEdit";
+import ForumPostEdit from "./Forum/ForumPostEdit";
+import ChatRoom from "./Chat/ChatRoom";
+import './App.css';
 
 function App() {
   // Code to handle form submission
   const writeArticle = (event: React.FormEvent<HTMLFormElement>) => {};
   const authCtx = useContext(AuthContext);
+  // const [profileImage, setProfileImage] = useState(null);
+  // const token = "bearer " + localStorage.getItem("token");
+
+  // useEffect(() => {
+  //   const fetchProfileImage = async () => {
+  //     try {
+  //       const response = await axios.get("api/member/me", {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       });
+  //       setProfileImage(response.data.image);
+  //       console.log(profileImage, "정보");
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchProfileImage();
+  // }, [token]);
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token")
@@ -48,11 +72,13 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/trudymap" element={<TrudyMap />} />
+        <Route id ="nav-item" path="/trudymap" element={<TrudyMap />} />
         <Route path="/forum" element={<ForumPage />} />
-        <Route path="/forum/:id" element={<ForumDetail />} />
+        <Route path="/post/:id" element={<ForumDetail />} />
         <Route path="/forumcreate" element={<ForumCreate />} />
-        <Route path="/square" element={<Square />} /> 
+        <Route path="/post/update/:id" element={<ForumPostEdit />} />
+        <Route path="/square" element={<Square />} />
+        <Route path="/profile/:id" element={<UserProfile />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/square" element={<Square />} />
         <Route
@@ -60,14 +86,20 @@ function App() {
           element={authCtx.isLoggedIn ? <Planner /> : <SignIn />}
           // element={<Planner />}
         />
-        <Route
-        path="/profileupdate"
-        element={<ProfileUpdate />}
-        />
+        <Route path="/profileedit" element={<ProfileEdit />} />
         <Route
           path="/signin"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignIn />}
         />
+        <Route
+          path="/emailconfirm"
+          element={authCtx.isLoggedIn ? <Navigate to="/" /> : <EmailConfirm />}
+        />
+
+        {/* 로그인한 상태면 랜딩페이지로 */}
+        {/* 로그인 안했는데 이메일 인증 안했으면 이메일 인증 페이지로 */}
+        {/* 로그인 안했는데 이메일 인증은 했으면 회원가입 페이지로 */}
+        {/* <Route path="/signup" element={(authCtx.isLoggedIn) ? <Navigate to="/" /> : (authCtx.isVerified) ? <SignUp /> : <SignUpSelect />} /> */}
         <Route
           path="/signup"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUp />}
@@ -75,6 +107,10 @@ function App() {
         <Route
           path="/signupselect"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpSelect />}
+        />
+        <Route
+          path="/chatroom"
+          element={authCtx.isLoggedIn ? <ChatRoom /> : <SignUp />}
         />
       </Routes>
     </div>

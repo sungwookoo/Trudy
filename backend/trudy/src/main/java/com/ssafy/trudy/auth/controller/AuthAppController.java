@@ -60,7 +60,6 @@ public class AuthAppController {
 
     @PostMapping("/signup")
     public MemberResponse signUp(
-
             @RequestBody SignupRequest signupRequest) {
         return memberAppService.signup(signupRequest);
     }
@@ -73,10 +72,24 @@ public class AuthAppController {
                     @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
             })
 
-    @DeleteMapping("/logout")
-    public void logout(@AuthenticationPrincipal PrincipalDetails principal) {
-        memberAppService.logout(principal);
+    @PostMapping("/logout")
+    public void logout(@RequestParam Long id) {
+        memberAppService.logout(id);
     }
+
+
+
+//    // 이메일 중복 검사
+//    @ApiOperation(value = "이메일 중복 체크 / 1: 가입가능, 2: 가입불가",
+//            produces = MediaType.APPLICATION_JSON_VALUE,
+//            responseHeaders = {
+//                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE)
+//            })
+//    @PostMapping("/emailCheck")
+//    public String emailCheck(@RequestParam String email) {
+//        String result = memberAppService.emailCheck(email);
+//        return result;
+//    }
 
     // 이메일 인증
     @ApiOperation(value = "이메일 인증",
@@ -91,4 +104,6 @@ public class AuthAppController {
 
         return confirm;
     }
+
+
 }

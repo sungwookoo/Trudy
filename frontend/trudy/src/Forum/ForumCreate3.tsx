@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import axiosInstance from '../Common/axiosInterceptor';
 function ForumCreate() {
   const [user, setUser] = useState('Pyo');
   const [content, setContent] = useState('Content');
@@ -19,7 +19,7 @@ function ForumCreate() {
     }
 
     console.log(formData)
-    axios.post('api/post', formData)
+    axiosInstance.post('api/post', formData)
       .then((response) => {
         console.log(response.data);
       })

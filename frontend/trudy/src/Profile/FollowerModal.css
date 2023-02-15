@@ -1,0 +1,36 @@
+.follow-modal-container {
+  /* 모달창 크기 */
+  width: 500px;
+  height: 300px;
+
+  /* 최상단 위치 */
+  z-index: 999;
+
+  /* 중앙배치 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* 모달창 디자인 */
+  background-color: gray;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+}
+
+/* 모달창 내부 X */
+
+.follow-modal-close {
+  /* X 위치 */
+  /* position: absolute; */
+  top: 50px;
+  left: 10px;
+
+  /* X 디자인 */
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}

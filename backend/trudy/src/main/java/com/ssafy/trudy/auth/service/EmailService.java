@@ -6,6 +6,8 @@ import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.ssafy.trudy.exception.ApiException;
+import com.ssafy.trudy.exception.ServiceErrorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,6 +18,9 @@ public class EmailService {
 
     @Autowired
     JavaMailSender emailSender;
+
+    @Autowired
+    MemberAppService memberAppService;
 
     public static final String ePw = createKey();
 
@@ -72,10 +77,20 @@ public class EmailService {
         return key.toString();
     }
 
-    public String sendSimpleMessage(String to)throws Exception {
-        // TODO Auto-generated method stub
-        MimeMessage message = createMessage(to);
-        try{//예외처리
+    public String sendSimpleMessage(String to)  {
+        
+        if(memberAppService.emailCheck(to)) {
+            throw new ApiException(ServiceErrorType.DUPLICATE_USER_EMAIL);
+        }
+
+        MimeMessage message = null;
+        try {
+            message = createMessage(to);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        try{ //예외처리
             emailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();
