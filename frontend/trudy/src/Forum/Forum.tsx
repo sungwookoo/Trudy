@@ -10,6 +10,7 @@ import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import { ThreeCircles } from "react-loader-spinner";
 import ForumDetail from "./ForumDetail";
+import SearchBar from "../Common/SearchBar";
 
 interface IgetForumResponse {
   id: number;
@@ -25,22 +26,20 @@ interface IgetForumResponse {
 function ForumPage() {
   const [selectedId, setSelectedId] = useState<any>(null);
   const [forumItem, setForumItem] = useState<any>(null);
+  const [forumSize, setForumSize] = useState<number>(20);
 
   const [forumResponse, setForumResponse] = useState<IgetForumResponse[]>([]);
   const [forumloading, setForumLoading] = useState(null);
 
   // 검색창
-  const [word, setword] = useState<any>("");
+  // 서치 바
+  const [nameSearch, setNameSearch] = useState<string>("");
+  const [searchChange, setSearchChange] = useState<string>("");
 
-  // 필터
-  // 지역 filter
-  const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const [selectedSigungu, setSelectedSigungu] = useState<number[]>([]);
-
-  // 대분류 선택시 해당 대분류 id 가진 세부지역 checkbox 표시하기
-  const handleAreaClick = (id: number) => {
-    setSelectedAreaCode(id);
+  // 초기화 필터
+  const clearFilter = () => {
+    setNameSearch("");
+    setcontentTypeId([]);
   };
 
   // 카테고리 영역 추가
@@ -68,17 +67,14 @@ function ForumPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData: any = await axios.get(
-          API_URL +
-            `?area=${selectedSigungu}&contentTypeId=${contentTypeId}&word=${word}&size=200`
-        );
+        const resData: any = await axios.get(API_URL + `?categoryList=${contentTypeId}&title=${nameSearch}&content=${nameSearch}&size=${forumSize}`);
         setForumResponse(resData.data.content);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, [contentTypeId, word]);
+  }, [contentTypeId, nameSearch, forumSize]);
 
   // 로딩 시 Spinner 띄움
   // {
@@ -99,66 +95,15 @@ function ForumPage() {
   //     </div>
   //   );
   // }
-  console.log(selectedSigungu);
   return (
     <>
       <div className="forum-page flex flex-row">
         <div className="filter-bar">
-          <div className="flex">
-            <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className={`p-2 m-2 rounded-md border border-2 border-black font-semibold shadow-md ${
-                !isCollapsed ? "bg-green-600 text-white" : "bg-white-300"
-              }`}
-            >
-              Area Select
-            </button>
-            {!isCollapsed && (
-              <AreaSelect
-                key={0}
-                areaCode={areaList}
-                onClick={handleAreaClick}
-              />
-            )}
-            {/* 세부지역선택 */}
-            <div className="flex flex-wrap">
-              {!isCollapsed &&
-                selectedAreaCode &&
-                sigunguList[selectedAreaCode].map(
-                  (sigunguInfo: any, i: number) => (
-                    <div key={i} className="flex items-center mb-2">
-                      <input
-                        className="mx-2"
-                        type="checkbox"
-                        id={`sigungu-${sigunguInfo.id}`}
-                        onChange={() => {
-                          if (selectedSigungu.includes(sigunguInfo.id)) {
-                            const filteredSigungu = selectedSigungu.filter(
-                              (id: number) => id !== sigunguInfo.id
-                            );
-                            setSelectedSigungu(filteredSigungu);
-                          } else {
-                            setSelectedSigungu([
-                              ...selectedSigungu,
-                              sigunguInfo.id,
-                            ]);
-                          }
-                        }}
-                      />
-                      <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-                        {sigunguInfo.name}
-                      </label>
-                    </div>
-                  )
-                )}
-            </div>
-          </div>
-
           <div className="cat-selectors font-semibold">
-            <CategoryButtons
-              onClick={handleCategoryClick}
-              selectedCategories={contentTypeId}
-            />
+            <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
+          </div>
+          <div>
+            <SearchBar searchChange={searchChange} setNameSearch={setNameSearch} setSearchChange={setSearchChange} />
           </div>
 
           <button
@@ -178,6 +123,9 @@ function ForumPage() {
             <ForumDetail setForumItem={forumItem} />
           )} */}
       </div>
+      <button onClick={() => setForumSize(forumSize + 20)} className={`p-2 m-2 rounded-lg   "bg-indigo-500 text-white" `}>
+        See More
+      </button>
     </>
   );
 }

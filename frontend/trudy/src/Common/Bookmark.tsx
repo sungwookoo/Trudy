@@ -155,6 +155,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
   const handleDragStart = (e: React.DragEvent, bookmarkId: number) => {
     e.dataTransfer.setData("text/plain", bookmarkId.toString());
   };
+  console.log(selectedSigungu);
 
   return (
     <>
@@ -178,7 +179,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   id={`sigungu-${sigunguInfo.id}`}
                   checked={selectedSigungu.includes(sigunguInfo.id)}
                   onChange={() => {
-                    if (selectedSigungu.includes(sigunguInfo.sigungucode)) {
+                    if (selectedSigungu.includes(sigunguInfo.id)) {
                       const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
                       setSelectedSigungu(filteredSigungu);
                     } else {

@@ -26,6 +26,7 @@ function ForumItem({ post }: any) {
   const postmemberImage = post.memberElement.image;
   const postmemberName = post.memberElement.name;
 
+  console.log(post);
   console.log(postmemberId, "작성자 ID");
   const authCtx = useContext(AuthContext);
   const loggedinId = authCtx.loggedInfo.uid;
@@ -53,47 +54,25 @@ function ForumItem({ post }: any) {
   // my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3
 
   return (
-    <div
-      className="forum-item-box px-4 py-4 cursor-pointer hover:bg-gray-300 rounded-md"
-      onClick={navigateToForumDetail}
-    >
+    <div className="forum-item-box px-4 py-4 cursor-pointer hover:bg-gray-300 rounded-md" onClick={navigateToForumDetail}>
       {/* <!-- Article --> */}
       <article className="forum-item-article overflow-hidden rounded-lg shadow-lg">
         {forumImageData ? (
-          <img
-            className="block h-auto w-full"
-            src={forumImageData[0].url}
-            alt="forum thumbnail"
-          />
+          <img className="block h-auto w-full" src={forumImageData[0].url} alt="forum thumbnail" />
         ) : (
-          <img
-            className="block h-auto w-full"
-            src={
-              "http://img.seoul.co.kr//img/upload/2021/11/16/SSI_20211116180452.jpg"
-            }
-            alt="forum thumbnail"
-          />
+          <img className="block h-auto w-full" src={"http://img.seoul.co.kr//img/upload/2021/11/16/SSI_20211116180452.jpg"} alt="forum thumbnail" />
         )}
 
         <header className="flex items-center justify-between leading-tight py-4 h-20">
           <h1 className="text-2xl capitalize">
-            <div className="no-underline hover:underline text-black elipsis px-3">
-              {forumTextData.title}
-            </div>
+            <div className="no-underline hover:underline text-black elipsis px-3">{forumTextData.title}</div>
           </h1>
           {/* <p className="text-grey-darker text-sm">{forumCreateDate}</p> */}
         </header>
 
         <footer className="flex items-center justify-between leading-none p-2 md:p-4 mb-3">
-          <a
-            className="flex items-center no-underline hover:underline text-black"
-            href="#"
-          >
-            <img
-              alt="Placeholder"
-              className="block rounded-full w-12 h-12"
-              src={postmemberImage}
-            />
+          <a className="flex items-center no-underline hover:underline text-black" href="#">
+            <img alt="Placeholder" className="block rounded-full w-12 h-12" src={postmemberImage} />
             <p className="ml-2 text-md">{postmemberName}</p>
           </a>
           {/* <a
