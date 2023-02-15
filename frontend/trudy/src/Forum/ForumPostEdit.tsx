@@ -16,26 +16,29 @@ function PostEditPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  const [saveFileNameArr, setSaveFileNameArr] = useState([""]);
+
+  //수정함=======================
+  //========================useEffect start================================
+  //[back 버튼 클릭 시 사진 삭제준비]useEffect 에 이미지 이름을 sessionStorage에 저장
+  useEffect(() => {
+    console.log(
+      "saveFileNameArr감시 useEffect - saveFileNameArr sessionStorage 저장 값보기 : ",
+      saveFileNameArr
+    );
+    sessionStorage.setItem("saveFileNameArr", JSON.stringify(saveFileNameArr));
+    console.log("sessionStorage에서 가져온 결과 : ");
+    console.log(JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]"));
+  }, [saveFileNameArr]);
+
+  //====================useEffect end==========================
+
   const navigate = useNavigate();
   const backToPost = () => {
     navigate(-1);
   };
 
   const token = "bearer " + localStorage.getItem("token");
-  // console.log(id, "포스트아이디");
-
-  // const getpostData = async () => {
-  //   try {
-  //     const forumResponse = await axios.get(`/api/post/${id}`).then (
-  //     setPostData(forumResponse.data.postCombine.postElement);
-  //     setPostMemberData(forumResponse.data.postCombine.memberElement);
-  //     setPostRegionData(forumResponse.data.postCombine.sigunguCodeList);
-  //     setPostCategoryData(forumResponse.data.postCombine.categoryNameList);
-  //     // console.log(postData, "포스트데이터");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +48,7 @@ function PostEditPage() {
           setPostMemberData(res.data.postCombine.memberElement);
           setPostRegionData(res.data.postCombine.sigunguCodeList);
           setPostCategoryData(res.data.postCombine.categoryNameList);
-          setTitle(res.data.postCombine.postElement.title)
+          setTitle(res.data.postCombine.postElement.title);
           setEditPost(res.data.postCombine.postElement.content);
         });
       } catch (error) {
@@ -55,7 +58,7 @@ function PostEditPage() {
     fetchData();
     // 필터 값 바뀌면 limit 값 변경해주기
   }, []);
-  console.log(editPost, 333333333);
+  console.log(editPost, 33333);
   const handleEditPost = async (e: any) => {
     e.preventDefault();
     try {
@@ -80,21 +83,38 @@ function PostEditPage() {
   };
 
   const customUploadAdapter = (loader: any) => {
+    //수정함=======================
     return {
       upload() {
         return new Promise((resolve, reject) => {
-          const imagedata = new FormData();
+          const upload = new FormData();
           loader.file.then((file: any) => {
-            imagedata.append("name", file.name);
-            imagedata.append("upload", file);
-            console.log(file.name)
-            console.log(imagedata.get("upload"));
+            if (file.size > 1024 * 1024 * 10) {
+              reject("Only images smaller than 10MB can be uploaded");
+            } else {
+              upload.append("upload", file);
+              axios
+                .post("/api/post/upload", upload)
+                .then((res: any) => {
+                  console.log("사진 업로드 성공");
+                  console.log(file);
+                  console.log("res 결과 보기");
+                  console.log(res.data);
 
-            axios.post("/api/post", imagedata).then((res: any) => {
-              alert("이미지 업로드 완료!");
-              // setImage(res.data.filename);
-              console.log(res.data.file.name);
-            });
+                  resolve({
+                    default: `${res.data.imageUrl}`,
+                  });
+
+                  setSaveFileNameArr((prev) => [
+                    ...prev,
+                    `${res.data.fileName}`,
+                  ]);
+                })
+                .catch((err) => {
+                  console.log("사진 업로드 실패");
+                  reject(err);
+                });
+            }
           });
         });
       },
@@ -109,9 +129,44 @@ function PostEditPage() {
     };
   }
 
-
   const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(event.target.value);
+  };
+
+  //이미지 삭제 함수 ->sessionStorage에서 list를 가져옴 -> return 으로 파일 전체 삭제
+  const removeImageArr = () => {
+    let deleteFileNameArr = JSON.parse(
+      sessionStorage.getItem("saveFileNameArr") || "[]"
+    );
+
+    console.log(
+      "removeImageArr 함수 - 페이지 이동 useEffect return 실행 / from sessionStorage saveFileNameArr",
+      deleteFileNameArr
+    );
+
+    if (deleteFileNameArr.length > 1) {
+      deleteFileNameArr.shift();
+      console.log(
+        "useEffect return if 실행 /다음건 삭제할 파일명",
+        deleteFileNameArr
+      );
+
+      axios
+        .delete(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`)
+        .then((res) => {
+          console.log("eventListner axios 사진 삭제 성공");
+          console.log(
+            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
+          );
+          backToPost();
+        })
+        .catch((err) => {
+          console.log(" eventListner axios 사진 삭제 실패");
+          console.log(
+            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
+          );
+        });
+    }
   };
 
   return (
@@ -128,11 +183,11 @@ function PostEditPage() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <textarea className="forum-detail-edit-title capitalize px-6 border border-2"
-        value={title}
-        onChange={handleTitleChange}
-        >
-        </textarea>
+        <textarea
+          className="forum-detail-edit-title capitalize px-6 border border-2"
+          value={title}
+          onChange={handleTitleChange}
+        ></textarea>
         <div className="forum-detail-region-category flex flex-row justify-between my-3 w-1/4">
           <div>Region: {postRegionData}</div>
           <div>Category: {postCategoryData}</div>
@@ -173,7 +228,7 @@ function PostEditPage() {
         <div className=" w-full flex flex-row justify-end mt-5">
           <button
             className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-red-400"
-            // onClick={handleOpenModal}
+            onClick={removeImageArr}
           >
             Cancel
           </button>

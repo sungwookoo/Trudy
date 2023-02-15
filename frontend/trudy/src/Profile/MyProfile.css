@@ -5,6 +5,7 @@
   align-items: center;
   padding-top: 30px;
   background-color: rgb(237, 248, 239);
+  min-height: 95vh;
 }
 
 .profile-picture {
@@ -74,6 +75,7 @@ input:checked ~ .dot {
 .edit-toggle-follow-container {
   /* background-color: red; */
   height: 50%;
+  width: 150px;
   margin-right: 30px;
 }
 

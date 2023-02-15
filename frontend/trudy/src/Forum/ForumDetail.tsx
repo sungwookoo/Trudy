@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import "./ForumDetail.css";
 import AuthContext from "../Common/authContext";
 import ForumDeleteModal from "./ForumDeleteModal";
-import Parser from 'html-react-parser'
+import Parser from "html-react-parser";
 
 interface IForumDetailProps {
   post_id: number;
@@ -93,7 +93,7 @@ function ForumDetail() {
         <div className="forum-detail-title capitalize px-4 border border-1">
           {forumItem && forumItem.title}
         </div>
-        <div className="forum-detail-region-category flex flex-row justify-between my-3 w-1/4">
+        <div className="forum-detail-region-category flex flex-row justify-between my-3 w-1/3">
           <div>Region: {forumRegion}</div>
           <div>Category: {forumCategory}</div>
         </div>

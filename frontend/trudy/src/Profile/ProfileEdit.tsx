@@ -1,10 +1,11 @@
-import "./ProfileUpdate.css";
+import "./ProfileEdit.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import AuthContext from "../Common/authContext";
 import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
+import defaultImage from "../assets/defaultImage.png";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -22,6 +23,7 @@ interface getUser {
   introduction?: string;
   introduceId?: any | null;
   isLocal?: number;
+  areaCode?: number;
 }
 
 const getFollow = {
@@ -61,7 +63,7 @@ function Profile() {
         setUpdatedPlan(res.data.introduceId.plan);
         setUpdatedTitle(res.data.introduceId.title);
         setUpdatedLanguage(res.data.introduceId.language);
-        console.log(res.data.introduceId.title, 222)
+        console.log(res.data.introduceId.title, 222);
         console.log(res.data, 11111);
       })
       .catch((err: any) => console.error(err));
@@ -106,13 +108,12 @@ function Profile() {
         }
       );
       console.log(response, "프로필 수정 성공");
-      navigateToProfile();
+      // navigateToProfile();
+      window.location.replace("/profile");
     } catch (error) {
       console.log(error, "프로필 수정 실패");
     }
   };
-      
-    
 
   if (profile === null) {
     return <div className="flex justify-center">유저 찾는중.....</div>;
@@ -127,8 +128,8 @@ function Profile() {
         <div className="picture-name-row">
           {profile && (
             <img
-              className="profile-picture"
-              src={profile.image}
+              className="profile-picture hover:cursor-pointer"
+              src={profile.image || defaultImage}
               onClick={() => {
                 document.getElementById("profile-picture-upload")?.click();
               }}
@@ -144,11 +145,15 @@ function Profile() {
 
           <div>
             <h1 className="myprofile-username">{profile.name}</h1>
-            {profile.isLocal !== 1 ? (
+            {/* {profile.isLocal !== 1 ? (
               <div className="ml-1">Local</div>
             ) : (
               <div className="ml-1">Foreigner</div>
-            )}
+            )} */}
+            <div className="flex">
+              <div className="mr-5">{profile.areaCode}</div>
+              <div>{profile.gender}</div>
+            </div>
           </div>
         </div>
         {/* 프로필 수정 내 프로필 공개 토글 */}
@@ -156,7 +161,7 @@ function Profile() {
           {/* <ProfileUpdate /> */}
           <div className="flex items-center justify-center w-full mt-6">
             <button
-              className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-36 rounded-full mr-2"
               onClick={updateProfile}
             >
               Save Edit
@@ -175,13 +180,11 @@ function Profile() {
           </div>
           {/* 토글 바 끝 */}
           <div className="flex flex-col py-10">
-            <div className="myprofile-gender mx-3 font-bold">
-              {profile.gender}
-            </div>
+            <div className="myprofile-gender mx-3 font-bold"></div>
           </div>
         </div>
 
-        <div className="edit-profile-intro mb-1">
+        <div className="edit-profile-intro mt-2">
           <textarea
             className="profile-intro-edit"
             value={updatedSelf}
@@ -219,7 +222,7 @@ function Profile() {
               value={updatedTitle}
               onChange={(event) => setUpdatedTitle(event.target.value)}
             >
-            {profile.introduceId ? profile.introduceId.title : ""}
+              {profile.introduceId ? profile.introduceId.title : ""}
             </textarea>
           </div>
 

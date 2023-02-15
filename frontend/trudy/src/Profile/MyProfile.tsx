@@ -6,6 +6,7 @@ import AuthContext from "../Common/authContext";
 import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
 import Avatar from "react-avatar";
+import defaultImage from "../assets/defaultImage.png";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -23,6 +24,8 @@ interface getUser {
   introduction?: string;
   introduceId?: any | null;
   isLocal?: number;
+  areaCode?: number;
+  thumbnailImage?: string;
 }
 
 const getFollow = {
@@ -36,6 +39,8 @@ function Profile() {
   const [getmypost, setGetMyPost] = useState<any>([]);
   const [profile, setProfile] = useState<getUser | null>(null);
   const [viewPost, setViewPost] = useState<Boolean>(false);
+  const [profileImg, setProfileImg] = useState<string | any>(null);
+
   // const [getmypost, setGetMyPost] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -49,10 +54,14 @@ function Profile() {
   //  나의 게시글 가져오기
   const getMyPosts = () => {
     axios
-      .get("api/post")
+      .get("api/post", {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((res) => {
-        setGetMyPost(res.data);
-        console.log(res.data);
+        // setGetMyPost(res.data.content);
+        console.log(res.data.content, "겟 마이 포스트");
       })
       .catch((error: any) => console.error(error));
   };
@@ -66,50 +75,43 @@ function Profile() {
       })
       .then((res) => {
         setProfile(res.data);
-        getMyPosts();
-        console.log(res.data.id, 11111);
+        setGetMyPost(res.data.posts);
+
+        // getMyPosts();
+        console.log(res.data, "멤버 받는값");
       })
       .catch((err: any) => console.error(err));
   }, []);
-  // console.log(profile)
 
   if (profile === null) {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  // const memberdetails = {
-  //   id: profile.id,
-  //   // name: profile.name,
-  // }
-
-  // console.log(mymemberdetails)
-  // useEffect(() => {
-  //   const url = 'api/member/me/post'
-
-  //     // const imageUrl = ''
-
-  //     axios.get(url).then((res) => {
-  //         setUserInfo(res.data);
-  //     });
-  // }, []);
-  // console.log(userInfo)
-  console.log(profile, 444);
+  // console.log(profile, "내 프로필 정보");
   return (
     // 프로필 컨테이너 파란 영역
     <div className="profile-container">
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
-          {/* <Avatar className="" src={profile.image} /> */}
-          <img className="profile-picture" src={profile.image}></img>
+          <img
+            className="profile-picture"
+            src={profile.image || defaultImage}
+          ></img>
 
-          <div>
+          <div className="ml-3">
             <h1 className="myprofile-username">{profile.name}</h1>
-            {profile.isLocal !== 1 ? (
-              <div className="ml-1">Local</div>
-            ) : (
-              <div className="ml-1">Foreigner</div>
-            )}
+            <div className="ml-1 pt-1">
+              {/* {profile.isLocal !== 1 ? (
+                <div className="ml-1 ">Local, {profile.gender}</div>
+              ) : (
+                <div className="ml-1">Foreigner {profile.gender}</div>
+              )} */}
+              <div className="flex">
+                <div className="mr-5">{profile.areaCode}</div>
+                <div>{profile.gender}</div>
+              </div>
+            </div>
           </div>
         </div>
         {/* 프로필 수정 내 프로필 공개 토글 */}
@@ -123,7 +125,7 @@ function Profile() {
               Edit Profile
             </button>
             {/* 토글 바 */}
-            <label
+            {/* <label
               htmlFor="toggleB"
               className="flex items-center cursor-pointer"
             >
@@ -132,25 +134,12 @@ function Profile() {
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>
-            </label>
-          </div>
-          {/* 토글 바 끝 */}
-          <div className="flex flex-col py-10">
-            <div className="flex flex-row">
-              <div className="w-12 mx-9 font-bold">{getFollow.follower}</div>
-              <div className="w-12 mx-3 font-bold">{getFollow.following}</div>
-            </div>
-            <div className="flex flex-row">
-              <div className="mx-3 font-bold">Follower</div>
-              <div className="mx-3 font-bold">Following</div>
-              <div className="myprofile-gender mx-3 font-bold">
-                {profile.gender}
-              </div>
-            </div>
+            </label> */}
+            {/* 토글 바 끝 */}
           </div>
         </div>
 
-        <div className="myprofile-intro mb-3 ml-16">
+        <div className="myprofile-intro mb-1 ml-52">
           {profile.introduceId ? profile.introduceId.self : ""}
         </div>
       </div>
@@ -158,45 +147,49 @@ function Profile() {
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
         <div
-          className="mx-16 flex place-content-center font-bold text-4xl"
+          className="mx-16 flex place-content-center font-bold text-4xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
         >
           About
         </div>
 
         <div
-          className="mx-16 flex place-content-center font-bold text-4xl"
+          className="mx-16 flex place-content-center font-bold text-4xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
         >
           Posts
         </div>
       </div>
       {/* </div> */}
-      <div className="about-me grid grid-cols-1">
-        <hr className="about-me-hr" />
-        {!viewPost ? (
-          <div className="flex flex-col about-box mt-5">
-            <div className="text-4xl font-semibold mt-10">I will show you</div>
-            <div className="capitalize text-xl mt-5">
-              {profile.introduceId ? profile.introduceId.plan : ""}
-            </div>
-            <div className="text-4xl font-semibold mt-10">About me</div>
-            <div className="capitalize text-2xl mt-5">
-              {profile.introduceId ? profile.introduceId.title : ""}
-            </div>
+      <div>
+        <div className="about-me mx-auto">
+          <hr className="about-me-hr" />
+          {!viewPost ? (
+            <div className="flex flex-col about-box mt-5">
+              <div className="text-4xl font-semibold mt-10">
+                I will show you
+              </div>
+              <div className="capitalize text-xl mt-5">
+                {profile.introduceId ? profile.introduceId.plan : ""}
+              </div>
+              <div className="text-4xl font-semibold mt-10">About me</div>
+              <div className="capitalize text-2xl mt-5">
+                {profile.introduceId ? profile.introduceId.title : ""}
+              </div>
 
-            <div className="text-4xl font-semibold mt-10">Language</div>
-            <div className="capitalize text-2xl mt-5">
-              {profile.introduceId ? profile.introduceId.language : ""}
+              <div className="text-4xl font-semibold mt-10">Language</div>
+              <div className="capitalize text-2xl mt-5">
+                {profile.introduceId ? profile.introduceId.language : ""}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            {getmypost.map((post: any, i: any) => (
-              <ProfileMyPost key={i} post={post} memberdetails={profile.id} />
-            ))}
-          </div>
-        )}
+          ) : (
+            <div className="grid grid-cols-4 gap-1">
+              {getmypost.map((post: any, i: any) => (
+                <ProfileMyPost key={i} post={post} memberdetails={profile.id} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       {/* <ProfileMyPost id={profile.id}/> */}
       {/* <ProfileMyPost /> */}

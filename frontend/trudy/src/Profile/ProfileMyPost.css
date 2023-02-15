@@ -1,0 +1,12 @@
+.mypost-thumbnail-image {
+  width: 350px;
+  height: 250px;
+  border-radius: 2%;
+  border-width: 2px;
+}
+
+.my-post-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

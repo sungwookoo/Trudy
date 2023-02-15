@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import defaultImage from "../assets/defaultImage.png";
 
 function UserProfileImage() {
   const [profileImage, setProfileImage] = useState(null);
@@ -34,7 +35,7 @@ function UserProfileImage() {
         />
       ) : (
         <img
-          src="/default-profile-image.jpg"
+          src={defaultImage}
           alt="Default profile image"
           style={{ width: "40px", height: "40px", borderRadius: "50%" }}
         />

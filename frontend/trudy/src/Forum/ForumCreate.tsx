@@ -13,7 +13,7 @@ import "./CkEditor.css";
 
 function ForumCreate() {
   const authCtx = useContext(AuthContext);
-  //const loggedinId = authCtx.loggedInfo.uid;
+  const loggedinId = authCtx.loggedInfo.uid;
   const [forumtitle, setforumTitle] = useState("");
   const [forumcontent, setforumContent] = useState("");
   const [forumcategory, setCategory] = useState([]);
@@ -39,7 +39,10 @@ function ForumCreate() {
   //============================================================================useEffect start===============================================
   //useEffect 에 이미지를 sessionStorage에 저장
   useEffect(() => {
-    console.log("saveFileNameArr감시 useEffect - saveFileNameArr sessionStorage 저장 값보기 : ", saveFileNameArr);
+    console.log(
+      "saveFileNameArr감시 useEffect - saveFileNameArr sessionStorage 저장 값보기 : ",
+      saveFileNameArr
+    );
     sessionStorage.setItem("saveFileNameArr", JSON.stringify(saveFileNameArr));
     console.log("sessionStorage에서 가져온 결과 : ");
     console.log(JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]"));
@@ -52,7 +55,8 @@ function ForumCreate() {
     console.log(event);
 
     event.preventDefault();
-    event.returnValue = "Are you sure you want to leave? Your post will be lost.";
+    event.returnValue =
+      "Are you sure you want to leave? Your post will be lost.";
 
     console.log(event);
 
@@ -82,9 +86,9 @@ function ForumCreate() {
     title: forumtitle,
     content: forumcontent,
     sigunguIdList: [1, 2, 3],
-    memberId: 1,
+    memberId: loggedinId,
     categoryList: ["76", "85", "94"],
-    // thumbnailImage: flagImage,
+    thumbnailImage: flagImage,
   };
 
   const customUploadAdapter = (loader: any) => {
@@ -114,7 +118,10 @@ function ForumCreate() {
                     default: `${res.data.imageUrl}`,
                   });
 
-                  setSaveFileNameArr((prev) => [...prev, `${res.data.fileName}`]);
+                  setSaveFileNameArr((prev) => [
+                    ...prev,
+                    `${res.data.fileName}`,
+                  ]);
                 })
                 .catch((err) => {
                   console.log("사진 업로드 실패");
@@ -145,14 +152,18 @@ function ForumCreate() {
   };
 
   function uploadPlugin(editor: any) {
-    editor.plugins.get("FileRepository").createUploadAdapter = (loader: any) => {
+    editor.plugins.get("FileRepository").createUploadAdapter = (
+      loader: any
+    ) => {
       return customUploadAdapter(loader);
     };
   }
 
   //useEffect ->sessionStorage에서 list를 가져옴 -> return 으로 파일 전체 삭제
   const removeImageArr = () => {
-    let deleteFileNameArr = JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]");
+    let deleteFileNameArr = JSON.parse(
+      sessionStorage.getItem("saveFileNameArr") || "[]"
+    );
 
     console.log(
       "removeImageArr 함수 - 페이지 이동 useEffect return 실행 / from sessionStorage saveFileNameArr",
@@ -161,17 +172,24 @@ function ForumCreate() {
 
     if (deleteFileNameArr.length > 1) {
       deleteFileNameArr.shift();
-      console.log("useEffect return if 실행 /다음건 삭제할 파일명", deleteFileNameArr);
+      console.log(
+        "useEffect return if 실행 /다음건 삭제할 파일명",
+        deleteFileNameArr
+      );
 
       axios
         .delete(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`)
         .then((res) => {
           console.log("eventListner axios 사진 삭제 성공");
-          console.log(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`);
+          console.log(
+            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
+          );
         })
         .catch((err) => {
           console.log(" eventListner axios 사진 삭제 실패");
-          console.log(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`);
+          console.log(
+            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
+          );
         });
     }
   };
@@ -215,12 +233,14 @@ function ForumCreate() {
         <div className="flex flex-row w-full justify-end px-44">
           <button
             className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full"
-            onClick={cancelPosts}>
+            onClick={cancelPosts}
+          >
             Back
           </button>
           <button
             className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full"
-            onClick={submitPost}>
+            onClick={submitPost}
+          >
             Submit
           </button>
         </div>
