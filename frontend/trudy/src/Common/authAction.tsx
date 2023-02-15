@@ -1,11 +1,11 @@
 import axios from "axios";
-import { GET, POST } from "./authAxios";
+import { GET, POST, DELETE, PUT } from "./authAxios";
 
 // 토큰을 만드는 함수
 const createTokenHeader = (token: string) => {
   return {
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: "bearer " + token,
     },
   };
 };
@@ -55,50 +55,79 @@ export const retrieveStoredToken = () => {
 };
 
 // 토큰을 재발행하는 함수
-export const refreshTokenHandler = (
+export const refreshTokenHandler = async (
   accessToken: string,
   refreshToken: string
 ) => {
-  const URL = "/api/reissuance";
+  const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
-  const response = POST(URL, token, {});
+  const response = await axios.post(url, token, {});
   console.log("토큰 재발행", response);
+
+  return response;
+};
+
+// 이메일 인증 함수
+export const verifyEmail = (email: string) => {
+  const url = "api/emailConfirm";
+  const params = { email };
+  const response = axios.post(url, {}, { params });
+  return response;
 };
 
 // 회원가입 url을 POST방식으로 호출하는 함수
 export const signUpActionHandler = (
   email: string,
   password: string,
-  nickname: string
+  name: string,
+  gender: string,
+  birthday: string,
+  isLocal: string,
+  areaCode: number,
+  sigunguCode: number
 ) => {
-  const URL = "/api/signup";
-  const signupObject = { email, password, nickname };
-
-  const response = POST(URL, signupObject, {});
+  const url = "/api/signup";
+  const data = {
+    email,
+    password,
+    name,
+    gender,
+    birthday,
+    isLocal,
+    areaCode,
+    sigunguCode,
+  };
+  const response = axios.post(url, data, {});
   return response;
 };
 
 // 로그인 url을 POST방식으로 호출하는 함수
 export const signInActionHandler = (email: string, password: string) => {
-  const URL = "/api/login";
-  const loginObject = { email, password };
-  const response = POST(URL, loginObject, {});
-  
+  const url = "/api/login";
+  const data = { email, password };
+  const response = axios.post(url, data, {});
+
   return response;
 };
 
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
-export const signOutActionHandler = () => {
+export const signOutActionHandler = async (id: number) => {
+  const url = "api/logout";
+  const data = new FormData();
+  data.append("id", JSON.stringify(id));
+  const response = await axios.post(url, data, {});
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
+  alert("sign out");
+
+  return response;
 };
 
-// 유저의 정보를 GET방식으로 호출
+// 스퀘어 유저의 정보를 GET방식으로 호출
 export const getUserActionHandler = (params: any) => {
-  const URL = "api/member/";
-  const response = GET(URL, { params });
-
+  const url = "/api/member";
+  const response = GET(url, { params });
   return response;
 };
 
@@ -107,9 +136,9 @@ export const getUserActionHandler = (params: any) => {
 //   nickname: string,
 //   token: string
 // ) => {
-//   const URL = "";
+//   const url = "";
 //   const changeNicknameObj = { nickname };
-//   const response = POST(URL, changeNicknameObj, createTokenHeader(token));
+//   const response = POST(url, changeNicknameObj, createTokenHeader(token));
 
 //   return response;
 // };
@@ -120,15 +149,82 @@ export const getUserActionHandler = (params: any) => {
 //   newPassword: string,
 //   token: string
 // ) => {
-//   const URL = "/member/password";
+//   const url = "/member/password";
 //   const changePasswordObj = { exPassword, newPassword };
-//   const response = POST(URL, changePasswordObj, createTokenHeader(token));
+//   const response = POST(url, changePasswordObj, createTokenHeader(token));
 //   return response;
 // };
 
 // 유저의 Planner 정보를 GET방식으로 호출
-export const getUserPlanner = (userId: number) => {
-  const URL = "api/planner";
-  const response = GET(URL, userId);
+export const getPlanner = (token: string) => {
+  const url = "/api/planner";
+  // const params = { memberId: memberId };
+  // const params = { memberId: 1 };
+  const headers = createTokenHeader(token);
+  const response = GET(url, headers);
+
   return response;
+};
+
+// 유저의 plan을 POST 방식으로 생성
+export const createPlan = (token: string, sequence: string) => {
+  const url = "/api/planner/post";
+  const headers = createTokenHeader(token);
+  const data = new FormData();
+  data.append("sequence", JSON.stringify(sequence));
+
+  const response = POST(url, data, headers);
+};
+
+// 유저의 plan을 PUT 방식으로 수정
+export const updatePlan = (plannerId: number, sequence: number) => {
+  const url = "/api/planner/planner";
+  const params = { plannerId: plannerId, sequence: sequence };
+  const response = PUT(url, {}, { params });
+};
+
+// 유저의 plan을 DELETE 방식으로 삭제
+export const deletePlan = (plannerId: number | null) => {
+  const url = "/api/planner/planner/delete";
+  const params = { plannerId: plannerId };
+  const response = DELETE(url, { params });
+};
+
+// 유저의 day를 POST 방식으로 생성
+export const createDay = (
+  plannerId: number,
+  day: string,
+  memo: string,
+  sequence: number
+) => {
+  const url = "/api/planner/day/post";
+  // const headers = createTokenHeader(token)
+  const params = {
+    plannerId: plannerId,
+    day: day,
+    memo: memo,
+    sequence: sequence,
+  };
+  const response = POST(url, {}, { params });
+};
+
+// 유저의 day을 PUT 방식으로 수정
+export const updateDay = (dayId: number, sequence: number) => {
+  const url = "/api/planner/day";
+  const params = { dayId: dayId, sequence: sequence };
+  const response = PUT(url, {}, { params });
+};
+
+// 유저의 day를 DELETE 방식으로 삭제
+export const deleteDay = (dayId: number | null) => {
+  const url = "/api/planner/day/delete";
+  const params = { dayId: dayId };
+  const response = DELETE(url, { params });
+};
+
+// 유저의 dayItem을 PUT 방식으로 수정
+export const updateDayItem = (dayItemId: number, sequence: number) => {
+  const url = "/api/planner/dayitem";
+  const params = { dayItemId: dayItemId, sequence: sequence };
+  const response = PUT(url, {}, { params });
 };
