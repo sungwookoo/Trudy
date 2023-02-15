@@ -26,6 +26,7 @@ function SignUp() {
   const [wrongPasswordConfirm, setWrongPasswordConfirm] =
     useState<boolean>(false);
   const [wrongName, setWrongName] = useState<boolean>(false);
+  const [wrongExistName, setWrongExistName] = useState<boolean>(false);
   const [existName, setExistName] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
@@ -55,7 +56,7 @@ function SignUp() {
     }
   }
   function CheckNickName(name: string) {
-    if (/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9]{3,16}$/.test(name)) {
+    if (/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9]{4,16}$/.test(name)) {
       return 1;
     } else {
       return 0;
@@ -66,10 +67,12 @@ function SignUp() {
     const params = { name: name };
     try {
       const response: any = await axios.post(url, {}, { params });
-      return true;
-    } catch {
-      return false;
-    }
+      if (response.data === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch {}
   }
 
   useEffect(() => {
@@ -187,12 +190,15 @@ function SignUp() {
                 minLength={4}
                 maxLength={16}
                 className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer  ${
-                  wrongName ? "border-red-700 border-2" : "border-gray-300"
+                  wrongName || wrongExistName ? "border-red-700 border-2" : "border-gray-300"
                 }`}
                 placeholder=" "
                 onChange={(e) => {
                   setName(e.target.value);
-                  isExistName(name);
+                  isExistName(e.target.value).then((res:any) => {
+                    setExistName(res);
+                  });
+                  setWrongExistName(false)
                   if (CheckNickName(name) === 1) {
                     setIsName(true);
                     setWrongName(false);
@@ -215,10 +221,10 @@ function SignUp() {
                 </ul>
               ) : null}
               {name === "" ||
-              /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9]{3,16}$/.test(name) ? null : (
+              /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9]{4,16}$/.test(name) ? null : (
                 <ul className="text-sm text-red-500">
-                  3 characters or more and 16 characters or less, consisting of
-                  English
+                  4 characters or more and 16 characters or less, consisting of
+                  English and numbers
                 </ul>
               )}
             </ul>
@@ -363,7 +369,7 @@ function SignUp() {
                     areaCode,
                     sigunguCode
                   );
-                  if (response !== undefined) {
+                  if (response !== null) {
                     authCtx.login(email, password);
                     navigateToLending();
                   }
@@ -376,6 +382,9 @@ function SignUp() {
                   }
                   if (isName === false) {
                     setWrongName(true);
+                  }
+                  if (wrongExistName === true) {
+                    setWrongExistName(true)
                   }
                 }
               }}

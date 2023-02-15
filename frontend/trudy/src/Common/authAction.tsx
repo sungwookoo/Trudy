@@ -133,7 +133,6 @@ export const signInActionHandler = (email: string, password: string) => {
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
 export const signOutActionHandler = (id: number) => {
-  console.log("action 실행", id);
   const url = "api/logout";
   const data = new FormData();
   data.append("id", JSON.stringify(id));
