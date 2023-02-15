@@ -1,5 +1,5 @@
 .nav-bar {
-  height: 5vh;
+  height: 5.6vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -12,7 +12,8 @@
 .nav-logo {
   width: 120px;
   height: 40px;
-  margin-left: 40px;
+  margin-left: 30px;
+  margin-top: 1px;
   /* margin-right: 40px; */
 }
 
@@ -22,11 +23,23 @@
 } */
 
 .nav-item {
-  margin-left: 5%;
-  font-size: 24px;
-  font-weight: medium;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 22px;
+  font-weight: 500;
+  color: rgb(148, 147, 147);
   font-family: "Roboto", sans-serif;
 }
+
+.nav-item:hover {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 23px;
+  font-weight: 500;
+  color: rgb(35, 199, 35);
+  font-family: "Roboto", sans-serif;
+}
+
 
 .chat-nav-item {
   width: 100px;
@@ -58,7 +71,7 @@
   width: 60%;
   height: 100%;
   font-weight: medium;
-  margin-left: 5%;
+  margin-left: 5;
   /* background-color: aqua; */
 }
 
@@ -67,10 +80,10 @@
   flex-direction: row;
   align-items: center;
   /* justify-content: space-between; */
-  width: 25%;
+  width: 20%;
   height: 100%;
-  margin-left: 20%;
-  margin-right: 5%;
+  margin-left: 40%;
+  margin-right: 0px;
   /* background-color: blue; */
 }
 
