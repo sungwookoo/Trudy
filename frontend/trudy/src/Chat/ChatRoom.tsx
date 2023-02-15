@@ -143,25 +143,7 @@ function ChatRoom() {
         setPrivateChats(new Map(privateChats));
       }
       stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-      setUserData({...userData,message: ""});
-    }
-  }
-
-  const pressEnterPrivateValue = () => {
-    if (stompClient) {
-      let chatMessage = {
-        senderName: userData.username,
-        recieverName: tab,
-        message: userData.message,
-        status:"MESSAGE"
-      };
-
-      if(userData.username !== tab) {
-        privateChats.get(tab)!.push(chatMessage);
-        setPrivateChats(new Map(privateChats));
-      }
-      stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-      setUserData({...userData,message: ""});
+      setUserData({...userData,message:""});
     }
   }
 
