@@ -55,7 +55,7 @@ function ChatRoom() {
   }, []);
 
   const connect = () => {
-    const Sock = new SockJS('http://trudy.online:8080/ws');
+    const Sock = new SockJS('https://trudy.online:8080/ws');
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   }
