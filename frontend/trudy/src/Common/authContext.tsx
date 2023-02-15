@@ -23,16 +23,7 @@ const AuthContext = React.createContext({
   isGetSuccess: false,
   isVerified: false,
   loggedInfo: { iss: "", auth: "", uid: 0 },
-  signup: (
-    email: string,
-    password: string,
-    name: string,
-    gender: string,
-    birthday: string,
-    isLocal: string,
-    areaCode: number,
-    sigunguCode: number
-  ) => {},
+  signup: (email: string, password: string, name: string, gender: string, birthday: string, isLocal: string, areaCode: number, sigunguCode: number) => {},
   sendCode: (email: string) => {},
   emailVerified: (email: string) => {},
   defaultVerified: () => {},
@@ -46,14 +37,9 @@ const AuthContext = React.createContext({
   updatePlan: (plannerId: number, sequence: number) => {},
   deletePlan: (plannerId: number | null) => {},
   updateDay: (dayId: number, sequence: number) => {},
-  createDay: (
-    plannerId: number,
-    day: string,
-    memo: string,
-    sequence: number
-  ) => {},
+  createDay: (plannerId: number, day: string, memo: string, sequence: number) => {},
   deleteDay: (dayId: number | null) => {},
-  updateDayItem: (dayItemId: number, sequence: number) => {},
+  updateDayItem: (dayId: number, dayItemId: number, sequence: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -120,16 +106,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     sigunguCode: number
   ) => {
     setIsSuccess(false);
-    const response = await authAction.signUpActionHandler(
-      email,
-      password,
-      name,
-      gender,
-      birthday,
-      isLocal,
-      areaCode,
-      sigunguCode
-    );
+    const response = await authAction.signUpActionHandler(email, password, name, gender, birthday, isLocal, areaCode, sigunguCode);
 
     if (response !== null) {
       setIsSuccess(true);
@@ -140,32 +117,23 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   //   로그인을 하는 함수
   const loginHandler = async (email: string, password: string) => {
     setIsSuccess(false);
-    const data = await authAction
-      .signInActionHandler(email, password)
-      .then((result) => {
-        if (result !== null) {
-          const loginData: LoginToken = result.data;
-          setToken(loginData.accessToken);
-          setRefreshToken(loginData.refreshToken);
-          logoutTimer = setTimeout(
-            signOutHandler,
-            authAction.signInTokenHandler(
-              loginData.accessToken,
-              loginData.refreshToken,
-              loginData.accessTokenExpiresIn
-            )
-          );
-          // const localToken = localStorage.getItem("token")
-          // if (localToken) {
-          //   setLoggedInfo(jwtDecode(localToken))
-          //   console.log(jwtDecode(localToken))
-          // console.log('loggedInfo', loggedInfo)
-          // }
-          setIsSuccess(true);
-        } else {
-          alert("Wrong ID or Password!");
-        }
-      });
+    const data = await authAction.signInActionHandler(email, password).then((result) => {
+      if (result !== null) {
+        const loginData: LoginToken = result.data;
+        setToken(loginData.accessToken);
+        setRefreshToken(loginData.refreshToken);
+        logoutTimer = setTimeout(signOutHandler, authAction.signInTokenHandler(loginData.accessToken, loginData.refreshToken, loginData.accessTokenExpiresIn));
+        // const localToken = localStorage.getItem("token")
+        // if (localToken) {
+        //   setLoggedInfo(jwtDecode(localToken))
+        //   console.log(jwtDecode(localToken))
+        // console.log('loggedInfo', loggedInfo)
+        // }
+        setIsSuccess(true);
+      } else {
+        alert("Wrong ID or Password!");
+      }
+    });
   };
 
   //   로그아웃을 하는 함수
@@ -259,12 +227,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   // planner의 day를 생성하는 함수
-  const createPlannerDay = (
-    plannerId: number,
-    day: string,
-    memo: string,
-    sequence: number
-  ) => {
+  const createPlannerDay = (plannerId: number, day: string, memo: string, sequence: number) => {
     const response = authAction.createDay(plannerId, day, memo, sequence);
 
     return response;
@@ -285,8 +248,8 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   // planner의 dayItem을 수정하는 함수
-  const updatePlannerDayItem = (dayItemId: number, sequence: number) => {
-    const response = authAction.updateDayItem(dayItemId, sequence);
+  const updatePlannerDayItem = (dayId: number, dayItemId: number, sequence: number) => {
+    const response = authAction.updateDayItem(dayId, dayItemId, sequence, token);
 
     return response;
   };
@@ -324,11 +287,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     updateDayItem: updatePlannerDayItem,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
 };
 
 export default AuthContext;

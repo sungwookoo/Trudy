@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../Common/authContext";
 import "./ForumCreate.css";
 // import Editor from './Editor';
+import CategoryButtons from "../Filter/SelectCategory";
+
 import parse from "html-react-parser";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -17,7 +19,7 @@ function ForumCreate() {
   const loggedinId = authCtx.loggedInfo.uid;
   const [forumtitle, setforumTitle] = useState("");
   const [forumcontent, setforumContent] = useState("");
-  const [forumcategory, setCategory] = useState([]);
+  const [forumcategory, setForumCategory] = useState<number[]>([]);
   const [forummember, setMember] = useState(null);
   const [forumsigun, setSigun] = useState(null);
   const [forumimage, setImage] = useState(undefined);
@@ -25,6 +27,8 @@ function ForumCreate() {
   const [flagImage, setFlagImage] = useState("");
 
   const [saveFileNameArr, setSaveFileNameArr] = useState([""]);
+
+  const loggedinId = authCtx.loggedInfo.uid;
   const token = "bearer " + localStorage.getItem("token");
   // const [forumupload, setUpload] = useState(null);
   // const [viewContent, setViewContent] = useState([]);
@@ -40,10 +44,7 @@ function ForumCreate() {
   //============================================================================useEffect start===============================================
   //useEffect 에 이미지를 sessionStorage에 저장
   useEffect(() => {
-    console.log(
-      "saveFileNameArr감시 useEffect - saveFileNameArr sessionStorage 저장 값보기 : ",
-      saveFileNameArr
-    );
+    console.log("saveFileNameArr감시 useEffect - saveFileNameArr sessionStorage 저장 값보기 : ", saveFileNameArr);
     sessionStorage.setItem("saveFileNameArr", JSON.stringify(saveFileNameArr));
     console.log("sessionStorage에서 가져온 결과 : ");
     console.log(JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]"));
@@ -56,8 +57,7 @@ function ForumCreate() {
     console.log(event);
 
     event.preventDefault();
-    event.returnValue =
-      "Are you sure you want to leave? Your post will be lost.";
+    event.returnValue = "Are you sure you want to leave? Your post will be lost.";
 
     console.log(event);
 
@@ -86,12 +86,20 @@ function ForumCreate() {
   const forumdata = {
     title: forumtitle,
     content: forumcontent,
-    sigunguIdList: [1, 2, 3],
+    sigunguIdList: [],
     memberId: loggedinId,
-    categoryList: ["76", "85", "94"],
-    thumbnailImage: flagImage,
+    categoryList: forumcategory,
+    // thumbnailImage: flagImage,
   };
-
+  // 카테고리 버튼 on/off
+  const handleCategoryClick = (categoryId: number) => {
+    if (forumcategory.includes(categoryId)) {
+      setForumCategory(forumcategory.filter((c) => c !== categoryId));
+    } else {
+      setForumCategory([...forumcategory, categoryId]);
+    }
+  };
+  console.log(forumcategory);
   const customUploadAdapter = (loader: any) => {
     return {
       upload() {
@@ -119,10 +127,7 @@ function ForumCreate() {
                     default: `${res.data.imageUrl}`,
                   });
 
-                  setSaveFileNameArr((prev) => [
-                    ...prev,
-                    `${res.data.fileName}`,
-                  ]);
+                  setSaveFileNameArr((prev) => [...prev, `${res.data.fileName}`]);
                 })
                 .catch((err) => {
                   console.log(err, "사진 업로드 실패");
@@ -153,44 +158,30 @@ function ForumCreate() {
   };
 
   function uploadPlugin(editor: any) {
-    editor.plugins.get("FileRepository").createUploadAdapter = (
-      loader: any
-    ) => {
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader: any) => {
       return customUploadAdapter(loader);
     };
   }
 
   //useEffect ->sessionStorage에서 list를 가져옴 -> return 으로 파일 전체 삭제
   const removeImageArr = () => {
-    let deleteFileNameArr = JSON.parse(
-      sessionStorage.getItem("saveFileNameArr") || "[]"
-    );
+    let deleteFileNameArr = JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]");
 
-    console.log(
-      "removeImageArr 함수 - 페이지 이동 useEffect return 실행 / from sessionStorage saveFileNameArr",
-      deleteFileNameArr
-    );
+    console.log("removeImageArr 함수 - 페이지 이동 useEffect return 실행 / from sessionStorage saveFileNameArr", deleteFileNameArr);
 
     if (deleteFileNameArr.length > 1) {
       deleteFileNameArr.shift();
-      console.log(
-        "useEffect return if 실행 /다음건 삭제할 파일명",
-        deleteFileNameArr
-      );
+      console.log("useEffect return if 실행 /다음건 삭제할 파일명", deleteFileNameArr);
 
       axios
         .delete(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`)
         .then((res) => {
           console.log("eventListner axios 사진 삭제 성공");
-          console.log(
-            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
-          );
+          console.log(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`);
         })
         .catch((err) => {
           console.log(" eventListner axios 사진 삭제 실패");
-          console.log(
-            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
-          );
+          console.log(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`);
         });
     }
   };
@@ -198,14 +189,11 @@ function ForumCreate() {
   return (
     <>
       <div className="forum-create-container px-96">
-        <div className="create-cat-select bg-red-500 h-4">category</div>
+        <div className="flex flex-row">
+          <CategoryButtons onClick={handleCategoryClick} selectedCategories={forumcategory} />
+        </div>
         <div className="forum-title-container">
-          <input
-            className="forum-title"
-            type="text"
-            placeholder="Enter Title Here!"
-            onChange={(event) => setforumTitle(event.target.value)}
-          />
+          <input className="forum-title" type="text" placeholder="Enter Title Here!" onChange={(event) => setforumTitle(event.target.value)} />
         </div>
         <div className="forum-text-editor">
           <CKEditor
@@ -222,6 +210,7 @@ function ForumCreate() {
               const data = editor.getData();
               setforumContent(data);
               console.log({ data });
+              console.log({ data });
             }}
             onBlur={(event: any, editor: any) => {
               // console.log('Blur.', editor);
@@ -232,16 +221,10 @@ function ForumCreate() {
           />
         </div>
         <div className="flex flex-row w-full justify-end px-44">
-          <button
-            className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full"
-            onClick={cancelPosts}
-          >
+          <button className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={cancelPosts}>
             Back
           </button>
-          <button
-            className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full"
-            onClick={submitPost}
-          >
+          <button className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={submitPost}>
             Submit
           </button>
         </div>
