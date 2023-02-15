@@ -23,7 +23,7 @@ interface getUser {
   title?: string;
   introduction?: string;
   introduceId?: any | null;
-  isLocal?: number;
+  isLocal?: string;
   areaCode?: number;
 }
 
@@ -181,15 +181,17 @@ function Profile() {
 
           <div>
             <h1 className="myprofile-username">{profile.name}</h1>
-            {/* {profile.isLocal !== 1 ? (
-              <div className="ml-1">Local</div>
-            ) : (
-              <div className="ml-1">Foreigner</div>
-            )} */}
+            
             <div className="flex">
-              <div className="mr-5">{profile.areaCode}</div>
-              <div>{profile.gender}</div>
+            {profile.isLocal === "1" ? (
+                <div className="mr-8">{profile.areaCode}</div>
+                ) : ( 
+                <div></div>
+                )}
+              {/* <div className="mr-5">{profile.areaCode}</div> */}
+              <div className="capitalize">{profile.gender}</div>
             </div>
+            <div className=''>{profile.isLocal === '1' ? 'Local' : 'Tourist'}</div>
           </div>
         </div>
         {/* 프로필 수정 내 프로필 공개 토글 */}
@@ -231,7 +233,7 @@ function Profile() {
 
         <div className="edit-profile-intro mt-4">
           <textarea
-            className="profile-intro-edit mt-6"
+            className="profile-intro-edit "
             value={updatedSelf}
             onChange={(event) => setUpdatedSelf(event.target.value)}
           >

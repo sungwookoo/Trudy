@@ -26,7 +26,7 @@ function ForumItem({ post }: any) {
   const postmemberImage = post.memberElement.image;
   const postmemberName = post.memberElement.name;
 
-  console.log(post);
+  
   console.log(postmemberId, "작성자 ID");
   const authCtx = useContext(AuthContext);
   const loggedinId = authCtx.loggedInfo.uid;
@@ -35,8 +35,7 @@ function ForumItem({ post }: any) {
   const navigateToForumDetail = () => {
     navigate(`/post/${forumTextData.id}`);
   };
-
-  console.log(forumImageData, "포럼 이미지 데이터");
+  
   return (
     <div className="forum-item-box px-4 py-4 cursor-pointer hover:bg-gray-300 rounded-md" onClick={navigateToForumDetail}>
       {/* <!-- Article --> */}
