@@ -98,11 +98,9 @@ public class AuthAppController {
                     @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE)
             })
     @PostMapping("/emailConfirm")
-    public String emailConfirm(@RequestParam String email) throws Exception {
+    public String emailConfirm(@RequestParam String email) {
 
-        String confirm = emailService.sendSimpleMessage(email);
-
-        return confirm;
+        return emailService.sendSimpleMessage(email);
     }
 
 
