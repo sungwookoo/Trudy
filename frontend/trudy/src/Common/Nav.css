@@ -33,8 +33,9 @@
   height: 100px;
   /* background: red; */
   background: url("../assets/chat_nav.png");
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   margin-right: 30px;
+  background-size: 100px 100px;
 }
 
 #chat-nav-link {
