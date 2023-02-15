@@ -32,6 +32,8 @@ const UseruserInfo = () => {
   const token = "bearer " + localStorage.getItem("token");
   const [loginuser, setLoginUser] = useState<any>([]);
   const [modalOpen, setModalOpen] = useState<Boolean>(false);
+  const [getuserpost, setGetUserPost] = useState<any>([]);
+  const [viewPost, setViewPost] = useState<Boolean>(false);
 
   const getFollow = {
     follower: 1,
@@ -52,13 +54,11 @@ const UseruserInfo = () => {
       })
       .then((res) => {
         setUserInfo(res.data);
-        console.log(res.data);
+        setGetUserPost(res.data.posts);
+        console.log(res.data, "해당유저정보");
       })
       .catch((err: any) => console.error(err));
   }, []);
-
-  const [getuserpost, setGetUserPost] = useState<any>([]);
-  const [viewPost, setViewPost] = useState<Boolean>(false);
 
   // 로그인한 유저 정보 가져오기
   useEffect(() => {
