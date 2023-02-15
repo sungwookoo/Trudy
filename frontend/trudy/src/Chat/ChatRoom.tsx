@@ -38,9 +38,9 @@ function ChatRoom() {
   const myInfoUrl = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
 
   useEffect(() => {
     (async () => {
@@ -100,7 +100,7 @@ function ChatRoom() {
   };
 
   const onPrivateMessage = (payload: { body: string }): void => {
-    console.log(payload);
+    // console.log(payload);
     const payloadData: ChatMessage = JSON.parse(payload.body);
     if (privateChats.get(payloadData.senderName)) {
       privateChats.get(payloadData.senderName)!.push(payloadData);
@@ -147,7 +147,7 @@ function ChatRoom() {
         message: userData.message,
         status: "MESSAGE",
       };
-      console.log(chatMessage);
+      // console.log(chatMessage);
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
