@@ -20,8 +20,7 @@ function Planner() {
   const [dayData, setDayData] = useState<[] | null>(null);
   const [dayItemData, setDayItemData] = useState<[] | null>(null);
 
-  const [selectedPlanSequence, setSelectedPlanSequence] =
-    useState<string>("10");
+  const [selectedPlanSequence, setSelectedPlanSequence] = useState<string>("10");
   const [selectedDaySequence, setSelectedDaySequence] = useState<string>("10");
 
   const [selectedPlanId, setSelectedPlanId] = useState<number>(0);
@@ -41,77 +40,9 @@ function Planner() {
   const [hoverPlan, setHoverPlan] = useState<number | null>(null);
   const [hoverDay, setHoverDay] = useState<number | null>(null);
 
-  // const [isDragging, setIsDragging] = useState<boolean>(false);
-  // const [lists, setLists] = useState(sortedPlan);
-  // const [dragPlanData, setDragPlanData] = useState<any>(initialDragDataPlan);
-  // const [dragDayData, setDragDayData] = useState<any>();
-  // const [dragDayItemData, setDragDayItemData] = useState<any>();
-
-  // // Drag & Drop
-  // const _onDragOverPlan = (e: any) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   return true;
-  // };
-  // const _onDragStartPlan = (e: any) => {
-  //   setIsDragging(true);
-  //   setDragPlanData({
-  //     ...dragPlanData,
-  //     target: e.target,
-  //     index: Number(e.target.dataset.index),
-  //     updatePlanner: [...lists],
-  //   });
-
-  //   e.dataTransfer.setData("text/html", "");
-  //   e.dataTransfer.effectAllowed = "move";
-  // };
-  // const _onDragEnterPlan = (e: any) => {
-  //   const _dragged = Number(dragPlanData.target.dataset.index);
-  //   const _index = Number(dragPlanData.index);
-  //   const _target = Number(e.target.dataset.index);
-  //   let move_down = [...dragPlanData.move_down];
-  //   let move_up = [...dragPlanData.move_up];
-
-  //   let data = [...dragPlanData.updateLists];
-  //   data[_index] = data.splice(_target, 1, data[_index])[0];
-
-  //   if (_dragged > _target) {
-  //     move_down.includes(_target) ? move_down.pop() : move_down.push(_target);
-  //   } else if (_dragged < _target) {
-  //     move_up.includes(_target) ? move_up.pop() : move_up.push(_target);
-  //   } else {
-  //     move_down = [];
-  //     move_up = [];
-  //   }
-
-  //   setDragPlanData({
-  //     ...dragPlanData,
-  //     updateLists: data,
-  //     index: _target,
-  //     move_up,
-  //     move_down,
-  //   });
-  // };
-  // const _onDragLeavePlan = (e: any) => {
-  //   if (e.target === dragPlanData.target) {
-  //     e.target.style.visibility = "hidden";
-  //   }
-  // };
-  // const _onDragEndPlan = (e: any) => {
-  //   setIsDragging(false);
-  //   setPlannerData([...dragPlanData.updateLists]);
-
-  //   setDragPlanData({
-  //     ...dragPlanData,
-  //     move_down: [],
-  //     move_up: [],
-  //     updateLists: [],
-  //   });
-
-  //   e.target.style.visibility = "visible";
-  //   e.dataTransfer.dropEffect = "move";
-  // };
-  // const _onDropPlan = (e: any) => {};
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
 
   function IsSignIn() {
     if (authCtx.isLoggedIn) {
@@ -136,10 +67,7 @@ function Planner() {
     if (plannerData !== null) {
       const getSortedPlanList = () => {
         const compareSequence = (a: any, b: any) => {
-          if (
-            parseInt(a.plannerCombine.plannerElement["sequence"]) >
-            parseInt(b.plannerCombine.plannerElement["sequence"])
-          ) {
+          if (parseInt(a.plannerCombine.plannerElement["sequence"]) > parseInt(b.plannerCombine.plannerElement["sequence"])) {
             return 1;
           } else {
             return -1;
@@ -151,16 +79,9 @@ function Planner() {
         const sortedList: any = copyList.sort(compareSequence);
         setSortedPlan(sortedList);
         if (sortedList[parseInt(selectedPlanSequence)]) {
-          setDayData(
-            sortedList[parseInt(selectedPlanSequence)].dayCombine.dayElementList
-          );
+          setDayData(sortedList[parseInt(selectedPlanSequence)].dayCombine.dayElementList);
           // sequence 재부여
-          sortedList.map((plan: any, idx: number) =>
-            authCtx.updatePlan(
-              plan.plannerCombine.plannerElement.id,
-              (idx + 1) * 10
-            )
-          );
+          sortedList.map((plan: any, idx: number) => authCtx.updatePlan(plan.plannerCombine.plannerElement.id, (idx + 1) * 10));
         }
       };
       getSortedPlanList();
@@ -168,7 +89,7 @@ function Planner() {
       // setSelectedPlanSequence((planNum * 10).toString());
     }
   }, [plannerData]);
-
+  console.log(plannerData);
   // DayList sequence 순 정렬
   useEffect(() => {
     if (dayData !== null) {
@@ -198,7 +119,7 @@ function Planner() {
       setDayItemData(null);
     }
   }, [selectedPlanSequence, dayData]);
-  console.log('초기', selectedPlanSequence, selectedDaySequence)
+  console.log("초기", selectedPlanSequence, selectedDaySequence);
   // DayItem sequence 순 정렬
   useEffect(() => {
     if (dayItemData !== null) {
@@ -215,9 +136,7 @@ function Planner() {
         setSortedDayItem(sortedList);
         // sequence 재부여
         if (sortedList[0]) {
-          sortedList.map((dayItem: any, idx: number) =>
-            authCtx.updateDayItem(dayItem.id, (idx + 1) * 10)
-          );
+          sortedList.map((dayItem: any, idx: number) => authCtx.updateDayItem(dayItem.id, (idx + 1) * 10));
         }
       };
       getSortedDayItemList();
@@ -237,9 +156,7 @@ function Planner() {
     return (
       <div
         id="popup-modal"
-        className={`z-50 fixed top-1/2 right-1/2 translate-x-1/2  -translate-y-1/2 ${
-          modal ? "block" : "hidden"
-        }`}
+        className={`z-50 fixed top-1/2 right-1/2 translate-x-1/2  -translate-y-1/2 ${modal ? "block" : "hidden"}`}
         onClick={() => {
           setModal(false);
         }}
@@ -251,13 +168,7 @@ function Planner() {
               className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
               data-modal-hide="popup-modal"
             >
-              <svg
-                aria-hidden="true"
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -275,23 +186,16 @@ function Planner() {
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Are you sure you want to delete this product?
-              </h3>
+              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
               <button
                 data-modal-hide="popup-modal"
                 type="button"
                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
                 onClick={() => {
                   yesButton();
-                  setChange(change+1)
+                  setChange(change + 1);
                 }}
               >
                 Yes, I'm sure
@@ -387,9 +291,7 @@ function Planner() {
                       // & > * {
                       //   pointer-events: none;
                       // }`}
-                      onMouseEnter={() =>
-                        setHoverPlan(plan.plannerCombine.plannerElement.id)
-                      }
+                      onMouseEnter={() => setHoverPlan(plan.plannerCombine.plannerElement.id)}
                       onMouseLeave={() => setHoverPlan(null)}
                       key={i}
                       draggable
@@ -402,18 +304,11 @@ function Planner() {
                       <input
                         type="button"
                         className={`float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold ${
-                          selectedPlanSequence ===
-                          plan.plannerCombine.plannerElement.sequence
-                            ? "bg-trudy"
-                            : ""
+                          selectedPlanSequence === plan.plannerCombine.plannerElement.sequence ? "bg-trudy" : ""
                         }`}
                         onClick={() => {
-                          setSelectedPlanSequence(
-                            plan.plannerCombine.plannerElement.sequence
-                          );
-                          setSelectedPlanId(
-                            plan.plannerCombine.plannerElement.id
-                          );
+                          setSelectedPlanSequence(plan.plannerCombine.plannerElement.sequence);
+                          setSelectedPlanId(plan.plannerCombine.plannerElement.id);
                           setDayData(plan.dayCombine.dayElementList);
                         }}
                         value={plan.plannerCombine.plannerElement.title}
@@ -421,18 +316,12 @@ function Planner() {
                       <input
                         type="button"
                         className={`font-bold absolute right-1 bottom-5 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900 ${
-                          hoverPlan === plan.plannerCombine.plannerElement.id
-                            ? "block"
-                            : "hidden"
+                          hoverPlan === plan.plannerCombine.plannerElement.id ? "block" : "hidden"
                         }`}
                         value="x"
                         onClick={() => {
-                          setSelectedPlanSequence(
-                            plan.plannerCombine.plannerElement.sequence
-                          );
-                          setSelectedPlanId(
-                            plan.plannerCombine.plannerElement.id
-                          );
+                          setSelectedPlanSequence(plan.plannerCombine.plannerElement.sequence);
+                          setSelectedPlanId(plan.plannerCombine.plannerElement.id);
                           setModal(true);
                           setModalClick("plan");
                           setChange(change + 1);
@@ -472,17 +361,11 @@ function Planner() {
                   ) => {
                     return (
                       <div key={i}>
-                        <div
-                          onMouseEnter={() => setHoverDay(day.id)}
-                          onMouseLeave={() => setHoverDay(null)}
-                          className="relative"
-                        >
+                        <div onMouseEnter={() => setHoverDay(day.id)} onMouseLeave={() => setHoverDay(null)} className="relative">
                           <input
                             type="button"
                             className={`font-bold block px-4 py-2 text-left text-gray-700 rounded-t cursor-pointer hover:text-gray-900 ${
-                              selectedDaySequence === day.sequence
-                                ? "bg-trudy"
-                                : ""
+                              selectedDaySequence === day.sequence ? "bg-trudy" : ""
                             }
                         `}
                             onClick={() => {
@@ -517,12 +400,7 @@ function Planner() {
               type="button"
               className="float-left inline-block border-l border-t border-r rounded-t py-2 px-4 cursor-pointer text-blue-700 font-semibold"
               onClick={() => {
-                authCtx.createDay(
-                  selectedPlanId,
-                  `day ${dayNum + 1}`,
-                  "",
-                  (dayNum + 1) * 10
-                );
+                authCtx.createDay(selectedPlanId, `day ${dayNum + 1}`, "", (dayNum + 1) * 10);
                 setChange(change + 1);
               }}
               value="+"
@@ -544,10 +422,7 @@ function Planner() {
                     i: number
                   ) => {
                     return (
-                      <div
-                        key={i}
-                        className="relative bg-slate-600 p-2 border w-full"
-                      >
+                      <div key={i} className="relative bg-slate-600 p-2 border w-full">
                         <div className="flex p-4">
                           <input type="text" value={day.memo} placeholder="memo" />
                         </div>
