@@ -91,8 +91,8 @@ public class MemberController {
                     @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
             })
     @PostMapping("/info/name")
-    public void isModifyDupName(@AuthenticationPrincipal PrincipalDetails principal, @RequestParam String name) {
-        memberAppService.isModifyDupName(principal, name);
+    public String isModifyDupName(@AuthenticationPrincipal PrincipalDetails principal, @RequestParam String name) {
+        return memberAppService.isModifyDupName(principal, name);
     }
 
     @ApiOperation(value = "자기소개 수정",
