@@ -100,7 +100,7 @@ function Profile() {
             src={profile.image || defaultImage}
           ></img>
 
-          <div className="ml-3">
+          <div className="h-24 ml-3">
             <h1 className="myprofile-username">{profile.name}</h1>
             <div className="ml-1 pt-1">
               {/* {profile.isLocal !== 1 ? (
@@ -110,7 +110,7 @@ function Profile() {
               )} */}
               <div className="flex">
                 <div className="mr-5">{profile.areaCode}</div>
-                <div>{profile.gender}</div>
+                <div className="capitalize">{profile.gender}</div>
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@ function Profile() {
           {profile.introduceId ? profile.introduceId.self : ""}
         </div>
       </div>
-      <div className="content-box grid grid-cols-2 place-content-center mb-5">
+      <div className="content-box grid grid-cols-2 place-content-center mb-2">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
         <div

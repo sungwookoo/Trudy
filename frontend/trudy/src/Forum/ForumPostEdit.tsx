@@ -36,6 +36,7 @@ function PostEditPage() {
 
   const navigate = useNavigate();
   const backToPost = () => {
+    removeImageArr();
     navigate(-1);
   };
 
@@ -96,7 +97,7 @@ function PostEditPage() {
               reject("Only images smaller than 10MB can be uploaded");
             } else {
               upload.append("upload", file);
-              axiosInstance
+              axios
                 .post("/api/post/upload", upload)
                 .then((res: any) => {
                   console.log("사진 업로드 성공");
@@ -231,7 +232,7 @@ function PostEditPage() {
         <div className=" w-full flex flex-row justify-end mt-5">
           <button
             className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-red-400"
-            onClick={removeImageArr}
+            onClick={backToPost}
           >
             Cancel
           </button>

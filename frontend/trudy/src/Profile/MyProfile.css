@@ -31,11 +31,11 @@
 
 .picture-name-container {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: row;
   justify-content: center;
   width: 1000px;
-  height: 350px;
+  height: 300px;
   /* background-color: blueviolet; */
 }
 
@@ -82,8 +82,11 @@ input:checked ~ .dot {
 .myprofile-intro {
   /* border-width: 2px;
   border-color: black; */
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  font-size: 24px;
   width: 600px;
+  margin-left: 350px;
+  margin-bottom: 250px;
   text-transform: capitalize;
 }
 

@@ -162,13 +162,13 @@ function Profile() {
           {/* <ProfileUpdate /> */}
           <div className="flex items-center justify-center w-full mt-6">
             <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-36 rounded-full mr-2"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-28 rounded-full mr-2"
               onClick={updateProfile}
             >
               Save Edit
             </button>
             {/* 토글 바 */}
-            <label
+            {/* <label
               htmlFor="toggleB"
               className="flex items-center cursor-pointer"
             >
@@ -177,7 +177,7 @@ function Profile() {
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>
-            </label>
+            </label> */}
           </div>
           {/* 토글 바 끝 */}
           <div className="flex flex-col py-10">
@@ -185,9 +185,9 @@ function Profile() {
           </div>
         </div>
 
-        <div className="edit-profile-intro mt-2">
+        <div className="edit-profile-intro mt-4">
           <textarea
-            className="profile-intro-edit"
+            className="profile-intro-edit mt-6"
             value={updatedSelf}
             onChange={(event) => setUpdatedSelf(event.target.value)}
           >

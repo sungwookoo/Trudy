@@ -48,3 +48,9 @@
 
 .forum-detail-region-category {
 }
+
+.forum-detail-hr {
+  background-color: black;
+  height: 1px;
+  width: 800px;
+}

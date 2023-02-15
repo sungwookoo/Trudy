@@ -68,6 +68,8 @@ function ForumDetail() {
     }
   };
 
+  // 시간 포맷팅 해서 주기 검사후에===========
+
   useEffect(() => {
     getForumItem();
   }, [id]);
@@ -93,10 +95,12 @@ function ForumDetail() {
         <div className="forum-detail-title capitalize px-4 border border-1">
           {forumItem && forumItem.title}
         </div>
-        <div className="forum-detail-region-category flex flex-row justify-between my-3 w-1/3">
-          <div>Region: {forumRegion}</div>
-          <div>Category: {forumCategory}</div>
+        <div className="forum-detail-region-category flex flex-row justify-between my-3 w-2/3">
+          <div className="">Category: {forumCategory}</div>
+          <div className="">Created By: {forumMember?.name}</div>
+          <div className="">Created At: {forumItem?.createdAt}</div>
         </div>
+        <hr className="forum-detail-hr" />
         {/* 이미지 */}
         <div className="forum-detail-content px-5 pt-4 pb-8">
           {forumItem && Parser(forumItem?.content)}
@@ -119,7 +123,7 @@ function ForumDetail() {
             />
           )}
           <button
-            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2"
+            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400"
             onClick={postEditnavigate}
           >
             Edit
