@@ -106,7 +106,7 @@ function Nav(navProfileImg: any) {
           </>
         ) : (
           <>
-            채팅화면으로 전환
+            {/* 채팅화면으로 전환 */}
             <div>
               <NavLink id="chat-nav-link" to="/chatroom">
                 <div className="chat-nav-item absolute z-50 bottom-0 right-0"></div>
