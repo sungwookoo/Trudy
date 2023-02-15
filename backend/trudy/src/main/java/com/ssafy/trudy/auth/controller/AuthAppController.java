@@ -70,8 +70,8 @@ public class AuthAppController {
                     @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
             })
     @PostMapping("/signup/name")
-    public void isSignupDupName(@RequestParam String name) {
-        memberAppService.isSignupDupName(name);
+    public String isSignupDupName(@RequestParam String name) {
+        return memberAppService.isSignupDupName(name);
     }
 
 

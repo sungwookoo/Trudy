@@ -113,17 +113,19 @@ public class MemberAppService {
                 .build();
     }
 
-    public void isSignupDupName(String name) {
+    public String isSignupDupName(String name) {
         if(memberService.nameCheck(name)) {
-            throw new ApiException(ServiceErrorType.DUPLICATE_USER_NAME);
+            return "1";
         }
+        return "0";
     }
 
-    public void isModifyDupName(PrincipalDetails principal, String name) {
+    public String isModifyDupName(PrincipalDetails principal, String name) {
         Member member = memberService.getById(principal.getMember().getId());
         if(!member.getName().equals(name) && memberService.nameCheck(name)) {
-            throw new ApiException(ServiceErrorType.DUPLICATE_USER_NAME);
+            return "1";
         }
+        else return "0";
     }
 
     @Transactional
