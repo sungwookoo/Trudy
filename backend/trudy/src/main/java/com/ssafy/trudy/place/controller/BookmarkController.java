@@ -26,12 +26,10 @@ public class BookmarkController {
     @Autowired
     private final BookmarkService bookmarkService;
     @Autowired
-    private final MemberService memberService;
-    @Autowired
     private final PlaceService placeService;
 
     // 세션 유저의 북마크 장소 DTO로 반환
-    @GetMapping("")
+    @GetMapping
     public List<PlaceDto> bookmarkSearch(@AuthenticationPrincipal PrincipalDetails principal) {
         Member member = principal.getMember();
         // 해당하는 북마크의 장소 id 리스트를 받아옴

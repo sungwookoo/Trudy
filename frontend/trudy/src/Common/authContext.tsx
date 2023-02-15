@@ -83,7 +83,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   if (token) {
     loggedInfo = jwtDecode(token) as any;
   }
-  console.log('로그인 정보', loggedInfo)
 
   // Account
 
