@@ -18,7 +18,7 @@ function Planner() {
 
   const [plannerData, setPlannerData] = useState<any>(null);
   const [dayData, setDayData] = useState<[] | null>(null);
-  const [dayItemData, setDayItemData] = useState<[] | null>(null);
+  const [dayItemData, setDayItemData] = useState<any[] | null>(null);
 
   const [selectedPlanSequence, setSelectedPlanSequence] = useState<string>("10");
   const [selectedDaySequence, setSelectedDaySequence] = useState<string>("10");
@@ -39,11 +39,29 @@ function Planner() {
 
   const [hoverPlan, setHoverPlan] = useState<number | null>(null);
   const [hoverDay, setHoverDay] = useState<number | null>(null);
+  const [sequence, setSequence] = useState<number>(0);
 
+  //==================================드래그앤 드랍=======================================
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
-
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const PlaceId = parseInt(e.dataTransfer.getData("text/plain"));
+    console.log(PlaceId, "id 값 받기ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ");
+    const PlusDayItem = authCtx.updateDayItem(selectedDayId, PlaceId, sequence + 1);
+    setSequence(sequence + 1);
+    console.log(PlusDayItem, 55555555555555555);
+    // if (PlusDayItem) {
+    //   setDayItemData((prevState: any[] | null) => {
+    //     if (!prevState) {
+    //       return [PlusDayItem];
+    //     }
+    //     return [...prevState, PlusDayItem];
+    //   });
+    // }
+  };
+  console.log(dayItemData, "여기 사람있어요오오오오오오ㅗ오오오오오오오");
   function IsSignIn() {
     if (authCtx.isLoggedIn) {
     } else {
@@ -52,7 +70,6 @@ function Planner() {
     }
   }
   IsSignIn();
-
   // 멤버 Id로 planner 정보 받아오기
   useEffect(() => {
     async function GetPlanner() {
@@ -119,7 +136,7 @@ function Planner() {
       setDayItemData(null);
     }
   }, [selectedPlanSequence, dayData]);
-  console.log("초기", selectedPlanSequence, selectedDaySequence);
+  // console.log("초기", selectedPlanSequence, selectedDaySequence);
   // DayItem sequence 순 정렬
   useEffect(() => {
     if (dayItemData !== null) {
@@ -135,8 +152,9 @@ function Planner() {
         const sortedList: any = copyList.sort(compareSequence);
         setSortedDayItem(sortedList);
         // sequence 재부여
+        console.log(sortedList, 11111111111111111111);
         if (sortedList[0]) {
-          sortedList.map((dayItem: any, idx: number) => authCtx.updateDayItem(dayItem.id, (idx + 1) * 10));
+          sortedList.map((dayItem: any, idx: number) => authCtx.updateDayItem(selectedDayId, dayItem.id, (idx + 1) * 10));
         }
       };
       getSortedDayItemList();
@@ -295,11 +313,6 @@ function Planner() {
                       onMouseLeave={() => setHoverPlan(null)}
                       key={i}
                       draggable
-                      // onDragStart={_onDragStartPlan}
-                      // onDragEnter={_onDragEnterPlan}
-                      // onDragLeave={_onDragLeavePlan}
-                      // onDragEnd={_onDragEndPlan}
-                      // id={default_class}
                     >
                       <input
                         type="button"
@@ -344,7 +357,7 @@ function Planner() {
         </div>
 
         {/* 선택된 Plan의 내용 */}
-        <div id="planContent" className="h-full w-full relative">
+        <div id="planContent" className="h-full w-full relative" onDragOver={handleDragOver}>
           {/* 선택된 Plan의 DayList */}
           <div id="dayList" className="w-1/12 absolute right-0 bg-slate-400">
             {dayData !== null
@@ -408,8 +421,8 @@ function Planner() {
           </div>
 
           {/* 선택된 Day의 DayItemList */}
-          <div id="dayItemList" className="w-11/12 bg-slate-500">
-            {dayItemData !== null
+          <div id="dayItemList" className="w-11/12 bg-slate-500" onDrop={handleDrop}>
+            {dayItemData
               ? sortedDayItem.map(
                   (
                     day: {
@@ -426,6 +439,7 @@ function Planner() {
                         <div className="flex p-4">
                           <input type="text" value={day.memo} placeholder="memo" />
                         </div>
+                        <img src={day.customImage} alt="" />
                       </div>
                     );
                   }

@@ -25,12 +25,17 @@ function ForumDetail() {
   const [forumMember, setforumMember] = useState<any>(null);
   const [forumItem, setForumItem] = useState<any>(null);
   const [forumRegion, setForumRegion] = useState<any>(null);
-  const [forumCategory, setForumCategory] = useState<any>(null);
+  const [forumCategory, setForumCategory] = useState<string[]>([]);
   const [isDeleted, setIsDeleted] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  console.log (loggedinId, "로그인아이디");
   const postEditnavigate = () => {
     navigate(`/post/update/${id}`);
+  };
+
+  const userProfileNavigate = () => {
+    navigate(`/profile/${forumMember?.id}`);
   };
 
   const handleDelete = (postId: number) => {
@@ -56,7 +61,28 @@ function ForumDetail() {
       setForumItem(response.data.postCombine.postElement);
       setforumMember(response.data.postCombine.memberElement);
       setForumRegion(response.data.postCombine.sigunguCodeList);
-      setForumCategory(response.data.postCombine.categoryNameList);
+      setForumCategory(response.data.postCombine.categoryNameList.map((categoryName:any) => {
+        if (categoryName === '82') {
+          return 'Food';
+        } else if (categoryName === '80') {
+          return 'Accommodation';
+        } else if (categoryName === '85') {
+          return 'Festival';
+        } else if (categoryName === '76') {
+          return 'Attraction';
+        } else if (categoryName === '75') {
+          return 'Sports';
+        } else if (categoryName === '78') {
+          return 'Culture';
+        } else if (categoryName === '79') {
+          return 'Shopping';
+        }
+      else {
+          return categoryName;
+        }
+      }));
+
+      // setForumCategory(response.data.postCombine.categoryNameList);
       if (loggedinId === response.data.postCombine.memberElement.id) {
         setIsloggedin(true);
       }
@@ -92,14 +118,22 @@ function ForumDetail() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <div className="forum-detail-title capitalize px-4 border border-1">
-          {forumItem && forumItem.title}
+        <div className="forum-detail-title capitalize px-4 border border-1">{forumItem && forumItem.title}</div>
+        {/* 카테고리 */}
+        <div className="flex">
+          {forumCategory.map((categoryName, index) => (
+          <div key={index} className="border border-1 rounded-md px-1 mx-1 bg-green-200" >
+            {categoryName}
+            </div>
+            ))}
         </div>
-        <div className="forum-detail-region-category flex flex-row justify-between my-3 w-2/3">
-          <div className="">Category: {forumCategory}</div>
-          <div className="">Created By: {forumMember?.name}</div>
-          <div className="">Created At: {forumItem?.createdAt}</div>
+            {/* 작성자, 작성 시간 */}
+        <div className="forum-detail-region-category flex flex-row justify-between my-3">
+          <a className="font-semibold hover: cursor-pointer" onClick={userProfileNavigate}>{forumMember?.name}</a>
+          <div>{new Date(forumItem?.createdAt).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'})}</div>
+          {/* <div className="">{forumItem?.createdAt}</div> */}
         </div>
+        
         <hr className="forum-detail-hr" />
         {/* 이미지 */}
         <div className="forum-detail-content px-5 pt-4 pb-8">
@@ -107,28 +141,17 @@ function ForumDetail() {
           {/* {forumItem && forumItem.content} */}
         </div>
 
-        {/* {isloggedin && ( */}
-        <div className=" w-full flex flex-row justify-end mt-5">
-          <button
-            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400"
-            onClick={handleOpenModal}
-          >
-            Delete
-          </button>
-          {showModal && (
-            <ForumDeleteModal
-              postId={id}
-              onDelete={handleDelete}
-              onClose={handleCloseModal}
-            />
-          )}
-          <button
-            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400"
-            onClick={postEditnavigate}
-          >
-            Edit
-          </button>
-        </div>
+        {isloggedin && (
+          <div className=" w-full flex flex-row justify-end mt-5">
+            <button className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400" onClick={handleOpenModal}>
+              Delete
+            </button>
+            {showModal && <ForumDeleteModal postId={id} onDelete={handleDelete} onClose={handleCloseModal} />}
+            <button className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400" onClick={postEditnavigate}>
+              Edit
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
