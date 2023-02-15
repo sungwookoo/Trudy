@@ -115,10 +115,9 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   //   로그인을 하는 함수
-  const loginHandler = (email: string, password: string) => {
+  const loginHandler = async (email: string, password: string) => {
     setIsSuccess(false);
-    const data = authAction.signInActionHandler(email, password);
-    data.then((result) => {
+    const data = await authAction.signInActionHandler(email, password).then((result) => {
       if (result !== null) {
         const loginData: LoginToken = result.data;
         setToken(loginData.accessToken);
@@ -138,9 +137,9 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   //   로그아웃을 하는 함수
-  const signOutHandler = useCallback(() => {
+  const signOutHandler = useCallback(async () => {
     setToken("");
-    authAction.signOutActionHandler(loggedInfo.uid);
+    await authAction.signOutActionHandler(loggedInfo.uid);
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }

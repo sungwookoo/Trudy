@@ -60,7 +60,7 @@ function SignUp() {
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
           {/* 비밀번호 */}
-          <div className="-space-y-px rounded-md shadow-md">
+          <div className="-space-y-px rounded-md">
             <div>
               Password
               <input
@@ -68,26 +68,29 @@ function SignUp() {
                 name="password"
                 type="password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="relative block shadow-md w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
                 onChange={(e) => {
+                  setPassword(e.target.value);
                   if (
-                    !/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(
-                      e.target.value
-                    )
+                    !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)
                   ) {
                     setIsPassword(false);
                   } else {
                     setIsPassword(true);
-                    setPassword(e.target.value);
                   }
                 }}
               />
+              {password === "" || isPassword ? null : (
+                <div className="text-red-500">
+                  Minimum 8 characters, at least one letter and one number
+                </div>
+              )}
             </div>
           </div>
 
           {/* 비밀번호 확인 */}
-          <div className="-space-y-px rounded-md shadow-md">
+          <div className="-space-y-px rounded-md">
             <div>
               Password Confirm
               <input
@@ -95,19 +98,20 @@ function SignUp() {
                 name="passwordConfirm"
                 type="password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="relative block w-full shadow-md appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password Confirm"
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
-                  if (password !== passwordConfirm) {
-                  }
                 }}
               />
+              {passwordConfirm && password !== passwordConfirm ? (
+                <div className="text-red-500">password don't match</div>
+              ) : null}
             </div>
           </div>
 
           {/* 닉네임 */}
-          <div className="-space-y-px rounded-md shadow-md">
+          <div className="-space-y-px rounded-md">
             <div>
               Nickname
               <input
@@ -118,12 +122,19 @@ function SignUp() {
                 required
                 minLength={4}
                 maxLength={16}
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="relative block shadow-md w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Nickname"
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
               />
+              {name === "" ||
+              /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/.test(name) ? null : (
+                <div className="text-red-500">
+                  3 characters or more and 16 characters or less, consisting of
+                  English or numbers
+                </div>
+              )}
             </div>
           </div>
 
@@ -261,7 +272,7 @@ function SignUp() {
                   areaCode,
                   sigunguCode
                 );
-
+                console.log("에러", response);
                 if (response !== undefined) {
                   authCtx.login(email, password);
                   navigateToLending();
