@@ -52,7 +52,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
   // 초기화 필터
   const clearFilter = () => {
     setkeyword("");
-    setSelectedAreaCode([]);
+    setSelectedAreaCode("");
     setSelectedSigungu([]);
     setcontentTypeId([]);
     setIsCollapsed(true);
@@ -70,6 +70,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   // 대분류 선택시 해당 대분류 id 가진 세부지역 checkbox 표시하기
   const handleAreaClick = (id: number) => {
+    console.log(id);
     setSelectedAreaCode(id);
   };
 

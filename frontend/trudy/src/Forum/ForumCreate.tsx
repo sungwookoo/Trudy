@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../Common/authContext";
 import "./ForumCreate.css";
 // import Editor from './Editor';
+import CategoryButtons from "../Filter/SelectCategory";
+
 import parse from "html-react-parser";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -17,7 +19,7 @@ function ForumCreate() {
   const loggedinId = authCtx.loggedInfo.uid;
   const [forumtitle, setforumTitle] = useState("");
   const [forumcontent, setforumContent] = useState("");
-  const [forumcategory, setCategory] = useState([]);
+  const [forumcategory, setForumCategory] = useState<number[]>([]);
   const [forummember, setMember] = useState(null);
   const [forumsigun, setSigun] = useState(null);
   const [forumimage, setImage] = useState(undefined);
@@ -25,6 +27,7 @@ function ForumCreate() {
   const [flagImage, setFlagImage] = useState("");
 
   const [saveFileNameArr, setSaveFileNameArr] = useState([""]);
+
   const token = "bearer " + localStorage.getItem("token");
   // const [forumupload, setUpload] = useState(null);
   // const [viewContent, setViewContent] = useState([]);
@@ -86,12 +89,20 @@ function ForumCreate() {
   const forumdata = {
     title: forumtitle,
     content: forumcontent,
-    sigunguIdList: [1, 2, 3],
+    sigunguIdList: [],
     memberId: loggedinId,
-    categoryList: ["76", "85", "94"],
+    categoryList: forumcategory,
     thumbnailImage: flagImage,
   };
-
+  // 카테고리 버튼 on/off
+  const handleCategoryClick = (categoryId: number) => {
+    if (forumcategory.includes(categoryId)) {
+      setForumCategory(forumcategory.filter((c) => c !== categoryId));
+    } else {
+      setForumCategory([...forumcategory, categoryId]);
+    }
+  };
+  console.log(forumcategory);
   const customUploadAdapter = (loader: any) => {
     return {
       upload() {
@@ -198,7 +209,12 @@ function ForumCreate() {
   return (
     <>
       <div className="forum-create-container px-96">
-        <div className="create-cat-select bg-red-500 h-4">category</div>
+        <div className="flex flex-row">
+          <CategoryButtons
+            onClick={handleCategoryClick}
+            selectedCategories={forumcategory}
+          />
+        </div>
         <div className="forum-title-container">
           <input
             className="forum-title"
@@ -222,6 +238,7 @@ function ForumCreate() {
               const data = editor.getData();
               setforumContent(data);
               console.log({ data });
+              console.log({ data });
             }}
             onBlur={(event: any, editor: any) => {
               // console.log('Blur.', editor);
@@ -231,20 +248,16 @@ function ForumCreate() {
             }}
           />
         </div>
-        <div className="flex flex-row w-full justify-end px-44">
-          <button
-            className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full"
-            onClick={cancelPosts}
-          >
-            Back
-          </button>
-          <button
-            className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full"
-            onClick={submitPost}
-          >
-            Submit
-          </button>
-        </div>
+        {loggedinId && (
+          <div className="flex flex-row w-full justify-end px-44">
+            <button className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={cancelPosts}>
+              Back
+            </button>
+            <button className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={submitPost}>
+              Submit
+            </button>
+          </div>
+        )}
         {/* <ForumImageUpload /> */}
 
         {/* <Images /> */}

@@ -35,8 +35,11 @@ function PostEditPage() {
   //====================useEffect end==========================
 
   const navigate = useNavigate();
-  const backToPost = () => {
+  const cancelToPost = () => {
     removeImageArr();
+    navigate(-1);
+  };
+  const backToPost = () => {
     navigate(-1);
   };
 
@@ -232,7 +235,7 @@ function PostEditPage() {
         <div className=" w-full flex flex-row justify-end mt-5">
           <button
             className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-red-400"
-            onClick={backToPost}
+            onClick={cancelToPost}
           >
             Cancel
           </button>

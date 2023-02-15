@@ -6,6 +6,8 @@ import ProfileMyPost from "./ProfileMyPost";
 import Follow from "./Follow";
 import FollowerModal from "./FollowerModal";
 import axiosInstance from "../Common/axiosInterceptor";
+import defaultImage from "../assets/defaultImage.png";
+
 interface useruserInfoId {
   name: string;
   email: string;
@@ -22,7 +24,8 @@ interface getUser {
   title?: string;
   introduction?: string;
   introduceId?: any | null;
-  isLocal?: number;
+  isLocal?: string;
+  areaCode?: number;
 }
 const UseruserInfo = () => {
   const [userInfo, setUserInfo] = useState<getUser>({});
@@ -32,6 +35,8 @@ const UseruserInfo = () => {
   const token = "bearer " + localStorage.getItem("token");
   const [loginuser, setLoginUser] = useState<any>([]);
   const [modalOpen, setModalOpen] = useState<Boolean>(false);
+  const [getuserpost, setGetUserPost] = useState<any>([]);
+  const [viewPost, setViewPost] = useState<Boolean>(false);
 
   const getFollow = {
     follower: 1,
@@ -52,13 +57,11 @@ const UseruserInfo = () => {
       })
       .then((res) => {
         setUserInfo(res.data);
-        console.log(res.data);
+        setGetUserPost(res.data.posts);
+        console.log(res.data, "해당유저정보");
       })
       .catch((err: any) => console.error(err));
   }, []);
-
-  const [getuserpost, setGetUserPost] = useState<any>([]);
-  const [viewPost, setViewPost] = useState<Boolean>(false);
 
   // 로그인한 유저 정보 가져오기
   useEffect(() => {
@@ -94,15 +97,20 @@ const UseruserInfo = () => {
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
-          <img className="userInfo-picture" src={userInfo.image}></img>
-          <div>
+          <img className="userInfo-picture" src={userInfo.image || defaultImage}></img>
+          <div className="h-24 ml-3">
             <h1 className="userInfo-username capitalize">{userInfo.name}</h1>
-            {userInfo.isLocal !== 1 ? (
-              <div className="ml-1">Local</div>
-            ) : (
-              <div className="ml-1">Foreigner</div>
-            )}
-            {/* <div className=''>{userInfo.isLocal}</div> */}
+            <div className="ml-1 pt-1">
+            <div className="flex">
+            {userInfo.isLocal === "1" ? (
+                <div className="mr-8">{userInfo.areaCode}</div>
+                ) : ( 
+                <div></div>
+                )}
+                <div className="capitalize">{userInfo.gender}</div>
+              </div>
+              <div className=''>{userInfo.isLocal === '1' ? 'Local' : 'Tourist'}</div>
+            </div>
           </div>
         </div>
         <div className="edit-toggle-follow-container">
@@ -138,21 +146,21 @@ const UseruserInfo = () => {
             </div>
           </div> */}
         </div>
-        <div className="userprofile-intro mb-3">
+        <div className="userprofile-intro mb-1 ml-52">
           {userInfo.introduceId ? userInfo.introduceId.self : ""}
         </div>
       </div>
-      <div className="content-box grid grid-cols-2 place-content-center mb-5">
+      <div className="content-box grid grid-cols-2 place-content-center mb-2">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         <div
-          className="mx-16 flex place-content-center font-bold text-4xl"
+          className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
         >
           About
         </div>
 
         <div
-          className="mx-16 flex place-content-center font-bold text-4xl"
+          className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
         >
           Posts
