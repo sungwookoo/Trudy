@@ -92,9 +92,7 @@ function ForumDetail() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <div className="forum-detail-title capitalize px-4 border border-1">
-          {forumItem && forumItem.title}
-        </div>
+        <div className="forum-detail-title capitalize px-4 border border-1">{forumItem && forumItem.title}</div>
         <div className="forum-detail-region-category flex flex-row justify-between my-3 w-2/3">
           <div className="">Category: {forumCategory}</div>
           <div className="">Created By: {forumMember?.name}</div>
@@ -107,28 +105,17 @@ function ForumDetail() {
           {/* {forumItem && forumItem.content} */}
         </div>
 
-        {/* {isloggedin && ( */}
-        <div className=" w-full flex flex-row justify-end mt-5">
-          <button
-            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400"
-            onClick={handleOpenModal}
-          >
-            Delete
-          </button>
-          {showModal && (
-            <ForumDeleteModal
-              postId={id}
-              onDelete={handleDelete}
-              onClose={handleCloseModal}
-            />
-          )}
-          <button
-            className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400"
-            onClick={postEditnavigate}
-          >
-            Edit
-          </button>
-        </div>
+        {isloggedin && (
+          <div className=" w-full flex flex-row justify-end mt-5">
+            <button className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400" onClick={handleOpenModal}>
+              Delete
+            </button>
+            {showModal && <ForumDeleteModal postId={id} onDelete={handleDelete} onClose={handleCloseModal} />}
+            <button className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400" onClick={postEditnavigate}>
+              Edit
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

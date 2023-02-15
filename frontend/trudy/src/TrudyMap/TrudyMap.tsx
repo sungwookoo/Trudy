@@ -194,7 +194,7 @@ function TrudyMap() {
                   position={marker}
                   icon={{
                     url: "https://cdn-icons-png.flaticon.com/128/4101/4101579.png",
-                    scaledSize: new google.maps.Size(60, 60),
+                    scaledSize: new google.maps.Size(40, 40),
                   }}
                   animation={google.maps.Animation.BOUNCE}
                 />
