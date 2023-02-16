@@ -122,6 +122,12 @@ function Profile() {
                 <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.gender}</div>
               </div>
               <div className="border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.isLocal === "1" ? "Local" : "Tourist"}</div>
+              <Sns
+                Facebook={profile.introduceId.facebook}
+                Instagram={profile.introduceId.instagram}
+                Twitter={profile.introduceId.twitter}
+                Github={profile.introduceId.github}
+              />
             </div>
           </div>
         </div>

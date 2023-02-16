@@ -7,6 +7,8 @@ import Follow from "./Follow";
 import FollowerModal from "./FollowerModal";
 import axiosInstance from "../Common/axiosInterceptor";
 import defaultImage from "../assets/defaultImage.png";
+import Sns from "./Sns";
+import { areaList } from "../Filter/AreaCode";
 
 interface useruserInfoId {
   name: string;
@@ -74,7 +76,7 @@ const UseruserInfo = () => {
       .then((res) => {
         setLoginUser(res.data);
         const loginuserId = res.data.id;
-        console.log(res.data, loginuserId);
+        console.log(res.data, loginuserId, 333333333333333);
       })
       .catch((err: any) => console.error(err, "여기에러"));
   }, []);
@@ -97,26 +99,34 @@ const UseruserInfo = () => {
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
-          <img
-            className="userInfo-picture"
-            src={userInfo.image || defaultImage}
-          ></img>
+          <img className="userInfo-picture" src={userInfo.image || defaultImage}></img>
           <div className="h-24 ml-3">
-            <h1 className="userInfo-username capitalize image.png">
-              {userInfo.name}
-            </h1>
+            <h1 className="userInfo-username capitalize image.png">{userInfo.name}</h1>
             <div className="ml-1 pt-1">
               <div className="flex">
                 {userInfo.isLocal === "1" ? (
-                  <div className="mr-8">{userInfo.areaCode}</div>
+                  <div className="mr-2 border border-1 rounded-md px-1 mx-1 bg-green-200">
+                    {userInfo.areaCode &&
+                      areaList.map((area) => {
+                        if (area.id === userInfo.areaCode) {
+                          return area.name;
+                        }
+                      })}
+                  </div>
                 ) : (
                   <div></div>
                 )}
                 <div className="capitalize">{userInfo.gender}</div>
               </div>
-              <div className="">
-                {userInfo.isLocal === "1" ? "Local" : "Tourist"}
-              </div>
+              <div className="">{userInfo.isLocal === "1" ? "Local" : "Tourist"}</div>
+              {userInfo.introduceId && (
+                <Sns
+                  Facebook={userInfo.introduceId.facebook}
+                  Instagram={userInfo.introduceId.instagram}
+                  Twitter={userInfo.introduceId.twitter}
+                  Github={userInfo.introduceId.github}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -159,17 +169,11 @@ const UseruserInfo = () => {
       </div>
       <div className="content-box grid grid-cols-2 place-content-center mb-2">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
-          <div
-            className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
-            onClick={() => setViewPost(!viewPost)}
-          >
+          <div className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer" onClick={() => setViewPost(!viewPost)}>
             About
           </div>
 
-          <div
-            className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
-            onClick={() => setViewPost(!viewPost)}
-          >
+          <div className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer" onClick={() => setViewPost(!viewPost)}>
             Posts
           </div>
         </div>
@@ -179,28 +183,18 @@ const UseruserInfo = () => {
           {!viewPost ? (
             <div className="flex flex-col userprofile-about-box mt-5">
               <div className="text-4xl font-semibold">I will show you</div>
-              <div className="capitalize text-2xl mt-5">
-                {userInfo.introduceId ? userInfo.introduceId.plan : ""}
-              </div>
+              <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.plan : ""}</div>
 
               <div className="text-4xl font-semibold mt-10">About me</div>
-              <div className="capitalize text-2xl mt-5">
-                {userInfo.introduceId ? userInfo.introduceId.title : ""}
-              </div>
+              <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.title : ""}</div>
 
               <div className="text-4xl font-semibold mt-10">Language</div>
-              <div className="capitalize text-2xl mt-5">
-                {userInfo.introduceId ? userInfo.introduceId.language : ""}
-              </div>
+              <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.language : ""}</div>
             </div>
           ) : (
             <div>
               {getuserpost.map((post: any, i: any) => (
-                <ProfileMyPost
-                  key={i}
-                  post={post}
-                  memberdetails={userInfo.id}
-                />
+                <ProfileMyPost key={i} post={post} memberdetails={userInfo.id} />
               ))}
             </div>
           )}

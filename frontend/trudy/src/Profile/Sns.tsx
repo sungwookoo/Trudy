@@ -1,7 +1,6 @@
 import React from "react";
 
 function Sns({ Facebook, Github, Instagram, Twitter }: any) {
-  console.log(Github);
   return (
     <div className="flex justify-start space-x-2">
       {Facebook && (
