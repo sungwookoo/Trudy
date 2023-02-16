@@ -98,16 +98,6 @@ public class MemberService {
         refreshTokenRepository.deleteAll(refreshTokens);
     }
 
-    /*
-        @RequestParam(required = false) String name,
-                                              @RequestParam(required = false) String email,
-                                              @RequestParam(required = false) String gender,
-                                              @RequestParam(required = false) Long areaCode,
-                                              @RequestParam(required = false) Long sigunguCode,
-                                              @RequestParam(required = false) String isLocal,
-     */
-
-
     public Page<Member> getSearchByPageable(String name, String gender, String areaCode, String sigunguCode, String isLocal, Pageable pageable) {
         return memberRepository.findAll(MemberSpecification.getSearchByPageable(name, gender, areaCode, sigunguCode, isLocal), pageable);
     }
@@ -116,20 +106,8 @@ public class MemberService {
         return introduceRepository.findById(introduceId).orElse(null);
     }
 
-
-
-    //구글 연동 회원가입
-    public void addGoogle() {
-
-    }
-
     //비밀번호 찾기
     public void modifyPassword() {
-
-    }
-
-    //자기 소개 정보 가져오기
-    public void findMemberDetail() {
 
     }
 

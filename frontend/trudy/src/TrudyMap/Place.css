@@ -1,0 +1,17 @@
+.more-button {
+  width: 95%;
+}
+
+.more-button-center {
+  text-align: center;
+}
+
+.clear-btn {
+  border-radius: 10px;
+  border: none;
+  font-weight: 400;
+  background-color: red;
+  color: white;
+  width: 60px;
+  height: 30px;
+}

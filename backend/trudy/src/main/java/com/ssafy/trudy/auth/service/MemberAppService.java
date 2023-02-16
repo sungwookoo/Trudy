@@ -101,6 +101,10 @@ public class MemberAppService {
         introduce.setPlan(modifyIntroRequest.getPlan());
         introduce.setSelf(modifyIntroRequest.getSelf());
         introduce.setLanguage(modifyIntroRequest.getLanguage());
+        introduce.setFacebook(modifyIntroRequest.getFacebook());
+        introduce.setInstagram(modifyIntroRequest.getInstagram());
+        introduce.setTwitter(modifyIntroRequest.getTwitter());
+        introduce.setGithub(modifyIntroRequest.getGithub());
 
         Introduce modifiedIntroduce = memberService.saveIntroduce(introduce);
 
@@ -109,6 +113,10 @@ public class MemberAppService {
                 .plan(modifyIntroRequest.getPlan())
                 .self(modifyIntroRequest.getSelf())
                 .language(modifyIntroRequest.getLanguage())
+                .facebook(modifiedIntroduce.getFacebook())
+                .instagram(modifiedIntroduce.getInstagram())
+                .twitter(modifiedIntroduce.getTwitter())
+                .github(modifiedIntroduce.getGithub())
                 .build();
     }
 

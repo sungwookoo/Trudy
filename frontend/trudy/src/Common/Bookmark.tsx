@@ -9,6 +9,9 @@ import MapModal from "./MapModal";
 import nopictures from "../assets/nopictures.png";
 import { ModifierFlags } from "typescript";
 import axiosInstance from "./axiosInterceptor";
+import bookmark_yes from "../assets/star_yes.png";
+import "./Bookmark.css";
+
 type Props = {
   memberId: number;
   bookmarkedIds: number[];
@@ -119,15 +122,12 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
         }
         if (selectedSigungu.length > 0) {
           sigunguMatch = selectedSigungu.includes(parseInt(bookmark.sigungucode));
-          console.log(parseInt(bookmark.sigungucode));
-          console.log(selectedSigungu);
         } else {
           sigunguMatch = true;
         }
 
         if (bookMarkCategory.length > 0) {
           contentTypeMatch = bookMarkCategory.includes(parseInt(bookmark.contenttypeid));
-          console.log(bookmark.contenttypeid);
         } else {
           contentTypeMatch = true;
         }
@@ -147,7 +147,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
 
   // 지도 센터 옮기기
   const handleClick = (mapx: number, mapy: number) => {
-    console.log(mapx, mapy, 342341412412);
     onPlaceClick(mapx, mapy);
   };
 
@@ -155,18 +154,19 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
   const handleDragStart = (e: React.DragEvent, bookmarkId: number) => {
     e.dataTransfer.setData("text/plain", bookmarkId.toString());
   };
-  console.log(selectedSigungu);
 
   return (
     <>
       <div>
         <SearchBar searchChange={searchChange} setNameSearch={setNameSearch} setSearchChange={setSearchChange} />
-        <button onClick={clearFilter}>Clear</button>
+        <div>
+          <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
+            Area Select
+          </button>
+          <button className="clear-btn" onClick={clearFilter}>Clear</button>
+        </div>
         {/* --------------------------------------------------------필터 ----------------------------------------------- */}
         {/* --------------------------------------------------------필터 ----------------------------------------------- */}
-        <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
-          Area Select
-        </button>
         <div>{!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}</div>
         {!isCollapsed && areaCode && (
           <div className="flex flex-wrap">
@@ -181,7 +181,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   onChange={() => {
                     if (selectedSigungu.includes(sigunguInfo.id)) {
                       const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
-                      console.log(filteredSigungu, 33333333333333333);
                       setSelectedSigungu(filteredSigungu);
                     } else {
                       setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);
@@ -223,15 +222,15 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                     {bookmark.tel && <p className="font-bold text-xl mb-2">{bookmark.tel}</p>}
                   </div>
                   <img
-                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
-                    className="w-16 "
+                    src={`${bookmark_yes}`}
+                    className="star_img w-10"
                     alt="bookmark"
                     onClick={() => {
                       handleBookmarkClick(bookmark.id);
                     }}
                     style={{ cursor: "pointer" }}
                   />
-                  {isLoading && <div>Loading...</div>}
+                  {isLoading && <div></div>}
                 </div>
                 {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />}
               </>
@@ -239,7 +238,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
           })}
         </div>
       ) : (
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap place-content-center">
           {filteredBookmarks.map((bookmark: any, idx: number) => {
             return (
               <>
@@ -250,24 +249,24 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   style={{ cursor: "pointer" }}
                 >
                   {bookmark.firstimage ? (
-                    <img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />
+                    <img className="w-full h-64" src={bookmark.firstimage} alt="Place thumbnail" />
                   ) : (
-                    <img className="w-full" src={nopictures} alt="Place thumbnail" />
+                    <img className="w-full h-64" src={nopictures} alt="Place thumbnail" />
                   )}
-                  <div className="px-6 py-4">
+                  <div className="px-6 py-4 h-30">
                     <h1 className="font-bold  text-xl mb-2">{bookmark.title}</h1>
                     <br />
                   </div>
                   <img
-                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
-                    className="w-16 "
+                    src={`${bookmark_yes}`}
+                    className="star_img w-10"
                     alt="bookmark"
                     onClick={() => {
                       handleBookmarkClick(bookmark.id);
                     }}
                     style={{ cursor: "pointer" }}
                   />
-                  {isLoading && <div>Loading...</div>}
+                  {isLoading && <div></div>}
                 </div>
                 {/* {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />} */}
               </>

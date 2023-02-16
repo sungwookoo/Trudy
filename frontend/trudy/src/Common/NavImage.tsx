@@ -16,7 +16,6 @@ function UserProfileImage() {
           },
         });
         setProfileImage(response.data.image);
-        console.log(profileImage, "정보");
       } catch (error) {
         console.error(error);
       }
