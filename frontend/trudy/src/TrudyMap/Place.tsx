@@ -108,7 +108,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
         <div>
           <SearchBar searchChange={searchChange} setNameSearch={setkeyword} setSearchChange={setSearchChange} />
           <div>
-              <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
+              <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
                 Area Select
               </button>
               <button className="clear-btn" onClick={clearFilter}>Clear</button>

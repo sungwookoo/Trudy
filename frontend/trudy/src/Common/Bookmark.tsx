@@ -164,12 +164,14 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
     <>
       <div>
         <SearchBar searchChange={searchChange} setNameSearch={setNameSearch} setSearchChange={setSearchChange} />
-        <button onClick={clearFilter}>Clear</button>
+        <div>
+          <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
+            Area Select
+          </button>
+          <button className="clear-btn" onClick={clearFilter}>Clear</button>
+        </div>
         {/* --------------------------------------------------------필터 ----------------------------------------------- */}
         {/* --------------------------------------------------------필터 ----------------------------------------------- */}
-        <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
-          Area Select
-        </button>
         <div>{!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}</div>
         {!isCollapsed && areaCode && (
           <div className="flex flex-wrap">
@@ -242,7 +244,7 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
           })}
         </div>
       ) : (
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap place-content-center">
           {filteredBookmarks.map((bookmark: any, idx: number) => {
             return (
               <>
@@ -253,11 +255,11 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   style={{ cursor: "pointer" }}
                 >
                   {bookmark.firstimage ? (
-                    <img className="w-full" src={bookmark.firstimage} alt="Place thumbnail" />
+                    <img className="w-full h-64" src={bookmark.firstimage} alt="Place thumbnail" />
                   ) : (
-                    <img className="w-full" src={nopictures} alt="Place thumbnail" />
+                    <img className="w-full h-64" src={nopictures} alt="Place thumbnail" />
                   )}
-                  <div className="px-6 py-4">
+                  <div className="px-6 py-4 h-30">
                     <h1 className="font-bold  text-xl mb-2">{bookmark.title}</h1>
                     <br />
                   </div>
