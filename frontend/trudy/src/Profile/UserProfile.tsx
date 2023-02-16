@@ -7,7 +7,6 @@ import Follow from "./Follow";
 import FollowerModal from "./FollowerModal";
 import axiosInstance from "../Common/axiosInterceptor";
 import defaultImage from "../assets/defaultImage.png";
-import Sns from "./Sns";
 
 interface useruserInfoId {
   name: string;
@@ -98,23 +97,22 @@ const UseruserInfo = () => {
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
-          <img className="userInfo-picture" src={userInfo.image || defaultImage}></img>
+          <img
+            className="userInfo-picture"
+            src={userInfo.image || defaultImage}
+          ></img>
           <div className="h-24 ml-3">
             <h1 className="userInfo-username capitalize image.png">{userInfo.name}</h1>
             <div className="ml-1 pt-1">
-              <div className="flex border border-1 rounded-md px-1 mx-1 bg-green-200">
-                {userInfo.isLocal === "1" ? <div className="mr-8 image.png">{userInfo.areaCode}</div> : <div></div>}
-                <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">{userInfo.gender}</div>
+            <div className="flex">
+            {userInfo.isLocal === "1" ? (
+                <div className="mr-8">{userInfo.areaCode}</div>
+                ) : ( 
+                <div></div>
+                )}
+                <div className="capitalize">{userInfo.gender}</div>
               </div>
-              <div className="border border-1 rounded-md px-1 mx-1 bg-green-200">{userInfo.isLocal === "1" ? "Local" : "Tourist"}</div>
-              {userInfo.introduceId && (
-                <Sns
-                  Facebook={userInfo.introduceId.facebook}
-                  Github={userInfo.introduceId.github}
-                  Instagram={userInfo.introduceId.instagram}
-                  Twitter={userInfo.introduceId.twitter}
-                />
-              )}
+              <div className=''>{userInfo.isLocal === '1' ? 'Local' : 'Tourist'}</div>
             </div>
           </div>
         </div>
@@ -149,9 +147,11 @@ const UseruserInfo = () => {
                 {userInfo.gender}
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
-        <div className="userprofile-intro mb-1 ml-52">{userInfo.introduceId ? userInfo.introduceId.self : ""}</div>
+        <div className="userprofile-intro mb-1 ml-52">
+          {userInfo.introduceId ? userInfo.introduceId.self : ""}
+        </div>
       </div>
       <div className="content-box grid grid-cols-2 place-content-center mb-2">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
@@ -178,12 +178,10 @@ const UseruserInfo = () => {
             <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.language : ""}</div>
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-1">
-            {getuserpost.length !== 0 ? (
-              getuserpost.map((post: any, i: any) => <ProfileMyPost key={i} post={post} memberdetails={userInfo.id} />)
-            ) : (
-              <div className="text-2xl ml-auto mr-auto flex justify-center items-center h-full  col-start-2 col-span-2">There are currently no posts.</div>
-            )}
+          <div>
+            {getuserpost.map((post: any, i: any) => (
+              <ProfileMyPost key={i} post={post} memberdetails={userInfo.id} />
+            ))}
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ import ProfileMyPost from "./ProfileMyPost";
 import Avatar from "react-avatar";
 import defaultImage from "../assets/defaultImage.png";
 import axiosInstance from "../Common/axiosInterceptor";
+import { areaList } from "../Filter/AreaCode";
 import Sns from "./Sns";
 import Nav from "../Common/Nav";
 
@@ -106,16 +107,21 @@ function Profile() {
             <h1 className="myprofile-username capitalize ">{profile.name}</h1>
             <div className="ml-1 pt-1">
               <div className="flex">
-                {profile.isLocal === "1" ? <div className="mr-8 border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.areaCode}</div> : <div></div>}
-                <div className="capitalize border-1 rounded-md px-1 mx-1 bg-green-200">{profile.gender}</div>
+                {profile.isLocal === "1" ? (
+                  <div className="mr-2 border border-1 rounded-md px-1 mx-1 bg-green-200">
+                    {profile.areaCode &&
+                      areaList.map((area) => {
+                        if (area.id === profile.areaCode) {
+                          return area.name;
+                        }
+                      })}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.gender}</div>
               </div>
-              <div className="border-1 rounded-md px-1 mx-1 bg-green-200">{profile.isLocal === "1" ? "Local" : "Tourist"}</div>
-              <Sns
-                Facebook={profile.introduceId.facebook}
-                Github={profile.introduceId.github}
-                Instagram={profile.introduceId.instagram}
-                Twitter={profile.introduceId.twitter}
-              />
+              <div className="border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.isLocal === "1" ? "Local" : "Tourist"}</div>
             </div>
           </div>
         </div>

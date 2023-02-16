@@ -1,0 +1,64 @@
+.comment-profile {
+  min-width: 120px;
+  max-width: 160px;
+  height: 50px;
+  align-items: center;
+}
+
+.comment-profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 16%;
+  margin-left: 4px;
+}
+
+.comment-profile-name {
+  font-size: 22px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.forum-comment-content {
+  font-size: 18px;
+  margin-bottom: 4px;
+  margin-left: 4px;
+  font-weight: 500;
+  width: 800px;
+  min-height: 30px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.forum-comment-like-delete {
+  display: flex;
+  flex-direction: row;
+  margin-left: 550px;
+  border-width: 1px;
+  border-radius: 10px;
+  background-color: rgb(230, 230, 230);
+  padding: auto;
+  height: 40px;
+  width: 120px;
+}
+
+.forum-comment-hr {
+  background-color: black;
+  height: 1.1px;
+  width: 800px;
+}
+
+.nested-comment {
+  width: 770px;
+}
+
+.forum-nestedcomment-like-delete {
+  display: flex;
+  flex-direction: row;
+  margin-left: 525px;
+  border-width: 1px;
+  border-radius: 10px;
+  background-color: rgb(230, 230, 230);
+  /* padding: auto; */
+  height: 40px;
+  width: 120px;
+}

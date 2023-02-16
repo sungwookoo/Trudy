@@ -12,7 +12,7 @@ import Sns from "../Profile/Sns";
 
 function Square() {
   const [squareId, setSquareId] = useState<any>(null);
-  const [area, setArea] = useState<number>(1);
+  const [area, setArea] = useState<number[]>([]);
   const [isLocal, setIsLocal] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [nameSearch, setNameSearch] = useState<string>();
@@ -57,15 +57,27 @@ function Square() {
     async function SquareGet() {
       const res: any = await authCtx.getUser(params);
       setSquareData(res.data.content);
+      // setArea(
+      //   res.data.content.areaCode.map((areaNumber: any) => {
+      //     if (areaNumber === "1") {
+      //       return "Seoul";
+      //     } else if (areaNumber === "6") {
+      //       return "Busan";
+      //     } else {
+      //       return areaNumber;
+      //     }
+      //   })
+      // );
     }
     SquareGet();
   }, [areaCode, isLocal, gender, nameSearch]);
   console.log(areaCode);
+  // console.log(area, "지역");
   return (
     <div className="grid grid-rows-2 gap-4">
       {/* 검색창 */}
       <div className="border-b-2 flex flex-row py-1">
-        <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"}`}>
+        <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
           Area Select
         </button>
         {/* isLocal (UserType) 드랍박스 */}
@@ -100,7 +112,7 @@ function Square() {
           <input
             type="search"
             id="default-search"
-            className="block p-3 w-3/5 text-sm text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+            className="block p-3 w-3/5 text-sm text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 shadow-sm"
             placeholder="Search Name"
             required
             onKeyDown={pressEnter}
@@ -110,7 +122,7 @@ function Square() {
           />
           <button
             type="submit"
-            className="flex inset-y-0 right-0 p-3 text-sm font-medium bg-white rounded-md border hover:bg-green-700 ml-4 border-gray-500 shadow-sm"
+            className="flex inset-y-0 right-0 p-3 text-sm font-medium bg-white rounded-md border hover:bg-green-500 ml-4 border-gray-500 shadow-sm"
             onClick={(e) => {
               setNameSearch(searchChange);
             }}
@@ -160,7 +172,7 @@ function Square() {
               <>
                 {authCtx.loggedInfo.uid !== guide.id ? (
                   <div
-                    className="w-full bg-slate-100 rounded-lg overflow-hidden flex flex-col md:flex-row shadow-lg"
+                    className="w-full bg-slate-100 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row shadow-lg hover:cursor-pointer hover:bg-green-300"
                     key={i}
                     onClick={() => {
                       navigate(`/profile/${guide.id}`);
@@ -178,14 +190,28 @@ function Square() {
                     </div>
                     <div className="w-full md:w-3/5 text-left p-4 md:p-4 space-y-2">
                       <p className="text-3xl text-gray-700 font-bold">{guide.name}</p>
-                      <p className="text-2xl text-gray-400 font-normal">{/* areacode : {areaList.filter(area => area.id === guide.areaCode)} */}</p>
+                      {guide.areaCode == null ? (
+                        <p className="text-2xl text-gray-400 font-normal">Tourist</p>
+                      ) : (
+                        <p className="text-2xl text-gray-400 font-normal">
+                          {guide.areaCode &&
+                            areaList.map((area) => {
+                              if (area.id === guide.areaCode) {
+                                return area.name;
+                              }
+                            })}
+                          {/* {guide.areaCode} */}
+                        </p>
+                      )}
                       <p className="text-xl leading-relaxed text-gray-500 font-normal">{guide.introduceId.self}</p>
-                      <Sns
-                        Facebook={guide.introduceId.facebook}
-                        Instagram={guide.introduceId.instagram}
-                        Github={guide.introduceId.github}
-                        Twitter={guide.introduceId.twitter}
-                      />
+                      <div className="flex justify-start space-x-2">
+                        <Sns
+                          Facebook={guide.introduceId.facebook}
+                          Instagram={guide.introduceId.instagram}
+                          Github={guide.introduceId.github}
+                          Twitter={guide.introduceId.twitter}
+                        />
+                      </div>
                     </div>
                   </div>
                 ) : (
