@@ -6,7 +6,8 @@ import AuthContext from "../Common/authContext";
 
 function PasswordConfirm() {
   const [password, setPassword] = useState<string>("");
-  const [inputPassword, setInputPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  // const [data, setData] = useState<any>();
 
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -14,9 +15,13 @@ function PasswordConfirm() {
     navigate("/accountedit");
   }
 
-  const data = authCtx.getMyData();
-
-  // 내 계정의 비밀번호 불러와서 저장하기
+  useEffect(() => {
+    async function GetData ()  {
+      const response: any = await authCtx.getMyData();
+      setEmail(response.data.email);
+    };
+    GetData()
+  }, []);
 
   // Enter를 눌렀을 때 CheckPassword를 실행시키는 함수
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -27,11 +32,8 @@ function PasswordConfirm() {
 
   //   비밀번호를 확인하는 함수
   function CheckPassword() {
-    if (inputPassword !== "" && inputPassword === password) {
-      navigateToAccountEdit();
-    } else {
-      alert("Incorrect Password!");
-    }
+    const response = authCtx.login(email, password);
+    console.log('결과', response);
   }
 
   return (
@@ -56,7 +58,7 @@ function PasswordConfirm() {
             placeholder="Password"
             onKeyDown={pressEnter}
             onChange={(e) => {
-              setInputPassword(e.target.value);
+              setPassword(e.target.value);
             }}
           />
         </div>

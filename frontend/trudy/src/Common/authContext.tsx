@@ -164,10 +164,15 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
           // console.log('loggedInfo', loggedInfo)
           // }
           setIsSuccess(true);
+
+          return result
+        } 
+        else {
+          alert("Wrong ID or Password!");
+
         }
       })
       .catch(() => {
-        alert("Wrong ID or Password!");
       });
   };
 

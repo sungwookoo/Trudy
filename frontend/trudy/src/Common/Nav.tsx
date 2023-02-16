@@ -129,8 +129,8 @@ function Nav(navProfileImg: any) {
               </NavLink>
             </div>
             <div>
-              {/* <NavLink className="nav-item" to="/confirm"> */}
-              <NavLink className="nav-item" to="/accountedit">
+              <NavLink className="nav-item" to="/confirm">
+              {/* <NavLink className="nav-item" to="/accountedit"> */}
                 Account
               </NavLink>
             </div>
