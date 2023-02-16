@@ -24,7 +24,7 @@ interface getUser {
   title?: string;
   introduction?: string;
   introduceId?: any | null;
-  isLocal?: number;
+  isLocal?: string;
   areaCode?: number;
   thumbnailImage?: string;
 }
@@ -101,17 +101,17 @@ function Profile() {
           ></img>
 
           <div className="h-24 ml-3">
-            <h1 className="myprofile-username">{profile.name}</h1>
+            <h1 className="myprofile-username capitalize">{profile.name}</h1>
             <div className="ml-1 pt-1">
-              {/* {profile.isLocal !== 1 ? (
-                <div className="ml-1 ">Local, {profile.gender}</div>
-              ) : (
-                <div className="ml-1">Foreigner {profile.gender}</div>
-              )} */}
               <div className="flex">
-                <div className="mr-5">{profile.areaCode}</div>
+                {profile.isLocal === "1" ? (
+                <div className="mr-8">{profile.areaCode}</div>
+                ) : ( 
+                <div></div>
+                )}
                 <div className="capitalize">{profile.gender}</div>
               </div>
+              <div className=''>{profile.isLocal === '1' ? 'Local' : 'Tourist'}</div>
             </div>
           </div>
         </div>
@@ -148,14 +148,14 @@ function Profile() {
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
         <div
-          className="mx-16 flex place-content-center font-bold text-4xl hover:cursor-pointer"
+          className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
         >
           About
         </div>
 
         <div
-          className="mx-16 flex place-content-center font-bold text-4xl hover:cursor-pointer"
+          className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
         >
           Posts

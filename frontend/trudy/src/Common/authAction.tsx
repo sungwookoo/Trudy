@@ -69,15 +69,31 @@ export const refreshTokenHandler = async (
 };
 
 // 이메일 인증 함수
-export const verifyEmail = (email: string) => {
-  const url = "api/emailConfirm";
-  const params = { email };
-  const response = POST(url, {}, { params });
-  return response;
+export const verifyEmail = async (email: string) => {
+  const url = "api/emailConfirm/";
+  // const response = axios.post(url, {}, { params: {email : email}});
+  // const data = new FormData();
+  // data.append("email", JSON.stringify(email));
+  // const response = axios.post(url, data, {});
+  const params = { email: email };
+  try {
+    const response: any = await axios.post(url, {}, { params });
+    return response;
+  } catch (error) {
+    return null;
+  }
+
+  // response
+  //   .then(() => {
+  //     return response;
+  //   })
+  //   .catch((e) => {
+  //     return null;
+  //   });
 };
 
 // 회원가입 url을 POST방식으로 호출하는 함수
-export const signUpActionHandler = (
+export const signUpActionHandler = async (
   email: string,
   password: string,
   name: string,
@@ -98,8 +114,12 @@ export const signUpActionHandler = (
     areaCode,
     sigunguCode,
   };
-  const response = POST(url, data, {});
-  return response;
+  try {
+    const response = await axios.post(url, data, {});
+    return response;
+  } catch (error) {
+    return null;
+  }
 };
 
 // 로그인 url을 POST방식으로 호출하는 함수
@@ -113,15 +133,15 @@ export const signInActionHandler = (email: string, password: string) => {
 
 // 로그아웃 함수
 // localStorage의 토큰과 만료시간을 삭제한다
-export const signOutActionHandler = async (id: number) => {
+export const signOutActionHandler = (id: number) => {
   const url = "api/logout";
   const data = new FormData();
   data.append("id", JSON.stringify(id));
-  const response = await POST(url, data, {});
+  const response = axios.post(url, data, {});
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
   alert("sign out");
-
+  window.location.reload();
   return response;
 };
 
@@ -224,8 +244,18 @@ export const deleteDay = (dayId: number | null) => {
 };
 
 // 유저의 dayItem을 PUT 방식으로 수정
-export const updateDayItem = (dayItemId: number, sequence: number) => {
+export const updateDayItem = (
+  dayId: number,
+  dayItemId: number,
+  sequence: number,
+  token: string
+) => {
   const url = "/api/planner/dayitem";
-  const params = { dayItemId: dayItemId, sequence: sequence };
-  const response = PUT(url, {}, { params });
+  const headers = createTokenHeader(token);
+  // const data = new FormData()
+  //  data.append('dayId' , JSON.stringify(dayId))
+  //  data.append('dayItemId' , JSON.stringify(dayItemId))
+  //  data.append('sequence' , JSON.stringify(sequence))
+  const params = { dayId: dayId, placeId: dayItemId, sequence: sequence };
+  const response = PUT(url, { headers }, { params });
 };

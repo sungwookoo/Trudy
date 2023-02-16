@@ -6,6 +6,7 @@ import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 // 로그인 페이지
 
 function SignUp() {
@@ -21,6 +22,12 @@ function SignUp() {
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
   const [isName, setIsName] = useState<boolean>(false);
+  const [wrongPassword, setWrongPassword] = useState<boolean>(false);
+  const [wrongPasswordConfirm, setWrongPasswordConfirm] =
+    useState<boolean>(false);
+  const [wrongName, setWrongName] = useState<boolean>(false);
+  const [wrongExistName, setWrongExistName] = useState<boolean>(false);
+  const [existName, setExistName] = useState<boolean>(false);
   const { state } = useLocation();
   const email = state;
 
@@ -49,11 +56,23 @@ function SignUp() {
     }
   }
   function CheckNickName(name: string) {
-    if (/^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,16}$/.test(name)) {
+    if (/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9]{4,16}$/.test(name)) {
       return 1;
     } else {
       return 0;
     }
+  }
+  async function isExistName(name: string) {
+    const url = "/api/signup/name";
+    const params = { name: name };
+    try {
+      const response: any = await axios.post(url, {}, { params });
+      if (response.data === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch {}
   }
 
   useEffect(() => {
@@ -69,80 +88,99 @@ function SignUp() {
         </div>
 
         <div className="-space-y-px rounded-md shadow-md">
-          <div>
-            Email
+          <div className="relative">
             <input
               id="email"
               name="email"
               type="email"
               disabled
-              className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 placeholder-gray-900 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              className="relative block w-full appearance-none rounded-none rounded-b-md bg-gray-200 border border-gray-300 px-3 py-2 placeholder-gray-900 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder={email}
             />
+            <label className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+              Email
+            </label>
           </div>
         </div>
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
           {/* 비밀번호 */}
-          <div className="-space-y-px rounded-md">
-            <div>
-              Password
+          <div className="">
+            <div className="relative -space-y-px rounded-md shadow-md">
               <input
                 id="password"
                 name="password"
                 type="password"
                 required
-                className="relative block shadow-md w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Password"
+                className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                  wrongPassword ? "border-red-700 border-2 " : "border-gray-300"
+                }`}
+                placeholder=" "
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (CheckPassword(e.target.value) === 1) {
                     setIsPassword(true);
+                    setWrongPassword(false);
                   } else {
                     setIsPassword(false);
                   }
                 }}
               />
-              {password === "" || CheckPassword(password) ? null : (
-                <div className="text-red-500">
-                  8 to 16 characters with a combination of letters, numbers, and
-                  special characters
-                </div>
-              )}
+              <label
+                htmlFor="password"
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                Password
+              </label>
             </div>
+            {password === "" || CheckPassword(password) ? null : (
+              <p className="text-sm text-red-500">
+                8 to 16 characters with a combination of uppercases, lowercases,
+                numbers, and special characters
+              </p>
+            )}
           </div>
 
           {/* 비밀번호 확인 */}
-          <div className="-space-y-px rounded-md">
-            <div>
-              Password Confirm
+          <div className="">
+            <div className="relative -space-y-px rounded-md shadow-md">
               <input
                 id="passwordConfirm"
                 name="passwordConfirm"
                 type="password"
                 required
-                className="relative block w-full shadow-md appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Password Confirm"
+                className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer  ${
+                  wrongPasswordConfirm
+                    ? "border-red-700 border-2"
+                    : "border-gray-300"
+                }`}
+                placeholder=" "
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
                   if (CheckPasswordConfirm(e.target.value) === 1) {
                     setIsPasswordConfirm(true);
+                    setWrongPasswordConfirm(false);
                   } else {
                     setIsPasswordConfirm(false);
                   }
                 }}
               />
-              {passwordConfirm === "" ||
-              CheckPasswordConfirm(passwordConfirm) ? null : (
-                <div className="text-red-500">password don't match</div>
-              )}
+              <label
+                htmlFor="passwordConfirm"
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                Password Confirm
+              </label>
             </div>
+            {passwordConfirm === "" ||
+            CheckPasswordConfirm(passwordConfirm) ? null : (
+              <div className="text-sm text-red-500">password don't match</div>
+            )}
           </div>
 
           {/* 닉네임 */}
-          <div className="-space-y-px rounded-md">
-            <div>
-              Nickname
+          <div className="">
+            <div className="relative -space-y-px rounded-md shadow-md">
               <input
                 id="name"
                 name="name"
@@ -151,27 +189,45 @@ function SignUp() {
                 required
                 minLength={4}
                 maxLength={16}
-                className="relative block shadow-md w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Nickname"
+                className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer  ${
+                  wrongName || wrongExistName ? "border-red-700 border-2" : "border-gray-300"
+                }`}
+                placeholder=" "
                 onChange={(e) => {
                   setName(e.target.value);
+                  isExistName(e.target.value).then((res:any) => {
+                    setExistName(res);
+                  });
+                  setWrongExistName(false)
                   if (CheckNickName(name) === 1) {
                     setIsName(true);
+                    setWrongName(false);
                   } else {
                     setIsName(false);
                   }
                 }}
               />
-              {name === "" ||
-              /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{3,16}$/.test(
-                name
-              ) ? null : (
-                <div className="text-red-500">
-                  3 characters or more and 16 characters or less, consisting of
-                  English or numbers
-                </div>
-              )}
+              <label
+                htmlFor="name"
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                Nickname
+              </label>
             </div>
+            <ul>
+              {existName ? (
+                <ul className="text-sm text-red-700">
+                  This nickname already exists
+                </ul>
+              ) : null}
+              {name === "" ||
+              /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9]{4,16}$/.test(name) ? null : (
+                <ul className="text-sm text-red-500">
+                  4 characters or more and 16 characters or less, consisting of
+                  English and numbers
+                </ul>
+              )}
+            </ul>
           </div>
 
           {/* 성별 */}
@@ -313,12 +369,23 @@ function SignUp() {
                     areaCode,
                     sigunguCode
                   );
-                  if (response !== undefined) {
+                  if (response !== null) {
                     authCtx.login(email, password);
                     navigateToLending();
                   }
                 } else {
-                  alert("please fill out the form");
+                  if (isPassword === false) {
+                    setWrongPassword(true);
+                  }
+                  if (isPasswordConfirm === false) {
+                    setWrongPasswordConfirm(true);
+                  }
+                  if (isName === false) {
+                    setWrongName(true);
+                  }
+                  if (wrongExistName === true) {
+                    setWrongExistName(true)
+                  }
                 }
               }}
             >

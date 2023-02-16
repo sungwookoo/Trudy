@@ -18,6 +18,7 @@ function Square() {
   const [searchChange, setSearchChange] = useState<string>();
   const [squareData, setSquareData] = useState<[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [image, setImage] = useState<string>();
 
   const navigate = useNavigate();
   const navigateToUserProfile = (id: number) => {
@@ -33,8 +34,10 @@ function Square() {
   };
 
   const authCtx = useContext(AuthContext);
+  console.log(squareData, "squareData");
   const imgURL =
-    "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
+    "https://memorableindia.com/blog/wp-content/uploads/2017/11/Frequent-Traveler-Successful.jpg";
+  // "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
 
   // 검색하고 enter 눌렀을 때
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -175,7 +178,7 @@ function Square() {
               <>
                 {authCtx.loggedInfo.uid !== guide.id ? (
                   <div
-                    className="w-full bg-slate-100 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row shadow-lg"
+                    className="w-full bg-slate-100 rounded-lg overflow-hidden flex flex-col md:flex-row shadow-lg"
                     key={i}
                     onClick={() => {
                       navigate(`/profile/${guide.id}`);
@@ -185,9 +188,9 @@ function Square() {
                     {/* {squareId && <UserProfile key={i} userProfileId={squareId} />} */}
 
                     <div className="w-full md:w-2/5 h-80">
-                      {guide.img ? (
+                      {guide.image ? (
                         <img
-                          src={guide.img}
+                          src={guide.image}
                           alt="userThumbnail"
                           className="object-center object-cover w-full h-full"
                         />
@@ -204,7 +207,7 @@ function Square() {
                         {guide.name}
                       </p>
                       <p className="text-2xl text-gray-400 font-normal">
-                        areacode : {guide.areacode}
+                        {/* areacode : {areaList.filter(area => area.id === guide.areaCode)} */}
                       </p>
                       <p className="text-xl leading-relaxed text-gray-500 font-normal">
                         {guide.introduceId.self}

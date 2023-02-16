@@ -53,7 +53,7 @@ const AuthContext = React.createContext({
     sequence: number
   ) => {},
   deleteDay: (dayId: number | null) => {},
-  updateDayItem: (dayItemId: number, sequence: number) => {},
+  updateDayItem: (dayId: number, dayItemId: number, sequence: number) => {},
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
@@ -89,7 +89,8 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
   const sendCode = async (email: string) => {
     const response: any = await authAction.verifyEmail(email);
-    if (response === null) {
+    console.log(response, "spren");
+    if ((await response) === null) {
       alert("this email is already in use!!");
     } else {
       alert("Verification code has been sent");
@@ -134,43 +135,49 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     if (response !== null) {
       setIsSuccess(true);
       return response;
+    } else {
+      return null
     }
   };
 
   //   로그인을 하는 함수
   const loginHandler = (email: string, password: string) => {
     setIsSuccess(false);
-    const data = authAction.signInActionHandler(email, password);
-    data.then((result) => {
-      if (result !== null) {
-        const loginData: LoginToken = result.data;
-        setToken(loginData.accessToken);
-        setRefreshToken(loginData.refreshToken)
-        logoutTimer = setTimeout(
-          signOutHandler,
-          authAction.signInTokenHandler(
-            loginData.accessToken,
-            loginData.refreshToken,
-            loginData.accessTokenExpiresIn
-          )
-        );
-        // const localToken = localStorage.getItem("token")
-        // if (localToken) {
-        //   setLoggedInfo(jwtDecode(localToken))
-        //   console.log(jwtDecode(localToken))
-        // console.log('loggedInfo', loggedInfo)
-        // }
-        setIsSuccess(true);
-      } else {
+    const data = await authAction
+      .signInActionHandler(email, password)
+      .then((result) => {
+        if (result !== null) {
+          const loginData: LoginToken = result.data;
+          setToken(loginData.accessToken);
+          setRefreshToken(loginData.refreshToken);
+          logoutTimer = setTimeout(
+            signOutHandler,
+            authAction.signInTokenHandler(
+              loginData.accessToken,
+              loginData.refreshToken,
+              loginData.accessTokenExpiresIn
+            )
+          );
+          // const localToken = localStorage.getItem("token")
+          // if (localToken) {
+          //   setLoggedInfo(jwtDecode(localToken))
+          //   console.log(jwtDecode(localToken))
+          // console.log('loggedInfo', loggedInfo)
+          // }
+          setIsSuccess(true);
+        }
+      })
+      .catch(() => {
         alert("Wrong ID or Password!");
-      }
-    });
+      });
   };
 
   //   로그아웃을 하는 함수
-  const signOutHandler = useCallback(() => {
+  const signOutHandler = useCallback(async () => {
+    console.log(loggedInfo)
+    await authAction.signOutActionHandler(loggedInfo.uid);
     setToken("");
-    authAction.signOutActionHandler(loggedInfo.uid);
+    console.log('여기')
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
@@ -284,8 +291,17 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   // planner의 dayItem을 수정하는 함수
-  const updatePlannerDayItem = (dayItemId: number, sequence: number) => {
-    const response = authAction.updateDayItem(dayItemId, sequence);
+  const updatePlannerDayItem = (
+    dayId: number,
+    dayItemId: number,
+    sequence: number
+  ) => {
+    const response = authAction.updateDayItem(
+      dayId,
+      dayItemId,
+      sequence,
+      token
+    );
 
     return response;
   };
