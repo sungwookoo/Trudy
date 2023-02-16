@@ -48,8 +48,9 @@ const AuthContext = React.createContext({
     birth: string,
     isLocal: string,
     areaCode: number,
-    sigunguCode: number,
+    sigunguCode: number
   ) => {},
+  passwordChange: (currentPassword: string, newPassword: string) => {},
   getUser: (params: any) => {},
   //   changeNickname: (name: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
@@ -118,32 +119,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // signup 페이지로의 비정상 접근을 막는다
   const defaultVerified = () => {
     setIsVerified(false);
-  };
-
-  // 계정 정보를 수정하는 함수
-  const accountEditHandler = async (
-    name: string,
-    gender: string,
-    birth: string,
-    isLocal: string,
-    areaCode: number,
-    sigunguCode: number
-  ) => {
-    const response = await authAction.accountEditActionHandler(
-      name,
-      gender,
-      birth,
-      isLocal,
-      areaCode,
-      sigunguCode,
-      token
-    );
-
-    if (response !== null) {
-      return response;
-    } else {
-      return null;
-    }
   };
 
   //  회원가입을 하는 함수
@@ -222,6 +197,50 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       const response = await authAction.getMyDataHandler(token);
       return response;
     } catch {
+      return null;
+    }
+  };
+
+  // 계정 정보를 수정하는 함수
+  const accountEditHandler = async (
+    name: string,
+    gender: string,
+    birth: string,
+    isLocal: string,
+    areaCode: number,
+    sigunguCode: number
+  ) => {
+    const response = await authAction.accountEditActionHandler(
+      name,
+      gender,
+      birth,
+      isLocal,
+      areaCode,
+      sigunguCode,
+      token
+    );
+
+    if (response !== null) {
+      return response;
+    } else {
+      return null;
+    }
+  };
+
+  // 비밀번호를 수정하는 함수
+  const passwordChangeHandler = async (
+    currentPassword: string,
+    newPassword: string
+  ) => {
+    const response = await authAction.passwordChangeActionHandler(
+      currentPassword,
+      newPassword,
+      token
+    );
+      console.log('ctx', response)
+    if (response !== null) {
+      return response;
+    } else {
       return null;
     }
   };
@@ -385,6 +404,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     signOut: signOutHandler,
     getMyData: getMydata,
     accountEdit: accountEditHandler,
+    passwordChange: passwordChangeHandler,
     getUser: getUserHandler,
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,

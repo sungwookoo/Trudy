@@ -23,7 +23,7 @@ import ForumPostEdit from "./Forum/ForumPostEdit";
 import ChatRoom from "./Chat/ChatRoom";
 import "./App.css";
 import AccountEdit from "./Account/AccountEdit";
-import PasswordConfirm from "./Account/PasswordChange";
+import PasswordChange from "./Account/PasswordChange";
 import AccountSetting from "./Account/AccountSetting";
 
 function App() {
@@ -126,7 +126,7 @@ function App() {
         />
         <Route
           path="/passwordchange"
-          element={authCtx.isLoggedIn ? <PasswordConfirm /> : <SignIn />}
+          element={authCtx.isLoggedIn ? <PasswordChange /> : <SignIn />}
         />
         <Route
           path="/accountedit"

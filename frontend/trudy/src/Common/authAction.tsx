@@ -168,13 +168,6 @@ export const accountEditActionHandler = async (
   token: string
 ) => {
   const url = "/api/member/info";
-  // const data = new FormData();
-  // data.append("name", JSON.stringify(name));
-  // data.append("gender", JSON.stringify(gender));
-  // data.append("birth", JSON.stringify(birth));
-  // data.append("isLocal", JSON.stringify(isLocal));
-  // data.append("areaCode", JSON.stringify(areaCode));
-  // data.append("sigunguCode", JSON.stringify(sigunguCode));
   const data = {
     name,
     gender,
@@ -190,6 +183,48 @@ export const accountEditActionHandler = async (
   } catch (error) {
     return null;
   }
+};
+
+// 비밀번호를 수정하는 함수
+export const passwordChangeActionHandler = async (
+  currentPassword: string,
+  newPassword: string,
+  token: string
+) => {
+  console.log(currentPassword, newPassword);
+  try {
+    const response = await axios.put(
+      "/api/member/password",
+      {
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      },
+      {
+        headers: { Authorization: `bearer ${token}` },
+      }
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+  // const url = "/api/member/password";
+  // const data = {
+  //   currentPassword: currentPassword,
+  //   newPassword: newPassword,
+  // };
+
+  // const headers = {
+  //   Authorization: "bearer " + token,
+  //   "Content-Type": "application/json"
+  // };
+  // try {
+  //   // const response = await PUT(url, data, headers);
+  //   const response = await axios.put(url, data, { headers });
+  //   return response;
+  // } catch (error) {
+  //   console.log(error);
+  //   return null;
+  // }
 };
 
 // 스퀘어 유저의 정보를 GET방식으로 호출

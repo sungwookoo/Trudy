@@ -20,7 +20,7 @@ function AccountEdit() {
   const [data, setData] = useState<any>();
 
   const [isName, setIsName] = useState<boolean>(true);
-  const [isBirthday, setIsBirthday] = useState<boolean>(false);
+  const [isBirthday, setIsBirthday] = useState<boolean>(true);
 
   const [wrongName, setWrongName] = useState<boolean>(false);
   const [existName, setExistName] = useState<boolean>(false);
@@ -418,6 +418,7 @@ function AccountEdit() {
                       thisSigunguCode
                     );
                     if (response !== null) {
+                      alert("Success!");
                       navigateToAccountSetting();
                     }
                   } else {
@@ -431,6 +432,7 @@ function AccountEdit() {
                         thisSigunguCode
                       );
                       if (response !== null) {
+                        alert("Success!");
                         navigateToAccountSetting();
                       } else {
                         if (thisAreaCode === null) {
