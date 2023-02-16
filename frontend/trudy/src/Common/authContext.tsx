@@ -78,7 +78,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
-
+  
   let loggedInfo = { iss: "", auth: "", uid: 0 };
   if (token) {
     loggedInfo = jwtDecode(token) as any;
@@ -138,40 +138,39 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   //   로그인을 하는 함수
-  const loginHandler = async (email: string, password: string) => {
+  const loginHandler = (email: string, password: string) => {
     setIsSuccess(false);
-    const data = await authAction
-      .signInActionHandler(email, password)
-      .then((result) => {
-        if (result !== null) {
-          const loginData: LoginToken = result.data;
-          setToken(loginData.accessToken);
-          setRefreshToken(loginData.refreshToken);
-          logoutTimer = setTimeout(
-            signOutHandler,
-            authAction.signInTokenHandler(
-              loginData.accessToken,
-              loginData.refreshToken,
-              loginData.accessTokenExpiresIn
-            )
-          );
-          // const localToken = localStorage.getItem("token")
-          // if (localToken) {
-          //   setLoggedInfo(jwtDecode(localToken))
-          //   console.log(jwtDecode(localToken))
-          // console.log('loggedInfo', loggedInfo)
-          // }
-          setIsSuccess(true);
-        } else {
-          alert("Wrong ID or Password!");
-        }
-      });
+    const data = authAction.signInActionHandler(email, password);
+    data.then((result) => {
+      if (result !== null) {
+        const loginData: LoginToken = result.data;
+        setToken(loginData.accessToken);
+        setRefreshToken(loginData.refreshToken)
+        logoutTimer = setTimeout(
+          signOutHandler,
+          authAction.signInTokenHandler(
+            loginData.accessToken,
+            loginData.refreshToken,
+            loginData.accessTokenExpiresIn
+          )
+        );
+        // const localToken = localStorage.getItem("token")
+        // if (localToken) {
+        //   setLoggedInfo(jwtDecode(localToken))
+        //   console.log(jwtDecode(localToken))
+        // console.log('loggedInfo', loggedInfo)
+        // }
+        setIsSuccess(true);
+      } else {
+        alert("Wrong ID or Password!");
+      }
+    });
   };
 
   //   로그아웃을 하는 함수
-  const signOutHandler = useCallback(async () => {
+  const signOutHandler = useCallback(() => {
     setToken("");
-    await authAction.signOutActionHandler(loggedInfo.uid);
+    authAction.signOutActionHandler(loggedInfo.uid);
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }

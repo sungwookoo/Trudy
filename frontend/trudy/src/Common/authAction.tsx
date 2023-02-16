@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET, POST, DELETE, PUT } from "./authAxios";
 
+
 // 토큰을 만드는 함수
 const createTokenHeader = (token: string) => {
   return {
@@ -61,17 +62,17 @@ export const refreshTokenHandler = async (
 ) => {
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
-  const response = await axios.post(url, token, {});
+  const response = await POST(url, token, {});
   console.log("토큰 재발행", response);
 
-  return response;
+  return response
 };
 
 // 이메일 인증 함수
 export const verifyEmail = (email: string) => {
   const url = "api/emailConfirm";
   const params = { email };
-  const response = axios.post(url, {}, { params });
+  const response = POST(url, {}, { params });
   return response;
 };
 
@@ -97,7 +98,7 @@ export const signUpActionHandler = (
     areaCode,
     sigunguCode,
   };
-  const response = axios.post(url, data, {});
+  const response = POST(url, data, {});
   return response;
 };
 
@@ -105,8 +106,8 @@ export const signUpActionHandler = (
 export const signInActionHandler = (email: string, password: string) => {
   const url = "/api/login";
   const data = { email, password };
-  const response = axios.post(url, data, {});
-
+  const response = POST(url, data, {});
+  response.then((res) => {});
   return response;
 };
 
@@ -116,7 +117,7 @@ export const signOutActionHandler = async (id: number) => {
   const url = "api/logout";
   const data = new FormData();
   data.append("id", JSON.stringify(id));
-  const response = await axios.post(url, data, {});
+  const response = await POST(url, data, {});
   localStorage.removeItem("token");
   localStorage.removeItem("expirationTime");
   alert("sign out");
