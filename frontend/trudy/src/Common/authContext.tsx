@@ -22,13 +22,14 @@ const AuthContext = React.createContext({
   isSuccess: false,
   isGetSuccess: false,
   isVerified: false,
+  isPasswordVerified: false,
   loggedInfo: { iss: "", auth: "", uid: 0 },
   signup: (
     email: string,
     password: string,
     name: string,
     gender: string,
-    birthday: string,
+    birth: string,
     isLocal: string,
     areaCode: number,
     sigunguCode: number
@@ -36,9 +37,19 @@ const AuthContext = React.createContext({
   sendCode: (email: string) => {},
   emailVerified: (email: string) => {},
   defaultVerified: () => {},
+  passwordVerified: () => {},
+  defaultPasswordVerified: () => {},
   login: (email: string, password: string) => {},
   signOut: () => {},
   getMyData: () => {},
+  accountEdit: (
+    name: string,
+    gender: string,
+    birth: string,
+    isLocal: string,
+    areaCode: number,
+    sigunguCode: number,
+  ) => {},
   getUser: (params: any) => {},
   //   changeNickname: (name: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
@@ -76,6 +87,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [isPasswordVerified, setIsPasswordVerified] = useState<boolean>(false);
 
   const userIsLoggedIn = !!token;
 
@@ -108,13 +120,39 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     setIsVerified(false);
   };
 
+  // 계정 정보를 수정하는 함수
+  const accountEditHandler = async (
+    name: string,
+    gender: string,
+    birth: string,
+    isLocal: string,
+    areaCode: number,
+    sigunguCode: number
+  ) => {
+    const response = await authAction.accountEditActionHandler(
+      name,
+      gender,
+      birth,
+      isLocal,
+      areaCode,
+      sigunguCode,
+      token
+    );
+
+    if (response !== null) {
+      return response;
+    } else {
+      return null;
+    }
+  };
+
   //  회원가입을 하는 함수
   const signupHandler = async (
     email: string,
     password: string,
     name: string,
     gender: string,
-    birthday: string,
+    birth: string,
     isLocal: string,
     areaCode: number,
     sigunguCode: number
@@ -125,7 +163,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       password,
       name,
       gender,
-      birthday,
+      birth,
       isLocal,
       areaCode,
       sigunguCode
@@ -142,46 +180,37 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   //   로그인을 하는 함수
   const loginHandler = async (email: string, password: string) => {
     setIsSuccess(false);
-    const data = await authAction
-      .signInActionHandler(email, password)
-      .then((result) => {
-        if (result !== null) {
-          const loginData: LoginToken = result.data;
-          setToken(loginData.accessToken);
-          setRefreshToken(loginData.refreshToken);
-          logoutTimer = setTimeout(
-            signOutHandler,
-            authAction.signInTokenHandler(
-              loginData.accessToken,
-              loginData.refreshToken,
-              loginData.accessTokenExpiresIn
-            )
-          );
-          // const localToken = localStorage.getItem("token")
-          // if (localToken) {
-          //   setLoggedInfo(jwtDecode(localToken))
-          //   console.log(jwtDecode(localToken))
-          // console.log('loggedInfo', loggedInfo)
-          // }
-          setIsSuccess(true);
+    setIsSuccess(false);
+    try {
+      const result = await authAction.signInActionHandler(email, password);
+      if (result !== null) {
+        const loginData: LoginToken = result.data;
+        setToken(loginData.accessToken);
+        setRefreshToken(loginData.refreshToken);
+        logoutTimer = setTimeout(
+          signOutHandler,
+          authAction.signInTokenHandler(
+            loginData.accessToken,
+            loginData.refreshToken,
+            loginData.accessTokenExpiresIn
+          )
+        );
+        setIsSuccess(true);
+        return true;
+      } else {
+        alert("Wrong ID or Password!");
 
-          return result
-        } 
-        else {
-          alert("Wrong ID or Password!");
-
-        }
-      })
-      .catch(() => {
-      });
+        return false;
+      }
+    } catch {
+      return false;
+    }
   };
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(async () => {
-    console.log(loggedInfo);
     await authAction.signOutActionHandler(loggedInfo.uid);
     setToken("");
-    console.log("여기");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
@@ -189,9 +218,23 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   // 내 데이터를 가져오는 함수
   const getMydata = async () => {
-    const response = await authAction.getMyDataHandler(token);
+    try {
+      const response = await authAction.getMyDataHandler(token);
+      return response;
+    } catch {
+      return null;
+    }
+  };
 
-    return response;
+  // 비밀번호 인증을 완료했음을 기록하는 함수
+  const passwordVerified = () => {
+    setIsPasswordVerified(true);
+  };
+
+  // 비밀번호 인증상태를 초기화 시킨다
+  // accountedit 페이지로의 비정상 접근을 막는다
+  const defaultPasswordVerified = () => {
+    setIsPasswordVerified(false);
   };
 
   // 유저 정보를 가져오는 함수
@@ -330,14 +373,18 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     isSuccess,
     isGetSuccess,
     isVerified,
+    isPasswordVerified,
     loggedInfo,
     sendCode: sendCode,
     emailVerified: emailVerified,
+    passwordVerified: passwordVerified,
     defaultVerified: defaultVerified,
+    defaultPasswordVerified: defaultPasswordVerified,
     signup: signupHandler,
     login: loginHandler,
     signOut: signOutHandler,
     getMyData: getMydata,
+    accountEdit: accountEditHandler,
     getUser: getUserHandler,
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,

@@ -77,6 +77,8 @@ export const verifyEmail = async (email: string) => {
   const params = { email: email };
   try {
     const response: any = await axios.post(url, {}, { params });
+    console.log(response);
+
     return response;
   } catch (error) {
     return null;
@@ -97,7 +99,7 @@ export const signUpActionHandler = async (
   password: string,
   name: string,
   gender: string,
-  birthday: string,
+  birth: string,
   isLocal: string,
   areaCode: number,
   sigunguCode: number
@@ -108,7 +110,7 @@ export const signUpActionHandler = async (
     password,
     name,
     gender,
-    birthday,
+    birth,
     isLocal,
     areaCode,
     sigunguCode,
@@ -129,7 +131,7 @@ export const signInActionHandler = (email: string, password: string) => {
   // response.then((res) => {
   //   return res;
   // });
-  return response
+  return response;
 };
 
 // 로그아웃 함수
@@ -146,12 +148,48 @@ export const signOutActionHandler = (id: number) => {
   return response;
 };
 
+// 내 정보를 가져오는 함수
 export const getMyDataHandler = (token: string) => {
   const url = "api/member/me";
   const headers = createTokenHeader(token);
   const response = axios.get(url, headers);
 
   return response;
+};
+
+// 계정 정보를 수정하는 함수
+export const accountEditActionHandler = async (
+  name: string,
+  gender: string,
+  birth: string,
+  isLocal: string,
+  areaCode: number,
+  sigunguCode: number,
+  token: string
+) => {
+  const url = "/api/member/info";
+  // const data = new FormData();
+  // data.append("name", JSON.stringify(name));
+  // data.append("gender", JSON.stringify(gender));
+  // data.append("birth", JSON.stringify(birth));
+  // data.append("isLocal", JSON.stringify(isLocal));
+  // data.append("areaCode", JSON.stringify(areaCode));
+  // data.append("sigunguCode", JSON.stringify(sigunguCode));
+  const data = {
+    name,
+    gender,
+    birth,
+    isLocal,
+    areaCode,
+    sigunguCode,
+  };
+  const headers = createTokenHeader(token);
+  try {
+    const response = await PUT(url, data, headers);
+    return response;
+  } catch (error) {
+    return null;
+  }
 };
 
 // 스퀘어 유저의 정보를 GET방식으로 호출
