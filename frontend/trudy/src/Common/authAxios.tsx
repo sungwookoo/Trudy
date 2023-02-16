@@ -27,7 +27,6 @@ const fetchAuth = async (fetchData: FetchData) => {
     );
     
     if(response && response.data.error) {
-      console.log((response.data as LoginFailType).error);
       return null;
     }
 
@@ -42,12 +41,10 @@ const fetchAuth = async (fetchData: FetchData) => {
     if (axios.isAxiosError(err)) {
       const serverError = err as AxiosError<ServerError>;
       if (serverError && serverError.response) {
-        console.log(serverError.response.data);
         return null;
       }
     }
 
-    console.log(err);
     return null;
   }
   

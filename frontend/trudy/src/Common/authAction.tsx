@@ -77,6 +77,8 @@ export const verifyEmail = async (email: string) => {
   const params = { email: email };
   try {
     const response: any = await axios.post(url, {}, { params });
+    console.log(response);
+
     return response;
   } catch (error) {
     return null;
@@ -97,7 +99,7 @@ export const signUpActionHandler = async (
   password: string,
   name: string,
   gender: string,
-  birthday: string,
+  birth: string,
   isLocal: string,
   areaCode: number,
   sigunguCode: number
@@ -108,7 +110,7 @@ export const signUpActionHandler = async (
     password,
     name,
     gender,
-    birthday,
+    birth,
     isLocal,
     areaCode,
     sigunguCode,
@@ -129,7 +131,7 @@ export const signInActionHandler = (email: string, password: string) => {
   // response.then((res) => {
   //   return res;
   // });
-  return response
+  return response;
 };
 
 // 로그아웃 함수
@@ -146,12 +148,83 @@ export const signOutActionHandler = (id: number) => {
   return response;
 };
 
+// 내 정보를 가져오는 함수
 export const getMyDataHandler = (token: string) => {
   const url = "api/member/me";
   const headers = createTokenHeader(token);
   const response = axios.get(url, headers);
 
   return response;
+};
+
+// 계정 정보를 수정하는 함수
+export const accountEditActionHandler = async (
+  name: string,
+  gender: string,
+  birth: string,
+  isLocal: string,
+  areaCode: number,
+  sigunguCode: number,
+  token: string
+) => {
+  const url = "/api/member/info";
+  const data = {
+    name,
+    gender,
+    birth,
+    isLocal,
+    areaCode,
+    sigunguCode,
+  };
+  const headers = createTokenHeader(token);
+  try {
+    const response = await PUT(url, data, headers);
+    return response;
+  } catch (error) {
+    return null;
+  }
+};
+
+// 비밀번호를 수정하는 함수
+export const passwordChangeActionHandler = async (
+  currentPassword: string,
+  newPassword: string,
+  token: string
+) => {
+  console.log(currentPassword, newPassword);
+  try {
+    const response = await axios.put(
+      "/api/member/password",
+      {
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      },
+      {
+        headers: { Authorization: `bearer ${token}` },
+      }
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+  // const url = "/api/member/password";
+  // const data = {
+  //   currentPassword: currentPassword,
+  //   newPassword: newPassword,
+  // };
+
+  // const headers = {
+  //   Authorization: "bearer " + token,
+  //   "Content-Type": "application/json"
+  // };
+  // try {
+  //   // const response = await PUT(url, data, headers);
+  //   const response = await axios.put(url, data, { headers });
+  //   return response;
+  // } catch (error) {
+  //   console.log(error);
+  //   return null;
+  // }
 };
 
 // 스퀘어 유저의 정보를 GET방식으로 호출

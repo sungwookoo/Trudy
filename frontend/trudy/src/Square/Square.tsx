@@ -34,7 +34,6 @@ function Square() {
   };
 
   const authCtx = useContext(AuthContext);
-  console.log(squareData, "squareData");
   const imgURL =
     "https://memorableindia.com/blog/wp-content/uploads/2017/11/Frequent-Traveler-Successful.jpg";
   // "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
@@ -71,8 +70,6 @@ function Square() {
     }
     SquareGet();
   }, [areaCode, isLocal, gender, nameSearch]);
-  console.log(areaCode);
-  // console.log(area, "지역");
   return (
     <div className="grid grid-rows-2 gap-4">
       {/* 검색창 */}
@@ -187,11 +184,10 @@ function Square() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:px-2 lg:py-2 shadow-lg">
           {squareData.map((guide: any, i) => {
             return (
-              <>
+              <div key={i}>
                 {authCtx.loggedInfo.uid !== guide.id ? (
                   <div
-                    className="w-full bg-slate-100 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row shadow-lg hover:cursor-pointer hover:bg-green-300"
-                    key={i}
+                    className="w-full bg-slate-100 rounded-lg overflow-hidden flex flex-col md:flex-row shadow-lg"
                     onClick={() => {
                       navigate(`/profile/${guide.id}`);
                     }}
@@ -228,6 +224,13 @@ function Square() {
                             areaList.map((area) => {
                               if (area.id === guide.areaCode) {
                                 return area.name;
+                              }
+                            })}
+                          ,{" "}
+                          {guide.sigunguCode &&
+                            sigunguList[guide.areaCode].map((sigungu: any) => {
+                              if (sigungu.id === guide.sigunguCode) {
+                                return sigungu.name;
                               }
                             })}
                           {/* {guide.areaCode} */}
@@ -307,7 +310,7 @@ function Square() {
                 ) : (
                   ""
                 )}
-              </>
+              </div>
             ); // 여기가 return 끝
           })}
 

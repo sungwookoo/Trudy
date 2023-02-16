@@ -7,82 +7,102 @@ import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Place from "../TrudyMap/Place";
 // 로그인 페이지
 
 function AccountEdit() {
-  const [password, setPassword] = useState<string>("");
-  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [isLocal, setIsLocal] = useState<string>("");
-  const [areaCode, setAreaCode] = useState<any>(null);
-  const [sigunguCode, setSigunguCode] = useState<number>(0);
-  const [data, setData] = useState<any>()
+  const [thisAreaCode, setThisAreaCode] = useState<any>(null);
+  const [thisSigunguCode, setThisSigunguCode] = useState<number>(0);
+  const [data, setData] = useState<any>();
 
-  const [isPassword, setIsPassword] = useState<boolean>(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
-  const [isName, setIsName] = useState<boolean>(false);
-  const [isBirthday, setIsBirthday] = useState<boolean>(false);
-  const [wrongPassword, setWrongPassword] = useState<boolean>(false);
-  const [wrongPasswordConfirm, setWrongPasswordConfirm] =
-    useState<boolean>(false);
+  const [isName, setIsName] = useState<boolean>(true);
+  const [isBirthday, setIsBirthday] = useState<boolean>(true);
+
   const [wrongName, setWrongName] = useState<boolean>(false);
-  const [wrongExistName, setWrongExistName] = useState<boolean>(false);
   const [existName, setExistName] = useState<boolean>(false);
-  const [wrongGender, setWrongGender] = useState<boolean>();
   const [wrongBirthday, setWrongBirthday] = useState<boolean>();
-  const [wrongIsLocal, setWrongIsLocal] = useState<boolean>();
   const [wrongAreaCode, setWrongAreaCode] = useState<boolean>();
   const [wrongSigunguCode, setWrongSigunguCode] = useState<boolean>();
-  const { state } = useLocation();
-  const email = state;
 
   const authCtx = useContext(AuthContext);
 
   const currentDate = new Date();
 
   const handleAreaClick = (id: number) => {
-    setAreaCode(id);
+    setThisAreaCode(id);
+    setThisSigunguCode(0);
     setWrongAreaCode(false);
+    setWrongSigunguCode(false);
   };
 
+  type AreaCodeType = {
+    areaCode: Array<{
+      id: number;
+      name: string;
+    }>;
+    onClick: (id: number, name: string) => void;
+  };
+
+  function AreaSelect({ areaCode, onClick }: AreaCodeType) {
+    return (
+      <div className="flex flex-wrap">
+        {areaCode.map((areaCode, i) => (
+          <div className="p-1">
+            <label
+              key={i}
+              htmlFor={`classification-${areaCode.id}`}
+              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+            >
+              <input
+                type="radio"
+                name="areaCode"
+                id={`classification-${areaCode.id}`}
+                className="mr-0.5 color-green-500"
+                checked={thisAreaCode === areaCode.id}
+                onClick={() => {
+                  onClick(areaCode.id, areaCode.name);
+                }}
+              />
+              {areaCode.name}
+            </label>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   const navigate = useNavigate();
-  function navigateToLending() {
-    navigate("/");
+  function navigateToAccountSetting() {
+    navigate("/accountsetting");
+  }
+
+  function Cancel() {
+    navigate(-1);
   }
 
   useEffect(() => {
-      async function MyData() {
-        const response = await authCtx.getMyData()
-        setData(response)
-        console.log(data)
+    async function MyData() {
+      const response: any = await authCtx.getMyData();
+      setData(response);
     }
-    MyData()
-    // console.log(data.data)
-    // setName(data.)
-    // setGender()
-    // setBirthday()
-    // setIsLocal()
-    // setAreaCode()
-    // setSigunguCode()
-  }, [])
+    MyData();
+  }, []);
 
+  useEffect(() => {
+    if (data) {
+      setName(data.data.name);
+      setGender(data.data.gender);
+      setBirthday(data.data.birth);
+      setIsLocal(data.data.isLocal);
+      setThisAreaCode(data.data.areaCode);
+      setThisSigunguCode(data.data.sigunguCode);
+    }
+  }, [data]);
 
-  function CheckPassword(password: string) {
-    if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}/.test(password)) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-  function CheckPasswordConfirm(passwordConfirm: string) {
-    if (password === passwordConfirm) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
   function CheckNickName(name: string) {
     if (/^[a-zA-Z0-9]{4,16}$/.test(name)) {
       return 1;
@@ -100,10 +120,16 @@ function AccountEdit() {
 
   // 중복 닉네임 확인
   async function isExistName(name: string) {
-    const url = "/api/signup/name";
+    const url = "/api/member/info/name";
+    const headers = {
+      Authorization: "bearer " + localStorage.getItem("token"),
+    };
     const params = { name: name };
+    // const data = new FormData();
+    // data.append("name", JSON.stringify(name));
     try {
-      const response: any = await axios.post(url, {}, { params });
+      const response: any = await axios.post(url, {}, { headers, params });
+      console.log(response);
       if (response.data === 1) {
         return true;
       } else {
@@ -111,10 +137,6 @@ function AccountEdit() {
       }
     } catch {}
   }
-
-  useEffect(() => {
-    return authCtx.defaultVerified;
-  }, []);
 
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
@@ -125,80 +147,6 @@ function AccountEdit() {
         </div>
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
-          {/* 비밀번호 */}
-          <div className="">
-            <div className="relative -space-y-px rounded-md shadow-md">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
-                  wrongPassword ? "border-red-700 border-2 " : "border-gray-300"
-                }`}
-                placeholder=" "
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (CheckPassword(e.target.value) === 1) {
-                    setIsPassword(true);
-                    setWrongPassword(false);
-                  } else {
-                    setIsPassword(false);
-                  }
-                }}
-              />
-              <label
-                htmlFor="password"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
-                Password
-              </label>
-            </div>
-            {password === "" || CheckPassword(password) ? null : (
-              <p className="text-sm text-red-500">
-                8 to 16 characters with a combination of uppercases, lowercases,
-                numbers, and special characters
-              </p>
-            )}
-          </div>
-
-          {/* 비밀번호 확인 */}
-          <div className="">
-            <div className="relative -space-y-px rounded-md shadow-md">
-              <input
-                id="passwordConfirm"
-                name="passwordConfirm"
-                type="password"
-                required
-                className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer  ${
-                  wrongPasswordConfirm
-                    ? "border-red-700 border-2"
-                    : "border-gray-300"
-                }`}
-                placeholder=" "
-                onChange={(e) => {
-                  setPasswordConfirm(e.target.value);
-                  if (CheckPasswordConfirm(e.target.value) === 1) {
-                    setIsPasswordConfirm(true);
-                    setWrongPasswordConfirm(false);
-                  } else {
-                    setIsPasswordConfirm(false);
-                  }
-                }}
-              />
-              <label
-                htmlFor="passwordConfirm"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
-                Password Confirm
-              </label>
-            </div>
-            {passwordConfirm === "" ||
-            CheckPasswordConfirm(passwordConfirm) ? null : (
-              <div className="text-sm text-red-500">password don't match</div>
-            )}
-          </div>
-
           {/* 닉네임 */}
           <div className="">
             <div className="relative -space-y-px rounded-md shadow-md">
@@ -208,12 +156,11 @@ function AccountEdit() {
                 type="text"
                 autoComplete="nickname"
                 required
+                defaultValue={name}
                 minLength={4}
                 maxLength={16}
                 className={`relative block w-full appearance-none rounded-none rounded-b-md border text-sm text-gray-900 bg-transparent border-1 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer  ${
-                  wrongName || wrongExistName
-                    ? "border-red-700 border-2"
-                    : "border-gray-300"
+                  wrongName ? "border-red-700 border-2" : "border-gray-300"
                 }`}
                 placeholder=" "
                 onChange={(e) => {
@@ -221,7 +168,6 @@ function AccountEdit() {
                   isExistName(e.target.value).then((res: any) => {
                     setExistName(res);
                   });
-                  setWrongExistName(false);
                   if (CheckNickName(name) === 1) {
                     setIsName(true);
                     setWrongName(false);
@@ -253,11 +199,7 @@ function AccountEdit() {
           </div>
 
           {/* 성별 */}
-          <div
-            className={`relative -space-y-px rounded-md shadow-md border ${
-              wrongGender ? "border-red-700 border-2" : null
-            }`}
-          >
+          <div className={`relative -space-y-px rounded-md shadow-md border`}>
             <div className="block p-4">
               <div className="">
                 <label
@@ -272,10 +214,10 @@ function AccountEdit() {
                     name="gender"
                     type="radio"
                     value="Male"
+                    checked={gender === "male" || gender === "Male"}
                     required
                     onChange={(e) => {
                       setGender(e.target.value);
-                      setWrongGender(false);
                     }}
                   />
                   Male
@@ -289,9 +231,9 @@ function AccountEdit() {
                   type="radio"
                   value="Female"
                   required
+                  checked={gender === "Female" || gender === "female"}
                   onChange={(e) => {
                     setGender(e.target.value);
-                    setWrongGender(false);
                   }}
                 />
                 <label htmlFor="female">Female</label>
@@ -304,9 +246,9 @@ function AccountEdit() {
                   type="radio"
                   required
                   value="unknown"
+                  checked={gender === "unknown" || gender === "Unknown"}
                   onChange={(e) => {
                     setGender(e.target.value);
-                    setWrongGender(false);
                   }}
                 />
                 <label htmlFor="unknown">I prefer not to say</label>
@@ -332,6 +274,7 @@ function AccountEdit() {
                 name="birthday"
                 type="month"
                 required
+                defaultValue={birthday}
                 onChange={(e) => {
                   setBirthday(e.target.value);
                   if (CheckBirthday(e.target.value) === 1) {
@@ -350,9 +293,7 @@ function AccountEdit() {
 
           {/* 로컬여부 */}
           <div
-            className={`relative -space-y-px rounded-md shadow-md border p-4 ${
-              wrongIsLocal ? "border-red-700 border-2" : null
-            }`}
+            className={`relative -space-y-px rounded-md shadow-md border p-4`}
           >
             <div className="">
               <label
@@ -368,9 +309,9 @@ function AccountEdit() {
                 type="radio"
                 value="1"
                 required
+                checked={isLocal === "1"}
                 onChange={(e) => {
                   setIsLocal(e.target.value);
-                  setWrongIsLocal(false);
                 }}
               />
               Local
@@ -380,11 +321,11 @@ function AccountEdit() {
                 type="radio"
                 value="0"
                 required
+                checked={isLocal === "0"}
                 onChange={(e) => {
                   setIsLocal(e.target.value);
-                  setWrongIsLocal(false);
-                  setAreaCode(null);
-                  setSigunguCode(0);
+                  setThisAreaCode(null);
+                  setThisSigunguCode(0);
                 }}
               />
               Tourist
@@ -400,11 +341,7 @@ function AccountEdit() {
                     wrongAreaCode ? "border-red-700 border-2" : null
                   }`}
                 >
-                  <AreaSelect
-                    key={0}
-                    areaCode={areaList}
-                    onClick={handleAreaClick}
-                  />
+                  {AreaSelect({ areaCode: areaList, onClick: handleAreaClick })}
                   <label
                     htmlFor="name"
                     className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -412,19 +349,19 @@ function AccountEdit() {
                     Area
                   </label>
                 </div>
-                {areaCode && (
+                {thisAreaCode && (
                   <div
                     className={`relative -space-y-px rounded-md shadow-md border p-3 ${
                       wrongSigunguCode ? "border-red-700 border-2" : null
                     }`}
                   >
                     <div className="flex flex-col">
-                      {sigunguList[areaCode].map(
+                      {sigunguList[thisAreaCode].map(
                         (sigunguInfo: any, i: number) => (
                           <div key={i} className="flex items-center mb-2">
                             <label
                               key={i}
-                              htmlFor={`classification-${areaCode.id}`}
+                              htmlFor={`classification-${thisAreaCode.id}`}
                               className="inline-block bg-trudy rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
                             >
                               <input
@@ -432,9 +369,9 @@ function AccountEdit() {
                                 name="sigungu-select"
                                 type="radio"
                                 id={`sigungu-${sigunguInfo.id}`}
-                                checked={sigunguCode === sigunguInfo.id}
+                                checked={thisSigunguCode === sigunguInfo.id}
                                 onChange={() => {
-                                  setSigunguCode(sigunguInfo.id);
+                                  setThisSigunguCode(sigunguInfo.id);
                                   setWrongSigunguCode(false);
                                 }}
                               />
@@ -460,89 +397,67 @@ function AccountEdit() {
             )}
           </div>
 
-          {/* 회원가입 완료 버튼 */}
+          {/* 수정 완료 버튼 */}
           <div>
             <button
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={async (e) => {
                 if (
-                  isPassword === true &&
-                  isPasswordConfirm === true &&
                   isName === true &&
-                  isBirthday === true &&
-                  wrongGender === false &&
-                  wrongIsLocal === false
+                  existName === false &&
+                  isBirthday === true
                 ) {
                   if (isLocal === "0") {
-                    const response: any = await authCtx.signup(
-                      email,
-                      password,
+                    const response = await authCtx.accountEdit(
                       name,
                       gender,
                       birthday,
                       isLocal,
-                      areaCode,
-                      sigunguCode
+                      thisAreaCode,
+                      thisSigunguCode
                     );
                     if (response !== null) {
-                      authCtx.login(email, password);
-                      navigateToLending();
+                      alert("Success!");
+                      navigateToAccountSetting();
                     }
                   } else {
-                    if (areaCode !== null && sigunguCode !== 0) {
-                      const response: any = await authCtx.signup(
-                        email,
-                        password,
+                    if (thisAreaCode !== null && thisSigunguCode !== 0) {
+                      const response = await authCtx.accountEdit(
                         name,
                         gender,
                         birthday,
                         isLocal,
-                        areaCode,
-                        sigunguCode
+                        thisAreaCode,
+                        thisSigunguCode
                       );
                       if (response !== null) {
-                        authCtx.login(email, password);
-                        navigateToLending();
-                      }
-                    } else {
-                      if (areaCode === null) {
-                        setWrongAreaCode(true);
-                      }
-                      if (areaCode !== null && sigunguCode === 0) {
-                        setWrongSigunguCode(true);
+                        alert("Success!");
+                        navigateToAccountSetting();
+                      } else {
+                        if (thisAreaCode === null) {
+                          setWrongAreaCode(true);
+                        }
+                        if (thisAreaCode !== null && thisSigunguCode === 0) {
+                          setWrongSigunguCode(true);
+                        }
                       }
                     }
                   }
                 } else {
-                  if (isPassword === false) {
-                    setWrongPassword(true);
-                  }
-                  if (isPasswordConfirm === false) {
-                    setWrongPasswordConfirm(true);
-                  }
-                  if (isName === false) {
+                  if (isName === false || existName === true) {
                     setWrongName(true);
-                  }
-                  if (wrongExistName === true) {
-                    setWrongExistName(true);
-                  }
-                  if (gender === "") {
-                    setWrongGender(true);
                   }
                   if (isBirthday === false) {
                     setWrongBirthday(true);
                   }
-                  if (isLocal === "") {
-                    setWrongIsLocal(true);
-                  }
-                  if (isLocal === "1" && areaCode === null) {
+                  if (isLocal === "1" && thisAreaCode === null) {
                     setWrongAreaCode(true);
                   }
                   if (
                     isLocal === "1" &&
-                    areaCode !== null &&
-                    sigunguCode === 0
+                    thisAreaCode !== null &&
+                    thisSigunguCode === 0
                   ) {
                     setWrongSigunguCode(true);
                   }
@@ -550,10 +465,22 @@ function AccountEdit() {
               }}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
-              Submit
+              Edit
             </button>
           </div>
         </form>
+        <div>
+          <button
+            type="button"
+            className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            onClick={(e) => {
+              Cancel();
+            }}
+          >
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

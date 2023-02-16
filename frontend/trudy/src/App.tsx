@@ -23,7 +23,8 @@ import ForumPostEdit from "./Forum/ForumPostEdit";
 import ChatRoom from "./Chat/ChatRoom";
 import "./App.css";
 import AccountEdit from "./Account/AccountEdit";
-import PasswordConfirm from "./Account/PasswordConfirm";
+import PasswordChange from "./Account/PasswordChange";
+import AccountSetting from "./Account/AccountSetting";
 
 function App() {
   // Code to handle form submission
@@ -120,8 +121,12 @@ function App() {
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <EmailConfirm />}
         />
         <Route
-          path="/confirm"
-          element={authCtx.isLoggedIn ? <PasswordConfirm /> : <SignIn />}
+          path="/accountsetting"
+          element={authCtx.isLoggedIn ? <AccountSetting /> : <SignIn />}
+        />
+        <Route
+          path="/passwordchange"
+          element={authCtx.isLoggedIn ? <PasswordChange /> : <SignIn />}
         />
         <Route
           path="/accountedit"
