@@ -26,7 +26,14 @@ export type mapPlaceType = {
   zipcode: string | undefined;
 };
 
-function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, memberId, setbookmarkList, mapVisible }: any) {
+function Place({
+  onPlaceClick = () => {},
+  bookmarkedIds,
+  setbookmarkedIds,
+  memberId,
+  setbookmarkList,
+  mapVisible,
+}: any) {
   const [selectedPlace, setSelectedPlace] = useState<mapPlaceType | null>(null);
   const [places, setPlaces] = useState<mapPlaceType[]>([]);
   // 관광 정보 query
@@ -88,7 +95,8 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       setIsLoading(true);
       try {
         const resData: any = await axios.get(
-          API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
+          API_URL +
+            `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
         );
         setPlaces(resData.data);
       } catch (error) {
@@ -106,17 +114,42 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       {/* 지역 버튼 */}
       <div>
         <div>
-          <SearchBar searchChange={searchChange} setNameSearch={setkeyword} setSearchChange={setSearchChange} />
-          <div>
-            <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
+          <SearchBar
+            searchChange={searchChange}
+            setNameSearch={setkeyword}
+            setSearchChange={setSearchChange}
+          />
+          <div className="flex items-center mb-2">
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className={`flex items-center p-1 m-2 h-12 rounded-lg  ${
+                !isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"
+              }`}
+            >
               Area Select
             </button>
-            <button className="clear-btn" onClick={clearFilter}>
+            {/* 카테고리 */}
+            <div>
+              <CategoryButtons
+                onClick={handleCategoryClick}
+                selectedCategories={contentTypeId}
+              />
+            </div>
+            <button
+              className="clear-btn p-1 mr-8 py-3 ml-1 flex justify-center items-center"
+              onClick={clearFilter}
+            >
               Clear
             </button>
           </div>
-          <div>
-            {!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}
+          <div className="">
+            {!isCollapsed && (
+              <AreaSelect
+                key={0}
+                areaCode={areaList}
+                onClick={handleAreaClick}
+              />
+            )}
             {!isCollapsed && selectedAreaCode && (
               <SigunguSelect
                 key={selectedAreaCode}
@@ -129,8 +162,13 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
             )}
           </div>
         </div>
-        {/* 카테고리 */}
-        <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
+        <div className="">
+          {/* 카테고리 */}
+          {/* <CategoryButtons
+            onClick={handleCategoryClick}
+            selectedCategories={contentTypeId}
+          /> */}
+        </div>
       </div>
       <div className="flex flex-wrap place-content-center">
         {places ? (
@@ -163,7 +201,11 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       </div>
       {isLoading && (
         <div className="flex justify-center items-center w-full h-full">
-          <img src={trudylogo} alt="Loading" className="w-12 h-12 animate-spin" />
+          <img
+            src={trudylogo}
+            alt="Loading"
+            className="w-12 h-12 animate-spin"
+          />
         </div>
       )}
     </div>

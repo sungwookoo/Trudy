@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./Forum.css";
 import ForumItem from "./ForumItem";
 import axios from "axios";
-import ForumSearch from "./ForumSearch";
 import CategoryButtons from "../Filter/SelectCategory";
 import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
