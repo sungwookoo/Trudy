@@ -215,23 +215,24 @@ function ForumDetail() {
       {/*=====================================댓글==============================================*/}
 
       <div>
-        <div className="forum-detail-comment-section">
-          comment input area
+        <div className="forum-detail-comment-section mt-6 mb-6">
           {/* 로그인 시 댓글 작성 가능하도록, 대댓글도 */}
-          <br />
+          <div className="flex items-center">
           <input
+            className="comment-input-area ml-3"
             type="text"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
           <button
-            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 mx-2 hover:bg-green-400"
+            className="forum-input-submit-button rounded-md bg-gray-300 border border-black border-2 mx-2 hover:bg-green-400"
             onClick={onClickHandlerComment}
           >
-            Comment Submit!
+          Submit
           </button>
+          </div>
         </div>
-        comment Area
+        
         <div>
           {/* {commentObject && <Comment props={commentObject} />} */}
           {/* //=========================추가됨 */}

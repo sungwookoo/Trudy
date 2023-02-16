@@ -62,3 +62,14 @@
   width: 800px;
   background: green;
 }
+
+
+.comment-input-area{
+  width: 800px;
+  min-height: 40px;
+  border-radius: 5px;
+}
+
+.forum-input-submit-button{
+  width: 80px;
+}
