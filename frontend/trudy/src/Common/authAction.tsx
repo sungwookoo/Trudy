@@ -145,6 +145,15 @@ export const signOutActionHandler = (id: number) => {
   return response;
 };
 
+
+export const getMyDataHandler = (token: string) => {
+  const url = "api/member/me"
+  const headers = createTokenHeader(token);
+  const response = axios.get(url, headers)
+
+  return response
+}
+
 // 스퀘어 유저의 정보를 GET방식으로 호출
 export const getUserActionHandler = (params: any) => {
   const url = "/api/member";

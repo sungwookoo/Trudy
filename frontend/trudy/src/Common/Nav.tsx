@@ -15,13 +15,14 @@ function Nav(navProfileImg: any) {
     setIsOpen(!isOpen);
   };
   const token = "bearer " + localStorage.getItem("token");
-
-  // const navigateToProfile = useNavigate()
-  // navigateToProfile('/profile')
+  const navigate = useNavigate();
+  function navigateToProfile() {
+    navigate("/profile");
+  }
   const navproImg = navProfileImg;
   const authCtx = useContext(AuthContext);
   const signOut = () => {
-    console.log('nav.tsx 작동')
+    console.log("nav.tsx 작동");
     authCtx.signOut();
   };
 
@@ -113,17 +114,25 @@ function Nav(navProfileImg: any) {
                 <div className="chat-nav-item fixed z-50 bottom-0 right-0"></div>
               </NavLink>
             </div>
-            <div className="nav-item flex flex-row items-center">
+            <div
+              className="nav-item flex flex-row items-center cursor-pointer"
+              onClick={navigateToProfile}
+            >
               <NavImage />
               {/* <img
                 className="nav-profile-img mr-12"
                 src={navproImg}
                 alt="navProfileImage"
               /> */}
-              <NavLink className="nav-link" to="/profile">
+              <NavLink className="nav-item" to="/profile">
                 Profile
               </NavLink>
             </div>
+            {/* <div>
+              <NavLink className="nav-item" to="/confirm">
+                Account
+              </NavLink>
+            </div> */}
             <div className="nav-item">
               <button className="nav-link mr-3" onClick={signOut}>
                 SignOut

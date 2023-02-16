@@ -22,6 +22,8 @@ import ProfileEdit from "./Profile/ProfileEdit";
 import ForumPostEdit from "./Forum/ForumPostEdit";
 import ChatRoom from "./Chat/ChatRoom";
 import "./App.css";
+import AccountEdit from "./Account/AccountEdit";
+import PasswordConfirm from "./Account/PasswordConfirm";
 
 function App() {
   // Code to handle form submission
@@ -117,7 +119,14 @@ function App() {
           path="/emailconfirm"
           element={authCtx.isLoggedIn ? <Navigate to="/" /> : <EmailConfirm />}
         />
-
+        <Route
+          path="/confirm"
+          element={authCtx.isLoggedIn ?  <PasswordConfirm /> : <SignIn />}
+        />
+        <Route
+          path="/accountedit"
+          element={authCtx.isLoggedIn ?  <AccountEdit /> : <SignIn />}
+        />
         {/* 로그인한 상태면 랜딩페이지로 */}
         {/* 로그인 안했는데 이메일 인증 안했으면 이메일 인증 페이지로 */}
         {/* 로그인 안했는데 이메일 인증은 했으면 회원가입 페이지로 */}
