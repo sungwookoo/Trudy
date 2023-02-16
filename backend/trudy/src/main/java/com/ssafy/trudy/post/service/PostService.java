@@ -208,7 +208,7 @@ public class PostService {
             commentElement = modelMapper.map(commentEntity, PostDto.CommentElement.class);
 
             //3. Comment DTO에 entity를 DTO로 변환후 CustomMemberForComment 저장
-            commentElement.setCustomMemberForComment(modelMapper.map(commentEntity.getPostId().getMemberId(), PostDto.CustomMemberForComment.class));
+            commentElement.setCustomMemberForComment(modelMapper.map(commentEntity.getMemberId(), PostDto.CustomMemberForComment.class));
 
             //4. comment DTO에 comment_like count 저장
             commentElement.setCommentLikeCount(commentLikeRepository.countByCommentId(commentEntity));
@@ -304,7 +304,7 @@ public class PostService {
         // comment 존재 & nested comment 존재 시
         if(commentEntity.isPresent() && nestedCommentCount > 0){
             commentEntity.get().setIsDeleted((byte) 1);
-            commentEntity.get().setContent("삭제된 댓글 입니다");
+            commentEntity.get().setContent("Deleted Comment");
         }
         // comment 만 존재 시 -> 삭제
         else if(commentEntity.isPresent()){
