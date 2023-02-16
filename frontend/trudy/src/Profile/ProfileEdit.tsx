@@ -43,7 +43,10 @@ function Profile() {
   const [updatedTitle, setUpdatedTitle] = useState<string>("");
   const [updatedLanguage, setUpdatedLanguage] = useState<string>("");
   const [updatedPublic, setUpdatedPublic] = useState<string>("");
-
+  const [updatedFacebook, setUpdatedFacebook] = useState<string>("");
+  const [updatedTwitter, setUpdatedTwitter] = useState<string>("");
+  const [updatedInstagram, setUpdatedInstagram] = useState<string>("");
+  const [updatedGithub, setUpdatedGithub] = useState<string>("");
   const navigate = useNavigate();
   const navigateToProfile = () => {
     navigate("/profile");
@@ -104,6 +107,10 @@ function Profile() {
           self: updatedSelf,
           title: updatedTitle,
           language: updatedLanguage,
+          facebook: updatedFacebook,
+          instagram: updatedInstagram,
+          twitter: updatedTwitter,
+          github: updatedGithub,
         },
         {
           headers: {
@@ -144,7 +151,7 @@ function Profile() {
 
   // 프로필 공개 토글 클릭
   const checkToggle = () => {
-    console.log(updatePublic, '여기')
+    // console.log(updatePublic, "여기");
     if (updatedPublic === "0") {
       setUpdatedPublic("1");
     } else {
@@ -172,28 +179,44 @@ function Profile() {
               }}
             />
           )}
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            onChange={handleProfilePictureUpload}
-            id="profile-picture-upload"
-            style={{ display: "none" }}
-          />
+          <input type="file" accept=".png, .jpg, .jpeg" onChange={handleProfilePictureUpload} id="profile-picture-upload" style={{ display: "none" }} />
 
           <div>
             <h1 className="myprofile-username">{profile.name}</h1>
 
             <div className="flex">
-              {profile.isLocal === "1" ? (
-                <div className="mr-8">{profile.areaCode}</div>
-              ) : (
-                <div></div>
-              )}
+              {profile.isLocal === "1" ? <div className="mr-8 border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.areaCode}</div> : <div></div>}
               {/* <div className="mr-5">{profile.areaCode}</div> */}
-              <div className="capitalize">{profile.gender}</div>
+              <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.gender}</div>
             </div>
-            <div className="">
-              {profile.isLocal === "1" ? "Local" : "Tourist"}
+            <div className="border border-1 rounded-md px-1 mx-1 bg-green-200">{profile.isLocal === "1" ? "Local" : "Tourist"}</div>
+            <div className="mt-4">
+              {" "}
+              Facebook :
+              <textarea className="profile-intro-edit " value={updatedFacebook} onChange={(event) => setUpdatedFacebook(event.target.value)}>
+                {profile.introduceId ? profile.introduceId.facebook : ""}
+              </textarea>
+            </div>
+            <div className=" mt-4">
+              {" "}
+              Instagram :
+              <textarea className="instagram-edit " value={updatedInstagram} onChange={(event) => setUpdatedInstagram(event.target.value)}>
+                {profile.introduceId ? profile.introduceId.instagram : ""}
+              </textarea>
+            </div>
+            <div className=" mt-4">
+              {" "}
+              Twitter :
+              <textarea className="twitter-intro-edit " value={updatedTwitter} onChange={(event) => setUpdatedTwitter(event.target.value)}>
+                {profile.introduceId ? profile.introduceId.twitter : ""}
+              </textarea>
+            </div>
+            <div className="mt-4">
+              {" "}
+              Github :
+              <textarea className="github-intro-edit " value={updatedGithub} onChange={(event) => setUpdatedGithub(event.target.value)}>
+                {profile.introduceId ? profile.introduceId.github : ""}
+              </textarea>
             </div>
           </div>
         </div>
@@ -211,18 +234,9 @@ function Profile() {
               Save Edit
             </button>
             {/* 토글 바 */}
-            <label
-              htmlFor="toggleB"
-              className="flex items-center cursor-pointer"
-            >
+            <label htmlFor="toggleB" className="flex items-center cursor-pointer">
               <div className="relative">
-                <input
-                  type="checkbox"
-                  id="toggleB"
-                  className="sr-only"
-                  onClick={checkToggle}
-                  defaultChecked={updatedPublic === "0" ? false : true}
-                />
+                <input type="checkbox" id="toggleB" className="sr-only" onClick={checkToggle} defaultChecked={updatedPublic === "0" ? false : true} />
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>
@@ -235,11 +249,7 @@ function Profile() {
         </div>
 
         <div className="edit-profile-intro mt-4">
-          <textarea
-            className="profile-intro-edit "
-            value={updatedSelf}
-            onChange={(event) => setUpdatedSelf(event.target.value)}
-          >
+          <textarea className="profile-intro-edit " value={updatedSelf} onChange={(event) => setUpdatedSelf(event.target.value)}>
             {profile.introduceId ? profile.introduceId.self : ""}
           </textarea>
         </div>
@@ -247,42 +257,28 @@ function Profile() {
       <div className="content-box flex place-content-center mb-5">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
-        <div className="flex place-content-center font-bold text-4xl">
-          About
-        </div>
+        <div className="flex place-content-center font-bold text-4xl">About</div>
       </div>
       {/* </div> */}
       <div className="about-me grid grid-cols-1">
         <hr className="about-me-hr" />
         <div className="flex flex-col about-box mt-2">
-          <div className="text-4xl font-semibold mt-6">I will show you</div>
+          <div className="text-4xl flex flex-start font-semibold mt-6">I will show you</div>
           <div className="capitalize text-xl mt-3">
-            <textarea
-              className="profile-textarea-edit"
-              value={updatedPlan}
-              onChange={(event) => setUpdatedPlan(event.target.value)}
-            >
+            <textarea className="profile-textarea-edit" value={updatedPlan} onChange={(event) => setUpdatedPlan(event.target.value)}>
               {profile.introduceId ? profile.introduceId.plan : ""}
             </textarea>
           </div>
           <div className="text-4xl font-semibold mt-6">About me</div>
           <div className="capitalize text-2xl mt-3">
-            <textarea
-              className="profile-textarea-edit"
-              value={updatedTitle}
-              onChange={(event) => setUpdatedTitle(event.target.value)}
-            >
+            <textarea className="profile-textarea-edit" value={updatedTitle} onChange={(event) => setUpdatedTitle(event.target.value)}>
               {profile.introduceId ? profile.introduceId.title : ""}
             </textarea>
           </div>
 
           <div className="text-4xl font-semibold mt-6">Language</div>
           <div className="capitalize text-2xl mt-3">
-            <textarea
-              className="profile-textarea-edit"
-              value={updatedLanguage}
-              onChange={(event) => setUpdatedLanguage(event.target.value)}
-            >
+            <textarea className="profile-textarea-edit" value={updatedLanguage} onChange={(event) => setUpdatedLanguage(event.target.value)}>
               {profile.introduceId ? profile.introduceId.language : ""}
             </textarea>
           </div>
