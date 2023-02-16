@@ -71,9 +71,7 @@ function Nav(navProfileImg: any) {
 
         {/* 지도 */}
         <div
-          className={`${
-            selectedNav === "/trudymap" ? "nav-item-select" : "nav-item"
-          }`}
+          className={`${selectedNav === "/trudymap" ? "nav-item-select" : "nav-item"}`}
           onClick={(e) => {
             handelClickNav(e);
           }}
@@ -85,9 +83,7 @@ function Nav(navProfileImg: any) {
 
         {/* 포럼 */}
         <div
-          className={`${
-            selectedNav === "/forum" ? "nav-item-select" : "nav-item"
-          }`}
+          className={`${selectedNav === "/forum" ? "nav-item-select" : "nav-item"}`}
           onClick={(e) => {
             handelClickNav(e);
           }}
@@ -99,9 +95,7 @@ function Nav(navProfileImg: any) {
 
         {/* 스퀘어 */}
         <div
-          className={`${
-            selectedNav === "/square" ? "nav-item-select" : "nav-item"
-          }`}
+          className={`${selectedNav === "/square" ? "nav-item-select" : "nav-item"}`}
           onClick={(e) => {
             handelClickNav(e);
           }}
@@ -112,11 +106,11 @@ function Nav(navProfileImg: any) {
         </div>
 
         {/* 플래너 */}
-        <div className="nav-item">
+        {/* <div className="nav-item">
           <NavLink className="nav-link" to="/planner">
             Planner
           </NavLink>
-        </div>
+        </div> */}
       </div>
 
       <div className="profile-signout">
@@ -126,9 +120,7 @@ function Nav(navProfileImg: any) {
         {!authCtx.isLoggedIn ? (
           <>
             <div
-              className={`${
-                selectedNav === "/signin" ? "nav-item-select" : "nav-item"
-              }`}
+              className={`${selectedNav === "/signin" ? "nav-item-select" : "nav-item"}`}
               onClick={(e) => {
                 handelClickNav(e);
               }}
@@ -138,9 +130,7 @@ function Nav(navProfileImg: any) {
               </NavLink>
             </div>
             <div
-              className={`${
-                selectedNav === "/signupselect" ? "nav-item-select" : "nav-item"
-              }`}
+              className={`${selectedNav === "/signupselect" ? "nav-item-select" : "nav-item"}`}
               onClick={(e) => {
                 handelClickNav(e);
               }}
@@ -158,10 +148,7 @@ function Nav(navProfileImg: any) {
                 <div className="chat-nav-item fixed z-50 bottom-0 right-0"></div>
               </NavLink>
             </div>
-            <div
-              className="nav-item flex flex-row items-center cursor-pointer"
-              onClick={navigateToProfile}
-            >
+            <div className="nav-item flex flex-row items-center cursor-pointer" onClick={navigateToProfile}>
               <NavImage />
               {/* <img
                 className="nav-profile-img mr-12"
@@ -169,9 +156,7 @@ function Nav(navProfileImg: any) {
                 alt="navProfileImage"
               /> */}
               <NavLink
-                className={`${
-                  selectedNav === "/profile" ? "nav-item-select" : "nav-item"
-                }`}
+                className={`${selectedNav === "/profile" ? "nav-item-select" : "nav-item"}`}
                 onClick={(e) => {
                   handelClickNav(e);
                 }}
@@ -182,11 +167,7 @@ function Nav(navProfileImg: any) {
             </div>
             <div>
               <NavLink
-                className={`${
-                  selectedNav === "/accountsetting"
-                    ? "nav-item-select"
-                    : "nav-item"
-                }`}
+                className={`${selectedNav === "/accountsetting" ? "nav-item-select" : "nav-item"}`}
                 onClick={(e) => {
                   handelClickNav(e);
                 }}

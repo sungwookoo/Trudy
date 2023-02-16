@@ -164,7 +164,7 @@ function TrudyMap() {
             ) : (
               // --------------------------------------------------------------------------
               // 로그인 안되어있는 경우
-              <Place bookmarkedIds={bookmarkedIds} setbookmarkedIds={setbookmarkedIds} mapVisible={mapVisible} />
+              <Place bookmarkedIds={bookmarkedIds} setbookmarkedIds={setbookmarkedIds} mapVisible={mapVisible} onPlaceClick={updateCenter} />
             )}
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
