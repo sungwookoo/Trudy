@@ -8,7 +8,7 @@ import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
 import SearchBar from "../Common/SearchBar";
-import trudylogo from "../assets/trudylogo.png"
+import trudylogo from "../assets/trudylogo.png";
 import "./Place.css";
 
 export type mapPlaceType = {
@@ -72,7 +72,6 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   // 대분류 선택시 해당 대분류 id 가진 세부지역 checkbox 표시하기
   const handleAreaClick = (id: number) => {
-    console.log(id);
     setSelectedAreaCode(id);
   };
 
@@ -84,8 +83,9 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   // 관광 정보 데이터 불러오기
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
         const resData: any = await axios.get(
           API_URL + `?offset=${offset}&limit=${limit}&areaSigun=${areaSigun}&contentTypeId=${contentTypeId}&keyword=${keyword}`
@@ -94,13 +94,13 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       } catch (error) {
         console.error(error);
       } finally {
-      setIsLoading(false)
-    }};
+        setIsLoading(false);
+      }
+    };
     fetchData();
     // 필터 값 바뀌면 limit 값 변경해주기
   }, [limit, offset, areaSigun, contentTypeId, keyword]);
 
-  console.log(places);
   return (
     <div>
       {/* 지역 버튼 */}
@@ -108,10 +108,12 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
         <div>
           <SearchBar searchChange={searchChange} setNameSearch={setkeyword} setSearchChange={setSearchChange} />
           <div>
-              <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
-                Area Select
-              </button>
-              <button className="clear-btn" onClick={clearFilter}>Clear</button>
+            <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
+              Area Select
+            </button>
+            <button className="clear-btn" onClick={clearFilter}>
+              Clear
+            </button>
           </div>
           <div>
             {!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}
@@ -128,7 +130,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
           </div>
         </div>
         {/* 카테고리 */}
-        <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId}/>
+        <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
       </div>
       <div className="flex flex-wrap place-content-center">
         {places ? (
@@ -151,7 +153,11 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
         )}
       </div>
       <div className="more-button-center">
-        <button onClick={() => setLimit(limit + 10)} color="black" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded-full more-button">
+        <button
+          onClick={() => setLimit(limit + 10)}
+          color="black"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded-full more-button"
+        >
           more
         </button>
       </div>
