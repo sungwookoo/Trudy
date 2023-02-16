@@ -184,7 +184,7 @@ function Square() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:px-2 lg:py-2 shadow-lg">
           {squareData.map((guide: any, i) => {
             return (
-              <div key={i}>
+              <>
                 {authCtx.loggedInfo.uid !== guide.id ? (
                   <div
                     className="w-full bg-slate-100 rounded-lg overflow-hidden flex flex-col md:flex-row shadow-lg"
@@ -310,7 +310,7 @@ function Square() {
                 ) : (
                   ""
                 )}
-              </div>
+              </>
             ); // 여기가 return 끝
           })}
 
