@@ -1,6 +1,9 @@
 import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import nopictures from "../assets/nopictures.png";
+import bookmark_yes from "../assets/star_yes.png";
+import bookmark_no from "../assets/star_no.png";
+import "../Common//Bookmark.css";
 
 type PlaceFormProps = {
   place: {
@@ -112,14 +115,14 @@ function PlaceForm({ place, onClick = () => {}, bookmarkedIds = [], setbookmarke
           </div>
           {memberId && (
             <img
-              src={isBookmarked ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png" : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"}
+              src={isBookmarked ? `${bookmark_yes}` : `${bookmark_no}`}
               alt="bookmark"
               onClick={handleBookmarkClick}
               style={{ cursor: "pointer" }}
-              className="w-16"
-            />
+              className="star_img w-10"
+            /> 
           )}
-          {isLoading && <div>Loading...</div>}
+          {isLoading && <div></div>}
         </div>
       ) : (
         <div className="max-w-sm rounded overflow-hidden shadow-lg m-5" onClick={handleClick} style={{ cursor: "pointer" }}>
@@ -136,14 +139,14 @@ function PlaceForm({ place, onClick = () => {}, bookmarkedIds = [], setbookmarke
           </div>
           {memberId && (
             <img
-              src={isBookmarked ? "https://cdn-icons-png.flaticon.com/128/4101/4101575.png" : "https://cdn-icons-png.flaticon.com/128/4101/4101579.png"}
+              src={isBookmarked ? `${bookmark_yes}` : `${bookmark_yes}`}
               alt="bookmark"
               onClick={handleBookmarkClick}
               style={{ cursor: "pointer" }}
-              className="w-16"
+              className="star_img w-10"
             />
           )}
-          {isLoading && <div>Loading...</div>}
+          {isLoading && <div></div>}
         </div>
       )}
     </>
