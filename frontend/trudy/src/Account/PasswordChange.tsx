@@ -59,7 +59,6 @@ function PasswordChange() {
         newPassword
       );
       if (response !== null) {
-        console.log('결과', response)
         alert("Success!");
         NavigateToAccountSetting();
       } else {

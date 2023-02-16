@@ -68,11 +68,13 @@ function Profile() {
         setUpdatedPlan(res.data.introduceId.plan);
         setUpdatedTitle(res.data.introduceId.title);
         setUpdatedLanguage(res.data.introduceId.language);
-        setUpdatedPublic(res.data.isPublic);
-        console.log(res.data.introduceId.title, 222);
-        console.log(res.data, 11111);
+        if (res.data.isPublic !== null) {
+          setUpdatedPublic(res.data.isPublic);
+        } else {
+          setUpdatedPublic("0");
+        }
       })
-      .catch((err: any) => console.error(err));
+      .catch((err: any) => {});
   }, []);
 
   // 프로필 이미지 업로드
@@ -89,16 +91,12 @@ function Profile() {
       })
       .then((res) => {
         setProfile({ ...profile, image: res.data.imageUrl });
-        console.log(res, "업로드 성공");
       })
-      .catch((err) => {
-        console.log(err, "업로드 실패");
-      });
+      .catch((err) => {});
   };
 
   const updateProfile = async (e: any) => {
     e.preventDefault();
-    console.log(token);
     try {
       const response = await axiosInstance.put(
         "api/member/intro",
@@ -118,12 +116,9 @@ function Profile() {
           },
         }
       );
-      console.log(response, "프로필 수정 성공");
       navigateToProfile();
-      window.location.replace("/profile");
-    } catch (error) {
-      console.log(error, "프로필 수정 실패");
-    }
+      // window.location.replace("/profile");
+    } catch (error) {}
   };
 
   // 프로필 공개여부
@@ -141,17 +136,13 @@ function Profile() {
           },
         }
       );
-      console.log(response, "프로필 공개여부 수정 성공");
-      navigateToProfile();
+      // navigateToProfile();
       window.location.replace("/profile");
-    } catch (error) {
-      console.log(error, "프로필 공개여부 수정 실패");
-    }
+    } catch (error) {}
   };
 
   // 프로필 공개 토글 클릭
   const checkToggle = () => {
-    // console.log(updatePublic, "여기");
     if (updatedPublic === "0") {
       setUpdatedPublic("1");
     } else {
@@ -163,7 +154,6 @@ function Profile() {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  console.log(profile, 444);
   return (
     // 프로필 컨테이너 파란 영역
     <div className="profile-update-container">
@@ -236,7 +226,13 @@ function Profile() {
             {/* 토글 바 */}
             <label htmlFor="toggleB" className="flex items-center cursor-pointer">
               <div className="relative">
-                <input type="checkbox" id="toggleB" className="sr-only" onClick={checkToggle} defaultChecked={updatedPublic === "0" ? false : true} />
+                <input
+                  type="checkbox"
+                  id="toggleB"
+                  className="sr-only"
+                  onClick={checkToggle}
+                  checked={updatedPublic === "0" ? false : true}
+                />
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>

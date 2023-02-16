@@ -129,7 +129,6 @@ function AccountEdit() {
     // data.append("name", JSON.stringify(name));
     try {
       const response: any = await axios.post(url, {}, { headers, params });
-      console.log(response);
       if (response.data === 1) {
         return true;
       } else {

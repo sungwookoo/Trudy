@@ -102,17 +102,21 @@ const UseruserInfo = () => {
             src={userInfo.image || defaultImage}
           ></img>
           <div className="h-24 ml-3">
-            <h1 className="userInfo-username capitalize image.png">{userInfo.name}</h1>
+            <h1 className="userInfo-username capitalize image.png">
+              {userInfo.name}
+            </h1>
             <div className="ml-1 pt-1">
-            <div className="flex">
-            {userInfo.isLocal === "1" ? (
-                <div className="mr-8">{userInfo.areaCode}</div>
-                ) : ( 
-                <div></div>
+              <div className="flex">
+                {userInfo.isLocal === "1" ? (
+                  <div className="mr-8">{userInfo.areaCode}</div>
+                ) : (
+                  <div></div>
                 )}
                 <div className="capitalize">{userInfo.gender}</div>
               </div>
-              <div className=''>{userInfo.isLocal === '1' ? 'Local' : 'Tourist'}</div>
+              <div className="">
+                {userInfo.isLocal === "1" ? "Local" : "Tourist"}
+              </div>
             </div>
           </div>
         </div>
@@ -155,40 +159,57 @@ const UseruserInfo = () => {
       </div>
       <div className="content-box grid grid-cols-2 place-content-center mb-2">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
-        <div className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer" onClick={() => setViewPost(!viewPost)}>
-          About
+          <div
+            className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
+            onClick={() => setViewPost(!viewPost)}
+          >
+            About
+          </div>
+
+          <div
+            className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
+            onClick={() => setViewPost(!viewPost)}
+          >
+            Posts
+          </div>
         </div>
 
-        <div className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer" onClick={() => setViewPost(!viewPost)}>
-          Posts
+        <div className="user-about-me">
+          <hr className="user-about-me-hr" />
+          {!viewPost ? (
+            <div className="flex flex-col userprofile-about-box mt-5">
+              <div className="text-4xl font-semibold">I will show you</div>
+              <div className="capitalize text-2xl mt-5">
+                {userInfo.introduceId ? userInfo.introduceId.plan : ""}
+              </div>
+
+              <div className="text-4xl font-semibold mt-10">About me</div>
+              <div className="capitalize text-2xl mt-5">
+                {userInfo.introduceId ? userInfo.introduceId.title : ""}
+              </div>
+
+              <div className="text-4xl font-semibold mt-10">Language</div>
+              <div className="capitalize text-2xl mt-5">
+                {userInfo.introduceId ? userInfo.introduceId.language : ""}
+              </div>
+            </div>
+          ) : (
+            <div>
+              {getuserpost.map((post: any, i: any) => (
+                <ProfileMyPost
+                  key={i}
+                  post={post}
+                  memberdetails={userInfo.id}
+                />
+              ))}
+            </div>
+          )}
         </div>
+        {/* <ProfileMyPost id={profile.id}/> */}
+        {/* <ProfileMyPost /> */}
+
+        {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
       </div>
-
-      <div className="user-about-me">
-        <hr className="user-about-me-hr" />
-        {!viewPost ? (
-          <div className="flex flex-col userprofile-about-box mt-5">
-            <div className="text-4xl font-semibold">I will show you</div>
-            <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.plan : ""}</div>
-
-            <div className="text-4xl font-semibold mt-10">About me</div>
-            <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.title : ""}</div>
-
-            <div className="text-4xl font-semibold mt-10">Language</div>
-            <div className="capitalize text-2xl mt-5">{userInfo.introduceId ? userInfo.introduceId.language : ""}</div>
-          </div>
-        ) : (
-          <div>
-            {getuserpost.map((post: any, i: any) => (
-              <ProfileMyPost key={i} post={post} memberdetails={userInfo.id} />
-            ))}
-          </div>
-        )}
-      </div>
-      {/* <ProfileMyPost id={profile.id}/> */}
-      {/* <ProfileMyPost /> */}
-
-      {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
     </div>
   );
 };

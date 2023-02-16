@@ -237,7 +237,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       newPassword,
       token
     );
-      console.log('ctx', response)
     if (response !== null) {
       return response;
     } else {
