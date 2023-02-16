@@ -136,7 +136,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       setIsSuccess(true);
       return response;
     } else {
-      return null
+      return null;
     }
   };
 
@@ -174,10 +174,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(async () => {
-    console.log(loggedInfo)
+    console.log(loggedInfo);
     await authAction.signOutActionHandler(loggedInfo.uid);
     setToken("");
-    console.log('여기')
+    console.log("여기");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
