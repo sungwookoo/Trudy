@@ -6,6 +6,7 @@ import "./ForumDetail.css";
 import AuthContext from "../Common/authContext";
 import ForumDeleteModal from "./ForumDeleteModal";
 import Parser from "html-react-parser";
+import Comment from "./Comment";
 
 interface IForumDetailProps {
   post_id: number;
@@ -28,8 +29,10 @@ function ForumDetail() {
   const [forumCategory, setForumCategory] = useState<string[]>([]);
   const [isDeleted, setIsDeleted] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [commentObject, setCommentObject] = useState<any>(null); // 댓글 객체
+  const [comment, setComment] = useState("");
 
-  console.log (loggedinId, "로그인아이디");
+  console.log(loggedinId, "로그인아이디");
   const postEditnavigate = () => {
     navigate(`/post/update/${id}`);
   };
@@ -58,29 +61,31 @@ function ForumDetail() {
   const getForumItem = async () => {
     try {
       const response = await axios.get(`/api/post/${id}`);
+      setCommentObject(response.data.commentCombine.commentElementList);
       setForumItem(response.data.postCombine.postElement);
       setforumMember(response.data.postCombine.memberElement);
       setForumRegion(response.data.postCombine.sigunguCodeList);
-      setForumCategory(response.data.postCombine.categoryNameList.map((categoryName:any) => {
-        if (categoryName === '82') {
-          return 'Food';
-        } else if (categoryName === '80') {
-          return 'Accommodation';
-        } else if (categoryName === '85') {
-          return 'Festival';
-        } else if (categoryName === '76') {
-          return 'Attraction';
-        } else if (categoryName === '75') {
-          return 'Sports';
-        } else if (categoryName === '78') {
-          return 'Culture';
-        } else if (categoryName === '79') {
-          return 'Shopping';
-        }
-      else {
-          return categoryName;
-        }
-      }));
+      setForumCategory(
+        response.data.postCombine.categoryNameList.map((categoryName: any) => {
+          if (categoryName === "82") {
+            return "Food";
+          } else if (categoryName === "80") {
+            return "Accommodation";
+          } else if (categoryName === "85") {
+            return "Festival";
+          } else if (categoryName === "76") {
+            return "Attraction";
+          } else if (categoryName === "75") {
+            return "Sports";
+          } else if (categoryName === "78") {
+            return "Culture";
+          } else if (categoryName === "79") {
+            return "Shopping";
+          } else {
+            return categoryName;
+          }
+        })
+      );
 
       // setForumCategory(response.data.postCombine.categoryNameList);
       if (loggedinId === response.data.postCombine.memberElement.id) {
@@ -104,6 +109,32 @@ function ForumDetail() {
     return null; // If the post has been deleted, don't render it
   }
 
+  //댓글 작성 후 갱신을 위함
+  function refreshComment() {
+    axios.get(`/api/post/${id}`).then((res) => {
+      console.log("PostEditPage useEffect 가져온 값 보기");
+      setCommentObject(res.data.commentCombine.commentElementList);
+    });
+  }
+
+  //댓글 작성 제출
+  const onClickHandlerComment = () => {
+    axios
+      .post(`/api/post/comment/${loggedinId}/${id}?content=${comment}`)
+      .then((res) => {
+        console.log("댓글 작성 성공");
+        console.log(res.data, 777);
+        setComment("");
+        refreshComment();
+      })
+      .catch((err) => {
+        console.log("댓글 작성 실패");
+        console.log(err);
+      });
+  };
+
+  console.log(id, "글작성 아이디");
+
   return (
     // 밑에 포럼 컨테이너 밖에 back만들어야함
     <div className="forum-detail-container">
@@ -118,22 +149,37 @@ function ForumDetail() {
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
-        <div className="forum-detail-title capitalize px-4 border border-1">{forumItem && forumItem.title}</div>
+        <div className="forum-detail-title capitalize px-4 border border-1">
+          {forumItem && forumItem.title}
+        </div>
         {/* 카테고리 */}
         <div className="flex">
           {forumCategory.map((categoryName, index) => (
-          <div key={index} className="border border-1 rounded-md px-1 mx-1 bg-green-200" >
-            {categoryName}
+            <div
+              key={index}
+              className="border border-1 rounded-md px-1 mx-1 bg-green-200"
+            >
+              {categoryName}
             </div>
-            ))}
+          ))}
         </div>
-            {/* 작성자, 작성 시간 */}
+        {/* 작성자, 작성 시간 */}
         <div className="forum-detail-region-category flex flex-row justify-between my-3">
-          <a className="font-semibold hover: cursor-pointer" onClick={userProfileNavigate}>{forumMember?.name}</a>
-          <div>{new Date(forumItem?.createdAt).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'})}</div>
+          <a
+            className="font-semibold hover: cursor-pointer"
+            onClick={userProfileNavigate}
+          >
+            {forumMember?.name}
+          </a>
+          <div>
+            {new Date(forumItem?.createdAt).toLocaleString("en-US", {
+              dateStyle: "short",
+              timeStyle: "short",
+            })}
+          </div>
           {/* <div className="">{forumItem?.createdAt}</div> */}
         </div>
-        
+
         <hr className="forum-detail-hr" />
         {/* 이미지 */}
         <div className="forum-detail-content px-5 pt-4 pb-8">
@@ -143,15 +189,62 @@ function ForumDetail() {
 
         {isloggedin && (
           <div className=" w-full flex flex-row justify-end mt-5">
-            <button className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400" onClick={handleOpenModal}>
+            <button
+              className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400"
+              onClick={handleOpenModal}
+            >
               Delete
             </button>
-            {showModal && <ForumDeleteModal postId={id} onDelete={handleDelete} onClose={handleCloseModal} />}
-            <button className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400" onClick={postEditnavigate}>
+            {showModal && (
+              <ForumDeleteModal
+                postId={id}
+                onDelete={handleDelete}
+                onClose={handleCloseModal}
+              />
+            )}
+            <button
+              className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400"
+              onClick={postEditnavigate}
+            >
               Edit
             </button>
           </div>
         )}
+      </div>
+
+      {/*=====================================댓글==============================================*/}
+
+      <div>
+        <div className="forum-detail-comment-section">
+          comment input area
+          {/* 로그인 시 댓글 작성 가능하도록, 대댓글도 */}
+          <br />
+          <input
+            type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button
+            className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 mx-2 hover:bg-green-400"
+            onClick={onClickHandlerComment}
+          >
+            Comment Submit!
+          </button>
+        </div>
+        comment Area
+        <div>
+          {/* {commentObject && <Comment props={commentObject} />} */}
+          {/* //=========================추가됨 */}
+          {commentObject?.map((comment: any, index: string, postid: number) => (
+            <Comment
+              comment={comment}
+              index={index}
+              postid={id}
+              key={index}
+              refreshComment={refreshComment}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
