@@ -16,4 +16,12 @@ public class MemberIntroRequest {
     private String plan;
     private String self;
     private String language;
+
+    private String facebook;
+
+    private String instagram;
+
+    private String twitter;
+
+    private String github;
 }
