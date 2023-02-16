@@ -42,6 +42,7 @@ function Profile() {
   const [updatedPlan, setUpdatedPlan] = useState<string>("");
   const [updatedTitle, setUpdatedTitle] = useState<string>("");
   const [updatedLanguage, setUpdatedLanguage] = useState<string>("");
+  const [updatedPublic, setUpdatedPublic] = useState<string>("");
 
   const navigate = useNavigate();
   const navigateToProfile = () => {
@@ -64,6 +65,7 @@ function Profile() {
         setUpdatedPlan(res.data.introduceId.plan);
         setUpdatedTitle(res.data.introduceId.title);
         setUpdatedLanguage(res.data.introduceId.language);
+        setUpdatedPublic(res.data.isPublic);
         console.log(res.data.introduceId.title, 222);
         console.log(res.data, 11111);
       })
@@ -93,6 +95,7 @@ function Profile() {
 
   const updateProfile = async (e: any) => {
     e.preventDefault();
+    console.log(token);
     try {
       const response = await axiosInstance.put(
         "api/member/intro",
@@ -108,11 +111,43 @@ function Profile() {
           },
         }
       );
-      console.log(response, "프로필 수정 성공");
-      // navigateToProfile();
+      // console.log(response, "프로필 수정 성공");
+      navigateToProfile();
       window.location.replace("/profile");
     } catch (error) {
-      console.log(error, "프로필 수정 실패");
+      // console.log(error, "프로필 수정 실패");
+    }
+  };
+
+  // 프로필 공개여부
+  const updatePublic = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        "api/member/public",
+        {
+          isPublic: updatedPublic,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      // console.log(response, "프로필 공개여부 수정 성공");
+      navigateToProfile();
+      window.location.replace("/profile");
+    } catch (error) {
+      // console.log(error, "프로필 공개여부 수정 실패");
+    }
+  };
+
+  // 프로필 공개 토글 클릭
+  const checkToggle = () => {
+    if (updatedPublic === "0") {
+      setUpdatedPublic("1");
+    } else {
+      setUpdatedPublic("0");
     }
   };
 
@@ -165,21 +200,30 @@ function Profile() {
           <div className="flex items-center justify-center w-full mt-6">
             <button
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-28 rounded-full mr-2"
-              onClick={updateProfile}
+              onClick={(e) => {
+                updateProfile(e);
+                updatePublic(e);
+              }}
             >
               Save Edit
             </button>
             {/* 토글 바 */}
-            {/* <label
+            <label
               htmlFor="toggleB"
               className="flex items-center cursor-pointer"
             >
               <div className="relative">
-                <input type="checkbox" id="toggleB" className="sr-only" />
+                <input
+                  type="checkbox"
+                  id="toggleB"
+                  className="sr-only"
+                  onClick={checkToggle}
+                  defaultChecked={updatedPublic === "0" ? false : true}
+                />
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>
-            </label> */}
+            </label>
           </div>
           {/* 토글 바 끝 */}
           <div className="flex flex-col py-10">

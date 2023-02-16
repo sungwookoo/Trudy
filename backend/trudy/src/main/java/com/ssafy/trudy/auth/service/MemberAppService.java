@@ -102,6 +102,10 @@ public class MemberAppService {
         introduce.setPlan(modifyIntroRequest.getPlan());
         introduce.setSelf(modifyIntroRequest.getSelf());
         introduce.setLanguage(modifyIntroRequest.getLanguage());
+        introduce.setFacebook(modifyIntroRequest.getFacebook());
+        introduce.setInstagram(modifyIntroRequest.getInstagram());
+        introduce.setTwitter(modifyIntroRequest.getTwitter());
+        introduce.setGithub(modifyIntroRequest.getGithub());
 
         Introduce modifiedIntroduce = memberService.saveIntroduce(introduce);
 
@@ -110,12 +114,31 @@ public class MemberAppService {
                 .plan(modifyIntroRequest.getPlan())
                 .self(modifyIntroRequest.getSelf())
                 .language(modifyIntroRequest.getLanguage())
+                .facebook(modifiedIntroduce.getFacebook())
+                .instagram(modifiedIntroduce.getInstagram())
+                .twitter(modifiedIntroduce.getTwitter())
+                .github(modifiedIntroduce.getGithub())
                 .build();
+    }
+
+    public String isSignupDupName(String name) {
+        if(memberService.nameCheck(name)) {
+            return "1";
+        }
+        return "0";
+    }
+
+    public String isModifyDupName(PrincipalDetails principal, String name) {
+        Member member = memberService.getById(principal.getMember().getId());
+        if(!member.getName().equals(name) && memberService.nameCheck(name)) {
+            return "1";
+        }
+        else return "0";
     }
 
     @Transactional
     public MemberResponse modifyMember(PrincipalDetails principal, MemberModifyRequest modifyRequest) {
-        modifyRequest.validation();
+//        modifyRequest.validation();
 
         Member member = memberService.getById(principal.getMember().getId());
 
@@ -147,12 +170,7 @@ public class MemberAppService {
 
     @Transactional
     public MemberResponse signup(SignupRequest signupRequest) {
-        signupRequest.validation();
-
-        if(memberService.nameCheck(signupRequest.getName())) {
-            throw new ApiException(ServiceErrorType.DUPLICATE_USER_NAME);
-        }
-
+//        signupRequest.validation();
 
         Member member = Member.signupBuilder()
                 .email(signupRequest.getEmail())
