@@ -6,6 +6,8 @@ import Place from "./Place";
 import axios from "axios";
 import AuthContext from "../Common/authContext";
 import Bookmark from "../Common/Bookmark";
+import bookmark_yes from "../assets/star_yes.png";
+import bookmark_no from "../assets/star_no.png";
 
 const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
@@ -121,16 +123,16 @@ function TrudyMap() {
               //                                                         로그인이 되어있는 경우
               // ----------------------------------------------------------------------------------------------------------------------------------------------------
               <>
-                <div className="flex flex-row justify-center">
+                <div className="flex flex-row justify-center mb-2">
                   <button
                     onClick={() => setselectedInfo("bookmark")}
-                    className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                    className={`p-4 w-1/2 ${selectedInfo === "bookmark" ? "bg-green-500 text-white font-semibold" : "bg-gray-200 text-slate-400  font-medium"}`}
                   >
                     Bookmark Information
                   </button>
                   <button
                     onClick={() => setselectedInfo("placeinfo")}
-                    className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                    className={`p-4 w-1/2 ${selectedInfo === "placeinfo" ? "bg-green-500 text-white font-semibold" : "bg-gray-300 text-slate-400 font-medium"}`}
                   >
                     Place Information
                   </button>
@@ -187,7 +189,7 @@ function TrudyMap() {
                       lng: parseFloat(bookmark.mapx),
                     }}
                     icon={{
-                      url: "https://cdn-icons-png.flaticon.com/128/4101/4101575.png",
+                      url: `${bookmark_yes}`,
                       scaledSize: new google.maps.Size(40, 40),
                     }}
                     animation={google.maps.Animation.BOUNCE}
@@ -196,7 +198,7 @@ function TrudyMap() {
                 <MarkerF
                   position={marker}
                   icon={{
-                    url: "https://cdn-icons-png.flaticon.com/128/4101/4101579.png",
+                    url: `${bookmark_no}`,
                     scaledSize: new google.maps.Size(40, 40),
                   }}
                   animation={google.maps.Animation.BOUNCE}
