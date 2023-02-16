@@ -1,6 +1,9 @@
-.star_img {
-  margin-left: 87%;
-  margin-bottom: 5%;
+.more-button {
+  width: 95%;
+}
+
+.more-button-center {
+  text-align: center;
 }
 
 .clear-btn {

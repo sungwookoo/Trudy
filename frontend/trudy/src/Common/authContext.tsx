@@ -38,6 +38,7 @@ const AuthContext = React.createContext({
   defaultVerified: () => {},
   login: (email: string, password: string) => {},
   signOut: () => {},
+  getMyData: () => {},
   getUser: (params: any) => {},
   //   changeNickname: (name: string) => {},
   //   changePassword: (exPassword: string, newPassword: string) => {},
@@ -75,7 +76,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isGetSuccess, setIsGetSuccess] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
-  // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
 
@@ -89,7 +89,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // 이메일 중복을 확인하고 인증 코드를 보내는 함수
   const sendCode = async (email: string) => {
     const response: any = await authAction.verifyEmail(email);
-    console.log(response, "spren");
     if ((await response) === null) {
       alert("this email is already in use!!");
     } else {
@@ -165,10 +164,15 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
           // console.log('loggedInfo', loggedInfo)
           // }
           setIsSuccess(true);
+
+          return result
+        } 
+        else {
+          alert("Wrong ID or Password!");
+
         }
       })
       .catch(() => {
-        alert("Wrong ID or Password!");
       });
   };
 
@@ -182,6 +186,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       clearTimeout(logoutTimer);
     }
   }, []);
+
+  // 내 데이터를 가져오는 함수
+  const getMydata = async () => {
+    const response = await authAction.getMyDataHandler(token);
+
+    return response;
+  };
 
   // 유저 정보를 가져오는 함수
   const getUserHandler = async (params: any) => {
@@ -326,6 +337,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     signup: signupHandler,
     login: loginHandler,
     signOut: signOutHandler,
+    getMyData: getMydata,
     getUser: getUserHandler,
     // changeNickname: changeNicknameHandler,
     // changePassword: changePaswordHandler,

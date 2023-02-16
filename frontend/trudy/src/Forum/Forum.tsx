@@ -67,7 +67,10 @@ function ForumPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData: any = await axios.get(API_URL + `?categoryList=${contentTypeId}&title=${nameSearch}&content=${nameSearch}&size=${forumSize}`);
+        const resData: any = await axios.get(
+          API_URL +
+            `?categoryList=${contentTypeId}&title=${nameSearch}&content=${nameSearch}&size=${forumSize}&size=200`
+        );
         setForumResponse(resData.data.content);
       } catch (e) {
         console.error(e);
@@ -100,10 +103,17 @@ function ForumPage() {
       <div className="forum-page flex flex-row">
         <div className="filter-bar">
           <div className="cat-selectors font-semibold">
-            <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
+            <CategoryButtons
+              onClick={handleCategoryClick}
+              selectedCategories={contentTypeId}
+            />
           </div>
           <div>
-            <SearchBar searchChange={searchChange} setNameSearch={setNameSearch} setSearchChange={setSearchChange} />
+            <SearchBar
+              searchChange={searchChange}
+              setNameSearch={setNameSearch}
+              setSearchChange={setSearchChange}
+            />
           </div>
 
           <button
@@ -123,7 +133,10 @@ function ForumPage() {
             <ForumDetail setForumItem={forumItem} />
           )} */}
       </div>
-      <button onClick={() => setForumSize(forumSize + 20)} className={`p-2 m-2 rounded-lg   "bg-indigo-500 text-white" `}>
+      <button
+        onClick={() => setForumSize(forumSize + 20)}
+        className={`p-2 m-2 rounded-lg   "bg-indigo-500 text-white" `}
+      >
         See More
       </button>
     </>
