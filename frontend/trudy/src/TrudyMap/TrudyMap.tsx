@@ -137,23 +137,23 @@ function TrudyMap() {
               //                                                         로그인이 되어있는 경우
               // ----------------------------------------------------------------------------------------------------------------------------------------------------
               <>
-                <div className="flex flex-row justify-center">
+                <div className="flex flex-row justify-center mb-2">
                   <button
                     onClick={() => setselectedInfo("bookmark")}
-                    className={`p-4 m-2 rounded-lg ${
+                    className={`p-4 w-1/2 ${
                       selectedInfo === "bookmark"
-                        ? "bg-indigo-500 text-white"
-                        : "bg-gray-300"
+                        ? "bg-green-500 text-white font-semibold"
+                        : "bg-gray-200 text-slate-400  font-medium"
                     }`}
                   >
                     Bookmark Information
                   </button>
                   <button
                     onClick={() => setselectedInfo("placeinfo")}
-                    className={`p-4 m-2 rounded-lg ${
+                    className={`p-4 w-1/2 ${
                       selectedInfo === "placeinfo"
-                        ? "bg-indigo-500 text-white"
-                        : "bg-gray-300"
+                        ? "bg-green-500 text-white font-semibold"
+                        : "bg-gray-300 text-slate-400 font-medium"
                     }`}
                   >
                     Place Information
