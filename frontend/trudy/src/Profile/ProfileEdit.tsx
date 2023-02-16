@@ -7,6 +7,7 @@ import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
 import defaultImage from "../assets/defaultImage.png";
 import axiosInstance from "../Common/axiosInterceptor";
+import { areaList } from "../Filter/AreaCode";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -144,7 +145,7 @@ function Profile() {
 
   // 프로필 공개 토글 클릭
   const checkToggle = () => {
-    console.log(updatePublic, '여기')
+    console.log(updatePublic, "여기");
     if (updatedPublic === "0") {
       setUpdatedPublic("1");
     } else {
