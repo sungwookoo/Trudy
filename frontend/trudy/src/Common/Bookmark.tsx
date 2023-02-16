@@ -9,6 +9,9 @@ import MapModal from "./MapModal";
 import nopictures from "../assets/nopictures.png";
 import { ModifierFlags } from "typescript";
 import axiosInstance from "./axiosInterceptor";
+import bookmark_yes from "../assets/star_yes.png";
+import "./Bookmark.css";
+
 type Props = {
   memberId: number;
   bookmarkedIds: number[];
@@ -223,15 +226,15 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                     {bookmark.tel && <p className="font-bold text-xl mb-2">{bookmark.tel}</p>}
                   </div>
                   <img
-                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
-                    className="w-16 "
+                    src={`${bookmark_yes}`}
+                    className="star_img w-10"
                     alt="bookmark"
                     onClick={() => {
                       handleBookmarkClick(bookmark.id);
                     }}
                     style={{ cursor: "pointer" }}
                   />
-                  {isLoading && <div>Loading...</div>}
+                  {isLoading && <div></div>}
                 </div>
                 {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />}
               </>
@@ -259,15 +262,15 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                     <br />
                   </div>
                   <img
-                    src={"https://cdn-icons-png.flaticon.com/128/4101/4101575.png"}
-                    className="w-16 "
+                    src={`${bookmark_yes}`}
+                    className="star_img w-10"
                     alt="bookmark"
                     onClick={() => {
                       handleBookmarkClick(bookmark.id);
                     }}
                     style={{ cursor: "pointer" }}
                   />
-                  {isLoading && <div>Loading...</div>}
+                  {isLoading && <div></div>}
                 </div>
                 {/* {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />} */}
               </>

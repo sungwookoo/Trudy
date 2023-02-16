@@ -23,8 +23,8 @@ function EmailConfirm() {
   //   인증 코드 전송 버튼을 누르는 함수
   function clickSendCode() {
     if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(inputEmail) === true) {
-      setEmail(inputEmail);
       setSend(send + 1);
+      setEmail(inputEmail);
     } else {
       alert("Wrong Email!");
     }
@@ -50,7 +50,7 @@ function EmailConfirm() {
       return;
     }
     let timeout = setTimeout(() => {}, 0);
-    if (time === true) {
+    if (time === true && inputEmail === email) {
       alert("you can only be sent code once every 30seconds!");
     } else {
       setTime(true);

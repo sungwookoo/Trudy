@@ -12,6 +12,8 @@ import Place from "./Place";
 import axios from "axios";
 import AuthContext from "../Common/authContext";
 import Bookmark from "../Common/Bookmark";
+import bookmark_yes from "../assets/star_yes.png";
+import bookmark_no from "../assets/star_no.png";
 
 const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
@@ -100,11 +102,11 @@ function TrudyMap() {
     setbookmarkedIds(tempbookMark);
   }, [bookmarkList]);
 
-  console.log(bookmarkList, "메인페이지임");
+  // console.log(bookmarkList, "메인페이지임");
 
   // 선택시 센터 위도 경도 업데이트
   const updateCenter = (lat: number, lng: number) => {
-    console.log(lat, lng, "동작중ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ1123");
+    // console.log(lat, lng, "동작중ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ1123");
     setCenter({ lat, lng });
     setZoom(20);
     setMarker({ lat, lng });
@@ -121,7 +123,7 @@ function TrudyMap() {
   );
 
   const onUnmount = React.useCallback(function callback() {
-    console.log("onUnmounttttttttttttttttttttttttttttttttttt");
+    // console.log("onUnmounttttttttttttttttttttttttttttttttttt");
     setMap(null);
   }, []);
   return (
@@ -213,7 +215,7 @@ function TrudyMap() {
                       lng: parseFloat(bookmark.mapx),
                     }}
                     icon={{
-                      url: "https://cdn-icons-png.flaticon.com/128/4101/4101575.png",
+                      url: `${bookmark_yes}`,
                       scaledSize: new google.maps.Size(40, 40),
                     }}
                     animation={google.maps.Animation.BOUNCE}
@@ -222,7 +224,7 @@ function TrudyMap() {
                 <MarkerF
                   position={marker}
                   icon={{
-                    url: "https://cdn-icons-png.flaticon.com/128/4101/4101579.png",
+                    url: `${bookmark_no}`,
                     scaledSize: new google.maps.Size(40, 40),
                   }}
                   animation={google.maps.Animation.BOUNCE}
