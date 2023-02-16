@@ -141,9 +141,9 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   };
 
   //   로그인을 하는 함수
-  const loginHandler = (email: string, password: string) => {
+  const loginHandler = async (email: string, password: string) => {
     setIsSuccess(false);
-    const data = authAction
+    const data = await authAction
       .signInActionHandler(email, password)
       .then((result) => {
         if (result !== null) {
