@@ -9,7 +9,6 @@ import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ForumImageUpload from "./ForumImageUpload";
-import Images from "./Forumimage";
 import { useNavigate } from "react-router-dom";
 import "./CkEditor.css";
 import axiosInstance from "../Common/axiosInterceptor";
