@@ -82,7 +82,17 @@ public class MemberController {
     @PutMapping("/info")
     public MemberResponse modifyMember(@AuthenticationPrincipal PrincipalDetails principal, @RequestBody MemberModifyRequest memberModifyRequest) {
         return memberAppService.modifyMember(principal, memberModifyRequest);
+    }
 
+    @ApiOperation(value = "개인정보 수정 닉네임 중복 검사",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            responseHeaders = {
+                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
+                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
+            })
+    @PostMapping("/info/name")
+    public String isModifyDupName(@AuthenticationPrincipal PrincipalDetails principal, @RequestParam String name) {
+        return memberAppService.isModifyDupName(principal, name);
     }
 
     @ApiOperation(value = "자기소개 수정",
