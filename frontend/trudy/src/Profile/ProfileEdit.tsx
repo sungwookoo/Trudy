@@ -111,11 +111,11 @@ function Profile() {
           },
         }
       );
-      // console.log(response, "프로필 수정 성공");
+      console.log(response, "프로필 수정 성공");
       navigateToProfile();
       window.location.replace("/profile");
     } catch (error) {
-      // console.log(error, "프로필 수정 실패");
+      console.log(error, "프로필 수정 실패");
     }
   };
 
@@ -134,16 +134,17 @@ function Profile() {
           },
         }
       );
-      // console.log(response, "프로필 공개여부 수정 성공");
+      console.log(response, "프로필 공개여부 수정 성공");
       navigateToProfile();
       window.location.replace("/profile");
     } catch (error) {
-      // console.log(error, "프로필 공개여부 수정 실패");
+      console.log(error, "프로필 공개여부 수정 실패");
     }
   };
 
   // 프로필 공개 토글 클릭
   const checkToggle = () => {
+    console.log(updatePublic, '여기')
     if (updatedPublic === "0") {
       setUpdatedPublic("1");
     } else {
@@ -181,17 +182,19 @@ function Profile() {
 
           <div>
             <h1 className="myprofile-username">{profile.name}</h1>
-            
+
             <div className="flex">
-            {profile.isLocal === "1" ? (
+              {profile.isLocal === "1" ? (
                 <div className="mr-8">{profile.areaCode}</div>
-                ) : ( 
+              ) : (
                 <div></div>
-                )}
+              )}
               {/* <div className="mr-5">{profile.areaCode}</div> */}
               <div className="capitalize">{profile.gender}</div>
             </div>
-            <div className=''>{profile.isLocal === '1' ? 'Local' : 'Tourist'}</div>
+            <div className="">
+              {profile.isLocal === "1" ? "Local" : "Tourist"}
+            </div>
           </div>
         </div>
         {/* 프로필 수정 내 프로필 공개 토글 */}

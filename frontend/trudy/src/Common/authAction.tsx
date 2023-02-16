@@ -1,7 +1,6 @@
 import axios from "axios";
 import { GET, POST, DELETE, PUT } from "./authAxios";
 
-
 // 토큰을 만드는 함수
 const createTokenHeader = (token: string) => {
   return {
@@ -65,7 +64,7 @@ export const refreshTokenHandler = async (
   const response = await POST(url, token, {});
   console.log("토큰 재발행", response);
 
-  return response
+  return response;
 };
 
 // 이메일 인증 함수
@@ -127,8 +126,10 @@ export const signInActionHandler = (email: string, password: string) => {
   const url = "/api/login";
   const data = { email, password };
   const response = POST(url, data, {});
-  response.then((res) => {});
-  return response;
+  // response.then((res) => {
+  //   return res;
+  // });
+  return response
 };
 
 // 로그아웃 함수
@@ -142,6 +143,14 @@ export const signOutActionHandler = (id: number) => {
   localStorage.removeItem("expirationTime");
   alert("sign out");
   window.location.reload();
+  return response;
+};
+
+export const getMyDataHandler = (token: string) => {
+  const url = "api/member/me";
+  const headers = createTokenHeader(token);
+  const response = axios.get(url, headers);
+
   return response;
 };
 
