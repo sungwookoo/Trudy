@@ -21,6 +21,7 @@ function Nav(navProfileImg: any) {
   const navproImg = navProfileImg;
   const authCtx = useContext(AuthContext);
   const signOut = () => {
+    console.log('nav.tsx 작동')
     authCtx.signOut();
   };
 
