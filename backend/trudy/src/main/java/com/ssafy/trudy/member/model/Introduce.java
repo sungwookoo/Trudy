@@ -28,4 +28,12 @@ public class Introduce {
     private String self;
 
     private String language;
+
+    private String facebook;
+
+    private String instagram;
+
+    private String twitter;
+
+    private String github;
 }
