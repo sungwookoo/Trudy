@@ -190,7 +190,7 @@ function ForumDetail() {
         {isloggedin && (
           <div className=" w-full flex flex-row justify-end mt-5">
             <button
-              className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 hover:bg-red-400"
+              className="rounded-md bg-gray-300 border-black border-2 px-2 py-0.5 hover:bg-red-400"
               onClick={handleOpenModal}
             >
               Delete
@@ -203,7 +203,7 @@ function ForumDetail() {
               />
             )}
             <button
-              className="rounded-md bg-gray-300 border-black border-2 px-2 py-1 mx-2 hover:bg-orange-400"
+              className="rounded-md bg-gray-300 border-black border-2 px-2 py-0.5 mx-2 hover:bg-orange-400"
               onClick={postEditnavigate}
             >
               Edit
@@ -218,21 +218,21 @@ function ForumDetail() {
         <div className="forum-detail-comment-section mt-6 mb-6">
           {/* 로그인 시 댓글 작성 가능하도록, 대댓글도 */}
           <div className="flex items-center">
-          <input
-            className="comment-input-area ml-3"
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-          <button
-            className="forum-input-submit-button rounded-md bg-gray-300 border border-black border-2 mx-2 hover:bg-green-400"
-            onClick={onClickHandlerComment}
-          >
-          Submit
-          </button>
+            <textarea
+              className="comment-input-area ml-3"
+              // type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button
+              className="forum-input-submit-button rounded-md bg-gray-300 border border-black border-2 mx-2 hover:bg-green-400"
+              onClick={onClickHandlerComment}
+            >
+              Submit
+            </button>
           </div>
         </div>
-        
+
         <div>
           {/* {commentObject && <Comment props={commentObject} />} */}
           {/* //=========================추가됨 */}

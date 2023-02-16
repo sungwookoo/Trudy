@@ -224,7 +224,13 @@ function Square() {
                         </p>
                       ) : (
                         <p className="text-2xl text-gray-400 font-normal">
-                          {guide.areaCode}
+                          {guide.areaCode &&
+                            areaList.map((area) => {
+                              if (area.id === guide.areaCode) {
+                                return area.name;
+                              }
+                            })}
+                          {/* {guide.areaCode} */}
                         </p>
                       )}
                       <p className="text-xl leading-relaxed text-gray-500 font-normal">

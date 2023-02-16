@@ -60,16 +60,15 @@
 
 .forum-detail-comment-section {
   width: 800px;
-  background: green;
+  /* background: green; */
 }
 
-
-.comment-input-area{
+.comment-input-area {
   width: 800px;
   min-height: 40px;
   border-radius: 5px;
 }
 
-.forum-input-submit-button{
+.forum-input-submit-button {
   width: 80px;
 }

@@ -17,6 +17,7 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
   const authCtx = useContext(AuthContext);
   const loggedinId = authCtx.loggedInfo.uid;
   const [commentMemberId, setCommentMemberId] = useState(null);
+  const [nestedcommentMemberId, setNestedcommentMemberId] = useState(null);
 
   const navigate = useNavigate();
   const goToProfile = () => {
@@ -25,10 +26,12 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
 
   useEffect(() => {
     setCommentMemberId(comment.customMemberForComment.id);
+    // setNestedcommentMemberId(comment?.nestedCommentList.customMemberForComment.id)
     console.log("Comment component get");
     console.log(comment, 1111);
   }, []);
 
+  console.log(comment, "comment");
   //대댓글 창 띄우기(isDeleted: 0이면 삭제된 댓글이므로 대댓글 작성 불가)
   const onClickHandlerWriteNestedComment = (isDeleted: number) => {
     if (isDeleted === 0) {
@@ -74,10 +77,10 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
     isDeleted: number
   ) => {
     if (isDeleted === 1) {
-      alert("이미 삭제된 항목입니다!");
+      alert("This Comment is already Deleted!");
       return;
     }
-    if (window.confirm("정말 삭제하시겠습니까?") === false) return;
+    if (window.confirm("This action will Delete the Comment") === false) return;
     axios
       .delete(`/api/post/${type}/${Id}`)
       .then((res) => {
@@ -107,13 +110,12 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
 
   //대댓글 창 스타일
   const styleObj = {
-    width: "500px",
-    height: "32px",
+    width: "670px",
+    height: "35px",
     fontSize: "15px",
     border: "0",
-    borderRadius: "15px",
+    borderRadius: "10px",
     outline: "none",
-    paddingLeft: "10px",
     backgroundColor: "rgb(233, 233, 233)",
   };
 
@@ -122,112 +124,156 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
       {/* 한개의 댓글안에 여러 대댓글을 띄우는 구조 */}
       {comment && (
         <div key={index}>
-          <div
-            onClick={() => onClickHandlerWriteNestedComment(comment.isDeleted)}
-          >
-            <div className="hover: cursor-pointer">
-              <a
-                className="comment-profile flex bg-red-500 hover: cursor-pointer"
-                onClick={goToProfile}
-              >
-                <img
-                  src={comment.customMemberForComment.image}
-                  style={{ width: "50px", height: "50px" }}
-                />
-                {comment.customMemberForComment.name}
-              </a>
-            </div>
-            <span>{comment.content}</span>
-            <br />
-
-            <div>
-              {new Date(comment?.createdAt).toLocaleString("en-US", {
-                dateStyle: "short",
-                timeStyle: "short",
-              })}
-            </div>
-
-            {/* (작성일자 : {comment.createdAt})<br /> */}
-          </div>
-          {comment.isDeleted === 0 ? (
-            <div>
-              {commentMemberId === loggedinId ? (
-                <button
-                  className="mr-2 rounded-md bg-red-500 text-white p-0.5 px-1"
-                  onClick={(e) =>
-                    onClickHandlerDeleteCommentForAllType(
-                      e,
-                      comment.id,
-                      "comment",
-                      comment.isDeleted
-                    )
-                  }
-                >
-                  댓글 삭제
-                </button>
-              ) : null}
-              <button
-                onClick={(e) =>
-                  onClickHandlerLikeComment(e, comment.id, "comment")
+          <div>
+            <div className="">
+              <div className="flex">
+                <div className="flex items-center">
+                  <div
+                    className="comment-profile flex hover: cursor-pointer"
+                    onClick={goToProfile}
+                  >
+                    <img
+                      className="comment-profile-image"
+                      src={comment.customMemberForComment.image}
+                    />
+                    <div className="comment-profile-name">
+                      {comment.customMemberForComment.name}
+                    </div>
+                  </div>
+                  <div className="forum-comment-like-delete flex items-center">
+                    <button
+                      onClick={(e) =>
+                        onClickHandlerLikeComment(e, comment.id, "comment")
+                      }
+                    >
+                      <div className="mx-2">💚 {comment.commentLikeCount}</div>
+                    </button>
+                    {comment.isDeleted === 0 ? (
+                      <div className="">
+                        {commentMemberId === loggedinId ? (
+                          <button
+                            className="ml-2 rounded-md bg-red-500 text-white p-0.5 px-1"
+                            onClick={(e) =>
+                              onClickHandlerDeleteCommentForAllType(
+                                e,
+                                comment.id,
+                                "comment",
+                                comment.isDeleted
+                              )
+                            }
+                          >
+                            Delete
+                          </button>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+              {/* 댓글 */}
+              <div
+                className="forum-comment-content mt-2 hover: cursor-pointer"
+                onClick={() =>
+                  onClickHandlerWriteNestedComment(comment.isDeleted)
                 }
               >
-                💚 {comment.commentLikeCount}
-              </button>
+                {comment.content}
+              </div>
+              <div className="text-xs ml-1">
+                {new Date(comment?.createdAt).toLocaleString("en-US", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                })}
+              </div>
             </div>
-          ) : null}
-          <br />
+          </div>
+          {/* 이하 대댓글 작성 */}
           {state === "취소" ? (
-            <span>
+            <div className="my-3">
               <input
                 style={styleObj}
                 onChange={(e) => setNestedComment(e.target.value)}
               ></input>
               <button
+                className="mx-2 rounded-md bg-green-500 text-white p-0.5 px-1"
                 onClick={(e) =>
                   onClickHandlerWriteCommentComplete(e, comment.id)
                 }
               >
-                작성 완료
-              </button>{" "}
-              / <button onClick={onClickHandlerWriteCommentCancel}>취소</button>
-            </span>
+                Submit
+              </button>
+
+              <button
+                className="rounded-md bg-red-500 text-white p-0.5 px-1"
+                onClick={onClickHandlerWriteCommentCancel}
+              >
+                Cancel
+              </button>
+            </div>
           ) : null}
+          <hr className="forum-comment-hr my-3" />
         </div>
       )}
       {comment.nestedCommentList?.map((nestedComment: any, index: string) => (
-        <ol className="ml-8 my-4" key={index} style={{}}>
-          <img
-            src={nestedComment.customMemberForComment.image}
-            style={{ width: "30px", height: "30px" }}
-          />
-          <span> {nestedComment.customMemberForComment.name} | </span>
-          <span className="text-xl"> {nestedComment.content} </span>
-          <br />
-          (작성일자 : {nestedComment.createdAt})
-          <br />
-          {nestedComment.customMemberForComment.id === loggedinId ? (
-            <button
-              className="mr-2 rounded-md bg-red-500 text-white p-0.5 px-1"
-              onClick={(e) =>
-                onClickHandlerDeleteCommentForAllType(
-                  e,
-                  nestedComment.id,
-                  "nested-comment",
-                  0
-                )
-              }
+        <div
+          className="nested-comment ml-8 my-2 bg-gray-100 rounded-md py-1 px-1"
+          key={index}
+        >
+          <div className="flex items-center">
+            <a
+              className="comment-profile flex hover: cursor-pointer"
+              href={`https://trudy.online/profile/${nestedComment.customMemberForComment.id}`}
+              // onClick={goToProfile}
             >
-              대댓글 삭제
-            </button>
-          ) : null}
-          <button
-            onClick={(e) =>
-              onClickHandlerLikeComment(e, nestedComment.id, "nested-comment")
-            }
-          >
-            💚 {nestedComment.nestedCommentLikeCount}
-          </button>
-        </ol>
+              <img
+                className="comment-profile-image"
+                src={nestedComment.customMemberForComment.image}
+              />
+              <div className="comment-profile-name">
+                {nestedComment.customMemberForComment.name}
+              </div>
+            </a>
+            <div className="forum-nestedcomment-like-delete flex items-center">
+              <button
+                onClick={(e) =>
+                  onClickHandlerLikeComment(
+                    e,
+                    nestedComment.id,
+                    "nested-comment"
+                  )
+                }
+              >
+                <div className="mx-2">
+                  💚 {nestedComment.nestedCommentLikeCount}
+                </div>
+              </button>
+              {nestedComment.customMemberForComment.id === loggedinId ? (
+                <button
+                  className="ml-2 rounded-md bg-red-500 text-white p-0.5 px-1"
+                  onClick={(e) =>
+                    onClickHandlerDeleteCommentForAllType(
+                      e,
+                      nestedComment.id,
+                      "nested-comment",
+                      0
+                    )
+                  }
+                >
+                  Delete
+                </button>
+              ) : null}
+            </div>
+          </div>
+          <div className="forum-comment-content mt-2 hover: cursor-pointer text-xl">
+            {nestedComment.content}
+          </div>
+          <div className="text-xs ml-1">
+            {new Date(nestedComment?.createdAt).toLocaleString("en-US", {
+              dateStyle: "short",
+              timeStyle: "short",
+            })}
+          </div>
+        </div>
       ))}
     </div>
   );
