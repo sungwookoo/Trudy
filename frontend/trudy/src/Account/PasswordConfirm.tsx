@@ -7,17 +7,18 @@ import AuthContext from "../Common/authContext";
 function PasswordConfirm() {
   const [password, setPassword] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
-  
+
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
   function navigateToAccountEdit() {
     navigate("/accountedit");
   }
 
-  const data = authCtx.getMyData()
-  console.log('최종', data)
+  const data = authCtx.getMyData();
 
-    // Enter를 눌렀을 때 CheckPassword를 실행시키는 함수
+  // 내 계정의 비밀번호 불러와서 저장하기
+
+  // Enter를 눌렀을 때 CheckPassword를 실행시키는 함수
   const pressEnter = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
       CheckPassword();

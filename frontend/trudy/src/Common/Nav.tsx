@@ -128,11 +128,12 @@ function Nav(navProfileImg: any) {
                 Profile
               </NavLink>
             </div>
-            {/* <div>
-              <NavLink className="nav-item" to="/confirm">
+            <div>
+              {/* <NavLink className="nav-item" to="/confirm"> */}
+              <NavLink className="nav-item" to="/accountedit">
                 Account
               </NavLink>
-            </div> */}
+            </div>
             <div className="nav-item">
               <button className="nav-link mr-3" onClick={signOut}>
                 SignOut
