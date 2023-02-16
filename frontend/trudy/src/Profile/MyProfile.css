@@ -92,7 +92,7 @@ input:checked ~ .dot {
 
 .about-me {
   font-size: 30px;
-  font-weight: bolder;
+  /* font-weight: bolder; */
 }
 
 .about-box {

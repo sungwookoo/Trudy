@@ -33,7 +33,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
   const [limit, setLimit] = useState<any>(10);
   const [offset, setOffset] = useState<any>(0);
   const [areaSigun, setareaSigun] = useState<any>([]);
-  const [keyword, setkeyword] = useState<any>("");
+  const [keyword, setkeyword] = useState<any>();
 
   // 카테고리
   const [contentTypeId, setcontentTypeId] = useState<number[]>([]);
@@ -105,7 +105,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
     <div>
       {/* 지역 버튼 */}
       <div>
-        <div>
+        <div className="">
           <SearchBar searchChange={searchChange} setNameSearch={setkeyword} setSearchChange={setSearchChange} />
           <div>
             <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
