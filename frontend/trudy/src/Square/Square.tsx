@@ -226,6 +226,13 @@ function Square() {
                                 return area.name;
                               }
                             })}
+                          ,{" "}
+                          {guide.sigunguCode &&
+                            sigunguList[guide.areaCode].map((sigungu: any) => {
+                              if (sigungu.id === guide.sigunguCode) {
+                                return sigungu.name;
+                              }
+                            })}
                           {/* {guide.areaCode} */}
                         </p>
                       )}
