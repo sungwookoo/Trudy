@@ -11,19 +11,25 @@ import ChatRoom from "../Chat/ChatRoom";
 function Nav(navProfileImg: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [profile, setProfile] = useState<any>(null);
+  const [selectedNav, setSelectedNav] = useState<any>(window.location.href);
+
   const openDropDown = () => {
     setIsOpen(!isOpen);
   };
   const token = "bearer " + localStorage.getItem("token");
   const navigate = useNavigate();
   function navigateToProfile() {
+    setSelectedNav("/profile");
     navigate("/profile");
   }
   const navproImg = navProfileImg;
   const authCtx = useContext(AuthContext);
   const signOut = () => {
-    console.log("nav.tsx 작동");
     authCtx.signOut();
+  };
+
+  const handelClickNav = (e: any) => {
+    setSelectedNav(e.target.pathname);
   };
 
   // useEffect(() => {
@@ -35,9 +41,7 @@ function Nav(navProfileImg: any) {
   //         },
   //       });
   //       setProfile(response.data);
-  //       console.log(profile, "정보");
   //     } catch (error) {
-  //       console.log(error);
   //     }
   //   };
   //   getprofile();
@@ -48,7 +52,12 @@ function Nav(navProfileImg: any) {
   return (
     // 네비게이션바
     <nav className="nav-bar">
-      <div className="all-fuctions">
+      <div
+        className="all-fuctions"
+        onClick={(e) => {
+          handelClickNav(e);
+        }}
+      >
         <NavLink to="/">
           <img className="nav-logo" src={NewLogo} alt="TrudyLogo"></img>
         </NavLink>
@@ -61,21 +70,36 @@ function Nav(navProfileImg: any) {
       </div> */}
 
         {/* 지도 */}
-        <div className="nav-item">
+        <div
+          className={`${selectedNav === "/trudymap" ? "nav-item-select" : "nav-item"}`}
+          onClick={(e) => {
+            handelClickNav(e);
+          }}
+        >
           <NavLink className="ml-4 nav-link" to="/trudymap">
             Map
           </NavLink>
         </div>
 
         {/* 포럼 */}
-        <div className="nav-item">
+        <div
+          className={`${selectedNav === "/forum" ? "nav-item-select" : "nav-item"}`}
+          onClick={(e) => {
+            handelClickNav(e);
+          }}
+        >
           <NavLink className="nav-link" to="/forum">
             Forum
           </NavLink>
         </div>
 
         {/* 스퀘어 */}
-        <div className="nav-item">
+        <div
+          className={`${selectedNav === "/square" ? "nav-item-select" : "nav-item"}`}
+          onClick={(e) => {
+            handelClickNav(e);
+          }}
+        >
           <NavLink className="nav-link" to="/square">
             Square
           </NavLink>
@@ -95,12 +119,22 @@ function Nav(navProfileImg: any) {
         {/* 로그인 */}
         {!authCtx.isLoggedIn ? (
           <>
-            <div className="nav-item">
+            <div
+              className={`${selectedNav === "/signin" ? "nav-item-select" : "nav-item"}`}
+              onClick={(e) => {
+                handelClickNav(e);
+              }}
+            >
               <NavLink className="nav-link" to="/signin">
                 Sign In
               </NavLink>
             </div>
-            <div className="nav-item mr-22">
+            <div
+              className={`${selectedNav === "/signupselect" ? "nav-item-select" : "nav-item"}`}
+              onClick={(e) => {
+                handelClickNav(e);
+              }}
+            >
               <NavLink className="nav-link" to="/signupselect">
                 Sign Up
               </NavLink>
@@ -121,12 +155,24 @@ function Nav(navProfileImg: any) {
                 src={navproImg}
                 alt="navProfileImage"
               /> */}
-              <NavLink className="nav-item" to="/profile">
+              <NavLink
+                className={`${selectedNav === "/profile" ? "nav-item-select" : "nav-item"}`}
+                onClick={(e) => {
+                  handelClickNav(e);
+                }}
+                to="/profile"
+              >
                 Profile
               </NavLink>
             </div>
             <div>
-              <NavLink className="nav-item" to="/confirm">
+              <NavLink
+                className={`${selectedNav === "/accountsetting" ? "nav-item-select" : "nav-item"}`}
+                onClick={(e) => {
+                  handelClickNav(e);
+                }}
+                to="/accountsetting"
+              >
                 {/* <NavLink className="nav-item" to="/accountedit"> */}
                 Account
               </NavLink>
