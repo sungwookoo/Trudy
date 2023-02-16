@@ -62,7 +62,6 @@ export const refreshTokenHandler = async (
   const url = "/api/reissuance";
   const token = { accessToken, refreshToken };
   const response = await POST(url, token, {});
-  console.log("토큰 재발행", response);
 
   return response;
 };
@@ -78,7 +77,6 @@ export const verifyEmail = async (email: string) => {
   try {
     const response: any = await axios.post(url, {}, { params });
     console.log(response);
-
     return response;
   } catch (error) {
     return null;
@@ -153,7 +151,7 @@ export const getMyDataHandler = (token: string) => {
   const url = "api/member/me";
   const headers = createTokenHeader(token);
   const response = axios.get(url, headers);
-
+  console.log(response);
   return response;
 };
 
@@ -191,7 +189,6 @@ export const passwordChangeActionHandler = async (
   newPassword: string,
   token: string
 ) => {
-  console.log(currentPassword, newPassword);
   try {
     const response = await axios.put(
       "/api/member/password",
@@ -203,10 +200,7 @@ export const passwordChangeActionHandler = async (
         headers: { Authorization: `bearer ${token}` },
       }
     );
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
   // const url = "/api/member/password";
   // const data = {
   //   currentPassword: currentPassword,
