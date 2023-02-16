@@ -11,7 +11,7 @@ import "./Square.css";
 
 function Square() {
   const [squareId, setSquareId] = useState<any>(null);
-  const [area, setArea] = useState<number>(1);
+  const [area, setArea] = useState<number[]>([]);
   const [isLocal, setIsLocal] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [nameSearch, setNameSearch] = useState<string>();
@@ -56,6 +56,17 @@ function Square() {
     async function SquareGet() {
       const res: any = await authCtx.getUser(params);
       setSquareData(res.data.content);
+      // setArea(
+      //   res.data.content.areaCode.map((areaNumber: any) => {
+      //     if (areaNumber === "1") {
+      //       return "Seoul";
+      //     } else if (areaNumber === "6") {
+      //       return "Busan";
+      //     } else {
+      //       return areaNumber;
+      //     }
+      //   })
+      // );
     }
     SquareGet();
   }, [areaCode, isLocal, gender, nameSearch]);
@@ -66,7 +77,7 @@ function Square() {
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={`p-2 m-2 rounded-lg  ${
-            !isCollapsed ? "bg-indigo-500 text-white" : "bg-gray-300"
+            !isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"
           }`}
         >
           Area Select
@@ -103,7 +114,7 @@ function Square() {
           <input
             type="search"
             id="default-search"
-            className="block p-3 w-3/5 text-sm text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+            className="block p-3 w-3/5 text-sm text-gray-900 border border-gray-500 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 shadow-sm"
             placeholder="Search Name"
             required
             onKeyDown={pressEnter}
@@ -113,7 +124,7 @@ function Square() {
           />
           <button
             type="submit"
-            className="flex inset-y-0 right-0 p-3 text-sm font-medium bg-white rounded-md border hover:bg-green-700 ml-4 border-gray-500 shadow-sm"
+            className="flex inset-y-0 right-0 p-3 text-sm font-medium bg-white rounded-md border hover:bg-green-500 ml-4 border-gray-500 shadow-sm"
             onClick={(e) => {
               setNameSearch(searchChange);
             }}
@@ -203,22 +214,21 @@ function Square() {
                       <p className="text-3xl text-gray-700 font-bold">
                         {guide.name}
                       </p>
-                      <p className="text-2xl text-gray-400 font-normal">
-                        {guide.areaCode
-                          ? areaList.filter(
-                              (area) => area.id === guide.areaCode
-                            )[0].name
-                          : ""}
-
-                        {guide.sigunguCode
-                          ? `, ${
-                              sigunguList[guide.areaCode].filter(
-                                (sigungu: any) =>
-                                  sigungu.id === guide.sigunguCode
-                              )[0].name
-                            }`
-                          : ""}
-                      </p>
+                      {guide.areaCode == null ? (
+                        <p className="text-2xl text-gray-400 font-normal">
+                          Tourist
+                        </p>
+                      ) : (
+                        <p className="text-2xl text-gray-400 font-normal">
+                          {guide.areaCode &&
+                            areaList.map((area) => {
+                              if (area.id === guide.areaCode) {
+                                return area.name;
+                              }
+                            })}
+                          {/* {guide.areaCode} */}
+                        </p>
+                      )}
                       <p className="text-xl leading-relaxed text-gray-500 font-normal">
                         {guide.introduceId.self}
                       </p>

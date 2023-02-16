@@ -8,6 +8,7 @@ import ProfileMyPost from "./ProfileMyPost";
 import Avatar from "react-avatar";
 import defaultImage from "../assets/defaultImage.png";
 import axiosInstance from "../Common/axiosInterceptor";
+import { areaList } from "../Filter/AreaCode";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -105,13 +106,22 @@ function Profile() {
             <div className="ml-1 pt-1">
               <div className="flex">
                 {profile.isLocal === "1" ? (
-                <div className="mr-8">{profile.areaCode}</div>
-                ) : ( 
-                <div></div>
+                  <div className="mr-2">
+                    {profile.areaCode &&
+                      areaList.map((area) => {
+                        if (area.id === profile.areaCode) {
+                          return area.name;
+                        }
+                      })}
+                  </div>
+                ) : (
+                  <div></div>
                 )}
                 <div className="capitalize">{profile.gender}</div>
               </div>
-              <div className=''>{profile.isLocal === '1' ? 'Local' : 'Tourist'}</div>
+              <div className="">
+                {profile.isLocal === "1" ? "Local" : "Tourist"}
+              </div>
             </div>
           </div>
         </div>

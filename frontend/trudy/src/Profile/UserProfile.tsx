@@ -7,6 +7,7 @@ import Follow from "./Follow";
 import FollowerModal from "./FollowerModal";
 import axiosInstance from "../Common/axiosInterceptor";
 import defaultImage from "../assets/defaultImage.png";
+import { areaList } from "../Filter/AreaCode";
 
 interface useruserInfoId {
   name: string;
@@ -97,55 +98,35 @@ const UseruserInfo = () => {
       {/* 프로필 사진과 유저네임 */}
       <div className="picture-name-container">
         <div className="picture-name-row">
-          <img className="userInfo-picture" src={userInfo.image || defaultImage}></img>
+          <img
+            className="userInfo-picture"
+            src={userInfo.image || defaultImage}
+          ></img>
           <div className="h-24 ml-3">
             <h1 className="userInfo-username capitalize">{userInfo.name}</h1>
             <div className="ml-1 pt-1">
-            <div className="flex">
-            {userInfo.isLocal === "1" ? (
-                <div className="mr-8">{userInfo.areaCode}</div>
-                ) : ( 
-                <div></div>
+              <div className="flex">
+                {userInfo.isLocal === "1" ? (
+                  <div className="mr-2">
+                    {userInfo.areaCode &&
+                      areaList.map((area) => {
+                        if (area.id === userInfo.areaCode) {
+                          return area.name;
+                        }
+                      })}
+                  </div>
+                ) : (
+                  <div></div>
                 )}
                 <div className="capitalize">{userInfo.gender}</div>
               </div>
-              <div className=''>{userInfo.isLocal === '1' ? 'Local' : 'Tourist'}</div>
+              <div className="">
+                {userInfo.isLocal === "1" ? "Local" : "Tourist"}
+              </div>
             </div>
           </div>
         </div>
-        <div className="edit-toggle-follow-container">
-          {/* <div className="flex mt-5">
-        <Follow
-        loginuserId={loginuser.id}
-        userID={userInfo.id}
-        />
-        <button className="border-2 border-black hover:bg-green-500 text-black font-bold py-2 px-4 rounded-full mr-5" >Message</button>
-        
-        </div> */}
-
-          {/* <div className="flex flex-col py-10">
-            <div className="flex flex-row">
-              <div className="w-12 mx-9 font-bold">{getFollow.follower}</div>
-              <div className="w-12 mx-3 font-bold">{getFollow.following}</div>
-            </div>
-            <div className="flex flex-row">
-              <button className="mx-3 font-bold" onClick={showModal}>
-                Follower
-              </button>
-              {modalOpen && (
-                <FollowerModal
-                  senduserID={userId}
-                  setModalOpen={setModalOpen}
-                />
-              )}
-
-              <div className="mx-3 font-bold">Following</div>
-              <div className="userprofile-gender mx-3 font-bold">
-                {userInfo.gender}
-              </div>
-            </div>
-          </div> */}
-        </div>
+        <div className="edit-toggle-follow-container"></div>
         <div className="userprofile-intro mb-1 ml-52">
           {userInfo.introduceId ? userInfo.introduceId.self : ""}
         </div>
@@ -187,7 +168,7 @@ const UseruserInfo = () => {
             </div>
           </div>
         ) : (
-          <div>
+          <div className="grid grid-cols-4 gap-1">
             {getuserpost.map((post: any, i: any) => (
               <ProfileMyPost key={i} post={post} memberdetails={userInfo.id} />
             ))}
