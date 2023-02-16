@@ -78,7 +78,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // const [loggedInfo, setLoggedInfo] = useState<any>()
 
   const userIsLoggedIn = !!token;
-  
+
   let loggedInfo = { iss: "", auth: "", uid: 0 };
   if (token) {
     loggedInfo = jwtDecode(token) as any;
@@ -136,14 +136,14 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
       setIsSuccess(true);
       return response;
     } else {
-      return null
+      return null;
     }
   };
 
   //   로그인을 하는 함수
   const loginHandler = (email: string, password: string) => {
     setIsSuccess(false);
-    const data = await authAction
+    const data = authAction
       .signInActionHandler(email, password)
       .then((result) => {
         if (result !== null) {
@@ -174,10 +174,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   //   로그아웃을 하는 함수
   const signOutHandler = useCallback(async () => {
-    console.log(loggedInfo)
+    console.log(loggedInfo);
     await authAction.signOutActionHandler(loggedInfo.uid);
     setToken("");
-    console.log('여기')
+    console.log("여기");
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
