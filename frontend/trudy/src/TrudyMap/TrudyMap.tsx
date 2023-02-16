@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { GoogleMap, useJsApiLoader, MarkerF, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  MarkerF,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 import "./TrudyMap.css";
 import Place from "./Place";
 // import Bookmark from "../Common/Bookmark";
@@ -13,7 +19,7 @@ const API_KEY = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
 const containerStyle = {
   width: "100%",
-  height: "90%",
+  height: "95%",
 };
 
 function TrudyMap() {
@@ -31,7 +37,9 @@ function TrudyMap() {
   const [map, setMap] = React.useState(null);
 
   // 북마크, placeinfo 버튼
-  const [selectedInfo, setselectedInfo] = useState<"bookmark" | "placeinfo">("placeinfo");
+  const [selectedInfo, setselectedInfo] = useState<"bookmark" | "placeinfo">(
+    "placeinfo"
+  );
 
   // 북마크 정보 저장
   const [bookmarkedIds, setbookmarkedIds] = useState<number[]>([]);
@@ -63,11 +71,14 @@ function TrudyMap() {
       }
       if (memberId) {
         try {
-          const bookmarkResponse = await axios.get(`api/bookmark?memberId=${memberId}`, {
-            headers: {
-              Authorization: token,
-            },
-          });
+          const bookmarkResponse = await axios.get(
+            `api/bookmark?memberId=${memberId}`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
           setbookmarkList(bookmarkResponse.data);
         } catch (error) {
           console.log(error);
@@ -81,7 +92,10 @@ function TrudyMap() {
     if (bookmarkList) {
       bookmarkList.map((bookmark: any) => {
         tempbookMark.push(bookmark.id);
-        markMarker.push({ lat: parseFloat(bookmark.mapy), lng: parseFloat(bookmark.mapx) });
+        markMarker.push({
+          lat: parseFloat(bookmark.mapy),
+          lng: parseFloat(bookmark.mapx),
+        });
       });
     }
     setbookmarkMarker(markMarker);
@@ -126,13 +140,21 @@ function TrudyMap() {
                 <div className="flex flex-row justify-center">
                   <button
                     onClick={() => setselectedInfo("bookmark")}
-                    className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                    className={`p-4 m-2 rounded-lg ${
+                      selectedInfo === "bookmark"
+                        ? "bg-indigo-500 text-white"
+                        : "bg-gray-300"
+                    }`}
                   >
                     Bookmark Information
                   </button>
                   <button
                     onClick={() => setselectedInfo("placeinfo")}
-                    className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                    className={`p-4 m-2 rounded-lg ${
+                      selectedInfo === "placeinfo"
+                        ? "bg-indigo-500 text-white"
+                        : "bg-gray-300"
+                    }`}
                   >
                     Place Information
                   </button>
@@ -164,7 +186,11 @@ function TrudyMap() {
             ) : (
               // --------------------------------------------------------------------------
               // 로그인 안되어있는 경우
-              <Place bookmarkedIds={bookmarkedIds} setbookmarkedIds={setbookmarkedIds} mapVisible={mapVisible} />
+              <Place
+                bookmarkedIds={bookmarkedIds}
+                setbookmarkedIds={setbookmarkedIds}
+                mapVisible={mapVisible}
+              />
             )}
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -184,7 +210,10 @@ function TrudyMap() {
                 {bookmarkList.map((bookmark: any, index: number) => (
                   <MarkerF
                     key={index}
-                    position={{ lat: parseFloat(bookmark.mapy), lng: parseFloat(bookmark.mapx) }}
+                    position={{
+                      lat: parseFloat(bookmark.mapy),
+                      lng: parseFloat(bookmark.mapx),
+                    }}
                     icon={{
                       url: `${bookmark_yes}`,
                       scaledSize: new google.maps.Size(40, 40),
@@ -219,13 +248,21 @@ function TrudyMap() {
                     <div className="flex flex-row justify-center">
                       <button
                         onClick={() => setselectedInfo("bookmark")}
-                        className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                        className={`p-4 m-2 rounded-lg ${
+                          selectedInfo === "bookmark"
+                            ? "bg-indigo-500 text-white"
+                            : "bg-gray-300"
+                        }`}
                       >
                         Bookmark Information
                       </button>
                       <button
                         onClick={() => setselectedInfo("placeinfo")}
-                        className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
+                        className={`p-4 m-2 rounded-lg ${
+                          selectedInfo === "placeinfo"
+                            ? "bg-indigo-500 text-white"
+                            : "bg-gray-300"
+                        }`}
                       >
                         Place Information
                       </button>
@@ -270,7 +307,12 @@ function TrudyMap() {
           </div>
         </>
       )}
-      <button type="button" onClick={() => setMapVisible(!mapVisible)} id="map-toggle" className="mt-12 mr-12 absolute top-0 right-0">
+      <button
+        type="button"
+        onClick={() => setMapVisible(!mapVisible)}
+        id="map-toggle"
+        className="mt-12 mr-12 absolute top-0 right-0"
+      >
         {mapVisible ? "Hide Map" : "Show Map"}
       </button>
     </div>
