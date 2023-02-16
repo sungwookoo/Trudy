@@ -8,6 +8,7 @@ import { areaList } from "../Filter/AreaCode";
 import { sigunguList } from "../Filter/SigunguCode";
 import SigunguSelect from "../Filter/SelectSigungu";
 import SearchBar from "../Common/SearchBar";
+import trudylogo from "../assets/trudylogo.png";
 
 export type mapPlaceType = {
   id: number;
@@ -70,7 +71,6 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   // 대분류 선택시 해당 대분류 id 가진 세부지역 checkbox 표시하기
   const handleAreaClick = (id: number) => {
-    console.log(id);
     setSelectedAreaCode(id);
   };
 
@@ -82,6 +82,7 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
 
   // 관광 정보 데이터 불러오기
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const resData: any = await axios.get(
@@ -90,13 +91,14 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
         setPlaces(resData.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
     // 필터 값 바뀌면 limit 값 변경해주기
   }, [limit, offset, areaSigun, contentTypeId, keyword]);
 
-  console.log(places);
   return (
     <div>
       {/* 지역 버튼 */}
@@ -147,6 +149,11 @@ function Place({ onPlaceClick = () => {}, bookmarkedIds, setbookmarkedIds, membe
       <button onClick={() => setLimit(limit + 10)} color="black">
         more
       </button>
+      {isLoading && (
+        <div className="flex justify-center items-center w-full h-full">
+          <img src={trudylogo} alt="Loading" className="w-12 h-12 animate-spin" />
+        </div>
+      )}
     </div>
   );
 }

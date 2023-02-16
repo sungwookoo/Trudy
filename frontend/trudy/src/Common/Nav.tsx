@@ -80,11 +80,11 @@ function Nav(navProfileImg: any) {
         </div>
 
         {/* 플래너 */}
-        {/* <div className="nav-item">
+        <div className="nav-item">
           <NavLink className="nav-link" to="/planner">
             Planner
           </NavLink>
-        </div> */}
+        </div>
       </div>
 
       <div className="profile-signout">

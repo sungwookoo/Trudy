@@ -119,15 +119,12 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
         }
         if (selectedSigungu.length > 0) {
           sigunguMatch = selectedSigungu.includes(parseInt(bookmark.sigungucode));
-          console.log(parseInt(bookmark.sigungucode));
-          console.log(selectedSigungu);
         } else {
           sigunguMatch = true;
         }
 
         if (bookMarkCategory.length > 0) {
           contentTypeMatch = bookMarkCategory.includes(parseInt(bookmark.contenttypeid));
-          console.log(bookmark.contenttypeid);
         } else {
           contentTypeMatch = true;
         }
@@ -147,7 +144,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
 
   // 지도 센터 옮기기
   const handleClick = (mapx: number, mapy: number) => {
-    console.log(mapx, mapy, 342341412412);
     onPlaceClick(mapx, mapy);
   };
 
@@ -155,7 +151,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
   const handleDragStart = (e: React.DragEvent, bookmarkId: number) => {
     e.dataTransfer.setData("text/plain", bookmarkId.toString());
   };
-  console.log(selectedSigungu);
 
   return (
     <>
@@ -181,7 +176,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   onChange={() => {
                     if (selectedSigungu.includes(sigunguInfo.id)) {
                       const filteredSigungu = selectedSigungu.filter((id: number) => id !== sigunguInfo.id);
-                      console.log(filteredSigungu, 33333333333333333);
                       setSelectedSigungu(filteredSigungu);
                     } else {
                       setSelectedSigungu([...selectedSigungu, sigunguInfo.id]);

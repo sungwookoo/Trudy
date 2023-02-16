@@ -1,11 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  MarkerF,
-  DirectionsService,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, MarkerF, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import "./TrudyMap.css";
 import Place from "./Place";
 // import Bookmark from "../Common/Bookmark";
@@ -35,9 +29,7 @@ function TrudyMap() {
   const [map, setMap] = React.useState(null);
 
   // 북마크, placeinfo 버튼
-  const [selectedInfo, setselectedInfo] = useState<"bookmark" | "placeinfo">(
-    "placeinfo"
-  );
+  const [selectedInfo, setselectedInfo] = useState<"bookmark" | "placeinfo">("placeinfo");
 
   // 북마크 정보 저장
   const [bookmarkedIds, setbookmarkedIds] = useState<number[]>([]);
@@ -69,14 +61,11 @@ function TrudyMap() {
       }
       if (memberId) {
         try {
-          const bookmarkResponse = await axios.get(
-            `api/bookmark?memberId=${memberId}`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
+          const bookmarkResponse = await axios.get(`api/bookmark?memberId=${memberId}`, {
+            headers: {
+              Authorization: token,
+            },
+          });
           setbookmarkList(bookmarkResponse.data);
         } catch (error) {
           console.log(error);
@@ -100,11 +89,8 @@ function TrudyMap() {
     setbookmarkedIds(tempbookMark);
   }, [bookmarkList]);
 
-  console.log(bookmarkList, "메인페이지임");
-
   // 선택시 센터 위도 경도 업데이트
   const updateCenter = (lat: number, lng: number) => {
-    console.log(lat, lng, "동작중ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ1123");
     setCenter({ lat, lng });
     setZoom(20);
     setMarker({ lat, lng });
@@ -115,15 +101,15 @@ function TrudyMap() {
     function callback(map: any) {
       new window.google.maps.LatLngBounds(center);
       setMap(map);
-      setZoom(14);
+      setZoom(zoom);
     },
     [center]
   );
 
   const onUnmount = React.useCallback(function callback() {
-    console.log("onUnmounttttttttttttttttttttttttttttttttttt");
     setMap(null);
   }, []);
+
   return (
     <div className="flex h-screen">
       {/* 지도 보이는 경우 -------------------------------------------------------------------------- */}
@@ -138,21 +124,13 @@ function TrudyMap() {
                 <div className="flex flex-row justify-center">
                   <button
                     onClick={() => setselectedInfo("bookmark")}
-                    className={`p-4 m-2 rounded-lg ${
-                      selectedInfo === "bookmark"
-                        ? "bg-indigo-500 text-white"
-                        : "bg-gray-300"
-                    }`}
+                    className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
                   >
                     Bookmark Information
                   </button>
                   <button
                     onClick={() => setselectedInfo("placeinfo")}
-                    className={`p-4 m-2 rounded-lg ${
-                      selectedInfo === "placeinfo"
-                        ? "bg-indigo-500 text-white"
-                        : "bg-gray-300"
-                    }`}
+                    className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
                   >
                     Place Information
                   </button>
@@ -184,11 +162,7 @@ function TrudyMap() {
             ) : (
               // --------------------------------------------------------------------------
               // 로그인 안되어있는 경우
-              <Place
-                bookmarkedIds={bookmarkedIds}
-                setbookmarkedIds={setbookmarkedIds}
-                mapVisible={mapVisible}
-              />
+              <Place bookmarkedIds={bookmarkedIds} setbookmarkedIds={setbookmarkedIds} mapVisible={mapVisible} />
             )}
           </div>
           {/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */}
@@ -246,21 +220,13 @@ function TrudyMap() {
                     <div className="flex flex-row justify-center">
                       <button
                         onClick={() => setselectedInfo("bookmark")}
-                        className={`p-4 m-2 rounded-lg ${
-                          selectedInfo === "bookmark"
-                            ? "bg-indigo-500 text-white"
-                            : "bg-gray-300"
-                        }`}
+                        className={`p-4 m-2 rounded-lg ${selectedInfo === "bookmark" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
                       >
                         Bookmark Information
                       </button>
                       <button
                         onClick={() => setselectedInfo("placeinfo")}
-                        className={`p-4 m-2 rounded-lg ${
-                          selectedInfo === "placeinfo"
-                            ? "bg-indigo-500 text-white"
-                            : "bg-gray-300"
-                        }`}
+                        className={`p-4 m-2 rounded-lg ${selectedInfo === "placeinfo" ? "bg-indigo-500 text-white" : "bg-gray-300"}`}
                       >
                         Place Information
                       </button>
@@ -305,12 +271,7 @@ function TrudyMap() {
           </div>
         </>
       )}
-      <button
-        type="button"
-        onClick={() => setMapVisible(!mapVisible)}
-        id="map-toggle"
-        className="mt-12 mr-12 absolute top-0 right-0"
-      >
+      <button type="button" onClick={() => setMapVisible(!mapVisible)} id="map-toggle" className="mt-12 mr-12 absolute top-0 right-0">
         {mapVisible ? "Hide Map" : "Show Map"}
       </button>
     </div>
