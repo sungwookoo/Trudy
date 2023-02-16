@@ -304,7 +304,7 @@ public class PostService {
         // comment 존재 & nested comment 존재 시
         if(commentEntity.isPresent() && nestedCommentCount > 0){
             commentEntity.get().setIsDeleted((byte) 1);
-            commentEntity.get().setContent("삭제된 댓글 입니다");
+            commentEntity.get().setContent("Deleted Comment");
         }
         // comment 만 존재 시 -> 삭제
         else if(commentEntity.isPresent()){
