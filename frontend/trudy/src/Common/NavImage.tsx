@@ -36,7 +36,7 @@ function UserProfileImage() {
         <img
           src={defaultImage}
           alt="Default profile image"
-          style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+          style={{ width: "40px", height: "40px", borderRadius: "20%" }}
         />
       )}
     </>

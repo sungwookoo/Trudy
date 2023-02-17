@@ -219,8 +219,4 @@ public class MemberService {
         memberRepository.save(member);
         return map;
     }
-
-    public void changePassword(Member member, String password) {
-        member.setPassword(password);
-    }
 }

@@ -8,7 +8,6 @@ import parse from "html-react-parser";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ForumImageUpload from "./ForumImageUpload";
 import { useNavigate } from "react-router-dom";
 import "./CkEditor.css";
 import axiosInstance from "../Common/axiosInterceptor";
@@ -104,7 +103,7 @@ function ForumCreate() {
         return new Promise((resolve, reject) => {
           const upload = new FormData();
           loader.file.then((file: any) => {
-            if (file.size > 1024 * 1024 * 10) {
+            if (file.size > 1024 * 1024 * 100) {
               reject("Only images smaller than 10MB can be uploaded");
             } else {
               upload.append("upload", file);
@@ -220,10 +219,16 @@ function ForumCreate() {
         </div>
         {loggedinId && (
           <div className="flex flex-row w-full justify-end px-44">
-            <button className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={cancelPosts}>
+            <button
+              className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full"
+              onClick={cancelPosts}
+            >
               Back
             </button>
-            <button className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={submitPost}>
+            <button
+              className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full"
+              onClick={submitPost}
+            >
               Submit
             </button>
           </div>

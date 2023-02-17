@@ -13,6 +13,7 @@ import com.ssafy.trudy.member.model.dto.*;
 import com.ssafy.trudy.member.service.MemberService;
 import com.ssafy.trudy.post.model.Post;
 import com.ssafy.trudy.post.service.PostService;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -142,7 +143,7 @@ public class MemberAppService {
         Member member = memberService.getById(principal.getMember().getId());
 
         member.setName(modifyRequest.getName());
-//        member.setPassword(passwordEncoder.encode(modifyRequest.getPassword()));
+        member.setPassword(passwordEncoder.encode(modifyRequest.getPassword()));
         member.setGender(modifyRequest.getGender());
         member.setBirth(modifyRequest.getBirth());
         member.setIsLocal(modifyRequest.getIsLocal());
@@ -445,14 +446,5 @@ public class MemberAppService {
 
     public Map<String, String> createMemberFile(MultipartFile multipartFile, String dirName, PrincipalDetails principal) throws IOException {
         return memberService.createMemberFile(multipartFile, dirName, principal);
-    }
-
-    public String changePassword(PrincipalDetails principal, String currentPassword, String newPassword) {
-        Member member = principal.getMember();
-        if(member.getPassword().equals(passwordEncoder.encode(currentPassword))) {
-            memberService.changePassword(member, passwordEncoder.encode(newPassword));
-            return "1";
-        }
-        else return "0";
     }
 }
