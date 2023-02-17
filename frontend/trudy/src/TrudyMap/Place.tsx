@@ -10,7 +10,6 @@ import SigunguSelect from "../Filter/SelectSigungu";
 import SearchBar from "../Common/SearchBar";
 import trudylogo from "../assets/trudylogo.png";
 import "./Place.css";
-
 export type mapPlaceType = {
   id: number;
   addr1: string;
@@ -40,7 +39,7 @@ function Place({
   const [limit, setLimit] = useState<any>(10);
   const [offset, setOffset] = useState<any>(0);
   const [areaSigun, setareaSigun] = useState<any>([]);
-  const [keyword, setkeyword] = useState<any>();
+  const [keyword, setkeyword] = useState<any>("");
 
   // 카테고리
   const [contentTypeId, setcontentTypeId] = useState<number[]>([]);
@@ -48,7 +47,7 @@ function Place({
   const API_URL: string = "api/place";
 
   // 지역 filter
-  const [selectedAreaCode, setSelectedAreaCode] = useState<any>();
+  const [selectedAreaCode, setSelectedAreaCode] = useState<any>("");
   const [isCollapsed, setIsCollapsed] = useState(true);
   // 시군구 filter
   const [selectedSigungu, setSelectedSigungu] = useState<number[]>([]);
@@ -56,7 +55,7 @@ function Place({
   // 로딩중 spinner
   const [isLoading, setIsLoading] = useState(false);
   // 서치 바
-  const [searchChange, setSearchChange] = useState<string>();
+  const [searchChange, setSearchChange] = useState<any>("");
   // 초기화
   // 초기화 필터
   const clearFilter = () => {
@@ -113,8 +112,9 @@ function Place({
     <div>
       {/* 지역 버튼 */}
       <div>
-        <div>
+        <div className="">
           <SearchBar
+            key={Date.now()}
             searchChange={searchChange}
             setNameSearch={setkeyword}
             setSearchChange={setSearchChange}
@@ -162,13 +162,12 @@ function Place({
             )}
           </div>
         </div>
-        <div className="">
-          {/* 카테고리 */}
-          {/* <CategoryButtons
-            onClick={handleCategoryClick}
-            selectedCategories={contentTypeId}
-          /> */}
-        </div>
+        {/* 카테고리 */}
+        <CategoryButtons
+          key={Date.now()}
+          onClick={handleCategoryClick}
+          selectedCategories={contentTypeId}
+        />
       </div>
       <div className="flex flex-wrap place-content-center">
         {places ? (
@@ -194,7 +193,7 @@ function Place({
         <button
           onClick={() => setLimit(limit + 10)}
           color="black"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded-full more-button"
+          className="bg-green-400 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded-full more-button"
         >
           more
         </button>

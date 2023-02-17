@@ -67,7 +67,6 @@ function Profile() {
       })
       .then((res) => {
         // setGetMyPost(res.data.content);
-        console.log(res.data.content, "겟 마이 포스트");
       })
       .catch((error: any) => console.error(error));
   };
@@ -84,7 +83,6 @@ function Profile() {
         setGetMyPost(res.data.posts);
 
         // getMyPosts();
-        console.log(res.data, "멤버 받는값");
       })
       .catch((err: any) => console.error(err));
   }, []);
@@ -93,8 +91,6 @@ function Profile() {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  console.log(getmypost, "내 게시글ㅇㅇㅇㅇㅇㅇ");
-  console.log(profile, "내 프로필 정보");
   return (
     // 프로필 컨테이너 파란 영역
     <div className="profile-container">
@@ -221,16 +217,11 @@ function Profile() {
                   </div>
                   <div></div>
                 </>
-                // <div className="text-2xl justify-center">There are currently no posts. Shall we go write?</div>
               )}
             </div>
           )}
         </div>
       </div>
-      {/* <ProfileMyPost id={profile.id}/> */}
-      {/* <ProfileMyPost /> */}
-
-      {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
     </div>
   );
 }
