@@ -7,6 +7,7 @@ import { useContext } from "react";
 import ProfileMyPost from "./ProfileMyPost";
 import defaultImage from "../assets/defaultImage.png";
 import axiosInstance from "../Common/axiosInterceptor";
+import { areaList } from "../Filter/AreaCode";
 
 // authCtx.isLoggedin 이 true 면 로그인
 // import { dummyMembers } from '../Forum/Forum';
@@ -184,65 +185,69 @@ function Profile() {
           <div>
             <h1 className="myprofile-username">{profile.name}</h1>
 
-            <div className="flex">
+            <div className="flex mb-4">
               {profile.isLocal === "1" ? (
-                <div className="mr-8 border border-1 rounded-md px-1 mx-1 bg-green-200">
-                  {profile.areaCode}
+                <div className="mr-2 border border-1 rounded-md px-1 mx-1 bg-green-200 shadow-md">
+                  {profile.areaCode &&
+                    areaList.map((area) => {
+                      if (area.id === profile.areaCode) {
+                        return area.name;
+                      }
+                    })}
                 </div>
               ) : (
                 <div></div>
               )}
-              {/* <div className="mr-5">{profile.areaCode}</div> */}
-              <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">
+              <div className="capitalize border border-1 rounded-md px-1 bg-green-200 shadow-md">
                 {profile.gender}
               </div>
+
+              <div className="border border-1 rounded-md px-1 mx-2 bg-green-200 w-12 shadow-md">
+                {profile.isLocal === "1" ? "Local" : "Tourist"}
+              </div>
             </div>
-            <div className="border border-1 rounded-md px-1 mx-1 bg-green-200">
-              {profile.isLocal === "1" ? "Local" : "Tourist"}
-            </div>
-            <div className="mt-4">
-              {" "}
-              Facebook :
-              <textarea
-                className="profile-intro-edit "
-                value={updatedFacebook}
-                onChange={(event) => setUpdatedFacebook(event.target.value)}
-              >
-                {profile.introduceId ? profile.introduceId.facebook : ""}
-              </textarea>
-            </div>
-            <div className=" mt-4">
-              {" "}
-              Instagram :
-              <textarea
-                className="instagram-edit "
-                value={updatedInstagram}
-                onChange={(event) => setUpdatedInstagram(event.target.value)}
-              >
-                {profile.introduceId ? profile.introduceId.instagram : ""}
-              </textarea>
-            </div>
-            <div className=" mt-4">
-              {" "}
-              Twitter :
-              <textarea
-                className="twitter-intro-edit "
-                value={updatedTwitter}
-                onChange={(event) => setUpdatedTwitter(event.target.value)}
-              >
-                {profile.introduceId ? profile.introduceId.twitter : ""}
-              </textarea>
-            </div>
-            <div className="mt-4">
-              {" "}
-              Github :
-              <textarea
-                className="github-intro-edit "
-                value={updatedGithub}
-                onChange={(event) => setUpdatedGithub(event.target.value)}
-              >
-                {profile.introduceId ? profile.introduceId.github : ""}
-              </textarea>
+            {/* SNS 링크 */}
+            <div className="sns-link-box ml-1.5 mt-2 ">
+              <div className="flex font-semibold justify-between items-center mb-1">
+                Facebook
+                <textarea
+                  className="profile-sns-edit focus:ring-green-500"
+                  value={updatedFacebook}
+                  onChange={(event) => setUpdatedFacebook(event.target.value)}
+                >
+                  {profile.introduceId ? profile.introduceId.facebook : ""}
+                </textarea>
+              </div>
+              <div className="flex font-semibold justify-between items-center mb-1">
+                Instagram
+                <textarea
+                  className="profile-sns-edit focus:ring-green-500"
+                  value={updatedInstagram}
+                  onChange={(event) => setUpdatedInstagram(event.target.value)}
+                >
+                  {profile.introduceId ? profile.introduceId.instagram : ""}
+                </textarea>
+              </div>
+              <div className="flex font-semibold justify-between items-center mb-1">
+                Twitter
+                <textarea
+                  className="profile-sns-edit focus:ring-green-500"
+                  value={updatedTwitter}
+                  onChange={(event) => setUpdatedTwitter(event.target.value)}
+                >
+                  {profile.introduceId ? profile.introduceId.twitter : ""}
+                </textarea>
+              </div>
+              <div className="flex font-semibold justify-between items-center mb-1">
+                Github
+                <textarea
+                  className="profile-sns-edit focus:ring-green-500"
+                  value={updatedGithub}
+                  onChange={(event) => setUpdatedGithub(event.target.value)}
+                >
+                  {profile.introduceId ? profile.introduceId.github : ""}
+                </textarea>
+              </div>
             </div>
           </div>
         </div>
@@ -283,7 +288,7 @@ function Profile() {
           </div>
         </div>
 
-        <div className="edit-profile-intro mt-4">
+        <div className="edit-profile-intro">
           <textarea
             className="profile-intro-edit "
             value={updatedSelf}
@@ -296,7 +301,7 @@ function Profile() {
       <div className="content-box flex place-content-center mb-5">
         {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
-        <div className="flex place-content-center font-bold text-4xl">
+        <div className="flex place-content-center font-bold text-4xl mt-12">
           About
         </div>
       </div>
