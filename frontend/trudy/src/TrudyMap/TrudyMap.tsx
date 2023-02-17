@@ -187,6 +187,7 @@ function TrudyMap() {
                 bookmarkedIds={bookmarkedIds}
                 setbookmarkedIds={setbookmarkedIds}
                 mapVisible={mapVisible}
+                onPlaceClick={updateCenter}
               />
             )}
           </div>

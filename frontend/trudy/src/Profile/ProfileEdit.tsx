@@ -44,7 +44,10 @@ function Profile() {
   const [updatedTitle, setUpdatedTitle] = useState<string>("");
   const [updatedLanguage, setUpdatedLanguage] = useState<string>("");
   const [updatedPublic, setUpdatedPublic] = useState<string>("");
-
+  const [updatedFacebook, setUpdatedFacebook] = useState<string>("");
+  const [updatedTwitter, setUpdatedTwitter] = useState<string>("");
+  const [updatedInstagram, setUpdatedInstagram] = useState<string>("");
+  const [updatedGithub, setUpdatedGithub] = useState<string>("");
   const navigate = useNavigate();
   const navigateToProfile = () => {
     navigate("/profile");
@@ -65,12 +68,17 @@ function Profile() {
         setUpdatedSelf(res.data.introduceId.self);
         setUpdatedPlan(res.data.introduceId.plan);
         setUpdatedTitle(res.data.introduceId.title);
-        setUpdatedLanguage(res.data.introduceId.language);
-        setUpdatedPublic(res.data.isPublic);
-        console.log(res.data.introduceId.title, 222);
-        console.log(res.data, 11111);
+        setUpdatedFacebook(res.data.introduceId.facebook);
+        setUpdatedGithub(res.data.introduceId.github);
+        setUpdatedTwitter(res.data.introduceId.twitter);
+        setUpdatedInstagram(res.data.introduceId.instagram);
+        if (res.data.isPublic !== null) {
+          setUpdatedPublic(res.data.isPublic);
+        } else {
+          setUpdatedPublic("0");
+        }
       })
-      .catch((err: any) => console.error(err));
+      .catch((err: any) => {});
   }, []);
 
   // 프로필 이미지 업로드
@@ -87,16 +95,12 @@ function Profile() {
       })
       .then((res) => {
         setProfile({ ...profile, image: res.data.imageUrl });
-        console.log(res, "업로드 성공");
       })
-      .catch((err) => {
-        console.log(err, "업로드 실패");
-      });
+      .catch((err) => {});
   };
 
   const updateProfile = async (e: any) => {
     e.preventDefault();
-    console.log(token);
     try {
       const response = await axiosInstance.put(
         "api/member/intro",
@@ -105,6 +109,10 @@ function Profile() {
           self: updatedSelf,
           title: updatedTitle,
           language: updatedLanguage,
+          facebook: updatedFacebook,
+          instagram: updatedInstagram,
+          twitter: updatedTwitter,
+          github: updatedGithub,
         },
         {
           headers: {
@@ -112,12 +120,9 @@ function Profile() {
           },
         }
       );
-      console.log(response, "프로필 수정 성공");
       navigateToProfile();
-      window.location.replace("/profile");
-    } catch (error) {
-      console.log(error, "프로필 수정 실패");
-    }
+      // window.location.replace("/profile");
+    } catch (error) {}
   };
 
   // 프로필 공개여부
@@ -135,17 +140,13 @@ function Profile() {
           },
         }
       );
-      console.log(response, "프로필 공개여부 수정 성공");
-      navigateToProfile();
+      // navigateToProfile();
       window.location.replace("/profile");
-    } catch (error) {
-      console.log(error, "프로필 공개여부 수정 실패");
-    }
+    } catch (error) {}
   };
 
   // 프로필 공개 토글 클릭
   const checkToggle = () => {
-    console.log(updatePublic, "여기");
     if (updatedPublic === "0") {
       setUpdatedPublic("1");
     } else {
@@ -157,7 +158,6 @@ function Profile() {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  console.log(profile, 444);
   return (
     // 프로필 컨테이너 파란 영역
     <div className="profile-update-container">
@@ -186,15 +186,63 @@ function Profile() {
 
             <div className="flex">
               {profile.isLocal === "1" ? (
-                <div className="mr-8">{profile.areaCode}</div>
+                <div className="mr-8 border border-1 rounded-md px-1 mx-1 bg-green-200">
+                  {profile.areaCode}
+                </div>
               ) : (
                 <div></div>
               )}
               {/* <div className="mr-5">{profile.areaCode}</div> */}
-              <div className="capitalize">{profile.gender}</div>
+              <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">
+                {profile.gender}
+              </div>
             </div>
-            <div className="">
+            <div className="border border-1 rounded-md px-1 mx-1 bg-green-200">
               {profile.isLocal === "1" ? "Local" : "Tourist"}
+            </div>
+            <div className="mt-4">
+              {" "}
+              Facebook :
+              <textarea
+                className="profile-intro-edit "
+                value={updatedFacebook}
+                onChange={(event) => setUpdatedFacebook(event.target.value)}
+              >
+                {profile.introduceId ? profile.introduceId.facebook : ""}
+              </textarea>
+            </div>
+            <div className=" mt-4">
+              {" "}
+              Instagram :
+              <textarea
+                className="instagram-edit "
+                value={updatedInstagram}
+                onChange={(event) => setUpdatedInstagram(event.target.value)}
+              >
+                {profile.introduceId ? profile.introduceId.instagram : ""}
+              </textarea>
+            </div>
+            <div className=" mt-4">
+              {" "}
+              Twitter :
+              <textarea
+                className="twitter-intro-edit "
+                value={updatedTwitter}
+                onChange={(event) => setUpdatedTwitter(event.target.value)}
+              >
+                {profile.introduceId ? profile.introduceId.twitter : ""}
+              </textarea>
+            </div>
+            <div className="mt-4">
+              {" "}
+              Github :
+              <textarea
+                className="github-intro-edit "
+                value={updatedGithub}
+                onChange={(event) => setUpdatedGithub(event.target.value)}
+              >
+                {profile.introduceId ? profile.introduceId.github : ""}
+              </textarea>
             </div>
           </div>
         </div>
@@ -222,7 +270,7 @@ function Profile() {
                   id="toggleB"
                   className="sr-only"
                   onClick={checkToggle}
-                  defaultChecked={updatedPublic === "0" ? false : true}
+                  checked={updatedPublic === "0" ? false : true}
                 />
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
@@ -256,7 +304,9 @@ function Profile() {
       <div className="about-me grid grid-cols-1">
         <hr className="about-me-hr" />
         <div className="flex flex-col about-box mt-2">
-          <div className="text-4xl font-semibold mt-6">I will show you</div>
+          <div className="text-4xl flex flex-start font-semibold mt-6">
+            I will show you
+          </div>
           <div className="capitalize text-xl mt-3">
             <textarea
               className="profile-textarea-edit"

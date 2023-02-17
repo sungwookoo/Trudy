@@ -25,7 +25,7 @@ const SearchBar = ({ searchChange, setNameSearch, setSearchChange }: any) => {
         />
         <button
           type="submit"
-          className="w-1/6 pl-1.5 ml-2 mr-3 bg-white rounded-md border hover:bg-green-500 border-gray-500 items-center"
+          className="pl-6  mr-3 bg-white rounded-md border-0 hover:bg-green-700 border-gray-500 items-left"
           onClick={(e) => {
             setNameSearch(searchChange);
           }}

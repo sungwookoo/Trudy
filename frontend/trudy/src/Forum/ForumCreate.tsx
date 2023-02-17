@@ -107,7 +107,7 @@ function ForumCreate() {
         return new Promise((resolve, reject) => {
           const upload = new FormData();
           loader.file.then((file: any) => {
-            if (file.size > 1024 * 1024 * 10) {
+            if (file.size > 1024 * 1024 * 50) {
               reject("Only images smaller than 10MB can be uploaded");
             } else {
               upload.append("upload", file);

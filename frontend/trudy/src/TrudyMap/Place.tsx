@@ -40,7 +40,7 @@ function Place({
   const [limit, setLimit] = useState<any>(10);
   const [offset, setOffset] = useState<any>(0);
   const [areaSigun, setareaSigun] = useState<any>([]);
-  const [keyword, setkeyword] = useState<any>("");
+  const [keyword, setkeyword] = useState<any>();
 
   // 카테고리
   const [contentTypeId, setcontentTypeId] = useState<number[]>([]);
@@ -119,10 +119,10 @@ function Place({
             setNameSearch={setkeyword}
             setSearchChange={setSearchChange}
           />
-          <div className="flex items-center mb-2">
+          <div>
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className={`flex items-center p-1 m-2 h-12 rounded-lg  ${
+              className={`p-2 m-2 rounded-lg  ${
                 !isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"
               }`}
             >
