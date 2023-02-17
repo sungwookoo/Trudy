@@ -8,7 +8,6 @@ import parse from "html-react-parser";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ForumImageUpload from "./ForumImageUpload";
 import { useNavigate } from "react-router-dom";
 import "./CkEditor.css";
 import axiosInstance from "../Common/axiosInterceptor";
@@ -49,8 +48,7 @@ function ForumCreate() {
   window.addEventListener("beforeunload", (event) => {
 
     event.preventDefault();
-    event.returnValue =
-      "Are you sure you want to leave? Your post will be lost.";
+    event.returnValue = "Are you sure you want to leave? Your post will be lost.";
 
 
     // 삭제 함수
@@ -89,7 +87,7 @@ function ForumCreate() {
         return new Promise((resolve, reject) => {
           const upload = new FormData();
           loader.file.then((file: any) => {
-            if (file.size > 1024 * 1024 * 10) {
+            if (file.size > 1024 * 1024 * 100) {
               reject("Only images smaller than 10MB can be uploaded");
             } else {
               upload.append("upload", file);
@@ -106,10 +104,7 @@ function ForumCreate() {
                     default: `${res.data.imageUrl}`,
                   });
 
-                  setSaveFileNameArr((prev) => [
-                    ...prev,
-                    `${res.data.fileName}`,
-                  ]);
+                  setSaveFileNameArr((prev) => [...prev, `${res.data.fileName}`]);
                 })
                 .catch((err) => {
                   reject(err);
@@ -136,18 +131,14 @@ function ForumCreate() {
   };
 
   function uploadPlugin(editor: any) {
-    editor.plugins.get("FileRepository").createUploadAdapter = (
-      loader: any
-    ) => {
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader: any) => {
       return customUploadAdapter(loader);
     };
   }
 
   //useEffect ->sessionStorage에서 list를 가져옴 -> return 으로 파일 전체 삭제
   const removeImageArr = () => {
-    let deleteFileNameArr = JSON.parse(
-      sessionStorage.getItem("saveFileNameArr") || "[]"
-    );
+    let deleteFileNameArr = JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]");
 
 
 
@@ -170,18 +161,10 @@ function ForumCreate() {
     <>
       <div className="forum-create-container px-96">
         <div className="flex flex-row">
-          <CategoryButtons
-            onClick={handleCategoryClick}
-            selectedCategories={forumcategory}
-          />
+          <CategoryButtons onClick={handleCategoryClick} selectedCategories={forumcategory} />
         </div>
         <div className="forum-title-container">
-          <input
-            className="forum-title"
-            type="text"
-            placeholder="Enter Title Here!"
-            onChange={(event) => setforumTitle(event.target.value)}
-          />
+          <input className="forum-title" type="text" placeholder="Enter Title Here!" onChange={(event) => setforumTitle(event.target.value)} />
         </div>
         <div className="forum-text-editor">
           <CKEditor
@@ -208,10 +191,16 @@ function ForumCreate() {
         </div>
         {loggedinId && (
           <div className="flex flex-row w-full justify-end px-44">
-            <button className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={cancelPosts}>
+            <button
+              className="border-2 border-black hover:bg-red-400 font-bold py-1 px-4 mx-2 rounded-full"
+              onClick={cancelPosts}
+            >
               Back
             </button>
-            <button className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full" onClick={submitPost}>
+            <button
+              className="border-2 border-black hover:bg-green-400 font-bold py-1 px-4 mx-2 rounded-full"
+              onClick={submitPost}
+            >
               Submit
             </button>
           </div>

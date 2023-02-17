@@ -24,7 +24,8 @@
 .myprofile-username {
   font-size: 50px;
   font-weight: bolder;
-  margin-right: 70px;
+  /* margin-right: 40px; */
+  margin-left: 10px;
   text-transform: capitalize;
   /* margin-left: 100px; */
 }
@@ -85,8 +86,8 @@ input:checked ~ .dot {
   /* margin-top: 10px; */
   font-size: 24px;
   width: 600px;
-  margin-left: 350px;
-  margin-bottom: 250px;
+  margin-left: 360px;
+  margin-bottom: 150px;
   text-transform: capitalize;
 }
 

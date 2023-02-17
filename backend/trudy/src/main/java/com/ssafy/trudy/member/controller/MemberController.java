@@ -7,6 +7,7 @@ import com.ssafy.trudy.member.model.dto.MemberIntroRequest;
 import com.ssafy.trudy.member.model.dto.MemberIntroResponse;
 import com.ssafy.trudy.member.model.dto.MemberModifyRequest;
 import com.ssafy.trudy.member.model.dto.MemberResponse;
+import com.ssafy.trudy.upload.AwsS3Uploader;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ResponseHeader;
 import lombok.RequiredArgsConstructor;
@@ -81,17 +82,6 @@ public class MemberController {
     @PutMapping("/info")
     public MemberResponse modifyMember(@AuthenticationPrincipal PrincipalDetails principal, @RequestBody MemberModifyRequest memberModifyRequest) {
         return memberAppService.modifyMember(principal, memberModifyRequest);
-    }
-
-    @ApiOperation(value = "패스워드 변경",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            responseHeaders = {
-                    @ResponseHeader(name = HttpHeaders.CONTENT_TYPE, description = MediaType.APPLICATION_JSON_VALUE),
-                    @ResponseHeader(name = HttpHeaders.AUTHORIZATION, description = "bearer token")
-            })
-    @PutMapping("/password")
-    public String changePassword(@AuthenticationPrincipal PrincipalDetails principal, @RequestParam String currentPassword, @RequestParam String newPassword) {
-        return memberAppService.changePassword(principal, currentPassword, newPassword);
     }
 
     @ApiOperation(value = "개인정보 수정 닉네임 중복 검사",

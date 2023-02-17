@@ -227,7 +227,7 @@ function ChatRoom() {
                   onKeyDown={pressEnter}
                 />
                 <button type="button" id="send-button" onClick={sendValue}>
-                  send
+                  Send
                 </button>
               </div>
             </div>

@@ -62,7 +62,7 @@ function AccountEdit() {
                 name="areaCode"
                 id={`classification-${areaCode.id}`}
                 className="mr-0.5 color-green-500"
-                checked={thisAreaCode === areaCode.id}
+                // checked={thisAreaCode === areaCode.id}
                 onClick={() => {
                   onClick(areaCode.id, areaCode.name);
                 }}
@@ -182,16 +182,9 @@ function AccountEdit() {
               </label>
             </div>
             <ul>
-              {existName ? (
-                <ul className="text-sm text-red-700">
-                  This nickname already exists
-                </ul>
-              ) : null}
+              {existName ? <ul className="text-sm text-red-700">This nickname already exists</ul> : null}
               {name === "" || /^[a-zA-Z0-9]{4,16}$/.test(name) ? null : (
-                <ul className="text-sm text-red-500">
-                  4 characters or more and 16 characters or less, consisting of
-                  English or numbers
-                </ul>
+                <ul className="text-sm text-red-500">4 characters or more and 16 characters or less, consisting of English or numbers</ul>
               )}
             </ul>
           </div>
@@ -256,11 +249,7 @@ function AccountEdit() {
 
           {/* 생년월일 */}
           <div>
-            <div
-              className={`relative -space-y-px rounded-md shadow-md border p-4 ${
-                wrongBirthday ? "border-red-700 border-2" : null
-              }`}
-            >
+            <div className={`relative -space-y-px rounded-md shadow-md border p-4 ${wrongBirthday ? "border-red-700 border-2" : null}`}>
               <label
                 htmlFor="name"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 left-1"
@@ -284,15 +273,11 @@ function AccountEdit() {
                 }}
               />
             </div>
-            {birthday === "" || CheckBirthday(birthday) ? null : (
-              <p className="text-sm text-red-500">Invalid birthday</p>
-            )}
+            {birthday === "" || CheckBirthday(birthday) ? null : <p className="text-sm text-red-500">Invalid birthday</p>}
           </div>
 
           {/* 로컬여부 */}
-          <div
-            className={`relative -space-y-px rounded-md shadow-md border p-4`}
-          >
+          <div className={`relative -space-y-px rounded-md shadow-md border p-4`}>
             <div className="">
               <label
                 htmlFor="name"
@@ -334,11 +319,7 @@ function AccountEdit() {
           <div className="">
             {isLocal === "1" ? (
               <>
-                <div
-                  className={`relative -space-y-px rounded-md shadow-md border p-3 ${
-                    wrongAreaCode ? "border-red-700 border-2" : null
-                  }`}
-                >
+                <div className={`relative -space-y-px rounded-md shadow-md border p-3 ${wrongAreaCode ? "border-red-700 border-2" : null}`}>
                   {AreaSelect({ areaCode: areaList, onClick: handleAreaClick })}
                   <label
                     htmlFor="name"
@@ -348,38 +329,30 @@ function AccountEdit() {
                   </label>
                 </div>
                 {thisAreaCode && (
-                  <div
-                    className={`relative -space-y-px rounded-md shadow-md border p-3 ${
-                      wrongSigunguCode ? "border-red-700 border-2" : null
-                    }`}
-                  >
+                  <div className={`relative -space-y-px rounded-md shadow-md border p-3 ${wrongSigunguCode ? "border-red-700 border-2" : null}`}>
                     <div className="flex flex-col">
-                      {sigunguList[thisAreaCode].map(
-                        (sigunguInfo: any, i: number) => (
-                          <div key={i} className="flex items-center mb-2">
-                            <label
-                              key={i}
-                              htmlFor={`classification-${thisAreaCode.id}`}
-                              className="inline-block bg-trudy rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-                            >
-                              <input
-                                className="mr-2"
-                                name="sigungu-select"
-                                type="radio"
-                                id={`sigungu-${sigunguInfo.id}`}
-                                checked={thisSigunguCode === sigunguInfo.id}
-                                onChange={() => {
-                                  setThisSigunguCode(sigunguInfo.id);
-                                  setWrongSigunguCode(false);
-                                }}
-                              />
-                              <label htmlFor={`sigungu-${sigunguInfo.id}`}>
-                                {sigunguInfo.name}
-                              </label>
-                            </label>
-                          </div>
-                        )
-                      )}
+                      {sigunguList[thisAreaCode].map((sigunguInfo: any, i: number) => (
+                        <div key={i} className="flex items-center mb-2">
+                          <label
+                            key={i}
+                            htmlFor={`classification-${thisAreaCode.id}`}
+                            className="inline-block bg-trudy rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+                          >
+                            <input
+                              className="mr-2"
+                              name="sigungu-select"
+                              type="radio"
+                              id={`sigungu-${sigunguInfo.id}`}
+                              checked={thisSigunguCode === sigunguInfo.id}
+                              onChange={() => {
+                                setThisSigunguCode(sigunguInfo.id);
+                                setWrongSigunguCode(false);
+                              }}
+                            />
+                            <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
+                          </label>
+                        </div>
+                      ))}
                       <label
                         htmlFor="name"
                         className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -401,34 +374,16 @@ function AccountEdit() {
               type="button"
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-trudy-dark1 py-2 px-4 text-sm font-bold text-black hover:bg-trudy-dark2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={async (e) => {
-                if (
-                  isName === true &&
-                  existName === false &&
-                  isBirthday === true
-                ) {
+                if (isName === true && existName === false && isBirthday === true) {
                   if (isLocal === "0") {
-                    const response = await authCtx.accountEdit(
-                      name,
-                      gender,
-                      birthday,
-                      isLocal,
-                      thisAreaCode,
-                      thisSigunguCode
-                    );
+                    const response = await authCtx.accountEdit(name, gender, birthday, isLocal, thisAreaCode, thisSigunguCode);
                     if (response !== null) {
                       alert("Success!");
                       navigateToAccountSetting();
                     }
                   } else {
                     if (thisAreaCode !== null && thisSigunguCode !== 0) {
-                      const response = await authCtx.accountEdit(
-                        name,
-                        gender,
-                        birthday,
-                        isLocal,
-                        thisAreaCode,
-                        thisSigunguCode
-                      );
+                      const response = await authCtx.accountEdit(name, gender, birthday, isLocal, thisAreaCode, thisSigunguCode);
                       if (response !== null) {
                         alert("Success!");
                         navigateToAccountSetting();
@@ -452,11 +407,7 @@ function AccountEdit() {
                   if (isLocal === "1" && thisAreaCode === null) {
                     setWrongAreaCode(true);
                   }
-                  if (
-                    isLocal === "1" &&
-                    thisAreaCode !== null &&
-                    thisSigunguCode === 0
-                  ) {
+                  if (isLocal === "1" && thisAreaCode !== null && thisSigunguCode === 0) {
                     setWrongSigunguCode(true);
                   }
                 }

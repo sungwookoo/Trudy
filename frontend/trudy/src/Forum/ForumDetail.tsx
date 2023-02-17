@@ -199,6 +199,7 @@ function ForumDetail() {
               className="comment-input-area ml-3"
               // type="text"
               value={comment}
+              maxLength={250}
               onChange={(e) => setComment(e.target.value)}
             />
             <button

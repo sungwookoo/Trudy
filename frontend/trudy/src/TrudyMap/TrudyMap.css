@@ -1,6 +1,7 @@
 .trudy-map {
-  width: auto;
-  height: 850px;
+  /* width: auto; */
+  /* height: 920px; */
+  height: 94vh;
 }
 
 #map-toggle {

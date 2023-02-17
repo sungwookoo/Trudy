@@ -1,10 +1,9 @@
-
 .landing-body {
   -ms-overflow-style: none;
 }
 
 .outer {
-  height: 95vh;
+  height: 94.4vh;
   overflow-y: auto;
   overflow: hidden;
 }
