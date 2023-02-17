@@ -125,8 +125,7 @@ function AccountEdit() {
       Authorization: "bearer " + localStorage.getItem("token"),
     };
     const params = { name: name };
-    // const data = new FormData();
-    // data.append("name", JSON.stringify(name));
+
     try {
       const response: any = await axios.post(url, {}, { headers, params });
       if (response.data === 1) {

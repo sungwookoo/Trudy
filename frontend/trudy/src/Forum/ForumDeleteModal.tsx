@@ -14,9 +14,7 @@ function FollowerModal({ postId, onDelete, onClose }: ForumDeleteModalProps) {
 
   return (
     <div className="forum-modal-container">
-      {/* <button className="close" onClick={handleClose}>
-        X
-      </button> */}
+
       <ForumDelete postId={postId} onDelete={onDelete} onClose={onClose} />
     </div>
   );

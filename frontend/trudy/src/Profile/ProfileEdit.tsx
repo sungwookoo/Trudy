@@ -138,12 +138,9 @@ function Profile() {
           },
         }
       );
-      console.log("성공");
       // navigateToProfile();
       window.location.replace("/profile");
-    } catch (error) {
-      console.log("실패", error);
-    }
+    } catch (error) {}
   };
 
   // 프로필 공개 토글 클릭

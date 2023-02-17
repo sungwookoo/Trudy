@@ -27,7 +27,6 @@ function ForumItem({ post }: any) {
   const postmemberName = post.memberElement.name;
 
   
-  console.log(postmemberId, "작성자 ID");
   const authCtx = useContext(AuthContext);
   const loggedinId = authCtx.loggedInfo.uid;
   const token = "bearer " + localStorage.getItem("token");
@@ -50,7 +49,6 @@ function ForumItem({ post }: any) {
           <h1 className="text-2xl capitalize">
             <div className="no-underline hover:underline text-black elipsis px-3">{forumTextData.title}</div>
           </h1>
-          {/* <p className="text-grey-darker text-sm">{forumCreateDate}</p> */}
         </header>
 
         <footer className="flex items-center justify-between leading-none p-2 md:p-4 mb-3">
@@ -58,13 +56,7 @@ function ForumItem({ post }: any) {
             <img alt="Placeholder" className="block rounded-full w-12 h-12" src={postmemberImage} />
             <p className="ml-2 text-md">{postmemberName}</p>
           </a>
-          {/* <a
-            className="no-underline text-grey-darker hover:text-red-dark"
-            href="#"
-          >
-            <span className="hidden">Like</span>
-            <i className="fa fa-heart"></i>
-          </a> */}
+
         </footer>
       </article>
       {/* <!-- END Article --> */}

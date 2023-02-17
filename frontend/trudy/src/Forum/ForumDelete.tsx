@@ -24,7 +24,6 @@ function ForumDelete(props: ForumDeleteProps) {
         returnToForum();
       })
       .catch((error) => {
-        console.error(error);
       });
   };
 
