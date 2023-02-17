@@ -7,6 +7,7 @@ import Follow from "./Follow";
 import FollowerModal from "./FollowerModal";
 import axiosInstance from "../Common/axiosInterceptor";
 import defaultImage from "../assets/defaultImage.png";
+import Sns from "./Sns";
 import { areaList } from "../Filter/AreaCode";
 
 interface useruserInfoId {
@@ -59,7 +60,6 @@ const UseruserInfo = () => {
       .then((res) => {
         setUserInfo(res.data);
         setGetUserPost(res.data.posts);
-        console.log(res.data, "해당유저정보");
       })
       .catch((err: any) => console.error(err));
   }, []);
@@ -75,7 +75,6 @@ const UseruserInfo = () => {
       .then((res) => {
         setLoginUser(res.data);
         const loginuserId = res.data.id;
-        console.log(res.data, loginuserId);
       })
       .catch((err: any) => console.error(err, "여기에러"));
   }, []);
@@ -87,7 +86,6 @@ const UseruserInfo = () => {
       .get(url)
       .then((res) => {
         setGetUserPost(res.data);
-        console.log(res.data);
       })
       .catch((error: any) => console.error(error));
   };
@@ -107,7 +105,7 @@ const UseruserInfo = () => {
             <div className="ml-1 pt-1">
               <div className="flex">
                 {userInfo.isLocal === "1" ? (
-                  <div className="mr-2">
+                  <div className="mr-1 border border-1 rounded-md px-1 mx-1 bg-green-200">
                     {userInfo.areaCode &&
                       areaList.map((area) => {
                         if (area.id === userInfo.areaCode) {
@@ -118,11 +116,22 @@ const UseruserInfo = () => {
                 ) : (
                   <div></div>
                 )}
-                <div className="capitalize">{userInfo.gender}</div>
+                <div className="capitalize border border-1 rounded-md px-1 mx-1 bg-green-200">
+                  {userInfo.gender}
+                </div>
+                <div className="border border-1 rounded-md px-1 mx-1 bg-green-200 w-12">
+                  {userInfo.isLocal === "1" ? "Local" : "Tourist"}
+                </div>
               </div>
-              <div className="">
-                {userInfo.isLocal === "1" ? "Local" : "Tourist"}
-              </div>
+
+              {userInfo.introduceId && (
+                <Sns
+                  Facebook={userInfo.introduceId.facebook}
+                  Instagram={userInfo.introduceId.instagram}
+                  Twitter={userInfo.introduceId.twitter}
+                  Github={userInfo.introduceId.github}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -132,7 +141,6 @@ const UseruserInfo = () => {
         </div>
       </div>
       <div className="content-box grid grid-cols-2 place-content-center mb-2">
-        {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
         <div
           className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer"
           onClick={() => setViewPost(!viewPost)}
@@ -168,7 +176,7 @@ const UseruserInfo = () => {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-1">
+          <div>
             {getuserpost.map((post: any, i: any) => (
               <ProfileMyPost key={i} post={post} memberdetails={userInfo.id} />
             ))}
@@ -180,6 +188,7 @@ const UseruserInfo = () => {
 
       {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
     </div>
+    // </div>
   );
 };
 

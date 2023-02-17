@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./Forum.css";
 import ForumItem from "./ForumItem";
 import axios from "axios";
-import ForumSearch from "./ForumSearch";
 import CategoryButtons from "../Filter/SelectCategory";
 import AreaSelect from "../Filter/SelectArea";
 import { areaList } from "../Filter/AreaCode";
@@ -67,10 +66,7 @@ function ForumPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData: any = await axios.get(
-          API_URL +
-            `?categoryList=${contentTypeId}&title=${nameSearch}&content=${nameSearch}&size=${forumSize}&size=200`
-        );
+        const resData: any = await axios.get(API_URL + `?categoryList=${contentTypeId}&title=${nameSearch}&content=${nameSearch}&size=${forumSize}`);
         setForumResponse(resData.data.content);
       } catch (e) {
         console.error(e);
@@ -79,41 +75,15 @@ function ForumPage() {
     fetchData();
   }, [contentTypeId, nameSearch, forumSize]);
 
-  // 로딩 시 Spinner 띄움
-  // {
-  //   !forumloading && (
-  //     <div>
-  //       <ThreeCircles
-  //         height="100"
-  //         width="100"
-  //         color="#4fa94d"
-  //         wrapperStyle={{}}
-  //         wrapperClass=""
-  //         visible={true}
-  //         ariaLabel="three-circles-rotating"
-  //         outerCircleColor=""
-  //         innerCircleColor=""
-  //         middleCircleColor=""
-  //       />
-  //     </div>
-  //   );
-  // }
   return (
     <>
       <div className="forum-page flex flex-row">
         <div className="filter-bar">
           <div className="cat-selectors font-semibold">
-            <CategoryButtons
-              onClick={handleCategoryClick}
-              selectedCategories={contentTypeId}
-            />
+            <CategoryButtons onClick={handleCategoryClick} selectedCategories={contentTypeId} />
           </div>
           <div>
-            <SearchBar
-              searchChange={searchChange}
-              setNameSearch={setNameSearch}
-              setSearchChange={setSearchChange}
-            />
+            <SearchBar searchChange={searchChange} setNameSearch={setNameSearch} setSearchChange={setSearchChange} />
           </div>
 
           <button
@@ -133,12 +103,14 @@ function ForumPage() {
             <ForumDetail setForumItem={forumItem} />
           )} */}
       </div>
-      <button
-        onClick={() => setForumSize(forumSize + 20)}
-        className={`p-2 m-2 rounded-lg   "bg-indigo-500 text-white" `}
-      >
-        See More
-      </button>
+      <div className="flex justify-center ">
+        <button
+          onClick={() => setForumSize(forumSize + 20)}
+          className={`rounded-lg bg-green-400 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded-full `}
+        >
+          See More
+        </button>
+      </div>
     </>
   );
 }
