@@ -243,7 +243,7 @@ function TrudyMap() {
               {memberId ? (
                 <>
                   <div>
-                    <div className="flex flex-row justify-center bg-red-500">
+                    <div className="flex flex-row justify-center">
                       <button
                         onClick={() => setselectedInfo("bookmark")}
                         className={`p-4 m-2 rounded-lg ${

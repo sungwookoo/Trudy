@@ -24,7 +24,8 @@
 .userInfo-username {
   font-size: 50px;
   font-weight: bolder;
-  margin-right: 70px;
+  /* margin-right: 70px; */
+  margin-left: 10px;
   text-transform: capitalize;
   /* margin-left: 100px; */
 }
