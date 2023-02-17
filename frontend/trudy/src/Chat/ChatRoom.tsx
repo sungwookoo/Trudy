@@ -38,9 +38,6 @@ function ChatRoom() {
   const myInfoUrl = "api/member/me";
   const token = "bearer " + localStorage.getItem("token");
 
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
 
   useEffect(() => {
     (async () => {
@@ -52,7 +49,6 @@ function ChatRoom() {
         });
         setUserData({ ...userData, username: myInfoResponse.data.name });
       } catch (error) {
-        console.error(error);
       }
     })();
   }, []);
@@ -100,7 +96,6 @@ function ChatRoom() {
   };
 
   const onPrivateMessage = (payload: { body: string }): void => {
-    // console.log(payload);
     const payloadData: ChatMessage = JSON.parse(payload.body);
     if (privateChats.get(payloadData.senderName)) {
       privateChats.get(payloadData.senderName)!.push(payloadData);
@@ -114,7 +109,6 @@ function ChatRoom() {
   };
 
   const onError = (error: any) => {
-    console.log(error);
   };
 
   const handleMessage = (event: any) => {
@@ -148,7 +142,6 @@ function ChatRoom() {
         message: userData.message,
         status: "MESSAGE",
       };
-      // console.log(chatMessage);
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }

@@ -73,7 +73,6 @@ function ForumPage() {
         );
         setForumResponse(resData.data.content);
       } catch (e) {
-        console.error(e);
       }
     };
     fetchData();

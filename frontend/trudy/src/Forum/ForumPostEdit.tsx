@@ -23,13 +23,8 @@ function PostEditPage() {
   //========================useEffect start================================
   //[back 버튼 클릭 시 사진 삭제준비]useEffect 에 이미지 이름을 sessionStorage에 저장
   useEffect(() => {
-    console.log(
-      "saveFileNameArr감시 useEffect - saveFileNameArr sessionStorage 저장 값보기 : ",
-      saveFileNameArr
-    );
+
     sessionStorage.setItem("saveFileNameArr", JSON.stringify(saveFileNameArr));
-    console.log("sessionStorage에서 가져온 결과 : ");
-    console.log(JSON.parse(sessionStorage.getItem("saveFileNameArr") || "[]"));
   }, [saveFileNameArr]);
 
   //====================useEffect end==========================
@@ -59,13 +54,11 @@ function PostEditPage() {
             setEditPost(res.data.postCombine.postElement.content);
           });
       } catch (error) {
-        console.error(error);
       }
     };
     fetchData();
     // 필터 값 바뀌면 limit 값 변경해주기
   }, []);
-  console.log(editPost, 33333);
   const handleEditPost = async (e: any) => {
     e.preventDefault();
     try {
@@ -81,11 +74,9 @@ function PostEditPage() {
           },
         }
       );
-      console.log(response);
       setEditPost(response.data);
       backToPost();
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -103,10 +94,6 @@ function PostEditPage() {
               axios
                 .post("/api/post/upload", upload)
                 .then((res: any) => {
-                  console.log("사진 업로드 성공");
-                  console.log(file);
-                  console.log("res 결과 보기");
-                  console.log(res.data);
 
                   resolve({
                     default: `${res.data.imageUrl}`,
@@ -118,7 +105,6 @@ function PostEditPage() {
                   ]);
                 })
                 .catch((err) => {
-                  console.log("사진 업로드 실패");
                   reject(err);
                 });
             }
@@ -146,32 +132,18 @@ function PostEditPage() {
       sessionStorage.getItem("saveFileNameArr") || "[]"
     );
 
-    console.log(
-      "removeImageArr 함수 - 페이지 이동 useEffect return 실행 / from sessionStorage saveFileNameArr",
-      deleteFileNameArr
-    );
 
     if (deleteFileNameArr.length > 1) {
       deleteFileNameArr.shift();
-      console.log(
-        "useEffect return if 실행 /다음건 삭제할 파일명",
-        deleteFileNameArr
-      );
 
       axios
         .delete(`/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`)
         .then((res) => {
-          console.log("eventListner axios 사진 삭제 성공");
-          console.log(
-            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
-          );
+
           backToPost();
         })
         .catch((err) => {
-          console.log(" eventListner axios 사진 삭제 실패");
-          console.log(
-            `/api/post/upload?deleteFileNameArr=${deleteFileNameArr}`
-          );
+
         });
     }
   };
@@ -181,12 +153,7 @@ function PostEditPage() {
     <div className="forum-detail-container">
       {/* <div className=""> */}
       <div className="flex flex-row w-4/5 ml-34 mt-8">
-        {/* <button
-          className="rounded-md bg-gray-300 mx-52 w-16 h-8 border border-black border-2 px-2 py-1 mb-4 hover:bg-red-400"
-          onClick={forumnavigate}
-        >
-          Back
-        </button> */}
+
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
@@ -211,27 +178,19 @@ function PostEditPage() {
               }}
               data={editPost}
               onReady={(editor: any) => {
-                // console.log('Editor is ready to use!', editor);
               }}
               onChange={(event: any, editor: any) => {
                 const data = editor.getData();
-                // setImage(data);
                 setEditPost(data);
-                //
-                console.log({ data });
               }}
               onBlur={(event: any, editor: any) => {
-                // console.log('Blur.', editor);
               }}
               onFocus={(event: any, editor: any) => {
-                // console.log('Focus.', editor);
               }}
             />
           </div>
-          {/* {postData?.content} */}
         </div>
 
-        {/* {isloggedin && ( */}
         <div className=" w-full flex flex-row justify-end mt-5">
           <button
             className="rounded-md bg-gray-300 border border-black border-2 px-2 py-1 hover:bg-red-400"

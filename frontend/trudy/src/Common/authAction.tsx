@@ -69,26 +69,14 @@ export const refreshTokenHandler = async (
 // 이메일 인증 함수
 export const verifyEmail = async (email: string) => {
   const url = "api/emailConfirm/";
-  // const response = axios.post(url, {}, { params: {email : email}});
-  // const data = new FormData();
-  // data.append("email", JSON.stringify(email));
-  // const response = axios.post(url, data, {});
   const params = { email: email };
   try {
     const response: any = await axios.post(url, {}, { params });
-    console.log(response);
     return response;
   } catch (error) {
     return null;
   }
 
-  // response
-  //   .then(() => {
-  //     return response;
-  //   })
-  //   .catch((e) => {
-  //     return null;
-  //   });
 };
 
 // 회원가입 url을 POST방식으로 호출하는 함수
@@ -126,9 +114,7 @@ export const signInActionHandler = (email: string, password: string) => {
   const url = "/api/login";
   const data = { email, password };
   const response = POST(url, data, {});
-  // response.then((res) => {
-  //   return res;
-  // });
+
   return response;
 };
 
@@ -151,7 +137,6 @@ export const getMyDataHandler = (token: string) => {
   const url = "api/member/me";
   const headers = createTokenHeader(token);
   const response = axios.get(url, headers);
-  console.log(response);
   return response;
 };
 
@@ -189,21 +174,6 @@ export const passwordChangeActionHandler = async (
   newPassword: string,
   token: string
 ) => {
-  // try {
-  //   const response = await axios.put(
-  //     `/api/member/password?currentPassword=${currentPassword}&newPassword=${newPassword}`,
-  //     // {
-  //     //   currentPassword: currentPassword,
-  //     //   newPassword: newPassword,
-  //     // },
-  //     {
-  //       headers: { Authorization: `bearer ${token}` },
-  //     }
-  //   );
-  //   console.log(response);
-  // } catch (error) {
-  //   console.log(error, "실패");
-  // }
   const url = "/api/member/password";
   const params = {
     currentPassword: currentPassword,
@@ -215,12 +185,9 @@ export const passwordChangeActionHandler = async (
     "Content-Type": "application/json",
   };
   try {
-    // const response = await PUT(url, data, headers);
     const response = await axios.put(url, {}, { headers, params });
-    console.log("성공", response);
     return response;
   } catch (error) {
-    console.log(error);
     return null;
   }
 };
@@ -232,35 +199,11 @@ export const getUserActionHandler = (params: any) => {
   return response;
 };
 
-// 유저의 닉네임 변경을 POST방식으로 호출
-// export const changeNicknameActionHandler = (
-//   nickname: string,
-//   token: string
-// ) => {
-//   const url = "";
-//   const changeNicknameObj = { nickname };
-//   const response = POST(url, changeNicknameObj, createTokenHeader(token));
 
-//   return response;
-// };
-
-// 유저의 비밀번호 변경을 POST방식으로 호출
-// export const changePasswordActionHandler = (
-//   exPassword: string,
-//   newPassword: string,
-//   token: string
-// ) => {
-//   const url = "/member/password";
-//   const changePasswordObj = { exPassword, newPassword };
-//   const response = POST(url, changePasswordObj, createTokenHeader(token));
-//   return response;
-// };
 
 // 유저의 Planner 정보를 GET방식으로 호출
 export const getPlanner = (token: string) => {
   const url = "/api/planner";
-  // const params = { memberId: memberId };
-  // const params = { memberId: 1 };
   const headers = createTokenHeader(token);
   const response = GET(url, headers);
 
@@ -299,7 +242,6 @@ export const createDay = (
   sequence: number
 ) => {
   const url = "/api/planner/day/post";
-  // const headers = createTokenHeader(token)
   const params = {
     plannerId: plannerId,
     day: day,
@@ -332,10 +274,6 @@ export const updateDayItem = (
 ) => {
   const url = "/api/planner/dayitem";
   const headers = createTokenHeader(token);
-  // const data = new FormData()
-  //  data.append('dayId' , JSON.stringify(dayId))
-  //  data.append('dayItemId' , JSON.stringify(dayItemId))
-  //  data.append('sequence' , JSON.stringify(sequence))
   const params = { dayId: dayId, placeId: dayItemId, sequence: sequence };
   const response = PUT(url, { headers }, { params });
 };

@@ -56,7 +56,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
         },
       });
     } catch (error) {
-      console.error(error);
     }
     try {
       const nowBookMark = await axiosInstance.get(`api/bookmark?memberId=${memberId}`, {
@@ -66,7 +65,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
       });
       setbookmarkList(nowBookMark.data);
     } catch (error) {
-      console.error(error);
     }
     setIsLoading(false);
   };
@@ -268,7 +266,6 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
                   />
                   {isLoading && <div></div>}
                 </div>
-                {/* {showModal && <MapModal bookmark={selectedBookMark} onClose={handleCloseModal} />} */}
               </>
             );
           })}

@@ -32,20 +32,6 @@ function Nav(navProfileImg: any) {
     setSelectedNav(e.target.pathname);
   };
 
-  // useEffect(() => {
-  //   const getprofile = async () => {
-  //     try {
-  //       const response = await axios.get("api/member/me", {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       });
-  //       setProfile(response.data);
-  //     } catch (error) {
-  //     }
-  //   };
-  //   getprofile();
-  // }, []);
 
   // 이하 HTML
 
@@ -62,12 +48,7 @@ function Nav(navProfileImg: any) {
           <img className="nav-logo" src={NewLogo} alt="TrudyLogo"></img>
         </NavLink>
 
-        {/* 랜딩페이지 */}
-        {/* <div className="nav-item-logo">
-        <NavLink className="nav-link" to="/">
-          Trudy
-        </NavLink>
-      </div> */}
+
 
         {/* 지도 */}
         <div
@@ -111,12 +92,7 @@ function Nav(navProfileImg: any) {
           </NavLink>
         </div>
 
-        {/* 플래너 */}
-        {/* <div className="nav-item">
-          <NavLink className="nav-link" to="/planner">
-            Planner
-          </NavLink>
-        </div> */}
+
       </div>
 
       <div className="profile-signout">
@@ -236,11 +212,7 @@ function Nav(navProfileImg: any) {
               onClick={navigateToProfile}
             >
               <NavImage />
-              {/* <img
-                className="nav-profile-img mr-12"
-                src={navproImg}
-                alt="navProfileImage"
-              /> */}
+
               <NavLink
                 className={`${
                   selectedNav === "/profile" ? "nav-item-select" : "nav-item"
@@ -265,7 +237,6 @@ function Nav(navProfileImg: any) {
                 }}
                 to="/accountsetting"
               >
-                {/* <NavLink className="nav-item" to="/accountedit"> */}
                 Account
               </NavLink>
             </div>

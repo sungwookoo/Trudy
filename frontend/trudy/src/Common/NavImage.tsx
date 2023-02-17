@@ -17,7 +17,6 @@ function UserProfileImage() {
         });
         setProfileImage(response.data.image);
       } catch (error) {
-        console.error(error);
       }
     };
     fetchProfileImage();

@@ -90,7 +90,6 @@ function Editor () {
       }}
       data={forumContent}
       onReady={(editor:any) => {
-        console.log('Editor is ready to use!', editor);
       }}
       onChange={(event:any, editor:any) => {
         const data = editor.getData();
@@ -99,7 +98,6 @@ function Editor () {
         //   ...forumContent,
         //   content:data
         // });
-        console.log({ event, editor, data})
       }}
       onBlur={(event:any, editor:any) => {
         // console.log('Blur.', editor);

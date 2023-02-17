@@ -10,15 +10,10 @@ function ForumImageUpload() {
     if (!e.target.files) {
       return;
     }
-    console.log(e.target.files[0].name)
     const file = e.target.files[0];
     const formData = new FormData();
 
-    // if (formData) {
-    //   for (let i = 0; i < formData.length; i++) {
-    //     formData.append('files', formData[i]);
-    //   }
-    // }
+  
     formData.append('image', file);
     setFormData(formData);
   }, []);
@@ -36,10 +31,8 @@ function ForumImageUpload() {
       },
     })
       .then((res: any) => {
-        console.log(res.data);
       })
       .catch((err: any) => {
-        console.error(err);
       });
   }, [formData]);
 
