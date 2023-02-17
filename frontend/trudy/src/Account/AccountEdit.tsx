@@ -433,13 +433,13 @@ function AccountEdit() {
                       if (response !== null) {
                         alert("Success!");
                         navigateToAccountSetting();
-                      } else {
-                        if (thisAreaCode === null) {
-                          setWrongAreaCode(true);
-                        }
-                        if (thisAreaCode !== null && thisSigunguCode === 0) {
-                          setWrongSigunguCode(true);
-                        }
+                      }
+                    } else {
+                      if (thisAreaCode === null) {
+                        setWrongAreaCode(true);
+                      }
+                      if (thisAreaCode !== null && thisSigunguCode === 0) {
+                        setWrongSigunguCode(true);
                       }
                     }
                   }
