@@ -189,36 +189,40 @@ export const passwordChangeActionHandler = async (
   newPassword: string,
   token: string
 ) => {
-  try {
-    const response = await axios.put(
-      "/api/member/password",
-      {
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-      },
-      {
-        headers: { Authorization: `bearer ${token}` },
-      }
-    );
-  } catch (error) {}
-  // const url = "/api/member/password";
-  // const data = {
-  //   currentPassword: currentPassword,
-  //   newPassword: newPassword,
-  // };
-
-  // const headers = {
-  //   Authorization: "bearer " + token,
-  //   "Content-Type": "application/json"
-  // };
   // try {
-  //   // const response = await PUT(url, data, headers);
-  //   const response = await axios.put(url, data, { headers });
-  //   return response;
+  //   const response = await axios.put(
+  //     `/api/member/password?currentPassword=${currentPassword}&newPassword=${newPassword}`,
+  //     // {
+  //     //   currentPassword: currentPassword,
+  //     //   newPassword: newPassword,
+  //     // },
+  //     {
+  //       headers: { Authorization: `bearer ${token}` },
+  //     }
+  //   );
+  //   console.log(response);
   // } catch (error) {
-  //   console.log(error);
-  //   return null;
+  //   console.log(error, "실패");
   // }
+  const url = "/api/member/password";
+  const params = {
+    currentPassword: currentPassword,
+    newPassword: newPassword,
+  };
+
+  const headers = {
+    Authorization: "bearer " + token,
+    "Content-Type": "application/json",
+  };
+  try {
+    // const response = await PUT(url, data, headers);
+    const response = await axios.put(url, {}, { headers, params });
+    console.log("성공", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 // 스퀘어 유저의 정보를 GET방식으로 호출
