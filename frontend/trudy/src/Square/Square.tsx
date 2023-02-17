@@ -35,7 +35,8 @@ function Square() {
   };
 
   const authCtx = useContext(AuthContext);
-  const imgURL = "https://memorableindia.com/blog/wp-content/uploads/2017/11/Frequent-Traveler-Successful.jpg";
+  const imgURL =
+    "https://memorableindia.com/blog/wp-content/uploads/2017/11/Frequent-Traveler-Successful.jpg";
   // "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjVfMTU2/MDAxNTM3ODY1MTY5NDYx.lRYZG0121oJ0GiSZC3-rU96S2ryrM6Qs_fFZFDqPV4wg.xZ7lg9yyV1DmY2nqKatDllAcbhdvte29WOkzHGfBhr0g.GIF.z1583/3A6CE8F9-B62C-4369-AEB0-AE892D1E726E-25535-00000DD1D7B5B8D9_file.GIF?type=w800";
 
   // 검색하고 enter 눌렀을 때
@@ -51,22 +52,14 @@ function Square() {
       isLocal: isLocal,
       gender: gender,
       name: nameSearch,
+      size: 500
     };
 
     async function SquareGet() {
       const res: any = await authCtx.getUser(params);
+      console.log(params);
+      console.log(res.data.content);
       setSquareData(res.data.content);
-      // setArea(
-      //   res.data.content.areaCode.map((areaNumber: any) => {
-      //     if (areaNumber === "1") {
-      //       return "Seoul";
-      //     } else if (areaNumber === "6") {
-      //       return "Busan";
-      //     } else {
-      //       return areaNumber;
-      //     }
-      //   })
-      // );
     }
     SquareGet();
   }, [areaCode, isLocal, gender, nameSearch]);
@@ -74,7 +67,12 @@ function Square() {
     <div className="grid grid-rows-2 gap-4">
       {/* 검색창 */}
       <div className="border-b-2 flex flex-row py-1">
-        <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className={`p-2 m-2 rounded-lg  ${
+            !isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"
+          }`}
+        >
           Area Select
         </button>
         {/* isLocal (UserType) 드랍박스 */}
@@ -124,8 +122,19 @@ function Square() {
               setNameSearch(searchChange);
             }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              ></path>
             </svg>
           </button>
         </div>
@@ -150,7 +159,9 @@ function Square() {
                     checked={sigunguCode === sigunguInfo.id}
                     onChange={() => setSigunguCode(sigunguInfo.id)}
                   />
-                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>{sigunguInfo.name}</label>
+                  <label htmlFor={`sigungu-${sigunguInfo.id}`}>
+                    {sigunguInfo.name}
+                  </label>
                 </div>
               ))}
             </div>
@@ -180,15 +191,27 @@ function Square() {
 
                     <div className="w-full md:w-2/5 h-80">
                       {guide.image ? (
-                        <img src={guide.image} alt="userThumbnail" className="object-center object-cover w-full h-full" />
+                        <img
+                          src={guide.image}
+                          alt="userThumbnail"
+                          className="object-center object-cover w-full h-full"
+                        />
                       ) : (
-                        <img src={imgURL} alt="userThumbnail" className="object-center object-cover w-full h-full" />
+                        <img
+                          src={imgURL}
+                          alt="userThumbnail"
+                          className="object-center object-cover w-full h-full"
+                        />
                       )}
                     </div>
                     <div className="w-full md:w-3/5 text-left p-4 md:p-4 space-y-2">
-                      <p className="text-3xl text-gray-700 font-bold">{guide.name}</p>
+                      <p className="text-3xl text-gray-700 font-bold">
+                        {guide.name}
+                      </p>
                       {guide.areaCode == null ? (
-                        <p className="text-2xl text-gray-400 font-normal">Tourist</p>
+                        <p className="text-2xl text-gray-400 font-normal">
+                          Tourist
+                        </p>
                       ) : (
                         <p className="text-2xl text-gray-400 font-normal">
                           {guide.areaCode &&
@@ -207,7 +230,9 @@ function Square() {
                           {/* {guide.areaCode} */}
                         </p>
                       )}
-                      <p className="text-xl leading-relaxed text-gray-500 font-normal">{guide.introduceId.self}</p>
+                      <p className="text-xl leading-relaxed text-gray-500 font-normal">
+                        {guide.introduceId.self}
+                      </p>
                       <Sns
                         Facebook={guide.introduceId.facebook}
                         Instagram={guide.introduceId.instagram}
