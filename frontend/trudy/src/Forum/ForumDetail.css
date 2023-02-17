@@ -67,6 +67,7 @@
   width: 800px;
   min-height: 40px;
   border-radius: 5px;
+  resize: none;
 }
 
 .forum-input-submit-button {

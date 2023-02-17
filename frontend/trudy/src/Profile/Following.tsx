@@ -4,38 +4,27 @@ import { useState } from "react";
 import axiosInstance from "../Common/axiosInterceptor";
 
 interface Props {
-    userId: number;
+  userId: number;
 }
 
-function Following (userId: Props) {
-    
-    const [followings, setFollowings] = useState<any>([]);
+function Following(userId: Props) {
+  const [followings, setFollowings] = useState<any>([]);
 
-    const fetchFollowings = async () => {
-      const response = await axiosInstance.get(`/api/member/following/${userId.userId}`, {
-        headers: {
-          Authorization: "bearer " + localStorage.getItem("token"),
-        }
-      });
-      setFollowings(response.data);
-      console.log(response.data, '팔로우리스트');
-    };
+  const fetchFollowings = async () => {
+    const response = await axiosInstance.get(`/api/member/following/${userId.userId}`, {
+      headers: {
+        Authorization: "bearer " + localStorage.getItem("token"),
+      },
+    });
+    setFollowings(response.data);
+    console.log(response.data, "팔로우리스트");
+  };
 
-    useEffect(() => {
-        fetchFollowings();
-    }, []);
+  useEffect(() => {
+    fetchFollowings();
+  }, []);
 
-    return (
-        <div>
-            {/* {followings.map((following: any) => (
-                <div key={following.id}>
-                    <img src={following.profileImage} alt="profileImage" />
-                    <span>{following.name}</span>
-                </div>
-            ))} */}
-        </div>
-    )
-
-};
+  return <div></div>;
+}
 
 export default Following;

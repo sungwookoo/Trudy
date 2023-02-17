@@ -2,7 +2,6 @@ import { Data } from "@react-google-maps/api";
 import { useState, useEffect, useRef } from "react";
 import Dots from "../Common/Dots";
 import "../Landing/Landing.css";
-
 const DIVIDER_HEIGHT = 5;
 
 // 스크롤 컴포넌트 추후 컴포넌트 폴더로 따로 export 예정
@@ -90,7 +89,7 @@ function Landing() {
   return (
     <div className="landing-body">
       <div ref={outerDivRef} className="outer">
-        <Dots key={Date.now()} scrollIndex={scrollIndex} />
+        <Dots key={2} scrollIndex={scrollIndex} />
         <div className="landing-container">
           {/* 랜딩 1번째 화면 */}
           <div className="landing1">
@@ -112,7 +111,7 @@ function Landing() {
             <div className="landing-title3">We provide</div>
             <div className="landing-detail3">
               {/* key 고쳐주기 */}
-              <Item key={Date.now()} text={["Interactive Map", <br />, "Messenger", <br />, "Planner", <br />, <br />, "Both Web & Mobile"]} />
+              <Item key={2} text={["Interactive Map", <br />, "Messenger", <br />, "Planner", <br />, <br />, "Both Web & Mobile"]} />
             </div>
           </div>
         </div>
