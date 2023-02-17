@@ -89,6 +89,7 @@ public class PlannerController {
                                         @RequestParam Long dayId,
                                         @RequestParam(defaultValue = "") String memo,
                                         @RequestParam String sequence,
+
                                         @RequestParam(defaultValue = "") String customTitle
                                         ){
         try {

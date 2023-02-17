@@ -141,7 +141,7 @@ function Profile() {
             {/* 토글 바 */}
             {/* <label
               htmlFor="toggleB"
-              className="flex items-center cursor-pointer"
+              className="flex items-center cursor-poxinter"
             >
               <div className="relative">
                 <input type="checkbox" id="toggleB" className="sr-only" />

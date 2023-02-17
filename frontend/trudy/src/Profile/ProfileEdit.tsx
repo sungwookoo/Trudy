@@ -71,8 +71,13 @@ function Profile() {
         setUpdatedGithub(res.data.introduceId.github);
         setUpdatedTwitter(res.data.introduceId.twitter);
         setUpdatedInstagram(res.data.introduceId.instagram);
-        if (res.data.isPublic !== null) {
+        if (res.data.isPublic) {
+          console.log(res.data.isPublic, 3333333333333333333)
           setUpdatedPublic(res.data.isPublic);
+        } else if(res.data.isPublic === null) {
+          console.log(res.data.isPublic, 44444444444444444)
+
+          setUpdatedPublic("0")
         }
       })
       .catch((err: any) => {});
@@ -117,7 +122,7 @@ function Profile() {
           },
         }
       );
-      navigateToProfile();
+      // navigateToProfile();
       // window.location.replace("/profile");
     } catch (error) {}
   };
@@ -126,6 +131,14 @@ function Profile() {
   const updatePublic = async (e: any) => {
     e.preventDefault();
     try {
+      // const url = "api/member/public"
+      // const data = new FormData();
+      // data.append("isPublic", JSON.stringify(updatedPublic));
+      // const headers = token
+      // const response = axios.post(url, data, {headers: {
+      //   Authorization: token,
+      //   "Content-Type": "multipart/form-data",
+      // },});
       const response = await axios.put(
         "api/member/public",
         {
@@ -135,11 +148,11 @@ function Profile() {
           headers: {
             Authorization: token,
           },
-        }
-      );
+        })
       console.log("성공");
-      // navigateToProfile();
-      window.location.replace("/profile");
+      console.log(updatedPublic)
+      navigateToProfile();
+      // window.location.replace("/profile");
     } catch (error) {
       console.log("실패", error);
     }
