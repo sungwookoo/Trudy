@@ -129,12 +129,6 @@ function Place({
               Area Select
             </button>
             {/* 카테고리 */}
-            <div>
-              <CategoryButtons
-                onClick={handleCategoryClick}
-                selectedCategories={contentTypeId}
-              />
-            </div>
             <button
               className="clear-btn p-1 mr-8 py-3 ml-1 flex justify-center items-center"
               onClick={clearFilter}

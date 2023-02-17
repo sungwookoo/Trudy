@@ -68,6 +68,7 @@ function Profile() {
         setUpdatedSelf(res.data.introduceId.self);
         setUpdatedPlan(res.data.introduceId.plan);
         setUpdatedTitle(res.data.introduceId.title);
+        setUpdatedLanguage(res.data.introduceId.language);
         setUpdatedFacebook(res.data.introduceId.facebook);
         setUpdatedGithub(res.data.introduceId.github);
         setUpdatedTwitter(res.data.introduceId.twitter);
@@ -119,7 +120,7 @@ function Profile() {
         }
       );
       navigateToProfile();
-      // window.location.replace("/profile");
+      window.location.replace("/profile");
     } catch (error) {}
   };
 
@@ -139,7 +140,7 @@ function Profile() {
         }
       );
       // navigateToProfile();
-      window.location.replace("/profile");
+      // window.location.replace("/profile");
     } catch (error) {}
   };
 
