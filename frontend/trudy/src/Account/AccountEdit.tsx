@@ -62,7 +62,7 @@ function AccountEdit() {
                 name="areaCode"
                 id={`classification-${areaCode.id}`}
                 className="mr-0.5 color-green-500"
-                // checked={thisAreaCode === areaCode.id}
+                checked={thisAreaCode === areaCode.id}
                 onClick={() => {
                   onClick(areaCode.id, areaCode.name);
                 }}
