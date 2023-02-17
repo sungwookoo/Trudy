@@ -9,7 +9,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 // 로그인 페이지
 
-function SignUp() {
+function AccountEdit() {
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -18,6 +18,7 @@ function SignUp() {
   const [isLocal, setIsLocal] = useState<string>("");
   const [areaCode, setAreaCode] = useState<any>(null);
   const [sigunguCode, setSigunguCode] = useState<number>(0);
+  const [data, setData] = useState<any>()
 
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
@@ -50,6 +51,23 @@ function SignUp() {
   function navigateToLending() {
     navigate("/");
   }
+
+  useEffect(() => {
+      async function MyData() {
+        const response = await authCtx.getMyData()
+        setData(response)
+        console.log(data)
+    }
+    MyData()
+    // console.log(data.data)
+    // setName(data.)
+    // setGender()
+    // setBirthday()
+    // setIsLocal()
+    // setAreaCode()
+    // setSigunguCode()
+  }, [])
+
 
   function CheckPassword(password: string) {
     if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}/.test(password)) {
@@ -104,22 +122,6 @@ function SignUp() {
         <div>
           <img className="mx-auto h-12 w-auto" src="faviconTrudy.png" />
           <p className="mt-2 text-center text-sm text-gray-600"></p>
-        </div>
-
-        <div className="-space-y-px rounded-md shadow-md">
-          <div className="relative">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              disabled
-              className="relative block w-full appearance-none rounded-none rounded-b-md bg-gray-200 border border-gray-300 px-3 py-2 placeholder-gray-900 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder={email}
-            />
-            <label className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-              Email
-            </label>
-          </div>
         </div>
 
         <form className="mt-8 space-y-6" action="/api/member" method="POST">
@@ -557,4 +559,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default AccountEdit;

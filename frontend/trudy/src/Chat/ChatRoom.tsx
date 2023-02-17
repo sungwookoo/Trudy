@@ -128,15 +128,16 @@ function ChatRoom() {
       const { value } = tempMessage;
       setUserData({ ...userData, message: value });
       setTempMessage(null);
-      if (stompClient) {
-        let chatMessage = {
-          senderName: userData.username,
-          message: userData.message,
-          status: "MESSAGE",
-        };
-        stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-        setUserData({ ...userData, message: "" });
-      }
+      sendValue();
+    }
+  };
+
+  const pressEnterPrivate = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      const { value } = tempMessage;
+      setUserData({ ...userData, message: value });
+      setTempMessage(null);
+      sendPrivateValue();
     }
   };
 
@@ -266,6 +267,7 @@ function ChatRoom() {
                   placeholder="enter the message"
                   value={userData.message}
                   onChange={handleMessage}
+                  onKeyDown={pressEnterPrivate}
                 />
                 <button
                   type="button"

@@ -28,7 +28,10 @@ public class MemberModifyRequest {
     private String name;
     @NotNull(message = "패스워드는 필수 항목입니다.")
     private String password;
+
+    @NotNull(message = "성별은 필수 항목입니다.")
     private String gender;
+    @NotNull(message = "생년월일은 필수 항목입니다.")
     private String birth;
 
     @NotNull(message = "로컬 여부는 필수 항목입니다.")
