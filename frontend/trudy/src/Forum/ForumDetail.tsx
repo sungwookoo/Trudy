@@ -10,7 +10,6 @@ import Comment from "./Comment";
 
 interface IForumDetailProps {
   post_id: number;
-  // setForumItem: (post: IgetForumResponse) => void;
 }
 
 function ForumDetail() {
@@ -32,7 +31,6 @@ function ForumDetail() {
   const [commentObject, setCommentObject] = useState<any>(null); // 댓글 객체
   const [comment, setComment] = useState("");
 
-  console.log(loggedinId, "로그인아이디");
   const postEditnavigate = () => {
     navigate(`/post/update/${id}`);
   };
@@ -53,10 +51,7 @@ function ForumDetail() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  // const [isForumLoaded, setIsForumLoaded] = useState(false);
-  // const token = useSelector((state: any) => state.Auth.token);
-  // const navigate = useNavigate
-  // console.log(loggedinId, '로그인아이디')
+
 
   const getForumItem = async () => {
     try {
@@ -87,15 +82,11 @@ function ForumDetail() {
         })
       );
 
-      // setForumCategory(response.data.postCombine.categoryNameList);
       if (loggedinId === response.data.postCombine.memberElement.id) {
         setIsloggedin(true);
       }
-      // setforumMember(response.data.postCombine.memberElement.id);
-      // console.log(forumMember, '로그인되었는지')
-      // console.log(ForumItem., '포럼아이템유저아이디')
+
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -112,7 +103,6 @@ function ForumDetail() {
   //댓글 작성 후 갱신을 위함
   function refreshComment() {
     axios.get(`/api/post/${id}`).then((res) => {
-      console.log("PostEditPage useEffect 가져온 값 보기");
       setCommentObject(res.data.commentCombine.commentElementList);
     });
   }
@@ -122,30 +112,19 @@ function ForumDetail() {
     axios
       .post(`/api/post/comment/${loggedinId}/${id}?content=${comment}`)
       .then((res) => {
-        console.log("댓글 작성 성공");
-        console.log(res.data, 777);
         setComment("");
         refreshComment();
       })
       .catch((err) => {
-        console.log("댓글 작성 실패");
-        console.log(err);
       });
   };
 
-  console.log(id, "글작성 아이디");
 
   return (
     // 밑에 포럼 컨테이너 밖에 back만들어야함
     <div className="forum-detail-container">
-      {/* <div className=""> */}
       <div className="flex flex-row w-4/5 ml-34 mt-8">
-        {/* <button
-          className="rounded-md bg-gray-300 mx-52 w-16 h-8 border border-black border-2 px-2 py-1 mb-4 hover:bg-red-400"
-          onClick={forumnavigate}
-        >
-          Back
-        </button> */}
+
       </div>
       {/* 이하 제목 컨텐츠 */}
       <div className="detail-box flex flex-col items-center">
@@ -177,14 +156,12 @@ function ForumDetail() {
               timeStyle: "short",
             })}
           </div>
-          {/* <div className="">{forumItem?.createdAt}</div> */}
         </div>
 
         <hr className="forum-detail-hr" />
         {/* 이미지 */}
         <div className="forum-detail-content px-5 pt-4 pb-8">
           {forumItem && Parser(forumItem?.content)}
-          {/* {forumItem && forumItem.content} */}
         </div>
 
         {isloggedin && (
@@ -235,8 +212,6 @@ function ForumDetail() {
         </div>
 
         <div>
-          {/* {commentObject && <Comment props={commentObject} />} */}
-          {/* //=========================추가됨 */}
           {commentObject?.map((comment: any, index: string, postid: number) => (
             <Comment
               comment={comment}

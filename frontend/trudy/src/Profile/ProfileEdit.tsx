@@ -68,6 +68,7 @@ function Profile() {
         setUpdatedSelf(res.data.introduceId.self);
         setUpdatedPlan(res.data.introduceId.plan);
         setUpdatedTitle(res.data.introduceId.title);
+        setUpdatedLanguage(res.data.introduceId.language);
         setUpdatedFacebook(res.data.introduceId.facebook);
         setUpdatedGithub(res.data.introduceId.github);
         setUpdatedTwitter(res.data.introduceId.twitter);
@@ -119,7 +120,7 @@ function Profile() {
         }
       );
       navigateToProfile();
-      // window.location.replace("/profile");
+      window.location.replace("/profile");
     } catch (error) {}
   };
 
@@ -138,12 +139,9 @@ function Profile() {
           },
         }
       );
-      console.log("성공");
       // navigateToProfile();
-      window.location.replace("/profile");
-    } catch (error) {
-      console.log("실패", error);
-    }
+      // window.location.replace("/profile");
+    } catch (error) {}
   };
 
   // 프로필 공개 토글 클릭

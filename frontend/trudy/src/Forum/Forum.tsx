@@ -69,7 +69,6 @@ function ForumPage() {
         const resData: any = await axios.get(API_URL + `?categoryList=${contentTypeId}&title=${nameSearch}&content=${nameSearch}&size=${forumSize}`);
         setForumResponse(resData.data.content);
       } catch (e) {
-        console.error(e);
       }
     };
     fetchData();

@@ -52,8 +52,6 @@ const AuthContext = React.createContext({
   ) => {},
   passwordChange: (currentPassword: string, newPassword: string) => {},
   getUser: (params: any) => {},
-  //   changeNickname: (name: string) => {},
-  //   changePassword: (exPassword: string, newPassword: string) => {},
   planner: () => {},
   createPlan: (sequence: string) => {},
   updatePlan: (plannerId: number, sequence: number) => {},
@@ -258,10 +256,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   // 유저 정보를 가져오는 함수
   const getUserHandler = async (params: any) => {
     setIsGetSuccess(false);
-    // 토큰이 만료되지 않았으면 재발행
-    // if (tokenData.duration > 0) {
-    //   console.log('재발행 시도')
-    // }
+
     const data = await authAction.getUserActionHandler(params);
     if (data !== null) {
       const userData: UserInfo = data.data;
@@ -272,45 +267,11 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return data;
   };
 
-  //   const changeNicknameHandler = (name: string) => {
-  //     setIsSuccess(false);
-
-  //     const data = authAction.changeNicknameActionHandler(name, token);
-  //     data.then((result) => {
-  //       if (result !== null) {
-  //         const userData: UserInfo = result.data;
-  //         setUserObj(userData);
-  //         setIsSuccess(true);
-  //       }
-  //     });
-  //   };
-
-  //   const changePaswordHandler = (exPassword: string, newPassword: string) => {
-  //     setIsSuccess(false);
-  //     const data = authAction.changePasswordActionHandler(
-  //       exPassword,
-  //       newPassword,
-  //       token
-  //     );
-  //     data.then((result) => {
-  //       if (result !== null) {
-  //         setIsSuccess(true);
-  //         logoutHandler();
-  //       }
-  //     });
-  //   };
-
-  // Planner
 
   // Planner 정보를 가져오는 함수
   const getPlannerHandler = () => {
     const response = authAction.getPlanner(token);
-    // const refresh = authAction.refreshTokenHandler(token, refreshToken)
-    // refresh.then((res) => {
-    //   console.log('재발행 data', res)
-    //   setToken(res?.data.accessToken)
-    //   setRefreshToken(res?.data.refreshToken)
-    // })
+
 
     return response;
   };
@@ -378,11 +339,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     return response;
   };
 
-  // useEffect(() => {
-  //   if (tokenData) {
-  //     logoutTimer = setTimeout(signOutHandler, tokenData.duration);
-  //   }
-  // }, [tokenData, signOutHandler]);
+
 
   const contextValue = {
     token,
@@ -405,8 +362,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     accountEdit: accountEditHandler,
     passwordChange: passwordChangeHandler,
     getUser: getUserHandler,
-    // changeNickname: changeNicknameHandler,
-    // changePassword: changePaswordHandler,
     planner: getPlannerHandler,
     createPlan: createPlannerPlan,
     updatePlan: updatePlannerPlan,
