@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@DynamicInsert
 @Entity
 @Getter
 @Setter
@@ -54,6 +56,7 @@ public class Member {
     private String isLocal;
 
     @Column(name = "is_public")
+    @ColumnDefault("0")
     private String isPublic;
 
     @CollectionTable(
