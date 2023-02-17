@@ -11,6 +11,8 @@ import { ModifierFlags } from "typescript";
 import axiosInstance from "./axiosInterceptor";
 import bookmark_yes from "../assets/star_yes.png";
 import "./Bookmark.css";
+import { v4 as uuidv4 } from "uuid";
+// uuidv4()
 
 type Props = {
   memberId: number;
@@ -163,11 +165,13 @@ function Bookmark({ bookmarkList, bookmarkedIds, setbookmarkedIds, memberId, set
           <button onClick={() => setIsCollapsed(!isCollapsed)} className={`p-2 m-2 rounded-lg  ${!isCollapsed ? "bg-green-500 text-white" : "bg-gray-300"}`}>
             Area Select
           </button>
-          <button className="clear-btn" onClick={clearFilter}>Clear</button>
+          <button className="clear-btn" onClick={clearFilter}>
+            Clear
+          </button>
         </div>
         {/* --------------------------------------------------------필터 ----------------------------------------------- */}
         {/* --------------------------------------------------------필터 ----------------------------------------------- */}
-        <div>{!isCollapsed && <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />}</div>
+        <div>{!isCollapsed && <AreaSelect key={uuidv4()} areaCode={areaList} onClick={handleAreaClick} />}</div>
         {!isCollapsed && areaCode && (
           <div className="flex flex-wrap">
             {/* // 시군구 선택 */}

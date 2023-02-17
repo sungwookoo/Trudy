@@ -60,7 +60,6 @@ const UseruserInfo = () => {
       .then((res) => {
         setUserInfo(res.data);
         setGetUserPost(res.data.posts);
-        console.log(res.data, "해당유저정보");
       })
       .catch((err: any) => console.error(err));
   }, []);
@@ -76,7 +75,6 @@ const UseruserInfo = () => {
       .then((res) => {
         setLoginUser(res.data);
         const loginuserId = res.data.id;
-        console.log(res.data, loginuserId, 333333333333333);
       })
       .catch((err: any) => console.error(err, "여기에러"));
   }, []);
@@ -88,7 +86,6 @@ const UseruserInfo = () => {
       .get(url)
       .then((res) => {
         setGetUserPost(res.data);
-        console.log(res.data);
       })
       .catch((error: any) => console.error(error));
   };

@@ -48,10 +48,8 @@ function Planner() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const PlaceId = parseInt(e.dataTransfer.getData("text/plain"));
-    console.log(PlaceId, "id 값 받기ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ");
     const PlusDayItem = authCtx.updateDayItem(selectedDayId, PlaceId, sequence + 1);
     setSequence(sequence + 1);
-    console.log(PlusDayItem, 55555555555555555);
     // if (PlusDayItem) {
     //   setDayItemData((prevState: any[] | null) => {
     //     if (!prevState) {

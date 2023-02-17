@@ -131,14 +131,8 @@ function AccountSetting() {
                     disabled
                     defaultValue={
                       data.areaCode || data.sigunguCode
-                        ? `${
-                            areaList.filter(
-                              (area) => area.id === data.areaCode
-                            )[0].name
-                          }, ${
-                            sigunguList[data.areaCode].filter(
-                              (sigungu: any) => sigungu.id === data.sigunguCode
-                            )[0].name
+                        ? `${areaList.filter((area) => area.id === data.areaCode)[0].name}, ${
+                            sigunguList[data.areaCode].filter((sigungu: any) => sigungu.id === data.sigunguCode)[0].name
                           }`
                         : ""
                     }

@@ -67,7 +67,6 @@ function Profile() {
       })
       .then((res) => {
         // setGetMyPost(res.data.content);
-        console.log(res.data.content, "겟 마이 포스트");
       })
       .catch((error: any) => console.error(error));
   };
@@ -84,7 +83,6 @@ function Profile() {
         setGetMyPost(res.data.posts);
 
         // getMyPosts();
-        console.log(res.data, "멤버 받는값");
       })
       .catch((err: any) => console.error(err));
   }, []);
@@ -93,8 +91,6 @@ function Profile() {
     return <div className="flex justify-center">유저 찾는중.....</div>;
   }
 
-  console.log(getmypost, "내 게시글ㅇㅇㅇㅇㅇㅇ");
-  console.log(profile, "내 프로필 정보");
   return (
     // 프로필 컨테이너 파란 영역
     <div className="profile-container">
@@ -138,26 +134,12 @@ function Profile() {
             <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-5" onClick={navigateToProfileUpdate}>
               Edit Profile
             </button>
-            {/* 토글 바 */}
-            {/* <label
-              htmlFor="toggleB"
-              className="flex items-center cursor-pointer"
-            >
-              <div className="relative">
-                <input type="checkbox" id="toggleB" className="sr-only" />
-                <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
-              </div>
-            </label> */}
-            {/* 토글 바 끝 */}
           </div>
         </div>
 
         <div className="myprofile-intro mb-1 ml-52">{profile.introduceId ? profile.introduceId.self : ""}</div>
       </div>
       <div className="content-box grid grid-cols-2 place-content-center mb-2">
-        {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
-        {/* <div className="about-post col-start-2 col-span-4 bg-yellow-500"> */}
         <div className="mx-16 flex place-content-center font-bold text-3xl hover:cursor-pointer" onClick={() => setViewPost(!viewPost)}>
           About
         </div>
@@ -200,16 +182,11 @@ function Profile() {
                   </div>
                   <div></div>
                 </>
-                // <div className="text-2xl justify-center">There are currently no posts. Shall we go write?</div>
               )}
             </div>
           )}
         </div>
       </div>
-      {/* <ProfileMyPost id={profile.id}/> */}
-      {/* <ProfileMyPost /> */}
-
-      {/* <hr className="border-black border-1 mx-12 mt-2 mb-2"></hr> */}
     </div>
   );
 }

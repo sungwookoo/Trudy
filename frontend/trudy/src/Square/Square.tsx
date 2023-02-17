@@ -135,13 +135,13 @@ function Square() {
       {!isCollapsed && (
         <>
           <div className="border border-gray-500">
-            <AreaSelect key={0} areaCode={areaList} onClick={handleAreaClick} />
+            <AreaSelect key={10} areaCode={areaList} onClick={handleAreaClick} />
           </div>
-          <br />
+
           {areaCode && (
             <div className="flex flex-wrap">
               {sigunguList[areaCode].map((sigunguInfo: any, i: number) => (
-                <div key={i} className="flex items-center mb-2">
+                <div key={i} className="flex items-center mb-2 inline-block bg-trudy rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
                   <input
                     className="mr-2"
                     name="sigungu-select"
