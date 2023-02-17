@@ -27,11 +27,8 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
   useEffect(() => {
     setCommentMemberId(comment.customMemberForComment.id);
     // setNestedcommentMemberId(comment?.nestedCommentList.customMemberForComment.id)
-    console.log("Comment component get");
-    console.log(comment, 1111);
   }, []);
 
-  console.log(comment, "comment");
   //대댓글 창 띄우기(isDeleted: 0이면 삭제된 댓글이므로 대댓글 작성 불가)
   const onClickHandlerWriteNestedComment = (isDeleted: number) => {
     if (isDeleted === 0) {
@@ -50,13 +47,9 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
         `/api/post/nested-comment/${loggedinId}/${commentId}?content=${nestedComment}`
       ) //memberId 나중에 수정해야함
       .then((res) => {
-        console.log("대댓글 작성 완료");
-        console.log(nestedComment);
         refreshComment();
       })
       .catch((err) => {
-        console.log("대댓글 작성 실패");
-        console.log(err);
       });
 
     setNestedComment("");
@@ -84,13 +77,10 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
     axios
       .delete(`/api/post/${type}/${Id}`)
       .then((res) => {
-        console.log(`${type} 삭제 완료`);
         refreshComment();
         window.location.replace(`/post/${postid}`);
       })
       .catch((err) => {
-        console.log(`${type} 삭제 실패`);
-        console.log(err);
       });
   };
 
@@ -99,12 +89,9 @@ function Comment({ comment, index, postid, refreshComment }: Props) {
     axios
       .post(`/api/post/${type}/like/${loggedinId}/${Id}`) //memberId 나중에 수정해야함
       .then((res) => {
-        console.log(`${type} 좋아요 완료`);
         refreshComment();
       })
       .catch((err) => {
-        console.log(`${type} 좋아요 실패`);
-        console.log(err);
       });
   };
 
