@@ -1,8 +1,6 @@
 # Trudy
 🛫 외국인 관광객을 위한 한국 현지인 연결 플랫폼 - Trudy
 
-# Trudy
-
 ![1](https://github.com/sungwookoo/Trudy/assets/53362965/ef0273d5-6b63-4ddf-9123-b0e4e6de0982)
 
 
